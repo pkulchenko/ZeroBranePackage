@@ -12,10 +12,6 @@ local function MakeMCServerInterpreter(a_InterpreterPostfix, a_ExePostfix)
 		api = {"baselib", "mcserver"},
 
 		frun = function(self, wfilename, withdebug)
-			if withdebug then
-				DebuggerAttachDefault({runstart = (ide.config.debugger.runonstart == true)})
-			end
-
 			-- MCServer plugins are always in a "Plugins/<PluginName>" subfolder located at the executable level
 			-- Get to the executable by removing the last two dirs:
 			local ExePath = wx.wxFileName(wfilename)
@@ -31,6 +27,14 @@ local function MakeMCServerInterpreter(a_InterpreterPostfix, a_ExePostfix)
 			-- Executable has a .exe ext on Windows
 			if (ide.osname == 'Windows') then
 				ExeName:SetExt("exe")
+			end
+
+			-- Start the debugger server:
+			if withdebug then
+				DebuggerAttachDefault({
+					runstart = (ide.config.debugger.runonstart == true),
+					basedir = ExePath:GetFullPath(),
+				})
 			end
 
 			-- Add a "nooutbuf" cmdline param to the server, causing it to call setvbuf to disable output buffering:
