@@ -20,11 +20,12 @@ local function analyzeProject(self)
   local projectPath = ide:GetProject()
   if projectPath then
     local specs = self:GetConfig().ignore or {}
-    for i in ipairs(specs) do specs[i] = "^"..path2mask(specs[i]).."$" end
+    local masks = {}
+    for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]).."$" end
     for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
       local checkPath = filePath:gsub(projectPath, "")
       local ignore = false
-      for _, spec in ipairs(specs) do
+      for _, spec in ipairs(masks) do
         ignore = ignore or checkPath:find(spec)
       end
       if not ignore then
