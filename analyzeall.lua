@@ -2,7 +2,14 @@ local G = ...
 local id = G.ID("analyzeall.analyzeall")
 local menuid
 
-local function analyzeProject()
+local function path2mask(s)
+  return s
+    :gsub('([%(%)%.%%%+%-%?%[%^%$%]])','%%%1') -- escape all special symbols
+    :gsub("%*", ".*") -- but expand asterisk into sequence of any symbols
+    :gsub("[\\/]","[\\\\/]") -- allow for any path
+end
+
+local function analyzeProject(self)
   local frame = ide:GetMainFrame()
   local menubar = ide:GetMenuBar()
   if menubar:IsChecked(ID_CLEAROUTPUT) then ClearOutput() end
@@ -12,16 +19,25 @@ local function analyzeProject()
   local errors, warnings = 0, 0
   local projectPath = ide:GetProject()
   if projectPath then
+    local specs = self:GetConfig().ignore or {}
+    for i in ipairs(specs) do specs[i] = "^"..path2mask(specs[i]).."$" end
     for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
-      local warn, err, line = AnalyzeFile(filePath)
-      if err then
-        DisplayOutputNoMarker(filePath..'('..line..'): '..err.."\n")
-        errors = errors + 1
-      elseif #warn > 0 then
-        DisplayOutputNoMarker(table.concat(warn, "\n") .. "\n")
-        warnings = warnings + #warn
+      local checkPath = filePath:gsub(projectPath, "")
+      local ignore = false
+      for _, spec in ipairs(specs) do
+        ignore = ignore or checkPath:find(spec)
       end
-      frame:Update() -- refresh the output with new results
+      if not ignore then
+        local warn, err, line = AnalyzeFile(filePath)
+        if err then
+          DisplayOutputNoMarker(filePath..'('..line..'): '..err.."\n")
+          errors = errors + 1
+        elseif #warn > 0 then
+          DisplayOutputNoMarker(table.concat(warn, "\n") .. "\n")
+          warnings = warnings + #warn
+        end
+        frame:Update() -- refresh the output with new results
+      end
     end
   end
 
@@ -35,15 +51,15 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
-  onRegister = function(self)
+  onRegister = function(package)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
     local _, analyzepos = ide:FindMenuItem(menu, ID_ANALYZE)
     if analyzepos then
       menu:Insert(analyzepos+1, id, TR("Analyze All")..KSC(id), TR("Analyze the project source code"))
     end
-    ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, analyzeProject)
+    ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function() return analyzeProject(package) end)
   end,
 
   onUnRegister = function(self)
