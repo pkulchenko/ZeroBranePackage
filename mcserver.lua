@@ -9,7 +9,7 @@ local function MakeMCServerInterpreter(a_InterpreterPostfix, a_ExePostfix)
 	{
 		name = "MCServer" .. a_InterpreterPostfix,
 		description = "MCServer - the custom C++ minecraft server",
-		api = {"baselib", "mcserver"},
+		api = {"baselib", "mcserver_api"},
 
 		frun = function(self, wfilename, withdebug)
 			-- MCServer plugins are always in a "Plugins/<PluginName>" subfolder located at the executable level
