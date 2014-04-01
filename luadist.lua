@@ -18,13 +18,13 @@ local disttype = ide.osarch
 local function serialize(s)
   return require('mobdebug').line(s, {comment = false}):gsub('"',"'") end
 
-local function run(command, ...)
+local function run(plugin, command, ...)
   local libs = {...}
   local ver = tonumber(libs[1]) and tostring(table.remove(libs, 1)) or '5.1'
   local opt = type(libs[#libs]) == 'table' and table.remove(libs) or {}
   local int = ide:GetConfig().default.interpreter
   local exe = ide:GetInterpreters()[int]:fexepath("")
-  local root = MergeFullPath(ide.oshome, 'luadist/'..ver)
+  local root = plugin:GetConfig().root or MergeFullPath(ide.oshome, 'luadist/'..ver)
   local install = command == 'install'
   local params = {
     distinfos_dir = 'dists',
@@ -139,7 +139,7 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.11,
+  version = 0.12,
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
     -- load something that requires liblua.dll so that it's in memory and
@@ -156,7 +156,8 @@ return {
     end
 
     -- update path/cpath so that LuaDist modules are available from the console
-    local lib = MergeFullPath(ide.oshome, 'luadist/5.1/lib/lua')
+    local root = MergeFullPath(ide.oshome, 'luadist/5.1')
+    local lib = MergeFullPath(root, 'lib/lua')
     if not package.path:find(lib, 1, true) then
       package.path = package.path..(';%s/?.lua;%s/?/init.lua'):format(lib, lib)
     end
@@ -169,7 +170,7 @@ return {
     for _, command in ipairs({
       'help', 'install', 'remove', 'refresh', 'list', 'info', 'search', 
       'fetch', 'make', 'upload', 'tree', 'selftest',
-    }) do commands[command] = function(...) return run(command, ...) end end
+    }) do commands[command] = function(...) return run(self, command, ...) end end
 
     ide:AddConsoleAlias("luadist", commands)
   end,
@@ -179,7 +180,7 @@ return {
     if not interpreter.luaversion then return end
 
     local version = tostring(interpreter.luaversion)
-    local root = MergeFullPath(ide.oshome, ('luadist/%s'):format(version))
+    local root = self:GetConfig().root or MergeFullPath(ide.oshome, ('luadist/%s'):format(version))
     local lib = MergeFullPath(root, 'lib/lua')
     local bin = MergeFullPath(root, 'bin')
 
@@ -194,13 +195,15 @@ return {
       wx.wxSetEnv("PATH", clibs..';'..bin..';'..path)
     end
 
+    -- keep "libs" last as luadist dependencies need to be loaded from
+    -- the IDE location first as dist/* module has been modified.
     local libs = ('%s/?.%s;'):format(lib, ext)
     local _, lcpath = wx.wxGetEnv('LUA_CPATH')
-    if lcpath then wx.wxSetEnv('LUA_CPATH', libs..lcpath) end
+    if lcpath then wx.wxSetEnv('LUA_CPATH', lcpath..libs) end
 
     local libs = ('%s/?.lua;%s/?/init.lua;'):format(lib, lib)
     local _, lpath = wx.wxGetEnv('LUA_PATH')
-    if lpath then wx.wxSetEnv('LUA_PATH', libs..lpath) end
+    if lpath then wx.wxSetEnv('LUA_PATH', lpath..libs) end
 
     paths = {PATH = path, LUA_CPATH = lcpath, LUA_PATH = lpath}
   end,
