@@ -5,6 +5,7 @@ return {
   description = "Saves all modified files every X seconds while debugging.",
   author = "Paul Kulchenko",
   version = 0.1,
+  dependencies = 0.51,
 
   onRegister = function(self)
     local handler = function()
