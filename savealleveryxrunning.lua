@@ -1,16 +1,14 @@
 local timer
 local evthandler
 return {
-  name = "Save all files every X seconds while debugging",
-  description = "Saves all modified files every X seconds while debugging.",
+  name = "Save all files every X seconds while running/debugging",
+  description = "Saves all modified files every X seconds while running/debugging.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
   dependencies = 0.51,
 
   onRegister = function(self)
-    local handler = function()
-      if ide:GetDebugger():IsConnected() then SaveAll(true) end
-    end
+    local handler = function() if ide:GetLaunchedProcess() then SaveAll(true) end end
     evthandler = wx.wxEvtHandler()
     evthandler:Connect(wx.wxEVT_TIMER, handler)
     timer = wx.wxTimer(evthandler)
