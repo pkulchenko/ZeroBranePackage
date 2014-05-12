@@ -7,8 +7,8 @@
 
 [Binaries]
 - http://sourceforge.net/projects/urho3d/files/Urho3D/
-  Download the STATIC package for your target Operating System.
-  The Urho3D executable with be located in "./share/Bin/"
+  Download the STATIC package for your target operating system.
+  The Urho3D executable will be located in "./share/Bin/"
 
 [Setup]
 - Make Urho3D executable available in PATH or put it into one of the default folders: "C:\Program Files\Urho3D" or "D:\Program Files\Urho3D" on Windows or "/Applications" on Mac OS X;
@@ -42,9 +42,9 @@
 *** Other useful information ***
 
 [Additional information]
-- We suggest to add "arg.urho3d = '-w -x 1024 -y 768'" or any other prefered resolution 
+- We suggest to add "arg.urho3d = '-w -x 1024 -y 768'" or any other prefered resolution
   in your "user.lua" configuration for setting as window mode
-  
+
 --]]
 
 local urho3d
