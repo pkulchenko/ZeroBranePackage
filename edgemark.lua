@@ -1,8 +1,8 @@
-return {
+local plugin = {
   name = "Mark edge",
   description = "Marks column edge for long lines.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
   onEditorLoad = function(self, editor)
     local config = self.GetConfig and self:GetConfig()
@@ -13,3 +13,5 @@ return {
     end
   end,
 }
+plugin.onEditorNew = plugin.onEditorLoad
+return plugin
