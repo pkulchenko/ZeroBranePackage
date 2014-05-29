@@ -4,7 +4,7 @@ local menuid
 local ident = "([a-zA-Z_][a-zA-Z_0-9%.%:]*)"
 return {
   name = "Show lua reference",
-  description = "Adds showing lua reference option to the editor menu.",
+  description = "Adds 'show lua reference' option to the editor menu.",
   author = "Paul Kulchenko",
   version = 0.1,
 
@@ -26,16 +26,14 @@ return {
       or (start and linetx:sub(start,localpos)..right or nil)
 
     if ref then
-      menu:AppendSeparator()
-      menu:Append(id, ("Show Reference: %s"):format(ref))
+      menu:Append(id, ("Show Lua Reference: %s"):format(ref))
+      menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
+        function()
+          local url = ('http://www.lua.org/manual/%s/manual.html#%s'):
+            format(ide:GetInterpreter().luaversion or '5.1',
+              ref:find('^luaL?_') and ref or 'pdf-'..ref)
+          wx.wxLaunchDefaultBrowser(url, 0)
+        end)
     end
-
-    editor:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
-      function()
-        local url = ('http://www.lua.org/manual/%s/manual.html#%s'):
-          format(ide:GetInterpreter().luaversion or '5.1',
-            ref:find('^luaL?_') and ref or 'pdf-'..ref)
-        wx.wxLaunchDefaultBrowser(url, 0)
-      end)
   end
 }
