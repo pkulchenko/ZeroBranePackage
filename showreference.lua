@@ -6,7 +6,7 @@ return {
   name = "Show reference",
   description = "Adds 'show reference' option to the editor menu.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
   onMenuEditor = function(self, menu, editor, event)
     local point = editor:ScreenToClient(event:GetPosition())
@@ -26,8 +26,10 @@ return {
       or (start and linetx:sub(start,localpos)..right or nil)
 
     local target = self:GetConfig().target
+    local transform = self:GetConfig().transform
     if ref and target then
       menu:Append(id, ("Show Reference: %s"):format(ref))
+      if transform then ref = select(2, pcall(transform, ref)) end
       menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
         function() wx.wxLaunchDefaultBrowser(target:format(ref), 0) end)
     end
@@ -36,6 +38,13 @@ return {
 
 --[[ configuration example:
 showreference = {
-  target = 'http://love2d.org/wiki/%s'
+  target = 'http://love2d.org/wiki/%s',
+}
+
+or
+
+showreference = {
+  target = 'http://docs.coronalabs.com/api/library/%s.html',
+  transform = function(s) return(s:gsub("%.","/")) end,
 }
 --]]
