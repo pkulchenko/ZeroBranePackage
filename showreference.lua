@@ -6,7 +6,7 @@ return {
   name = "Show reference",
   description = "Adds 'show reference' option to the editor menu.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
 
   onMenuEditor = function(self, menu, editor, event)
     local point = editor:ScreenToClient(event:GetPosition())
@@ -43,8 +43,16 @@ showreference = {
 
 or
 
+local G = ...
 showreference = {
-  target = 'http://docs.coronalabs.com/api/library/%s.html',
-  transform = function(s) return(s:gsub("%.","/")) end,
+  target = 'http://docs.coronalabs.com/api/%s.html',
+  transform = function(s)
+    local tip = G.GetTipInfo(G.ide:GetEditor(), s)
+    if tip then s = tip:match("%)%s*(%S+)") or s end
+    s = (G.type(G[s]) == "function" and "global." or "")..s
+    s = s..(s:find("[%.%:]") and "" or ".index")
+    s = s:find("^_") and "type."..s:sub(2) or "library."..s
+    return(s:gsub("[%.%:]","/"))
+  end,
 }
 --]]
