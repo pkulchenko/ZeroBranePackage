@@ -4,7 +4,7 @@ local exe
 local win = ide.osname == "Windows"
 
 local init = [=[
-(load or loadstring)([[
+(loadstring or load)([[
 if pcall(require, "mobdebug") then
   io.stdout:setvbuf('no')
   local cache = {}
@@ -12,7 +12,7 @@ if pcall(require, "mobdebug") then
   local rln = require("moonscript.errors").reverse_line_number
   local mdb = require "mobdebug"
   mdb.linemap = function(line, src)
-    return src:find('%.moon$') and (tonumber(lt[src] and rln(src:gsub("^@",""), lt[src], line, cache) or line) or -1) or nil
+    return src:find('%.moon$') and (tonumber(lt[src] and rln(src:gsub("^@",""), lt[src], line, cache) or line) or 1) or nil
   end
   mdb.loadstring = require("moonscript").loadstring
 end
@@ -162,7 +162,7 @@ return {
   name = "Moonscript",
   description = "Integration with Moonscript language",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
   dependencies = 0.61,
 
   onRegister = function(self)
