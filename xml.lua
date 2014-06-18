@@ -42,8 +42,16 @@ return {
   name = "XML syntax highlighting",
   description = "XML syntax highlighting",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
-  onRegister = function(self) ide:AddSpec("xml", spec) end,
+  onRegister = function(self)
+    local keywords = self:GetConfig().keywords or ''
+    spec.keywords[1] = keywords
+    ide:AddSpec("xml", spec)
+  end,
   onUnRegister = function(self) ide:RemoveSpec("xml") end,
 }
+
+--[[ configuration example:
+xml = {keywords = "foo bar"}
+--]]
