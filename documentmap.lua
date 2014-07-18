@@ -98,7 +98,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.11,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -146,19 +146,17 @@ return {
         local line = e:LineFromPosition(pos)
         local firstline, lastline = screenFirstLast(editorlinked)
         if line >= firstline and line <= lastline then
-          scroll = pos
+          scroll = true
           e:CaptureMouse()
+        else
+          scrollLinked(event:GetPosition())
+          editorlinked:SetFocus()
         end
       end)
     e:Connect(wx.wxEVT_LEFT_UP, function(event)
         if not editorlinked then return end
 
-        if scroll then
-          scroll = nil
-        else
-          scrollLinked(event:GetPosition())
-          editorlinked:SetFocus()
-        end
+        if scroll then scroll = nil end
         e:ReleaseMouse()
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
