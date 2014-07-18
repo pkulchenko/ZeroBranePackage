@@ -98,7 +98,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.12,
+  version = 0.13,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -156,8 +156,10 @@ return {
     e:Connect(wx.wxEVT_LEFT_UP, function(event)
         if not editorlinked then return end
 
-        if scroll then scroll = nil end
-        e:ReleaseMouse()
+        if scroll then
+          scroll = nil
+          e:ReleaseMouse()
+        end
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
