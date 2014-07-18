@@ -98,7 +98,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.11,
+  version = 0.12,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -167,6 +167,8 @@ return {
       end)
     -- ignore all double click events as they cause selection in the editor
     e:Connect(wx.wxEVT_LEFT_DCLICK, function(event) end)
+    -- ignore context menu
+    e:Connect(wx.wxEVT_CONTEXT_MENU, function(event) end)
     -- set the cursor so it doesn't look like vertical beam
     e:Connect(wx.wxEVT_SET_CURSOR, function(event)
         event:SetCursor(wx.wxCursor(wx.wxCURSOR_ARROW))
