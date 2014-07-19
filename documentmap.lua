@@ -4,8 +4,8 @@ local mappanel = "documentmappanel"
 local markers = {CURRENT = "docmap.current", BACKGROUND = "docmap.background"}
 local editormap, editorlinked, docpointer
 local id, menuid
-local markbeg, markend, markcur
 local win = ide.osname == 'Windows'
+local needupdate
 local function switchEditor(editor)
   if editorlinked == editor then return end
   if editormap then
@@ -43,9 +43,6 @@ local function switchEditor(editor)
     editormap:SetDocPointer(docpointer)
   end
   editorlinked = editor
-
-  -- reset cached values for markers
-  markbeg, markend, markcur = -1, -1, -1
 end
 
 function screenFirstLast(e)
@@ -57,37 +54,17 @@ end
 
 local function sync(e1, e2)
   local firstline, lastline = screenFirstLast(e1)
+  e2:MarkerDeleteAll(markers[markers.BACKGROUND])
+  for line = firstline, lastline do
+    e2:MarkerAdd(line, markers[markers.BACKGROUND])
+  end
+
   local currline = e1:GetCurrentLine()
+  e2:MarkerDeleteAll(markers[markers.CURRENT])
+  e2:MarkerAdd(currline, markers[markers.CURRENT])
 
-  if markbeg ~= firstline or markend ~= lastline then
-    -- quick sanity check for those cases when different content is reloaded
-    -- into the same file; only check for first and last markers
-    local markervalue = 2^markers[markers.BACKGROUND]
-    if bit.band(e2:MarkerGet(markbeg), markervalue) == 0
-    or bit.band(e2:MarkerGet(markend), markervalue) == 0 then
-      markbeg, markend, markcur = -1, -1, -1
-    end
-
-    for line = markbeg, markend do
-      if line < firstline or line > lastline then
-        e2:MarkerDelete(line, markers[markers.BACKGROUND])
-      end
-    end
-    for line = firstline, lastline do
-      if line < markbeg or line > markend then
-        e2:MarkerAdd(line, markers[markers.BACKGROUND])
-      end
-    end
-    markbeg, markend = firstline, lastline
-
-    -- force refresh to keep the map editor up-to-date and reduce jumpy scroll
-    if win then e2:Refresh() e2:Update() end
-  end
-  if markcur ~= currline then
-    e2:MarkerDelete(markcur, markers[markers.CURRENT])
-    e2:MarkerAdd(currline, markers[markers.CURRENT])
-    markcur = currline
-  end
+  -- force refresh to keep the map editor up-to-date and reduce jumpy scroll
+  if win then e2:Refresh() e2:Update() end
 
   local linesmax1 = math.max(1, e1:GetLineCount() - (lastline-firstline))
   local linesmax2 = math.max(1, e2:GetLineCount() - e2:LinesOnScreen())
@@ -99,7 +76,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.15,
+  version = 0.16,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -210,8 +187,15 @@ return {
     if editor == editorlinked then switchEditor() end
   end,
 
+  onEditorUpdateUI = function(self, editor)
+    needupdate = true
+  end,
+
   onEditorPainted = function(self, editor)
-    if editormap and editor == editorlinked then sync(editorlinked, editormap) end
+    if editormap and editor == editorlinked and needupdate then
+      needupdate = false
+      sync(editorlinked, editormap)
+    end
   end,
 }
 
