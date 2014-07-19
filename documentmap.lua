@@ -5,6 +5,7 @@ local markers = {CURRENT = "docmap.current", BACKGROUND = "docmap.background"}
 local editormap, editorlinked, docpointer
 local id, menuid
 local markbeg, markend, markcur
+local win = ide.osname == 'Windows'
 local function switchEditor(editor)
   if editorlinked == editor then return end
   if editormap then
@@ -80,7 +81,7 @@ local function sync(e1, e2)
     markbeg, markend = firstline, lastline
 
     -- force refresh to keep the map editor up-to-date and reduce jumpy scroll
-    e2:Refresh() e2:Update()
+    if win then e2:Refresh() e2:Update() end
   end
   if markcur ~= currline then
     e2:MarkerDelete(markcur, markers[markers.CURRENT])
@@ -98,7 +99,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.14,
+  version = 0.15,
   dependencies = 0.71,
 
   onRegister = function(self)
