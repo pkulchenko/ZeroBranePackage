@@ -98,7 +98,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.13,
+  version = 0.14,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -147,7 +147,6 @@ return {
         local firstline, lastline = screenFirstLast(editorlinked)
         if line >= firstline and line <= lastline then
           scroll = true
-          e:CaptureMouse()
         else
           scrollLinked(event:GetPosition())
           editorlinked:SetFocus()
@@ -155,17 +154,11 @@ return {
       end)
     e:Connect(wx.wxEVT_LEFT_UP, function(event)
         if not editorlinked then return end
-
-        if scroll then
-          scroll = nil
-          e:ReleaseMouse()
-        end
+        if scroll then scroll = nil end
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
-        if not scroll then event:Skip() e:ReleaseMouse() return end
-
-        scrollLinked(event:GetPosition())
+        if scroll then scrollLinked(event:GetPosition()) end
       end)
     -- ignore all double click events as they cause selection in the editor
     e:Connect(wx.wxEVT_LEFT_DCLICK, function(event) end)
