@@ -45,7 +45,7 @@ local function switchEditor(editor)
   editorlinked = editor
 end
 
-function screenFirstLast(e)
+local function screenFirstLast(e)
   local firstline = e:DocLineFromVisible(e:GetFirstVisibleLine())
   local linesvisible = (e:DocLineFromVisible(e:GetFirstVisibleLine()+e:LinesOnScreen()-1)
     - firstline)
@@ -76,7 +76,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.16,
+  version = 0.17,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -108,7 +108,7 @@ return {
       e:Connect(wx.wxEVT_KILL_FOCUS, function() e:SetReadOnly(ro or false) end)
     end
 
-    local function scrollLinked(point)
+    local function jumpLinked(point)
       local pos = e:PositionFromPoint(point)
       local firstline, lastline = screenFirstLast(editorlinked)
       local onscreen = lastline-firstline
@@ -117,6 +117,20 @@ return {
     end
 
     local scroll
+    local function scrollLinked(point)
+      local pos = e:PositionFromPoint(point)
+      local percent
+      do
+        local line = e:LineFromPosition(pos)
+        local firstline, lastline = screenFirstLast(e)
+        percent = lastline > firstline and (line-firstline)/(lastline-firstline) or 0.5
+      end
+      local firstline, lastline = screenFirstLast(editorlinked)
+      local onscreen = lastline-firstline
+      local topline = math.floor(e:GetLineCount()*percent-onscreen*scroll)
+      editorlinked:SetFirstVisibleLine(editorlinked:VisibleFromDocLine(topline))
+    end
+
     e:Connect(wx.wxEVT_LEFT_DOWN, function(event)
         if not editorlinked then return end
 
@@ -124,9 +138,9 @@ return {
         local line = e:LineFromPosition(pos)
         local firstline, lastline = screenFirstLast(editorlinked)
         if line >= firstline and line <= lastline then
-          scroll = true
+          scroll = lastline > firstline and (line-firstline)/(lastline-firstline) or 0.5
         else
-          scrollLinked(event:GetPosition())
+          jumpLinked(event:GetPosition())
           editorlinked:SetFocus()
         end
       end)
