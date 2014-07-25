@@ -76,7 +76,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.17,
+  version = 0.18,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -90,7 +90,8 @@ return {
           :MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
       end)
 
-    for m = 1, 4 do e:SetMarginWidth(m, 0) end
+    -- remove all margins
+    for m = 0, 4 do e:SetMarginWidth(m, 0) end
     e:SetUseHorizontalScrollBar(false)
     e:SetUseVerticalScrollBar(false)
     e:SetZoom(self:GetConfig().zoom or -7)
