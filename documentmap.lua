@@ -76,7 +76,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.18,
+  version = 0.19,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -151,7 +151,7 @@ return {
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
-        if scroll then scrollLinked(event:GetPosition()) end
+        if scroll then (win and jumpLinked or scrollLinked)(event:GetPosition()) end
       end)
     -- ignore all double click events as they cause selection in the editor
     e:Connect(wx.wxEVT_LEFT_DCLICK, function(event) end)
