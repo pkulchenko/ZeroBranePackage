@@ -6,6 +6,11 @@ local editormap, editorlinked, docpointer
 local id, menuid
 local win = ide.osname == 'Windows'
 local needupdate
+local colors = { -- default values if no style colors are set
+  text = {64, 64, 64},
+  background = {208, 208, 208},
+  current = {240, 240, 230},
+}
 local function switchEditor(editor)
   if editorlinked == editor then return end
   if editormap then
@@ -18,14 +23,14 @@ local function switchEditor(editor)
       local styles = ide:GetConfig().styles
       markers[markers.BACKGROUND] = ide:AddMarker(markers.BACKGROUND,
         wxstc.wxSTC_MARK_BACKGROUND,
-        styles.text.fg,
-        styles.sel.bg)
+        styles.text.fg or colors.text,
+        styles.sel.bg or colors.background)
       editormap:MarkerDefine(ide:GetMarker(markers.BACKGROUND))
     
       markers[markers.CURRENT] = ide:AddMarker(markers.CURRENT,
         wxstc.wxSTC_MARK_BACKGROUND,
-        styles.text.fg,
-        styles.caretlinebg.bg)
+        styles.text.fg or colors.text,
+        styles.caretlinebg.bg or colors.current)
       editormap:MarkerDefine(ide:GetMarker(markers.CURRENT))
     end
 
