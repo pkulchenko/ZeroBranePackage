@@ -59,6 +59,7 @@ end
 
 local function sync(e1, e2)
   local firstline, lastline = screenFirstLast(e1)
+
   e2:MarkerDeleteAll(markers[markers.BACKGROUND])
   for line = firstline, lastline do
     e2:MarkerAdd(line, markers[markers.BACKGROUND])
@@ -68,13 +69,13 @@ local function sync(e1, e2)
   e2:MarkerDeleteAll(markers[markers.CURRENT])
   e2:MarkerAdd(currline, markers[markers.CURRENT])
 
-  -- force refresh to keep the map editor up-to-date and reduce jumpy scroll
-  if win then e2:Refresh() e2:Update() end
-
   local linesmax1 = math.max(1, e1:GetLineCount() - (lastline-firstline))
   local linesmax2 = math.max(1, e2:GetLineCount() - e2:LinesOnScreen())
   local line2 = firstline * linesmax2 / linesmax1
   e2:SetFirstVisibleLine(e2:VisibleFromDocLine(math.floor(line2)))
+
+  -- force refresh to keep the map editor up-to-date and reduce jumpy scroll
+  if win then e2:Refresh() e2:Update() end
 end
 
 return {
