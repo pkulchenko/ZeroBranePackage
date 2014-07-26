@@ -153,7 +153,7 @@ return {
       end)
     e:Connect(wx.wxEVT_LEFT_UP, function(event)
         if not editorlinked then return end
-        if scroll then scroll = nil end
+        if scroll then scroll = nil; editorlinked:SetFocus() end
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
