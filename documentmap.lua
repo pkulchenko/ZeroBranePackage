@@ -82,7 +82,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.19,
+  version = 0.20,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -126,28 +126,28 @@ return {
     local scroll
     local function scrollLinked(point)
       local pos = e:PositionFromPoint(point)
-      local percent
-      do
-        local line = e:LineFromPosition(pos)
-        local firstline, lastline = screenFirstLast(e)
-        percent = lastline > firstline and (line-firstline)/(lastline-firstline) or 0.5
-      end
       local firstline, lastline = screenFirstLast(editorlinked)
       local onscreen = lastline-firstline
-      local topline = math.floor(e:GetLineCount()*percent-onscreen*scroll)
+      local line = e:LineFromPosition(pos)
+      local lineheight = e:TextHeight(line)
+      local count = e:GetLineCount()
+      local height = math.min(count * lineheight, e:GetClientSize():GetHeight())
+      local scrollnow = (point:GetY() - scroll) / (height - onscreen * lineheight)
+      local topline = math.floor((count-onscreen)*scrollnow)
       editorlinked:SetFirstVisibleLine(editorlinked:VisibleFromDocLine(topline))
     end
 
     e:Connect(wx.wxEVT_LEFT_DOWN, function(event)
         if not editorlinked then return end
 
-        local pos = e:PositionFromPoint(event:GetPosition())
+        local point = event:GetPosition()
+        local pos = e:PositionFromPoint(point)
         local line = e:LineFromPosition(pos)
         local firstline, lastline = screenFirstLast(editorlinked)
         if line >= firstline and line <= lastline then
-          scroll = lastline > firstline and (line-firstline)/(lastline-firstline) or 0.5
+          scroll = (line-firstline) * e:TextHeight(line)
         else
-          jumpLinked(event:GetPosition())
+          jumpLinked(point)
           editorlinked:SetFocus()
         end
       end)
@@ -157,7 +157,7 @@ return {
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
-        if scroll then (win and jumpLinked or scrollLinked)(event:GetPosition()) end
+        if scroll then scrollLinked(event:GetPosition()) end
       end)
     -- ignore all double click events as they cause selection in the editor
     e:Connect(wx.wxEVT_LEFT_DCLICK, function(event) end)
