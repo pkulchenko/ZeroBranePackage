@@ -82,7 +82,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.20,
+  version = 0.21,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -113,6 +113,14 @@ return {
       local ro
       e:Connect(wx.wxEVT_SET_FOCUS, function() ro = e:GetReadOnly() e:SetReadOnly(true) end)
       e:Connect(wx.wxEVT_KILL_FOCUS, function() e:SetReadOnly(ro or false) end)
+    end
+
+    local function setFocus(editor)
+      editor:SetFocus()
+      if ide.osname == 'Macintosh' then
+        -- manually trigger KILL_FOCUS event on OSX: http://trac.wxwidgets.org/ticket/14142
+        editormap:GetEventHandler():ProcessEvent(wx.wxFocusEvent(wx.wxEVT_KILL_FOCUS))
+      end
     end
 
     local function jumpLinked(point)
@@ -148,12 +156,15 @@ return {
           scroll = (line-firstline) * e:TextHeight(line)
         else
           jumpLinked(point)
-          editorlinked:SetFocus()
+          setFocus(editorlinked)
         end
       end)
     e:Connect(wx.wxEVT_LEFT_UP, function(event)
         if not editorlinked then return end
-        if scroll then scroll = nil; editorlinked:SetFocus() end
+        if scroll then
+          scroll = nil
+          setFocus(editorlinked)
+        end
       end)
     e:Connect(wx.wxEVT_MOTION, function(event)
         if not editorlinked then return end
