@@ -31,7 +31,7 @@ local function analyzeProject(self)
       if not ignore then
         local warn, err, line = AnalyzeFile(filePath)
         if err then
-          DisplayOutputNoMarker(filePath..'('..line..'): '..err.."\n")
+          DisplayOutputNoMarker(err .. "\n")
           errors = errors + 1
         elseif #warn > 0 then
           DisplayOutputNoMarker(table.concat(warn, "\n") .. "\n")
@@ -52,7 +52,8 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
+  dependencies = 0.71,
 
   onRegister = function(package)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
