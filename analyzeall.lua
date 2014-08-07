@@ -1,3 +1,5 @@
+-- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+
 local G = ...
 local id = G.ID("analyzeall.analyzeall")
 
@@ -36,7 +38,7 @@ local function analyzeProject(self)
           DisplayOutputNoMarker(table.concat(warn, "\n") .. "\n")
           warnings = warnings + #warn
         end
-        frame:Update() -- refresh the output with new results
+        ide:Yield() -- refresh the output with new results
       end
     end
   end
@@ -51,7 +53,7 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.35,
+  version = 0.4,
   dependencies = 0.71,
 
   onRegister = function(package)
