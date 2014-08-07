@@ -1,6 +1,5 @@
 local G = ...
 local id = G.ID("analyzeall.analyzeall")
-local menuid
 
 local function path2mask(s)
   return s
@@ -52,21 +51,18 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.3,
+  version = 0.35,
   dependencies = 0.71,
 
   onRegister = function(package)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
-    local _, analyzepos = ide:FindMenuItem(menu, ID_ANALYZE)
-    if analyzepos then
+    local _, menu, analyzepos = ide:FindMenuItem(ID_ANALYZE)
+    if menu then
       menu:Insert(analyzepos+1, id, TR("Analyze All")..KSC(id), TR("Analyze the project source code"))
+      menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function() return analyzeProject(package) end)
     end
-    ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function() return analyzeProject(package) end)
   end,
 
   onUnRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxEVT_COMMAND_MENU_SELECTED)
-    if menuid then menu:Destroy(menuid) end
+    ide:RemoveMenuItem(id)
   end,
 }
