@@ -82,7 +82,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.22,
+  version = 0.23,
   dependencies = 0.71,
 
   onRegister = function(self)
@@ -133,10 +133,8 @@ return {
 
     local scroll
     local function scrollLinked(point)
-      local pos = e:PositionFromPoint(point)
-      local firstline, lastline = screenFirstLast(editorlinked)
-      local onscreen = lastline-firstline
-      local line = e:LineFromPosition(pos)
+      local onscreen = math.min(editorlinked:LinesOnScreen(), editorlinked:GetLineCount())
+      local line = e:LineFromPosition(e:PositionFromPoint(point))
       local lineheight = e:TextHeight(line)
       local count = e:GetLineCount()
       local height = math.min(count * lineheight, e:GetClientSize():GetHeight())
