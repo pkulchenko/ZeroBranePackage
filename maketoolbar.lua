@@ -1,22 +1,21 @@
 local G = ...
 local id = G.ID("maketoolbar.makemenu")
-local menuid
 local tool
 return {
   name = "Add `make` toolbar button",
   description = "Adds a menu item and toolbar button that run `make`.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
+  dependencies = 0.71,
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
-    menuid = menu:Append(id, "Make")
+    menu:Append(id, "Make")
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
       function () CommandLineRun('make', ide:GetProject(), true) end)
 
     local tb = ide:GetToolBar()
-    local pos = tb:GetToolPos(ID_VIEWWATCHWINDOW)
-    tool = tb:InsertTool(pos+1, id, "Make", wx.wxBitmap({
+    tool = tb:AddTool(id, "Make"..KSC(id), wx.wxBitmap({
       -- columns rows colors chars-per-pixel --
       "16 16 87 1",
       "  c None",
@@ -55,7 +54,7 @@ return {
       "    zM     ,q;  ",
       "   ss       ,   ",
       "                "
-    }), wx.wxBitmap())
+    }))
     tb:Realize()
   end,
 
@@ -64,8 +63,6 @@ return {
     tb:DeleteTool(tool)
     tb:Realize()
 
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxEVT_COMMAND_MENU_SELECTED)
-    if menuid then menu:Destroy(menuid) end
+    ide:RemoveMenuItem(id)
   end,
 }
