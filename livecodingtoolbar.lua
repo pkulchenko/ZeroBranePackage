@@ -7,8 +7,7 @@ return {
 
   onRegister = function(self)
     local tb = ide:GetToolBar()
-    local pos = tb:GetToolPos(ID_STARTDEBUG)
-    tool = tb:InsertTool(pos+1, ID_RUNNOW, "Run as Scratchpad", wx.wxBitmap({
+    tool = tb:AddTool(ID_RUNNOW, "Run as Scratchpad", wx.wxBitmap({
       "16 16 4 1",
       "       c None",
       ".      c black",
@@ -29,7 +28,7 @@ return {
       "    .X..XXXXX.  ",
       "    ..X.......  ",
       "     ..         ",
-      "                "}), wx.wxBitmap(), wx.wxITEM_CHECK)
+      "                "}), "", wx.wxITEM_CHECK)
     tb:Realize()
   end,
 
