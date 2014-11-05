@@ -4,29 +4,41 @@ local G = ...
 local id = G.ID("referencepanel.referenceview")
 local refpanel = "referencepanel"
 local refeditor
+local spec = {iscomment = {}}
 return {
   name = "Show Reference in a panel",
   description = "Adds a panel for showing documentation based on tooltips.",
   author = "Paul Kulchenko",
-  version = 0.10,
+  version = 0.11,
   dependencies = 0.81,
 
   onRegister = function(self)
-    local e = wxstc.wxStyledTextCtrl(ide:GetMainFrame(), wx.wxID_ANY,
-      wx.wxDefaultPosition, wx.wxSize(20, 20), wx.wxBORDER_NONE)
+    local e = ide:CreateBareEditor()
     refeditor = e
 
     local w, h = 250, 250
-    ide:AddPanel(e, refpanel, TR("Reference"), function(pane)
-        pane:Dock():Right():TopDockable(false):BottomDockable(false)
-          :MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
-      end)
+    local conf = function(pane)
+      pane:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
+    end
+    if ide:IsPanelDocked(refpanel) then
+      ide:AddPanelDocked(ide:GetOutputNotebook(), e, refpanel, TR("Reference"), conf)
+    else
+      ide:AddPanel(e, refpanel, TR("Reference"), conf)
+    end
 
-    local font = ide:GetOutput():GetFont()
-    e:SetFont(font)
-    e:StyleSetFont(wxstc.wxSTC_STYLE_DEFAULT, font)
+    do -- markup handling in the reference panel
+      -- copy some settings from the lua spec
+      for _, s in ipairs({'lexer', 'lexerstyleconvert'}) do
+        spec[s] = ide.specs.lua[s]
+      end
+      -- this allows the markup to be recognized in all token types
+      for i = 0, 16 do spec.iscomment[i] = true end
+      e:Connect(wxstc.wxEVT_STC_UPDATEUI, function(event) MarkupStyle(e,0,e:GetLineCount()) end)
+    end
+
     e:SetReadOnly(true)
     e:SetWrapMode(wxstc.wxSTC_WRAP_WORD)
+    e:SetupKeywords("lua",spec,ide:GetConfig().styles,ide:GetOutput():GetFont())
 
     -- remove all margins
     for m = 0, 4 do e:SetMarginWidth(m, 0) end
