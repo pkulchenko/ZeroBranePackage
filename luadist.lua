@@ -139,7 +139,7 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.12,
+  version = 0.13,
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
     -- load something that requires liblua.dll so that it's in memory and
@@ -197,11 +197,11 @@ return {
 
     -- keep "libs" last as luadist dependencies need to be loaded from
     -- the IDE location first as dist/* module has been modified.
-    local libs = ('%s/?.%s;'):format(lib, ext)
+    local libs = (';%s/?.%s;'):format(lib, ext)
     local _, lcpath = wx.wxGetEnv('LUA_CPATH')
     if lcpath then wx.wxSetEnv('LUA_CPATH', lcpath..libs) end
 
-    local libs = ('%s/?.lua;%s/?/init.lua;'):format(lib, lib)
+    local libs = (';%s/?.lua;%s/?/init.lua;'):format(lib, lib)
     local _, lpath = wx.wxGetEnv('LUA_PATH')
     if lpath then wx.wxSetEnv('LUA_PATH', lpath..libs) end
 
