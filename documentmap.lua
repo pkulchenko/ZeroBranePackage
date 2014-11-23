@@ -40,7 +40,10 @@ local function switchEditor(editor)
   if editorlinked then
     editorlinked:ReleaseDocument(docpointer)
     -- clear the editor in case the last editor tab was closed
-    if editormap and not editor then editormap:SetText("") end
+    if editormap and not editor
+    and ide:GetEditorNotebook():GetPageCount() == 1 then
+      editormap:SetText("")
+    end
   end
   if editor then
     docpointer = editor:GetDocPointer()
@@ -82,7 +85,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.23,
+  version = 0.24,
   dependencies = 0.71,
 
   onRegister = function(self)
