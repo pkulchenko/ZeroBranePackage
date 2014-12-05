@@ -101,10 +101,148 @@ local interpreter = {
   takeparameters = true,
 }
 
--- Urho3D API generated on 2014-03-29
+-- Urho3D API generated on 2014-11-26
 
 local api = {
+
   -- Classes
+  Animatable = {
+    childs = {
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   AnimatedModel = {
     childs = {
       SetModel = {
@@ -481,7 +619,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -599,11 +737,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -624,13 +833,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -651,11 +860,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -671,55 +880,23 @@ local api = {
   },
   AnimatedSprite2D = {
     childs = {
-      SetSpeed = {
-        args = "(float speed)",
-        description = "Set speed.",
+      SetLayer = {
+        args = "(int layer)",
+        description = "Set layer.",
         returns = "()",
         type = "method"
       },
-      SetCycleMode = {
-        args = "(CycleMode cycleMode)",
-        description = "Set cycle mode.",
+      SetOrderInLayer = {
+        args = "(int orderInLayer)",
+        description = "Set order in layer.",
         returns = "()",
         type = "method"
       },
-      SetAnimation = {
-        args = "(Animation2D* animation)",
-        description = "Set animation.",
+      SetBlendMode = {
+        args = "(BlendMode mode)",
+        description = "Set blend mode.",
         returns = "()",
         type = "method"
-      },
-      GetSpeed = {
-        args = "()",
-        description = "Return speed.",
-        returns = "(float)",
-        type = "method"
-      },
-      GetCycleMode = {
-        args = "()",
-        description = "Return cycle mode.",
-        returns = "(CycleMode)",
-        type = "method"
-      },
-      GetAnimation = {
-        args = "()",
-        description = "Return Animation.",
-        returns = "(Animation2D*)",
-        valuetype = "Animation2D",
-        type = "method"
-      },
-      speed = {
-        description = "float\nSpeed.",
-        type = "value"
-      },
-      cycleMode = {
-        description = "CycleMode\nCycle mode.",
-        type = "value"
-      },
-      animation = {
-        valuetype = "Animation2D",
-        description = "Animation2D*\nAnimation.",
-        type = "value"
       },
       SetFlip = {
         args = "(bool flipX, bool flipY)",
@@ -745,6 +922,48 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetSpeed = {
+        args = "(float speed)",
+        description = "Set speed.",
+        returns = "()",
+        type = "method"
+      },
+      SetAnimation = {
+        args = "(AnimationSet2D* animationSet, const String name, LoopMode2D loopMode = LM_DEFAULT)",
+        description = "() SetAnimation (const String name, LoopMode2D loopMode = LM_DEFAULT)\nSet animation by animation set, name and loop mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAnimationSet = {
+        args = "(AnimationSet2D* animationSet)",
+        description = "Set animation set.",
+        returns = "()",
+        type = "method"
+      },
+      SetLoopMode = {
+        args = "(LoopMode2D loopMode)",
+        description = "Set loop mode.",
+        returns = "()",
+        type = "method"
+      },
+      GetLayer = {
+        args = "()",
+        description = "Return layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetOrderInLayer = {
+        args = "()",
+        description = "Return order in layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetBlendMode = {
+        args = "()",
+        description = "Return blend mode.",
+        returns = "(BlendMode)",
+        type = "method"
+      },
       GetFlipX = {
         args = "()",
         description = "Return flip X.",
@@ -764,6 +983,43 @@ local api = {
         valuetype = "Color",
         type = "method"
       },
+      GetSpeed = {
+        args = "()",
+        description = "Return speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAnimation = {
+        args = "()",
+        description = "Return animation name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetAnimationSet = {
+        args = "()",
+        description = "Return animation.",
+        returns = "(AnimationSet2D*)",
+        valuetype = "AnimationSet2D",
+        type = "method"
+      },
+      GetLoopMode = {
+        args = "()",
+        description = "Return loop mode.",
+        returns = "(LoopMode2D)",
+        type = "method"
+      },
+      layer = {
+        description = "int\nLayer.",
+        type = "value"
+      },
+      orderInLayer = {
+        description = "int\nOrder in layer.",
+        type = "value"
+      },
+      blendMode = {
+        description = "BlendMode\nBlend mode.",
+        type = "value"
+      },
       flipX = {
         description = "bool\nFlip X.",
         type = "value"
@@ -777,88 +1033,21 @@ local api = {
         description = "Color&\nColor.",
         type = "value"
       },
-      SetPixelsPerUnit = {
-        args = "(float pixelsPerUnit)",
-        description = "Set pixels per coordinate unit.",
-        returns = "()",
-        type = "method"
-      },
-      SetSprite = {
-        args = "(Sprite2D* sprite)",
-        description = "Set sprite.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
-        returns = "()",
-        type = "method"
-      },
-      SetBlendMode = {
-        args = "(BlendMode mode)",
-        description = "Set blend mode.",
-        returns = "()",
-        type = "method"
-      },
-      SetZValue = {
-        args = "(float zValue)",
-        description = "Set Z value.",
-        returns = "()",
-        type = "method"
-      },
-      GetPixelsPerUnit = {
-        args = "()",
-        description = "Return pixels per coordinate unit.",
-        returns = "(float)",
-        type = "method"
-      },
-      GetSprite = {
-        args = "()",
-        description = "Return sprite.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      GetMaterial = {
-        args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
-        type = "method"
-      },
-      GetBlendMode = {
-        args = "()",
-        description = "Return blend mode.",
-        returns = "(BlendMode)",
-        type = "method"
-      },
-      GetZValue = {
-        args = "()",
-        description = "Return Z value.",
-        returns = "(float)",
-        type = "method"
-      },
-      pixelsPerUnit = {
-        description = "float\nPixels per coordinate unit.",
+      speed = {
+        description = "float\nSpeed.",
         type = "value"
       },
-      sprite = {
-        valuetype = "Sprite2D",
-        description = "Sprite2D*\nSprite.",
+      animation = {
+        description = "String\nAnimation.",
         type = "value"
       },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
+      animationSet = {
+        valuetype = "AnimationSet2D",
+        description = "AnimationSet2D*\nAnimation set.",
         type = "value"
       },
-      blendMode = {
-        description = "BlendMode\nBlend mode.",
-        type = "value"
-      },
-      zValue = {
-        description = "float\nZ value.",
+      loopMode = {
+        description = "LoopMode2D\nLoop mode.",
         type = "value"
       },
       SetDrawDistance = {
@@ -1021,7 +1210,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -1139,11 +1328,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -1164,13 +1424,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -1191,11 +1451,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -1270,7 +1530,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -1315,80 +1575,34 @@ local api = {
   },
   Animation2D = {
     childs = {
-      GetTotalTime = {
-        args = "()",
-        description = "Return total time.",
-        returns = "(float)",
-        type = "method"
-      },
-      GetNumFrames = {
-        args = "()",
-        description = "Return number of frames.",
-        returns = "(unsigned)",
-        type = "method"
-      },
-      GetFrameSprite = {
-        args = "(unsigned index)",
-        description = "Return Frame sprite.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      GetFrameSpriteByTime = {
-        args = "(float time)",
-        description = "Return frame sprite by time.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      totalTime = {
-        description = "(Readonly) float",
-        type = "value"
-      },
-      numFrames = {
-        description = "(Readonly) unsigned",
-        type = "value"
-      },
-      Load = {
-        args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
-      Save = {
-        args = "(Serializer& dest)",
-        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
       GetName = {
         args = "()",
         description = "Return name.",
         returns = "(const String)",
         type = "method"
       },
-      GetNameHash = {
+      GetLength = {
         args = "()",
-        description = "Return name hash.",
-        returns = "(StringHash)",
+        description = "Return length.",
+        returns = "(float)",
         type = "method"
       },
-      GetMemoryUse = {
+      IsLooped = {
         args = "()",
-        description = "Return memory use in bytes, possibly approximate.",
-        returns = "(unsigned)",
+        description = "Return looped.",
+        returns = "(bool)",
         type = "method"
       },
       name = {
         description = "(Readonly) String\nName.",
         type = "value"
       },
-      nameHash = {
-        description = "(Readonly) StringHash\nName hash.",
+      length = {
+        description = "(Readonly) float\nLength.",
         type = "value"
       },
-      memoryUse = {
-        description = "(Readonly) unsigned\nMemory use in bytes.",
+      looped = {
+        description = "(Readonly) bool\nLooped.",
         type = "value"
       },
     },
@@ -1673,11 +1887,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -1698,13 +1983,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -1725,11 +2010,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -1759,6 +2044,70 @@ local api = {
       },
       scale = {
         description = "Vector3",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  AnimationSet2D = {
+    childs = {
+      GetNumAnimations = {
+        args = "()",
+        description = "Get number of animations.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetAnimation = {
+        args = "(unsigned index)",
+        description = "(Animation2D*) GetAnimation (const String name)\nReturn animation by index.",
+        returns = "(Animation2D*)",
+        valuetype = "Animation2D",
+        type = "method"
+      },
+      numAnimations = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
         type = "value"
       },
     },
@@ -2073,13 +2422,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -2100,11 +2449,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -2200,9 +2549,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetFaceCamera = {
-        args = "(bool enable)",
-        description = "Set whether billboards face the camera automatically. Default true.",
+      SetFaceCameraMode = {
+        args = "(FaceCameraMode mode)",
+        description = "Set how the billboards should rotate in relation to the camera. Default is to follow camera rotation on all axes (FC_ROTATE_XYZ.)",
         returns = "()",
         type = "method"
       },
@@ -2256,10 +2605,10 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      GetFaceCamera = {
+      GetFaceCameraMode = {
         args = "()",
-        description = "Return whether faces the camera automatically.",
-        returns = "(bool)",
+        description = "Return how the billboards rotate in relation to the camera.",
+        returns = "(FaceCameraMode)",
         type = "method"
       },
       GetAnimationLodBias = {
@@ -2289,8 +2638,8 @@ local api = {
         description = "bool\nBillboards sorted flag.",
         type = "value"
       },
-      faceCamera = {
-        description = "bool\nFace camera flag.",
+      faceCameraMode = {
+        description = "FaceCameraMode\nBillboard rotation mode in relation to the camera.",
         type = "value"
       },
       animationLodBias = {
@@ -2457,7 +2806,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -2575,11 +2924,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -2600,13 +3020,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -2627,11 +3047,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -2743,7 +3163,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -2781,7 +3207,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -2817,7 +3250,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -3020,6 +3458,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -3095,6 +3551,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -3189,7 +3651,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -3393,6 +3855,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -3473,9 +3941,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -3508,7 +3995,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -3554,12 +4041,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -3735,6 +4216,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -3789,6 +4274,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -3812,10 +4302,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -3834,6 +4320,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -3855,13 +4412,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -3882,11 +4439,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -4129,7 +4686,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -4167,7 +4730,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -4203,7 +4773,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -4406,6 +4981,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -4481,6 +5074,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -4575,7 +5174,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -4779,6 +5378,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -4859,9 +5464,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -4894,7 +5518,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -4940,12 +5564,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -5121,6 +5739,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -5175,6 +5797,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -5198,10 +5825,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -5220,6 +5843,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -5241,13 +5935,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -5268,11 +5962,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -5302,7 +5996,7 @@ local api = {
       },
       SetFov = {
         args = "(float fov)",
-        description = "Set field of view.",
+        description = "Set vertical field of view in degrees.",
         returns = "()",
         type = "method"
       },
@@ -5314,7 +6008,7 @@ local api = {
       },
       SetAspectRatio = {
         args = "(float aspectRatio)",
-        description = "Set aspect ratio.",
+        description = "Set aspect ratio manually. Disables the auto aspect ratio -mode.",
         returns = "()",
         type = "method"
       },
@@ -5356,7 +6050,7 @@ local api = {
       },
       SetAutoAspectRatio = {
         args = "(bool enable)",
-        description = "Set automatic aspect ratio based on viewport dimensions.",
+        description = "Set automatic aspect ratio based on viewport dimensions. Enabled by default.",
         returns = "()",
         type = "method"
       },
@@ -5404,7 +6098,7 @@ local api = {
       },
       GetFov = {
         args = "()",
-        description = "Return field of view.",
+        description = "Return vertical field of view in degrees.",
         returns = "(float)",
         type = "method"
       },
@@ -5515,7 +6209,7 @@ local api = {
       },
       GetScreenRay = {
         args = "(float x, float y)",
-        description = "Return ray corresponding to normalized screen coordinates (0.0 to 1.0.)",
+        description = "Return ray corresponding to normalized screen coordinates (0.0 - 1.0).",
         returns = "(Ray)",
         type = "method"
       },
@@ -5739,11 +6433,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -5764,13 +6529,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -5791,11 +6556,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -5893,7 +6658,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -5931,7 +6702,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -5967,7 +6745,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -6170,6 +6953,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -6245,6 +7046,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -6339,7 +7146,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -6543,6 +7350,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -6623,9 +7436,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -6658,7 +7490,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -6704,12 +7536,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -6885,6 +7711,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -6939,6 +7769,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -6962,10 +7797,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -6984,6 +7815,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -7005,13 +7907,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -7032,11 +7934,1871 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionBox2D = {
+    childs = {
+      SetSize = {
+        args = "(const Vector2& size)",
+        description = "() SetSize (float width, float height)\nSet size.",
+        returns = "()",
+        type = "method"
+      },
+      SetCenter = {
+        args = "(const Vector2& center)",
+        description = "() SetCenter (float x, float y)\nSet center.",
+        returns = "()",
+        type = "method"
+      },
+      SetAngle = {
+        args = "(float angle)",
+        description = "Set angle.",
+        returns = "()",
+        type = "method"
+      },
+      GetSize = {
+        args = "()",
+        description = "Return size.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetCenter = {
+        args = "()",
+        description = "Return center.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetAngle = {
+        args = "()",
+        description = "Return angle.",
+        returns = "(float)",
+        type = "method"
+      },
+      size = {
+        valuetype = "Vector2",
+        description = "Vector2&\nSize.",
+        type = "value"
+      },
+      center = {
+        valuetype = "Vector2",
+        description = "Vector2&\nCenter",
+        type = "value"
+      },
+      angle = {
+        description = "float\nAngle.",
+        type = "value"
+      },
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionChain2D = {
+    childs = {
+      SetLoop = {
+        args = "(bool loop)",
+        description = "Set loop.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertexCount = {
+        args = "(unsigned count)",
+        description = "Set vertex count.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertex = {
+        args = "(unsigned index, const Vector2& vertex)",
+        description = "Set vertex.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertices = {
+        args = "(const PODVector<Vector2>& vertices)",
+        returns = "()",
+        type = "method"
+      },
+      GetLoop = {
+        args = "()",
+        description = "Return loop.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetVertexCount = {
+        args = "()",
+        description = "Return vertex count.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertex = {
+        args = "(unsigned index)",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      loop = {
+        description = "bool\nLoop.",
+        type = "value"
+      },
+      vertexCount = {
+        description = "unsigned",
+        type = "value"
+      },
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionCircle2D = {
+    childs = {
+      SetRadius = {
+        args = "(float radius)",
+        description = "Set radius.",
+        returns = "()",
+        type = "method"
+      },
+      SetCenter = {
+        args = "(const Vector2& center)",
+        description = "() SetCenter (float x, float y)\nSet center.",
+        returns = "()",
+        type = "method"
+      },
+      GetRadius = {
+        args = "()",
+        description = "Return radius.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetCenter = {
+        args = "()",
+        description = "Return center.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      radius = {
+        description = "float\nRadius.",
+        type = "value"
+      },
+      center = {
+        valuetype = "Vector2",
+        description = "Vector2&\nCenter.",
+        type = "value"
+      },
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionEdge2D = {
+    childs = {
+      SetVertex1 = {
+        args = "(const Vector2& vertex)",
+        description = "Set vertex 1.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertex2 = {
+        args = "(const Vector2& vertex)",
+        description = "Set vertex 2.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertices = {
+        args = "(const Vector2& vertex1, const Vector2& vertex2)",
+        description = "Set vertices.",
+        returns = "()",
+        type = "method"
+      },
+      GetVertex1 = {
+        args = "()",
+        description = "Return vertex 1.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetVertex2 = {
+        args = "()",
+        description = "Return vertex 2.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      vertex1 = {
+        valuetype = "Vector2",
+        description = "Vector2&\nVertex 1.",
+        type = "value"
+      },
+      vertex2 = {
+        valuetype = "Vector2",
+        description = "Vector2&\nVertex 2.",
+        type = "value"
+      },
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionPolygon2D = {
+    childs = {
+      SetVertexCount = {
+        args = "(unsigned count)",
+        description = "Set vertex count.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertex = {
+        args = "(unsigned index, const Vector2& vertex)",
+        description = "Set vertex.",
+        returns = "()",
+        type = "method"
+      },
+      SetVertices = {
+        args = "(const PODVector<Vector2>& vertices)",
+        returns = "()",
+        type = "method"
+      },
+      GetVertexCount = {
+        args = "()",
+        description = "Return vertex count.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertex = {
+        args = "(unsigned index)",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      vertexCount = {
+        description = "unsigned",
+        type = "value"
+      },
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -7090,13 +9852,25 @@ local api = {
       },
       SetTriangleMesh = {
         args = "(Model* model, unsigned lodLevel = 0)",
-        description = "() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale),\n() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position),\n() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position, const Quaternion& rotation)\nSet as a triangle mesh.",
+        description = "() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale),\n() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position),\n() SetTriangleMesh (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position, const Quaternion& rotation)\nSet as a triangle mesh from Model. If you update a model's geometry and want to reapply the shape, call physicsWorld->RemoveCachedGeometry(model) first.",
+        returns = "()",
+        type = "method"
+      },
+      SetCustomTriangleMesh = {
+        args = "(CustomGeometry* custom)",
+        description = "() SetCustomTriangleMesh (CustomGeometry* custom, const Vector3& scale),\n() SetCustomTriangleMesh (CustomGeometry* custom, const Vector3& scale, const Vector3& position),\n() SetCustomTriangleMesh (CustomGeometry* custom, const Vector3& scale, const Vector3& position, const Quaternion& rotation)\nSet as a triangle mesh from CustomGeometry.",
         returns = "()",
         type = "method"
       },
       SetConvexHull = {
         args = "(Model* model, unsigned lodLevel = 0)",
         description = "() SetConvexHull (Model* model, unsigned lodLevel, const Vector3& scale),\n() SetConvexHull (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position),\n() SetConvexHull (Model* model, unsigned lodLevel, const Vector3& scale, const Vector3& position, const Quaternion& rotation)\nSet as a convex hull from Model.",
+        returns = "()",
+        type = "method"
+      },
+      SetCustomConvexHull = {
+        args = "(CustomGeometry* custom)",
+        description = "() SetCustomConvexHull (CustomGeometry* custom, const Vector3& scale),\n() SetCustomConvexHull (CustomGeometry* custom, const Vector3& scale, const Vector3& position),\n() SetCustomConvexHull (CustomGeometry* custom, const Vector3& scale, const Vector3& position, const Quaternion& rotation)\nSet as a convex hull from CustomGeometry.",
         returns = "()",
         type = "method"
       },
@@ -7303,11 +10077,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -7328,13 +10173,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -7355,11 +10200,341 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CollisionShape2D = {
+    childs = {
+      SetTrigger = {
+        args = "(bool trigger)",
+        description = "Set trigger.",
+        returns = "()",
+        type = "method"
+      },
+      SetCategoryBits = {
+        args = "(int categoryBits)",
+        description = "Set filter category bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaskBits = {
+        args = "(int maskBits)",
+        description = "Set filter mask bits.",
+        returns = "()",
+        type = "method"
+      },
+      SetGroupIndex = {
+        args = "(int groupIndex)",
+        description = "Set filter group index.",
+        returns = "()",
+        type = "method"
+      },
+      SetDensity = {
+        args = "(float density)",
+        description = "Set density.",
+        returns = "()",
+        type = "method"
+      },
+      SetFriction = {
+        args = "(float friction)",
+        description = "Set friction.",
+        returns = "()",
+        type = "method"
+      },
+      SetRestitution = {
+        args = "(float restitution)",
+        description = "Set restitution .",
+        returns = "()",
+        type = "method"
+      },
+      IsTrigger = {
+        args = "()",
+        description = "Return trigger.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCategoryBits = {
+        args = "()",
+        description = "Return filter category bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetMaskBits = {
+        args = "()",
+        description = "Return filter mask bits.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetGroupIndex = {
+        args = "()",
+        description = "Return filter group index.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDensity = {
+        args = "()",
+        description = "Return density.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFriction = {
+        args = "()",
+        description = "Return friction.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRestitution = {
+        args = "()",
+        description = "Return restitution.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      trigger = {
+        description = "bool",
+        type = "value"
+      },
+      categoryBits = {
+        description = "int",
+        type = "value"
+      },
+      maskBits = {
+        description = "int",
+        type = "value"
+      },
+      groupIndex = {
+        description = "int",
+        type = "value"
+      },
+      density = {
+        description = "float",
+        type = "value"
+      },
+      friction = {
+        description = "float",
+        type = "value"
+      },
+      restitution = {
+        description = "float",
+        type = "value"
+      },
+      mass = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      inertia = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      massCenter = {
+        description = "(Readonly) Vector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -7495,6 +10670,16 @@ local api = {
       Lerp = {
         args = "(const Color& rhs, float t)",
         returns = "(Color)",
+        type = "method"
+      },
+      Abs = {
+        args = "()",
+        returns = "(Color)",
+        type = "method"
+      },
+      Equals = {
+        args = "(const Color& rhs)",
+        returns = "(bool)",
         type = "method"
       },
       ToString = {
@@ -7638,11 +10823,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -7663,13 +10919,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -7690,11 +10946,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -7742,7 +10998,13 @@ local api = {
       },
       SetPosition = {
         args = "(const Vector3& position)",
-        description = "Set the observer position for interest management.",
+        description = "Set the observer position for interest management, to be sent to the server.",
+        returns = "()",
+        type = "method"
+      },
+      SetRotation = {
+        args = "(const Quaternion& rotation)",
+        description = "Set the observer rotation for interest management, to be sent to the server. Note: not used by the NetworkPriority component.",
         returns = "()",
         type = "method"
       },
@@ -7764,46 +11026,16 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SendServerUpdate = {
-        args = "()",
-        description = "Send scene update messages. Called by Network.",
+      SendPackageToClient = {
+        args = "(PackageFile* package)",
+        description = "Trigger client connection to download a package file from the server. Can be used to download additional resource packages when client is already joined in a scene. The package must have been added as a requirement to the scene the client is joined in, or else the eventual download will fail.",
         returns = "()",
-        type = "method"
-      },
-      SendClientUpdate = {
-        args = "()",
-        description = "Send latest controls from the client. Called by Network.",
-        returns = "()",
-        type = "method"
-      },
-      SendRemoteEvents = {
-        args = "()",
-        description = "Send queued remote events. Called by Network.",
-        returns = "()",
-        type = "method"
-      },
-      SendPackages = {
-        args = "()",
-        description = "Send package files to client. Called by network.",
-        returns = "()",
-        type = "method"
-      },
-      ProcessPendingLatestData = {
-        args = "()",
-        description = "Process pending latest data for nodes and components.",
-        returns = "()",
-        type = "method"
-      },
-      ProcessMessage = {
-        args = "(int msgID, MemoryBuffer& msg)",
-        description = "Process a message from the server or client. Called by Network.",
-        returns = "(bool)",
         type = "method"
       },
       GetIdentity = {
         args = "()",
         description = "Return client identity.",
-        returns = "(const VariantMap&)",
+        returns = "(VariantMap&)",
         valuetype = "VariantMap",
         type = "method"
       },
@@ -7823,9 +11055,16 @@ local api = {
       },
       GetPosition = {
         args = "()",
-        description = "Return the observer position for interest management.",
+        description = "Return the observer position sent by the client for interest management.",
         returns = "(const Vector3&)",
         valuetype = "Vector3",
+        type = "method"
+      },
+      GetRotation = {
+        args = "()",
+        description = "Return the observer rotation sent by the client for interest management.",
+        returns = "(const Quaternion&)",
+        valuetype = "Quaternion",
         type = "method"
       },
       IsClient = {
@@ -7914,6 +11153,11 @@ local api = {
         description = "Vector3&\nObserver position for interest management.",
         type = "value"
       },
+      rotation = {
+        valuetype = "Quaternion",
+        description = "Quaternion&\nObserver rotation for interest management.",
+        type = "value"
+      },
       client = {
         description = "(Readonly) bool",
         type = "value"
@@ -7935,11 +11179,11 @@ local api = {
         type = "value"
       },
       address = {
-        description = "(Readonly) String",
+        description = "(Readonly) String\nRemote endpoint address.",
         type = "value"
       },
       port = {
-        description = "(Readonly) short",
+        description = "(Readonly) short\nRemote endpoint port.",
         type = "value"
       },
       numDownloads = {
@@ -7957,13 +11201,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -7984,11 +11228,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -8012,13 +11256,31 @@ local api = {
       },
       SetVisible = {
         args = "(bool enable)",
-        description = "Show or hide. Showing automatically focuses the line edit.",
+        description = "Show or hide.",
         returns = "()",
         type = "method"
       },
       Toggle = {
         args = "()",
         description = "Toggle visibility.",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoVisibleOnError = {
+        args = "(bool enable)",
+        description = "Automatically set console to visible when receiving an error log message.",
+        returns = "()",
+        type = "method"
+      },
+      SetCommandInterpreter = {
+        args = "(const String interpreter)",
+        description = "Set the command interpreter.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumBufferedRows = {
+        args = "(unsigned rows)",
+        description = "Set number of buffered rows.",
         returns = "()",
         type = "method"
       },
@@ -8031,6 +11293,12 @@ local api = {
       SetNumHistoryRows = {
         args = "(unsigned rows)",
         description = "Set command history maximum size, 0 disables history.",
+        returns = "()",
+        type = "method"
+      },
+      SetFocusOnShow = {
+        args = "(bool enable)",
+        description = "Set whether to automatically focus the line edit when showing. Default true on desktops and false on mobile devices, as on mobiles it would pop up the screen keyboard.",
         returns = "()",
         type = "method"
       },
@@ -8061,16 +11329,47 @@ local api = {
         valuetype = "LineEdit",
         type = "method"
       },
+      GetCloseButton = {
+        args = "()",
+        description = "Return the close butoon element.",
+        returns = "(Button*)",
+        valuetype = "Button",
+        type = "method"
+      },
       IsVisible = {
         args = "()",
         description = "Return whether is visible.",
         returns = "(bool)",
         type = "method"
       },
+      IsAutoVisibleOnError = {
+        args = "()",
+        description = "Return true when console is set to automatically visible when receiving an error log message.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetCommandInterpreter = {
+        args = "()",
+        description = "Return the last used command interpreter.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNumBufferedRows = {
+        args = "()",
+        description = "Return number of buffered rows.",
+        returns = "(unsigned)",
+        type = "method"
+      },
       GetNumRows = {
         args = "()",
         description = "Return number of displayed rows.",
         returns = "(unsigned)",
+        type = "method"
+      },
+      CopySelectedRows = {
+        args = "()",
+        description = "Copy selected rows to system clipboard.",
+        returns = "()",
         type = "method"
       },
       GetNumHistoryRows = {
@@ -8091,6 +11390,12 @@ local api = {
         returns = "(const String)",
         type = "method"
       },
+      GetFocusOnShow = {
+        args = "()",
+        description = "Return whether automatically focuses the line edit when showing.",
+        returns = "(bool)",
+        type = "method"
+      },
       defaultStyle = {
         valuetype = "XMLFile",
         description = "XMLFile*",
@@ -8106,8 +11411,25 @@ local api = {
         description = "(Readonly) LineEdit*\nLine edit.",
         type = "value"
       },
+      closeButton = {
+        valuetype = "Button",
+        description = "(Readonly) Button*\nClose button.",
+        type = "value"
+      },
       visible = {
         description = "bool",
+        type = "value"
+      },
+      autoVisibleOnError = {
+        description = "bool\nAuto visible on error flag.",
+        type = "value"
+      },
+      commandInterpreter = {
+        description = "String\nLast used command interpreter.",
+        type = "value"
+      },
+      numBufferedRows = {
+        description = "unsigned",
         type = "value"
       },
       numRows = {
@@ -8122,16 +11444,20 @@ local api = {
         description = "(Readonly) unsigned\nCommand history current position.",
         type = "value"
       },
+      focusOnShow = {
+        description = "bool\nFlag for automatically focusing the line edit on showing the console.",
+        type = "value"
+      },
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -8152,11 +11478,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -8469,11 +11795,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -8494,13 +11891,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -8521,11 +11918,3689 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  Constraint2D = {
+    childs = {
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintDistance2D = {
+    childs = {
+      SetOwnerBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set owner body anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetOtherBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set other body anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetFrequencyHz = {
+        args = "(float frequencyHz)",
+        description = "Set frequency Hz.",
+        returns = "()",
+        type = "method"
+      },
+      SetDampingRatio = {
+        args = "(float dampingRatio)",
+        description = "Set damping ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBodyAnchor = {
+        args = "()",
+        description = "Return owner body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetOtherBodyAnchor = {
+        args = "()",
+        description = "Return other body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetFrequencyHz = {
+        args = "()",
+        description = "Return frequency Hz.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDampingRatio = {
+        args = "()",
+        description = "Return damping ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      ownerBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOwner body anchor.",
+        type = "value"
+      },
+      otherBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOther body anchor.",
+        type = "value"
+      },
+      frequencyHz = {
+        description = "float",
+        type = "value"
+      },
+      dampingRatio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintFriction2D = {
+    childs = {
+      SetAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxForce = {
+        args = "(float maxForce)",
+        description = "Set max force.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxTorque = {
+        args = "(float maxTorque)",
+        description = "Set max torque.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnchor = {
+        args = "()",
+        description = "Return anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetMaxForce = {
+        args = "()",
+        description = "Set max force.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMaxTorque = {
+        args = "()",
+        description = "Set max torque.",
+        returns = "(float)",
+        type = "method"
+      },
+      anchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAnchor.",
+        type = "value"
+      },
+      maxForce = {
+        description = "float",
+        type = "value"
+      },
+      maxTorque = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintGear2D = {
+    childs = {
+      SetOwnerConstraint = {
+        args = "(Constraint2D* constraint)",
+        description = "Set owner constraint.",
+        returns = "()",
+        type = "method"
+      },
+      SetOtherConstraint = {
+        args = "(Constraint2D* constraint)",
+        description = "Set other constraint.",
+        returns = "()",
+        type = "method"
+      },
+      SetRatio = {
+        args = "(float ratio)",
+        description = "Set ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerConstraint = {
+        args = "()",
+        description = "Return owner constraint.",
+        returns = "(Constraint2D*)",
+        valuetype = "Constraint2D",
+        type = "method"
+      },
+      GetOtherConstraint = {
+        args = "()",
+        description = "Return other constraint.",
+        returns = "(Constraint2D*)",
+        valuetype = "Constraint2D",
+        type = "method"
+      },
+      GetRatio = {
+        args = "()",
+        description = "Return ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      ownerConstraint = {
+        valuetype = "Constraint2D",
+        description = "Constraint2D*\nOwner body constraint.",
+        type = "value"
+      },
+      otherConstraint = {
+        valuetype = "Constraint2D",
+        description = "Constraint2D*\nOther body constraint.",
+        type = "value"
+      },
+      ratio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintMotor2D = {
+    childs = {
+      SetLinearOffset = {
+        args = "(const Vector2& linearOffset)",
+        description = "Set linear offset.",
+        returns = "()",
+        type = "method"
+      },
+      SetAngularOffset = {
+        args = "(float angularOffset)",
+        description = "Set angular offset.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxForce = {
+        args = "(float maxForce)",
+        description = "Set max force.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxTorque = {
+        args = "(float maxTorque)",
+        description = "Set max torque.",
+        returns = "()",
+        type = "method"
+      },
+      SetCorrectionFactor = {
+        args = "(float correctionFactor)",
+        description = "Set correction factor.",
+        returns = "()",
+        type = "method"
+      },
+      GetLinearOffset = {
+        args = "()",
+        description = "Return linear offset.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetAngularOffset = {
+        args = "()",
+        description = "Return angular offset.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMaxForce = {
+        args = "()",
+        description = "Return max force.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMaxTorque = {
+        args = "()",
+        description = "Return max torque.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetCorrectionFactor = {
+        args = "()",
+        description = "Return correction factor.",
+        returns = "(float)",
+        type = "method"
+      },
+      linearOffset = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLinear offset.",
+        type = "value"
+      },
+      angularOffset = {
+        description = "float",
+        type = "value"
+      },
+      maxForce = {
+        description = "float",
+        type = "value"
+      },
+      maxTorque = {
+        description = "float",
+        type = "value"
+      },
+      correctionFactor = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintMouse2D = {
+    childs = {
+      SetTarget = {
+        args = "(const Vector2& target)",
+        description = "Set target.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxForce = {
+        args = "(float maxForce)",
+        description = "Set max force.",
+        returns = "()",
+        type = "method"
+      },
+      SetFrequencyHz = {
+        args = "(float frequencyHz)",
+        description = "Set frequency Hz.",
+        returns = "()",
+        type = "method"
+      },
+      SetDampingRatio = {
+        args = "(float dampingRatio)",
+        description = "Set damping ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetTarget = {
+        args = "()",
+        description = "Return target.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetMaxForce = {
+        args = "()",
+        description = "Return max force.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFrequencyHz = {
+        args = "()",
+        description = "Return frequency Hz.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDampingRatio = {
+        args = "()",
+        description = "Return damping ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      target = {
+        valuetype = "Vector2",
+        description = "Vector2&\nTarget.",
+        type = "value"
+      },
+      maxForce = {
+        description = "float",
+        type = "value"
+      },
+      frequencyHz = {
+        description = "float",
+        type = "value"
+      },
+      dampingRatio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintPrismatic2D = {
+    childs = {
+      SetAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetAxis = {
+        args = "(const Vector2& axis)",
+        description = "Set axis.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnableLimit = {
+        args = "(bool enableLimit)",
+        description = "Set enable limit.",
+        returns = "()",
+        type = "method"
+      },
+      SetLowerTranslation = {
+        args = "(float lowerTranslation)",
+        description = "Set lower translation.",
+        returns = "()",
+        type = "method"
+      },
+      SetUpperTranslation = {
+        args = "(float upperTranslation)",
+        description = "Set upper translation.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnableMotor = {
+        args = "(bool enableMotor)",
+        description = "Set enable motor.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxMotorForce = {
+        args = "(float maxMotorForce)",
+        description = "Set maxmotor force.",
+        returns = "()",
+        type = "method"
+      },
+      SetMotorSpeed = {
+        args = "(float motorSpeed)",
+        description = "Set motor speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnchor = {
+        args = "()",
+        description = "Return anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetAxis = {
+        args = "()",
+        description = "Return axis.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetEnableLimit = {
+        args = "()",
+        description = "Return enable limit.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetLowerTranslation = {
+        args = "()",
+        description = "Return lower translation.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetUpperTranslation = {
+        args = "()",
+        description = "Return upper translation.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetEnableMotor = {
+        args = "()",
+        description = "Return enable motor.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMaxMotorForce = {
+        args = "()",
+        description = "Return maxmotor force.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMotorSpeed = {
+        args = "()",
+        description = "Return motor speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      anchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAnchor.",
+        type = "value"
+      },
+      axis = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAxis.",
+        type = "value"
+      },
+      enableLimit = {
+        description = "bool",
+        type = "value"
+      },
+      lowerTranslation = {
+        description = "float",
+        type = "value"
+      },
+      upperTranslation = {
+        description = "float",
+        type = "value"
+      },
+      enableMotor = {
+        description = "bool",
+        type = "value"
+      },
+      maxMotorForce = {
+        description = "float",
+        type = "value"
+      },
+      motorSpeed = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintPulley2D = {
+    childs = {
+      SetOwnerBodyGroundAnchor = {
+        args = "(const Vector2& groundAnchor)",
+        description = "Set other body ground anchor point.",
+        returns = "()",
+        type = "method"
+      },
+      SetOtherBodyGroundAnchor = {
+        args = "(const Vector2& groundAnchor)",
+        description = "Set other body ground anchor point.",
+        returns = "()",
+        type = "method"
+      },
+      SetOwnerBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set owner body anchor point.",
+        returns = "()",
+        type = "method"
+      },
+      SetOtherBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set other body anchor point.",
+        returns = "()",
+        type = "method"
+      },
+      SetRatio = {
+        args = "(float ratio)",
+        description = "Set ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBodyGroundAnchor = {
+        args = "()",
+        description = "Return owner body ground anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetOtherBodyGroundAnchor = {
+        args = "()",
+        description = "return other body ground anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetOwnerBodyAnchor = {
+        args = "()",
+        description = "Return owner body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetOtherBodyAnchor = {
+        args = "()",
+        description = "Return other body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetRatio = {
+        args = "()",
+        description = "Return ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      ownerBodyGroundAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOwner body ground anchor.",
+        type = "value"
+      },
+      otherBodyGroundAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOther body ground anchor.",
+        type = "value"
+      },
+      ownerBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOwner body anchor.",
+        type = "value"
+      },
+      otherBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOther body anchor.",
+        type = "value"
+      },
+      ratio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintRevolute2D = {
+    childs = {
+      SetAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnableLimit = {
+        args = "(bool enableLimit)",
+        description = "Set enable limit.",
+        returns = "()",
+        type = "method"
+      },
+      SetLowerAngle = {
+        args = "(float lowerAngle)",
+        description = "Set lower angle.",
+        returns = "()",
+        type = "method"
+      },
+      SetUpperAngle = {
+        args = "(float upperAngle)",
+        description = "Set upper angle.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnableMotor = {
+        args = "(bool enableMotor)",
+        description = "Set enable motor.",
+        returns = "()",
+        type = "method"
+      },
+      SetMotorSpeed = {
+        args = "(float motorSpeed)",
+        description = "Set motor speed.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxMotorTorque = {
+        args = "(float maxMotorTorque)",
+        description = "Set max motor torque.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnchor = {
+        args = "()",
+        description = "Return anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetEnableLimit = {
+        args = "()",
+        description = "Return enable limit.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetLowerAngle = {
+        args = "()",
+        description = "Return lower angle.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetUpperAngle = {
+        args = "()",
+        description = "Return upper angle.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetEnableMotor = {
+        args = "()",
+        description = "Return enable motor.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMotorSpeed = {
+        args = "()",
+        description = "Return motor speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMaxMotorTorque = {
+        args = "()",
+        description = "Return max motor torque.",
+        returns = "(float)",
+        type = "method"
+      },
+      anchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAnchor.",
+        type = "value"
+      },
+      enableLimit = {
+        description = "bool",
+        type = "value"
+      },
+      lowerAngle = {
+        description = "float",
+        type = "value"
+      },
+      upperAngle = {
+        description = "float",
+        type = "value"
+      },
+      enableMotor = {
+        description = "bool",
+        type = "value"
+      },
+      motorSpeed = {
+        description = "float",
+        type = "value"
+      },
+      maxMotorTorque = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintRope2D = {
+    childs = {
+      SetOwnerBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set owner body anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetOtherBodyAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set other body anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxLength = {
+        args = "(float maxLength)",
+        description = "Set max length.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBodyAnchor = {
+        args = "()",
+        description = "Return owner body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetOtherBodyAnchor = {
+        args = "()",
+        description = "Return other body anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetMaxLength = {
+        args = "()",
+        description = "Return max length.",
+        returns = "(float)",
+        type = "method"
+      },
+      ownerBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOwner body anchor.",
+        type = "value"
+      },
+      otherBodyAnchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nOther body anchor.",
+        type = "value"
+      },
+      maxLength = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintWeld2D = {
+    childs = {
+      SetAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetFrequencyHz = {
+        args = "(float frequencyHz)",
+        description = "Set frequency Hz.",
+        returns = "()",
+        type = "method"
+      },
+      SetDampingRatio = {
+        args = "(float dampingRatio)",
+        description = "Set damping ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnchor = {
+        args = "()",
+        description = "Return anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetFrequencyHz = {
+        args = "()",
+        description = "Return frequency Hz.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDampingRatio = {
+        args = "()",
+        description = "Return damping ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      anchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAnchor.",
+        type = "value"
+      },
+      frequencyHz = {
+        description = "float",
+        type = "value"
+      },
+      dampingRatio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ConstraintWheel2D = {
+    childs = {
+      SetAnchor = {
+        args = "(const Vector2& anchor)",
+        description = "Set anchor.",
+        returns = "()",
+        type = "method"
+      },
+      SetAxis = {
+        args = "(const Vector2& axis)",
+        description = "Set axis.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnableMotor = {
+        args = "(bool enableMotor)",
+        description = "Set enable motor.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxMotorTorque = {
+        args = "(float maxMotorTorque)",
+        description = "Set max motor torque.",
+        returns = "()",
+        type = "method"
+      },
+      SetMotorSpeed = {
+        args = "(float motorSpeed)",
+        description = "Set motor speed.",
+        returns = "()",
+        type = "method"
+      },
+      SetFrequencyHz = {
+        args = "(float frequencyHz)",
+        description = "Set frequency Hz.",
+        returns = "()",
+        type = "method"
+      },
+      SetDampingRatio = {
+        args = "(float dampingRatio)",
+        description = "Set damping ratio.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnchor = {
+        args = "()",
+        description = "Return anchor.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetAxis = {
+        args = "()",
+        description = "Return axis.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetEnableMotor = {
+        args = "()",
+        description = "Return enable motor.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMaxMotorTorque = {
+        args = "()",
+        description = "Return maxMotor torque.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMotorSpeed = {
+        args = "()",
+        description = "Return motor speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetFrequencyHz = {
+        args = "()",
+        description = "Return frequency Hz.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDampingRatio = {
+        args = "()",
+        description = "Return damping ratio.",
+        returns = "(float)",
+        type = "method"
+      },
+      anchor = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAnchor.",
+        type = "value"
+      },
+      axis = {
+        valuetype = "Vector2",
+        description = "Vector2&\nAxis.",
+        type = "value"
+      },
+      enableMotor = {
+        description = "bool",
+        type = "value"
+      },
+      maxMotorTorque = {
+        description = "float",
+        type = "value"
+      },
+      motorSpeed = {
+        description = "float",
+        type = "value"
+      },
+      frequencyHz = {
+        description = "float",
+        type = "value"
+      },
+      dampingRatio = {
+        description = "float",
+        type = "value"
+      },
+      SetOtherBody = {
+        args = "(RigidBody2D* body)",
+        description = "Set other rigid body.",
+        returns = "()",
+        type = "method"
+      },
+      SetCollideConnected = {
+        args = "(bool collideConnected)",
+        description = "Set collide connected.",
+        returns = "()",
+        type = "method"
+      },
+      GetOwnerBody = {
+        args = "()",
+        description = "Return owner body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetOtherBody = {
+        args = "()",
+        description = "Return other body.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetCollideConnected = {
+        args = "()",
+        description = "Return collide connected.",
+        returns = "(bool)",
+        type = "method"
+      },
+      ownerBody = {
+        valuetype = "RigidBody2D",
+        description = "(Readonly) RigidBody2D*\nOwner body.",
+        type = "value"
+      },
+      otherBody = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*\nOther body.",
+        type = "value"
+      },
+      collideConnected = {
+        description = "bool\nCollide connected.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -8556,7 +15631,7 @@ local api = {
         type = "method"
       },
       GetTypeName = {
-        args = "(ShortStringHash objectType)",
+        args = "(StringHash objectType)",
         description = "Return object type name from hash, or empty if unknown.",
         returns = "(const String)",
         type = "method"
@@ -8689,7 +15764,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -8727,7 +15808,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -8763,7 +15851,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -8966,6 +16059,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -9041,6 +16152,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -9135,7 +16252,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -9339,6 +16456,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -9419,9 +16542,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -9454,7 +16596,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -9500,12 +16642,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -9681,6 +16817,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -9735,6 +16875,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -9758,10 +16903,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -9780,6 +16921,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -9801,13 +17013,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -9828,11 +17040,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -9846,8 +17058,577 @@ local api = {
     },
     type = "class"
   },
+  CustomGeometry = {
+    childs = {
+      Clear = {
+        args = "()",
+        description = "Clear all geometries.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumGeometries = {
+        args = "(unsigned num)",
+        description = "Set number of geometries.",
+        returns = "()",
+        type = "method"
+      },
+      SetDynamic = {
+        args = "(bool enable)",
+        description = "Set vertex buffer dynamic mode. A dynamic buffer should be faster to update frequently. Effective at the next Commit() call.",
+        returns = "()",
+        type = "method"
+      },
+      BeginGeometry = {
+        args = "(unsigned index, PrimitiveType type)",
+        description = "Begin defining a geometry. Clears existing vertices in that index.",
+        returns = "()",
+        type = "method"
+      },
+      DefineVertex = {
+        args = "(const Vector3& position)",
+        description = "Define a vertex position. This begins a new vertex.",
+        returns = "()",
+        type = "method"
+      },
+      DefineNormal = {
+        args = "(const Vector3& normal)",
+        description = "Define a vertex normal.",
+        returns = "()",
+        type = "method"
+      },
+      DefineTangent = {
+        args = "(const Vector4& tangent)",
+        description = "Define a vertex tangent.",
+        returns = "()",
+        type = "method"
+      },
+      DefineColor = {
+        args = "(const Color& color)",
+        description = "Define a vertex color.",
+        returns = "()",
+        type = "method"
+      },
+      DefineTexCoord = {
+        args = "(const Vector2& texCoord)",
+        description = "Define a vertex UV coordinate.",
+        returns = "()",
+        type = "method"
+      },
+      DefineGeometry = {
+        args = "(unsigned index, PrimitiveType type, unsigned numVertices, bool hasNormals, bool hasColors, bool hasTexCoords, bool hasTangents)",
+        description = "Set the primitive type, number of vertices and elements in a geometry, after which the vertices can be edited with GetVertex(). An alternative to BeginGeometry() / DefineVertex().",
+        returns = "()",
+        type = "method"
+      },
+      Commit = {
+        args = "()",
+        description = "Update vertex buffer and calculate the bounding box. Call after finishing defining geometry.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaterial = {
+        args = "(Material* material)",
+        description = "(bool) SetMaterial (unsigned index, Material* material)\nSet material on all geometries.",
+        returns = "()",
+        type = "method"
+      },
+      GetNumGeometries = {
+        args = "()",
+        description = "Return number of geometries.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNumVertices = {
+        args = "(unsigned index)",
+        description = "Return number of vertices in a geometry.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      IsDynamic = {
+        args = "()",
+        description = "Return whether vertex buffer dynamic mode is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMaterial = {
+        args = "(unsigned index = 0)",
+        description = "Return material by geometry index.",
+        returns = "(Material*)",
+        valuetype = "Material",
+        type = "method"
+      },
+      GetVertex = {
+        args = "(unsigned geometryIndex, unsigned vertexNum)",
+        description = "Return a vertex in a geometry for editing, or null if out of bounds. After the edits are finished, calling Commit() updates  the vertex buffer.",
+        returns = "(CustomGeometryVertex*)",
+        valuetype = "CustomGeometryVertex",
+        type = "method"
+      },
+      material = {
+        valuetype = "Material",
+        description = "Material*",
+        type = "value"
+      },
+      numGeometries = {
+        description = "unsigned",
+        type = "value"
+      },
+      dynamic = {
+        description = "bool\nVertex buffer dynamic flag.",
+        type = "value"
+      },
+      SetDrawDistance = {
+        args = "(float distance)",
+        description = "Set draw distance.",
+        returns = "()",
+        type = "method"
+      },
+      SetShadowDistance = {
+        args = "(float distance)",
+        description = "Set shadow draw distance.",
+        returns = "()",
+        type = "method"
+      },
+      SetLodBias = {
+        args = "(float bias)",
+        description = "Set LOD bias.",
+        returns = "()",
+        type = "method"
+      },
+      SetViewMask = {
+        args = "(unsigned mask)",
+        description = "Set view mask. Is and'ed with camera's view mask to see if the object should be rendered.",
+        returns = "()",
+        type = "method"
+      },
+      SetLightMask = {
+        args = "(unsigned mask)",
+        description = "Set light mask. Is and'ed with light's and zone's light mask to see if the object should be lit.",
+        returns = "()",
+        type = "method"
+      },
+      SetShadowMask = {
+        args = "(unsigned mask)",
+        description = "Set shadow mask. Is and'ed with light's light mask and zone's shadow mask to see if the object should be rendered to a shadow map.",
+        returns = "()",
+        type = "method"
+      },
+      SetZoneMask = {
+        args = "(unsigned mask)",
+        description = "Set zone mask. Is and'ed with zone's zone mask to see if the object should belong to the zone.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxLights = {
+        args = "(unsigned num)",
+        description = "Set maximum number of per-pixel lights. Default 0 is unlimited.",
+        returns = "()",
+        type = "method"
+      },
+      SetCastShadows = {
+        args = "(bool enable)",
+        description = "Set shadowcaster flag.",
+        returns = "()",
+        type = "method"
+      },
+      SetOccluder = {
+        args = "(bool enable)",
+        description = "Set occlusion flag.",
+        returns = "()",
+        type = "method"
+      },
+      SetOccludee = {
+        args = "(bool enable)",
+        description = "Set occludee flag.",
+        returns = "()",
+        type = "method"
+      },
+      MarkForUpdate = {
+        args = "()",
+        description = "Mark for update and octree reinsertion. Update is automatically queued when the drawable's scene node moves or changes scale.",
+        returns = "()",
+        type = "method"
+      },
+      GetBoundingBox = {
+        args = "()",
+        description = "Return local space bounding box. May not be applicable or properly updated on all drawables.",
+        returns = "(const BoundingBox&)",
+        valuetype = "BoundingBox",
+        type = "method"
+      },
+      GetWorldBoundingBox = {
+        args = "()",
+        description = "Return world-space bounding box.",
+        returns = "(const BoundingBox&)",
+        valuetype = "BoundingBox",
+        type = "method"
+      },
+      GetDrawableFlags = {
+        args = "()",
+        description = "Return drawable flags.",
+        returns = "(char)",
+        type = "method"
+      },
+      GetDrawDistance = {
+        args = "()",
+        description = "Return draw distance.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetShadowDistance = {
+        args = "()",
+        description = "Return shadow draw distance.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetLodBias = {
+        args = "()",
+        description = "Return LOD bias.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetViewMask = {
+        args = "()",
+        description = "Return view mask.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLightMask = {
+        args = "()",
+        description = "Return light mask.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetShadowMask = {
+        args = "()",
+        description = "Return shadow mask.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetZoneMask = {
+        args = "()",
+        description = "Return zone mask.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetMaxLights = {
+        args = "()",
+        description = "Return maximum number of per-pixel lights.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetCastShadows = {
+        args = "()",
+        description = "Return shadowcaster flag.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsOccluder = {
+        args = "()",
+        description = "Return occluder flag.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsOccludee = {
+        args = "()",
+        description = "Return occludee flag.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsInView = {
+        args = "()",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetZone = {
+        args = "()",
+        description = "Return current zone.",
+        returns = "(Zone*)",
+        valuetype = "Zone",
+        type = "method"
+      },
+      worldBoundingBox = {
+        valuetype = "BoundingBox",
+        description = "(Readonly) BoundingBox&",
+        type = "value"
+      },
+      drawableFlags = {
+        description = "(Readonly) char",
+        type = "value"
+      },
+      drawDistance = {
+        description = "float",
+        type = "value"
+      },
+      shadowDistance = {
+        description = "float",
+        type = "value"
+      },
+      lodBias = {
+        description = "float",
+        type = "value"
+      },
+      viewMask = {
+        description = "unsigned",
+        type = "value"
+      },
+      lightMask = {
+        description = "unsigned",
+        type = "value"
+      },
+      shadowMask = {
+        description = "unsigned",
+        type = "value"
+      },
+      zoneMask = {
+        description = "unsigned",
+        type = "value"
+      },
+      maxLights = {
+        description = "unsigned",
+        type = "value"
+      },
+      castShadows = {
+        description = "bool",
+        type = "value"
+      },
+      occluder = {
+        description = "bool",
+        type = "value"
+      },
+      occludee = {
+        description = "bool",
+        type = "value"
+      },
+      inView = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      zone = {
+        valuetype = "Zone",
+        description = "(Readonly) Zone*",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  CustomGeometryVertex = {
+    childs = {
+      position = {
+        description = "Vector3",
+        type = "value"
+      },
+      normal = {
+        description = "Vector3",
+        type = "value"
+      },
+      color = {
+        description = "unsigned",
+        type = "value"
+      },
+      texCoord = {
+        description = "Vector2",
+        type = "value"
+      },
+      tangent = {
+        description = "Vector4",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   DebugHud = {
     childs = {
+      Update = {
+        args = "()",
+        description = "Update. Called by HandlePostUpdate().",
+        returns = "()",
+        type = "method"
+      },
       SetDefaultStyle = {
         args = "(XMLFile* style)",
         description = "Set UI elements' style from an XML file.",
@@ -9999,13 +17780,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -10026,11 +17807,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -10055,6 +17836,12 @@ local api = {
       AddLine = {
         args = "(const Vector3& start, const Vector3& end, const Color& color, bool depthTest = true)",
         description = "() AddLine (const Vector3& start, const Vector3& end, unsigned color, bool depthTest = true)\nAdd a line.",
+        returns = "()",
+        type = "method"
+      },
+      AddTriangle = {
+        args = "(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Color& color, bool depthTest = true)",
+        description = "() AddTriangle (const Vector3& v1, const Vector3& v2, const Vector3& v3, unsigned color, bool depthTest = true)\nAdd a triangle.",
         returns = "()",
         type = "method"
       },
@@ -10192,11 +17979,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -10217,13 +18075,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -10244,11 +18102,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -10522,7 +18380,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -10640,11 +18498,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -10665,13 +18594,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -10692,11 +18621,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -10855,6 +18784,24 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
+      ReadMatrix3 = {
+        args = "()",
+        description = "Read a Matrix3.",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      ReadMatrix3x4 = {
+        args = "()",
+        description = "Read a Matrix3x4.",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      ReadMatrix4 = {
+        args = "()",
+        description = "Read a Matrix4.",
+        returns = "(Matrix4)",
+        type = "method"
+      },
       ReadColor = {
         args = "()",
         description = "Read a color.",
@@ -10883,12 +18830,6 @@ local api = {
         args = "()",
         description = "Read a 32-bit StringHash.",
         returns = "(StringHash)",
-        type = "method"
-      },
-      ReadShortStringHash = {
-        args = "()",
-        description = "Read a 16-bit ShortStringHash.",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       ReadBuffer = {
@@ -11130,7 +19071,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -11248,11 +19189,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -11273,13 +19285,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -11300,11 +19312,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -11320,9 +19332,15 @@ local api = {
   },
   Drawable2D = {
     childs = {
-      SetPixelsPerUnit = {
-        args = "(float pixelsPerUnit)",
-        description = "Set pixels per coordinate unit.",
+      SetLayer = {
+        args = "(int layer)",
+        description = "Set layer.",
+        returns = "()",
+        type = "method"
+      },
+      SetOrderInLayer = {
+        args = "(int orderInLayer)",
+        description = "Set order in layer.",
         returns = "()",
         type = "method"
       },
@@ -11332,28 +19350,28 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
-        returns = "()",
-        type = "method"
-      },
       SetBlendMode = {
         args = "(BlendMode mode)",
         description = "Set blend mode.",
         returns = "()",
         type = "method"
       },
-      SetZValue = {
-        args = "(float zValue)",
-        description = "Set Z value.",
+      SetMaterial = {
+        args = "(Material* material)",
+        description = "Set material.",
         returns = "()",
         type = "method"
       },
-      GetPixelsPerUnit = {
+      GetLayer = {
         args = "()",
-        description = "Return pixels per coordinate unit.",
-        returns = "(float)",
+        description = "Return layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetOrderInLayer = {
+        args = "()",
+        description = "Return order in layer.",
+        returns = "(int)",
         type = "method"
       },
       GetSprite = {
@@ -11363,11 +19381,11 @@ local api = {
         valuetype = "Sprite2D",
         type = "method"
       },
-      GetMaterial = {
+      GetTexture = {
         args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
+        description = "Return texture.",
+        returns = "(Texture2D*)",
+        valuetype = "Texture2D",
         type = "method"
       },
       GetBlendMode = {
@@ -11376,14 +19394,19 @@ local api = {
         returns = "(BlendMode)",
         type = "method"
       },
-      GetZValue = {
+      GetMaterial = {
         args = "()",
-        description = "Return Z value.",
-        returns = "(float)",
+        description = "Return material.",
+        returns = "(Material*)",
+        valuetype = "Material",
         type = "method"
       },
-      pixelsPerUnit = {
-        description = "float\nPixels per coordinate unit.",
+      layer = {
+        description = "int\nLayer.",
+        type = "value"
+      },
+      orderInLayer = {
+        description = "int\nOrder in layer.",
         type = "value"
       },
       sprite = {
@@ -11391,17 +19414,18 @@ local api = {
         description = "Sprite2D*\nSprite.",
         type = "value"
       },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
+      texture = {
+        valuetype = "Texture2D",
+        description = "(Readonly) Texture2D*",
         type = "value"
       },
       blendMode = {
         description = "BlendMode\nBlend mode.",
         type = "value"
       },
-      zValue = {
-        description = "float\nZ value.",
+      material = {
+        valuetype = "Material",
+        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -11564,7 +19588,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -11682,11 +19706,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -11707,13 +19802,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -11734,11 +19829,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -12079,7 +20174,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -12117,7 +20218,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -12153,7 +20261,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -12356,6 +20469,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -12431,6 +20562,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -12525,7 +20662,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -12729,6 +20866,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -12809,9 +20952,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -12844,7 +21006,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -12890,12 +21052,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -13071,6 +21227,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -13125,6 +21285,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -13148,10 +21313,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -13170,6 +21331,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -13191,13 +21423,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -13218,11 +21450,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -13307,7 +21539,7 @@ local api = {
         type = "method"
       },
       DumpResources = {
-        args = "()",
+        args = "(bool dumpFileName = false)",
         description = "Dump information of all resources to the log.",
         returns = "()",
         type = "method"
@@ -13411,13 +21643,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -13438,11 +21670,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -13641,6 +21873,21 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
+      ReadMatrix3 = {
+        args = "()",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      ReadMatrix3x4 = {
+        args = "()",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      ReadMatrix4 = {
+        args = "()",
+        returns = "(Matrix4)",
+        type = "method"
+      },
       ReadColor = {
         args = "()",
         returns = "(Color)",
@@ -13664,11 +21911,6 @@ local api = {
       ReadStringHash = {
         args = "()",
         returns = "(StringHash)",
-        type = "method"
-      },
-      ReadShortStringHash = {
-        args = "()",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       ReadBuffer = {
@@ -13807,6 +22049,21 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      WriteMatrix3 = {
+        args = "(const Matrix3& value)",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix3x4 = {
+        args = "(const Matrix3x4& value)",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix4 = {
+        args = "(const Matrix4& value)",
+        returns = "(bool)",
+        type = "method"
+      },
       WriteColor = {
         args = "(const Color& value)",
         returns = "(bool)",
@@ -13829,11 +22086,6 @@ local api = {
       },
       WriteStringHash = {
         args = "(const StringHash& value)",
-        returns = "(bool)",
-        type = "method"
-      },
-      WriteShortStringHash = {
-        args = "(const ShortStringHash& value)",
         returns = "(bool)",
         type = "method"
       },
@@ -13922,13 +22174,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -13949,11 +22201,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -14210,13 +22462,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -14237,11 +22489,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -14282,8 +22534,14 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetExecuteConsoleCommands = {
+        args = "(bool enable)",
+        description = "Set whether to execute engine console commands as OS-specific system command.",
+        returns = "()",
+        type = "method"
+      },
       SystemCommand = {
-        args = "(const String commandLine)",
+        args = "(const String commandLine, bool redirectStdOutToLog = false)",
         description = "Run a program using the command interpreter, block until it exits and return the exit code. Will fail if any allowed paths are defined.",
         returns = "(int)",
         type = "method"
@@ -14291,6 +22549,17 @@ local api = {
       SystemRun = {
         args = "(const String fileName, const Vector<String>& arguments)",
         returns = "(int)",
+        type = "method"
+      },
+      SystemCommandAsync = {
+        args = "(const String commandLine)",
+        description = "Run a program using the command interpreter asynchronously. Return a request ID or M_MAX_UNSIGNED if failed. The exit code will be posted together with the request ID in an AsyncExecFinished event. Will fail if any allowed paths are defined.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      SystemRunAsync = {
+        args = "(const String fileName, const Vector<String>& arguments)",
+        returns = "(unsigned)",
         type = "method"
       },
       SystemOpen = {
@@ -14317,16 +22586,22 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      RegisterPath = {
-        args = "(const String pathName)",
-        description = "Register a path as allowed to access. If no paths are registered, all are allowed.",
-        returns = "()",
+      SetLastModifiedTime = {
+        args = "(const String fileName, unsigned newTime)",
+        description = "Set a file's last modified time as seconds since 1.1.1970. Return true on success.",
+        returns = "(bool)",
         type = "method"
       },
       GetCurrentDir = {
         args = "()",
         description = "Return the absolute current working directory.",
         returns = "(String)",
+        type = "method"
+      },
+      GetExecuteConsoleCommands = {
+        args = "()",
+        description = "Return whether is executing engine console commands as OS-specific system command.",
+        returns = "(bool)",
         type = "method"
       },
       HasRegisteredPaths = {
@@ -14377,16 +22652,22 @@ local api = {
         returns = "(String)",
         type = "method"
       },
+      GetAppPreferencesDir = {
+        args = "(const String org, const String app)",
+        description = "Return the application preferences directory.",
+        returns = "(String)",
+        type = "method"
+      },
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -14407,85 +22688,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
-        type = "value"
-      },
-      typeName = {
-        description = "(Readonly) const String",
-        type = "value"
-      },
-      category = {
-        description = "(Readonly) const String",
-        type = "value"
-      },
-    },
-    type = "class"
-  },
-  FileWatcher = {
-    childs = {
-      StartWatching = {
-        args = "(const String pathName, bool watchSubDirs)",
-        description = "Start watching a directory. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
-      StopWatching = {
-        args = "()",
-        description = "Stop watching the directory.",
-        returns = "()",
-        type = "method"
-      },
-      AddChange = {
-        args = "(const String fileName)",
-        description = "Add a file change into the changes queue.",
-        returns = "()",
-        type = "method"
-      },
-      GetPath = {
-        args = "()",
-        description = "Return the path being watched, or empty if not watching.",
-        returns = "(const String)",
-        type = "method"
-      },
-      GetType = {
-        args = "()",
-        description = "Return type hash.",
-        returns = "(ShortStringHash)",
-        type = "method"
-      },
-      GetBaseType = {
-        args = "()",
-        description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
-        type = "method"
-      },
-      GetTypeName = {
-        args = "()",
-        description = "Return type name.",
-        returns = "(const String)",
-        type = "method"
-      },
-      GetCategory = {
-        args = "()",
-        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
-        returns = "(const String)",
-        type = "method"
-      },
-      SendEvent = {
-        args = "(const String eventName, VariantMap* eventData = 0)",
-        returns = "()",
-        type = "method"
-      },
-      type = {
-        description = "(Readonly) ShortStringHash",
-        type = "value"
-      },
-      baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -14517,9 +22724,56 @@ local api = {
     type = "class"
   },
   Font = {
+    childs = {
+      SetAbsoluteGlyphOffset = {
+        args = "(const IntVector2& offset)",
+        description = "Set absolute (in pixels) position adjustment for glyphs.",
+        returns = "()",
+        type = "method"
+      },
+      SetScaledGlyphOffset = {
+        args = "(const Vector2& offset)",
+        description = "Set point size scaled position adjustment for glyphs.",
+        returns = "()",
+        type = "method"
+      },
+      GetAbsoluteGlyphOffset = {
+        args = "()",
+        description = "Return absolute position adjustment for glyphs.",
+        returns = "(const IntVector2&)",
+        valuetype = "IntVector2",
+        type = "method"
+      },
+      GetScaledGlyphOffset = {
+        args = "()",
+        description = "Return point size scaled position adjustment for glyphs.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetTotalGlyphOffset = {
+        args = "(int pointSize)",
+        description = "Return the total effective offset for a point size.",
+        returns = "(IntVector2)",
+        type = "method"
+      },
+      IsSDFFont = {
+        args = "()",
+        description = "Is signed distance field font.",
+        returns = "(bool)",
+        type = "method"
+      },
+      absoluteGlyphOffset = {
+        description = "IntVector2",
+        type = "value"
+      },
+      scaledGlyphOffset = {
+        description = "Vector2",
+        type = "value"
+      },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -14559,6 +22813,7 @@ local api = {
         description = "(Readonly) unsigned\nMemory use in bytes.",
         type = "value"
       },
+    },
     type = "class"
   },
   Frustum = {
@@ -14660,6 +22915,11 @@ local api = {
       },
       SetFlushGPU = {
         args = "(bool enable)",
+        returns = "()",
+        type = "method"
+      },
+      SetOrientations = {
+        args = "(const String orientations)",
         returns = "()",
         type = "method"
       },
@@ -14772,6 +23032,11 @@ local api = {
       GetFlushGPU = {
         args = "()",
         returns = "(bool)",
+        type = "method"
+      },
+      GetOrientations = {
+        args = "()",
+        returns = "(const String)",
         type = "method"
       },
       IsDeviceLost = {
@@ -14906,6 +23171,10 @@ local api = {
         description = "bool",
         type = "value"
       },
+      orientations = {
+        description = "String",
+        type = "value"
+      },
       deviceLost = {
         description = "(Readonly) bool",
         type = "value"
@@ -14930,7 +23199,7 @@ local api = {
         description = "(Readonly) unsigned",
         type = "value"
       },
-      sM3Support = {
+      SM3Support = {
         description = "(Readonly) bool",
         type = "value"
       },
@@ -14969,13 +23238,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -14996,11 +23265,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -15213,6 +23482,24 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
+      ReadMatrix3 = {
+        args = "()",
+        description = "Read a Matrix3.",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      ReadMatrix3x4 = {
+        args = "()",
+        description = "Read a Matrix3x4.",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      ReadMatrix4 = {
+        args = "()",
+        description = "Read a Matrix4.",
+        returns = "(Matrix4)",
+        type = "method"
+      },
       ReadColor = {
         args = "()",
         description = "Read a color.",
@@ -15241,12 +23528,6 @@ local api = {
         args = "()",
         description = "Read a 32-bit StringHash.",
         returns = "(StringHash)",
-        type = "method"
-      },
-      ReadShortStringHash = {
-        args = "()",
-        description = "Read a 16-bit ShortStringHash.",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       ReadBuffer = {
@@ -15351,16 +23632,28 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetPixelInt = {
+        args = "(int x, int y, unsigned uintColor)",
+        description = "() SetPixelInt (int x, int y, int z, unsigned uintColor)\nSet a 2D pixel with an integer color. R component is in the 8 lowest bits.",
+        returns = "()",
+        type = "method"
+      },
       LoadColorLUT = {
         args = "(Deserializer& source)",
         description = "(bool) LoadColorLUT (const String fileName)\nLoad as color LUT. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
+      FlipHorizontal = {
+        args = "()",
+        description = "Flip image horizontally. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
       FlipVertical = {
         args = "()",
-        description = "Flip image vertically.",
-        returns = "()",
+        description = "Flip image vertically. Return true if successful.",
+        returns = "(bool)",
         type = "method"
       },
       Resize = {
@@ -15372,6 +23665,12 @@ local api = {
       Clear = {
         args = "(const Color& color)",
         description = "Clear the image with a color.",
+        returns = "()",
+        type = "method"
+      },
+      ClearInt = {
+        args = "(unsigned uintColor)",
+        description = "Clear the image with an integer color. R component is in the 8 lowest bits.",
         returns = "()",
         type = "method"
       },
@@ -15403,6 +23702,12 @@ local api = {
         args = "(int x, int y)",
         description = "(Color) GetPixel (int x, int y, int z)\nReturn a 2D pixel color.",
         returns = "(Color)",
+        type = "method"
+      },
+      GetPixelInt = {
+        args = "(int x, int y)",
+        description = "(unsigned) GetPixelInt (int x, int y, int z)\nReturn a 2D pixel integer color. R component is in the 8 lowest bits.",
+        returns = "(unsigned)",
         type = "method"
       },
       GetPixelBilinear = {
@@ -15465,6 +23770,13 @@ local api = {
         returns = "(CompressedLevel)",
         type = "method"
       },
+      GetSubimage = {
+        args = "(const IntRect& rect)",
+        description = "Return subimage from the image by the defined rect or null if failed. 3D images are not supported. You must free the subimage yourself.",
+        returns = "(Image*)",
+        valuetype = "Image",
+        type = "method"
+      },
       width = {
         description = "(Readonly) int\nWidth.",
         type = "value"
@@ -15495,7 +23807,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -15547,33 +23859,119 @@ local api = {
         type = "method"
       },
       SetMouseVisible = {
-        args = "(bool enable)",
-        description = "Set whether the operating system mouse cursor is visible. When not visible (default), is kept centered to prevent leaving the window.",
+        args = "(bool enable, bool suppressEvent = false)",
+        description = "Set whether the operating system mouse cursor is visible. When not visible (default), is kept centered to prevent leaving the window. Mouse visiblility event can be suppressed-- this also recalls any unsuppressed SetMouseVisible which can be returned by ResetMouseVisible().",
         returns = "()",
         type = "method"
       },
-      OpenJoystick = {
-        args = "(unsigned index)",
-        description = "Open a joystick. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
-      CloseJoystick = {
-        args = "(unsigned index)",
-        description = "Close a joystick.",
+      SetMouseGrabbed = {
+        args = "(bool grab)",
+        description = "Set whether the mouse is currently being grabbed by an operation.",
         returns = "()",
         type = "method"
       },
-      DetectJoysticks = {
-        args = "()",
-        description = "Redetect joysticks. Return true if successful.",
+      SetMouseMode = {
+        args = "(MouseMode mode)",
+        returns = "()",
+        type = "method"
+      },
+      AddScreenJoystick = {
+        args = "(XMLFile* layoutFile = 0, XMLFile* styleFile = 0)",
+        returns = "(int)",
+        type = "method"
+      },
+      RemoveScreenJoystick = {
+        args = "(int id)",
         returns = "(bool)",
+        type = "method"
+      },
+      SetScreenJoystickVisible = {
+        args = "(int id, bool enable)",
+        returns = "()",
         type = "method"
       },
       SetScreenKeyboardVisible = {
         args = "(bool enable)",
         description = "Show or hide on-screen keyboard on platforms that support it. When shown, keypresses from it are delivered as key events.",
         returns = "()",
+        type = "method"
+      },
+      SetTouchEmulation = {
+        args = "(bool enable)",
+        description = "Set touch emulation by mouse. Only available on desktop platforms. When enabled, actual mouse events are no longer sent and the mouse cursor is forced visible.",
+        returns = "()",
+        type = "method"
+      },
+      RecordGesture = {
+        args = "()",
+        description = "Begin recording a touch gesture. Return true if successful. The E_GESTURERECORDED event (which contains the ID for the new gesture) will be sent when recording finishes.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SaveGestures = {
+        args = "(File* dest)",
+        description = "(bool) SaveGestures (const String fileName)",
+        returns = "(bool)",
+        type = "method"
+      },
+      SaveGesture = {
+        args = "(File* dest, unsigned gestureID)",
+        description = "(bool) SaveGesture (const String fileName, unsigned gestureID)",
+        returns = "(bool)",
+        type = "method"
+      },
+      LoadGestures = {
+        args = "(File* source)",
+        description = "(unsigned) LoadGestures (const String fileName)",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      RemoveGesture = {
+        args = "(unsigned gestureID)",
+        description = "Remove an in-memory gesture by ID. Return true if was found.",
+        returns = "(bool)",
+        type = "method"
+      },
+      RemoveAllGestures = {
+        args = "()",
+        description = "Remove all in-memory gestures.",
+        returns = "()",
+        type = "method"
+      },
+      GetKeyFromName = {
+        args = "(const String name)",
+        description = "Return keycode from key name.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetKeyFromScancode = {
+        args = "(int scancode)",
+        description = "Return keycode from scancode.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetKeyName = {
+        args = "(int key)",
+        description = "Return name of key from keycode.",
+        returns = "(String)",
+        type = "method"
+      },
+      GetScancodeFromKey = {
+        args = "(int key)",
+        description = "Return scancode from keycode.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetScancodeFromName = {
+        args = "(const String name)",
+        description = "Return scancode from key name.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetScancodeName = {
+        args = "(int scancode)",
+        description = "Return name of key from scancode.",
+        returns = "(String)",
         type = "method"
       },
       GetKeyDown = {
@@ -15585,6 +23983,18 @@ local api = {
       GetKeyPress = {
         args = "(int key)",
         description = "Check if a key has been pressed on this frame.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetScancodeDown = {
+        args = "(int scancode)",
+        description = "Check if a key is held down by scancode.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetScancodePress = {
+        args = "(int scancode)",
+        description = "Check if a key has been pressed on this frame by scancode.",
         returns = "(bool)",
         type = "method"
       },
@@ -15668,15 +24078,15 @@ local api = {
         returns = "(unsigned)",
         type = "method"
       },
-      GetJoystickName = {
-        args = "(unsigned index)",
-        description = "Return joystick name by index.",
-        returns = "(const String)",
+      GetJoystick = {
+        args = "(int id)",
+        returns = "(JoystickState*)",
+        valuetype = "JoystickState",
         type = "method"
       },
-      GetJoystick = {
+      GetJoystickByIndex = {
         args = "(unsigned index)",
-        description = "Return joystick state by index. Automatically open if not opened yet.",
+        description = "Return joystick state by index, or null if does not exist. 0 = first connected joystick.",
         returns = "(JoystickState*)",
         valuetype = "JoystickState",
         type = "method"
@@ -15693,9 +24103,20 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsScreenJoystickVisible = {
+        args = "(int id)",
+        returns = "(bool)",
+        type = "method"
+      },
       IsScreenKeyboardVisible = {
         args = "()",
         description = "Return whether on-screen keyboard is being shown.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetTouchEmulation = {
+        args = "()",
+        description = "Return whether touch emulation is enabled.",
         returns = "(bool)",
         type = "method"
       },
@@ -15703,6 +24124,18 @@ local api = {
         args = "()",
         description = "Return whether the operating system mouse cursor is visible.",
         returns = "(bool)",
+        type = "method"
+      },
+      IsMouseGrabbed = {
+        args = "()",
+        description = "Return whether the mouse is currently being grabbed by an operation.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMouseMode = {
+        args = "()",
+        description = "Return the mouse mode.",
+        returns = "(MouseMode)",
         type = "method"
       },
       HasFocus = {
@@ -15758,12 +24191,24 @@ local api = {
         description = "(Readonly) bool",
         type = "value"
       },
+      mouseMode = {
+        description = "MouseMode\nDetermines the mode of mouse behaviour.",
+        type = "value"
+      },
       screenKeyboardVisible = {
         description = "bool",
         type = "value"
       },
+      touchEmulation = {
+        description = "bool\nTouch emulation mode flag.",
+        type = "value"
+      },
       mouseVisible = {
         description = "bool\nOperating system mouse cursor visible flag.",
+        type = "value"
+      },
+      mouseGrabbed = {
+        description = "bool\nFlag to indicate the mouse is being grabbed by an operation. Subsystems like UI that uses mouse should temporarily ignore the mouse hover or click events.",
         type = "value"
       },
       focus = {
@@ -15777,13 +24222,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -15804,11 +24249,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -15925,8 +24370,511 @@ local api = {
     },
     type = "class"
   },
+  JSONFile = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(JSONFile*)",
+        valuetype = "JSONFile",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      CreateRoot = {
+        args = "(JSONValueType valueType = JSON_OBJECT)",
+        description = "Clear the document and create a root value, default is object type.",
+        returns = "(JSONValue)",
+        type = "method"
+      },
+      GetRoot = {
+        args = "(JSONValueType valueType = JSON_ANY)",
+        description = "Return the root value with specific value type, Return null value if not found.",
+        returns = "(JSONValue)",
+        type = "method"
+      },
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  JSONValue = {
+    childs = {
+      IsNull = {
+        args = "()",
+        description = "Return whether does not refer to JSON value.",
+        returns = "(bool)",
+        type = "method"
+      },
+      NotNull = {
+        args = "()",
+        description = "Return whether refers to JSON value.",
+        returns = "(bool)",
+        type = "method"
+      },
+      operatorbool = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      CreateChild = {
+        args = "(const String name, JSONValueType valueType = JSON_OBJECT)",
+        description = "(JSONValue) CreateChild (JSONValueType valueType = JSON_OBJECT)\nCreate a child value.",
+        returns = "(JSONValue)",
+        type = "method"
+      },
+      GetChild = {
+        args = "(const String name, JSONValueType valueType = JSON_ANY)",
+        description = "(JSONValue) GetChild (unsigned index, JSONValueType valueType = JSON_ANY)\nReturn a child value by name. Return null if not exist.",
+        returns = "(JSONValue)",
+        type = "method"
+      },
+      SetInt = {
+        args = "(const String name, int value)",
+        description = "Set int.",
+        returns = "()",
+        type = "method"
+      },
+      SetBool = {
+        args = "(const String name, bool value)",
+        description = "Set bool.",
+        returns = "()",
+        type = "method"
+      },
+      SetFloat = {
+        args = "(const String name, float value)",
+        description = "Set float.",
+        returns = "()",
+        type = "method"
+      },
+      SetVector2 = {
+        args = "(const String name, const Vector2& value)",
+        description = "Set vector2.",
+        returns = "()",
+        type = "method"
+      },
+      SetVector3 = {
+        args = "(const String name, const Vector3& value)",
+        description = "Set vector3.",
+        returns = "()",
+        type = "method"
+      },
+      SetVector4 = {
+        args = "(const String name, const Vector4& value)",
+        description = "Set vector4.",
+        returns = "()",
+        type = "method"
+      },
+      SetVectorVariant = {
+        args = "(const String name, const Variant& value)",
+        description = "Set vector variant.",
+        returns = "()",
+        type = "method"
+      },
+      SetQuaternion = {
+        args = "(const String name, const Quaternion& value)",
+        description = "Set quaternion.",
+        returns = "()",
+        type = "method"
+      },
+      SetColor = {
+        args = "(const String name, const Color& value)",
+        description = "Set color.",
+        returns = "()",
+        type = "method"
+      },
+      SetString = {
+        args = "(const String name, const String value)",
+        description = "Set string.",
+        returns = "()",
+        type = "method"
+      },
+      SetResourceRef = {
+        args = "(const String name, const ResourceRef& value)",
+        description = "Set resource ref.",
+        returns = "()",
+        type = "method"
+      },
+      SetResourceRefList = {
+        args = "(const String name, const ResourceRefList& value)",
+        description = "Set resource ref list.",
+        returns = "()",
+        type = "method"
+      },
+      SetIntRect = {
+        args = "(const String name, const IntRect& value)",
+        description = "Set int rect.",
+        returns = "()",
+        type = "method"
+      },
+      SetIntVector2 = {
+        args = "(const String name, const IntVector2& value)",
+        description = "Set int vector2.",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix3 = {
+        args = "(const String name, const Matrix3& value)",
+        description = "Set matrix3.",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix3x4 = {
+        args = "(const String name, const Matrix3x4& value)",
+        description = "Set matrix3x4.",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix4 = {
+        args = "(const String name, const Matrix4& value)",
+        description = "Set matrix4.",
+        returns = "()",
+        type = "method"
+      },
+      SetVariant = {
+        args = "(const String name, const Variant& value)",
+        description = "Set variant (include type).",
+        returns = "()",
+        type = "method"
+      },
+      SetVariantValue = {
+        args = "(const String name, const Variant& value)",
+        description = "Set variant value.",
+        returns = "()",
+        type = "method"
+      },
+      IsObject = {
+        args = "()",
+        description = "Is object type.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetChildNames = {
+        args = "()",
+        description = "Return child names (only object and array child name).",
+        returns = "(Vector<String>)",
+        type = "method"
+      },
+      GetValueNames = {
+        args = "()",
+        description = "Return member value names.",
+        returns = "(Vector<String>)",
+        type = "method"
+      },
+      GetInt = {
+        args = "(const String name)",
+        description = "(int) GetInt (unsigned index)\nReturn int.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetBool = {
+        args = "(const String name)",
+        description = "(bool) GetBool (unsigned index)\nReturn bool.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetFloat = {
+        args = "(const String name)",
+        description = "(float) GetFloat (unsigned index)\nReturn float.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetVector2 = {
+        args = "(const String name)",
+        description = "(Vector2) GetVector2 (unsigned index)\nReturn vector2.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      GetVector3 = {
+        args = "(const String name)",
+        description = "(Vector3) GetVector3 (unsigned index)\nReturn vector3.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      GetVector4 = {
+        args = "(const String name)",
+        description = "(Vector4) GetVector4 (unsigned index)\nReturn vector4.",
+        returns = "(Vector4)",
+        type = "method"
+      },
+      GetVectorVariant = {
+        args = "(const String name)",
+        description = "(Variant) GetVectorVariant (unsigned index)\nReturn vector variant.",
+        returns = "(Variant)",
+        type = "method"
+      },
+      GetQuaternion = {
+        args = "(const String name)",
+        description = "(Quaternion) GetQuaternion (unsigned index)\nReturn quaternion.",
+        returns = "(Quaternion)",
+        type = "method"
+      },
+      GetColor = {
+        args = "(const String name)",
+        description = "(Color) GetColor (unsigned index)\nReturn color.",
+        returns = "(Color)",
+        type = "method"
+      },
+      GetString = {
+        args = "(const String name)",
+        description = "(String) GetString (unsigned index)\nReturn string.",
+        returns = "(String)",
+        type = "method"
+      },
+      GetCString = {
+        args = "(const String name)",
+        description = "(const char*) GetCString (unsigned index)\nReturn C string.",
+        returns = "(const char*)",
+        type = "method"
+      },
+      GetResourceRef = {
+        args = "(const String name)",
+        description = "(ResourceRef) GetResourceRef (unsigned index)\nReturn resource ref.",
+        returns = "(ResourceRef)",
+        type = "method"
+      },
+      GetResourceRefList = {
+        args = "(const String name)",
+        description = "(ResourceRefList) GetResourceRefList (unsigned index)\nReturn resource ref list.",
+        returns = "(ResourceRefList)",
+        type = "method"
+      },
+      GetIntRect = {
+        args = "(const String name)",
+        description = "(IntRect) GetIntRect (unsigned index)\nReturn int rect.",
+        returns = "(IntRect)",
+        type = "method"
+      },
+      GetIntVector2 = {
+        args = "(const String name)",
+        description = "(IntVector2) GetIntVector2 (unsigned index)\nReturn int vector2.",
+        returns = "(IntVector2)",
+        type = "method"
+      },
+      GetMatrix3 = {
+        args = "(const String name)",
+        description = "(Matrix3) GetMatrix3 (unsigned index)\nReturn matrix3.",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      GetMatrix3x4 = {
+        args = "(const String name)",
+        description = "(Matrix3x4) GetMatrix3x4 (unsigned index)\nReturn matrix3x4.",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      GetMatrix4 = {
+        args = "(const String name)",
+        description = "(Matrix4) GetMatrix4 (unsigned index)\nReturn matrix4.",
+        returns = "(Matrix4)",
+        type = "method"
+      },
+      GetVariant = {
+        args = "(const String name)",
+        description = "(Variant) GetVariant (unsigned index)\nReturn variant.",
+        returns = "(Variant)",
+        type = "method"
+      },
+      GetVariantValue = {
+        args = "(const String name, VariantType type)",
+        description = "(Variant) GetVariantValue (unsigned index, VariantType type)\nReturn variant value.",
+        returns = "(Variant)",
+        type = "method"
+      },
+      AddInt = {
+        args = "(int value)",
+        description = "Add int.",
+        returns = "()",
+        type = "method"
+      },
+      AddBool = {
+        args = "(bool value)",
+        description = "Add bool.",
+        returns = "()",
+        type = "method"
+      },
+      AddFloat = {
+        args = "(float value)",
+        description = "Add float.",
+        returns = "()",
+        type = "method"
+      },
+      AddVector2 = {
+        args = "(const Vector2& value)",
+        description = "Add vector2.",
+        returns = "()",
+        type = "method"
+      },
+      AddVector3 = {
+        args = "(const Vector3& value)",
+        description = "Add vector3.",
+        returns = "()",
+        type = "method"
+      },
+      AddVector4 = {
+        args = "(const Vector4& value)",
+        description = "Add vector4.",
+        returns = "()",
+        type = "method"
+      },
+      AddVectorVariant = {
+        args = "(const Variant& value)",
+        description = "Add vector variant.",
+        returns = "()",
+        type = "method"
+      },
+      AddQuaternion = {
+        args = "(const Quaternion& value)",
+        description = "Add quaternion.",
+        returns = "()",
+        type = "method"
+      },
+      AddColor = {
+        args = "(const Color& value)",
+        description = "Add color.",
+        returns = "()",
+        type = "method"
+      },
+      AddString = {
+        args = "(const String value)",
+        description = "Add string.",
+        returns = "()",
+        type = "method"
+      },
+      AddResourceRef = {
+        args = "(const ResourceRef& value)",
+        description = "Add resource ref.",
+        returns = "()",
+        type = "method"
+      },
+      AddResourceRefList = {
+        args = "(const ResourceRefList& value)",
+        description = "Add resource ref list.",
+        returns = "()",
+        type = "method"
+      },
+      AddIntRect = {
+        args = "(const IntRect& value)",
+        description = "Add int rect.",
+        returns = "()",
+        type = "method"
+      },
+      AddIntVector2 = {
+        args = "(const IntVector2& value)",
+        description = "Add int vector2.",
+        returns = "()",
+        type = "method"
+      },
+      AddMatrix3 = {
+        args = "(const Matrix3& value)",
+        description = "Add matrix3.",
+        returns = "()",
+        type = "method"
+      },
+      AddMatrix3x4 = {
+        args = "(const Matrix3x4& value)",
+        description = "Add matrix3x4.",
+        returns = "()",
+        type = "method"
+      },
+      AddMatrix4 = {
+        args = "(const Matrix4& value)",
+        description = "Add matrix4.",
+        returns = "()",
+        type = "method"
+      },
+      AddVariant = {
+        args = "(const Variant& value)",
+        description = "Add variant.",
+        returns = "()",
+        type = "method"
+      },
+      AddVariantValue = {
+        args = "(const Variant& value)",
+        description = "Add variant value.",
+        returns = "()",
+        type = "method"
+      },
+      IsArray = {
+        args = "()",
+        description = "Is array type.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetSize = {
+        args = "()",
+        description = "Return array size.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      EMPTY = {
+        description = "const JSONValue\nEmpty JSONValue.",
+        type = "value"
+      },
+      null = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      object = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      array = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   JoystickState = {
     childs = {
+      IsController = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
       GetNumButtons = {
         args = "()",
         returns = "(unsigned)",
@@ -15961,6 +24909,18 @@ local api = {
         args = "(unsigned index)",
         returns = "(int)",
         type = "method"
+      },
+      name = {
+        description = "const String",
+        type = "value"
+      },
+      joystickID = {
+        description = "const int",
+        type = "value"
+      },
+      controller = {
+        description = "(Readonly) bool",
+        type = "value"
       },
       numButtons = {
         description = "(Readonly) unsigned",
@@ -15999,7 +24959,13 @@ local api = {
       },
       SetSpecularIntensity = {
         args = "(float intensity)",
-        description = "Set specular intensity.",
+        description = "Set specular intensity. Zero disables specular calculations.",
+        returns = "()",
+        type = "method"
+      },
+      SetBrightness = {
+        args = "(float brightness)",
+        description = "Set light brightness multiplier. Both the color and specular intensity are multiplied with this to get final values for rendering.",
         returns = "()",
         type = "method"
       },
@@ -16106,6 +25072,23 @@ local api = {
         returns = "(float)",
         type = "method"
       },
+      GetBrightness = {
+        args = "()",
+        description = "Return brightness multiplier.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetEffectiveColor = {
+        args = "()",
+        description = "Return whether light has negative (darkening) color.",
+        returns = "(Color)",
+        type = "method"
+      },
+      GetEffectiveSpecularIntensity = {
+        args = "()",
+        returns = "(float)",
+        type = "method"
+      },
       GetRange = {
         args = "()",
         description = "Return range.",
@@ -16195,6 +25178,17 @@ local api = {
         returns = "(Frustum)",
         type = "method"
       },
+      GetNumShadowSplits = {
+        args = "()",
+        description = "Return number of shadow map cascade splits for a directional light, considering also graphics API limitations.",
+        returns = "(int)",
+        type = "method"
+      },
+      IsNegative = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
       lightType = {
         description = "LightType\nLight type.",
         type = "value"
@@ -16210,6 +25204,10 @@ local api = {
       },
       specularIntensity = {
         description = "float\nSpecular intensity.",
+        type = "value"
+      },
+      brightness = {
+        description = "float\nBrightness multiplier.",
         type = "value"
       },
       range = {
@@ -16271,6 +25269,22 @@ local api = {
       },
       frustum = {
         description = "(Readonly) Frustum",
+        type = "value"
+      },
+      numShadowSplits = {
+        description = "(Readonly) int",
+        type = "value"
+      },
+      negative = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      effectiveColor = {
+        description = "(Readonly) Color",
+        type = "value"
+      },
+      effectiveSpecularIntensity = {
+        description = "(Readonly) float",
         type = "value"
       },
       SetDrawDistance = {
@@ -16433,7 +25447,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -16551,11 +25565,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -16576,13 +25661,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -16603,11 +25688,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -16806,7 +25891,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -16844,7 +25935,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -16880,7 +25978,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -17083,6 +26186,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -17158,6 +26279,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -17252,7 +26379,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -17456,6 +26583,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -17536,9 +26669,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -17571,7 +26723,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -17617,12 +26769,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -17798,6 +26944,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -17852,6 +27002,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -17875,10 +27030,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -17897,6 +27048,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -17918,13 +27140,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -17945,11 +27167,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -18071,6 +27293,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetSelectOnClickEnd = {
+        args = "(bool enable)",
+        description = "Enable reacting to click end instead of click start for item selection. Default false.",
+        returns = "()",
+        type = "method"
+      },
       Expand = {
         args = "(unsigned index, bool enable, bool recursive = false)",
         description = "Expand item at index. Only has effect in hierarchy mode.",
@@ -18122,6 +27350,12 @@ local api = {
         valuetype = "PODVector<unsigned>",
         type = "method"
       },
+      CopySelectedItemsToClipboard = {
+        args = "()",
+        description = "Copy selected items to system clipboard. Currently only applicable to Text items.",
+        returns = "()",
+        type = "method"
+      },
       GetSelectedItem = {
         args = "()",
         description = "Return first selected item, or null if none selected.",
@@ -18166,6 +27400,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      GetSelectOnClickEnd = {
+        args = "()",
+        description = "Return whether reacts to click end instead of click start for item selection.",
+        returns = "(bool)",
+        type = "method"
+      },
       GetHierarchyMode = {
         args = "()",
         description = "Return whether hierarchy mode enabled.",
@@ -18201,6 +27441,10 @@ local api = {
       },
       clearSelectionOnDefocus = {
         description = "bool\nClear selection on defocus flag.",
+        type = "value"
+      },
+      selectOnClickEnd = {
+        description = "bool\nReact to click end instead of click start flag.",
         type = "value"
       },
       hierarchyMode = {
@@ -18244,6 +27488,30 @@ local api = {
       SetPageStep = {
         args = "(float step)",
         description = "Set arrow key page step.",
+        returns = "()",
+        type = "method"
+      },
+      SetScrollDeceleration = {
+        args = "(float deceleration)",
+        description = "Set scroll deceleration.",
+        returns = "()",
+        type = "method"
+      },
+      SetScrollSnapEpsilon = {
+        args = "(float snap)",
+        description = "Set scroll snap epsilon",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoDisableChildren = {
+        args = "(bool disable)",
+        description = "Set whether child elements should be disabled while touch scrolling.",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoDisableThreshold = {
+        args = "(float amount)",
+        description = "Set how much touch movement is needed to trigger child element disabling.",
         returns = "()",
         type = "method"
       },
@@ -18300,6 +27568,30 @@ local api = {
         returns = "(float)",
         type = "method"
       },
+      GetScrollDeceleration = {
+        args = "()",
+        description = "Return scroll deceleration.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetScrollSnapEpsilon = {
+        args = "()",
+        description = "Return scroll snap epsilon",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAutoDisableChildren = {
+        args = "()",
+        description = "Return whether child element will be disabled while touch scrolling.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetAutoDisableThreshold = {
+        args = "()",
+        description = "Return how much touch movement is needed to trigger child element disabling.",
+        returns = "(float)",
+        type = "method"
+      },
       viewPosition = {
         valuetype = "IntVector2",
         description = "IntVector2&\nCurrent view offset from the top-left corner.",
@@ -18335,6 +27627,14 @@ local api = {
       },
       pageStep = {
         description = "float\nArrow key page step.",
+        type = "value"
+      },
+      scrollDeceleration = {
+        description = "float\nScroll deceleration",
+        type = "value"
+      },
+      scrollSnapEpsilon = {
+        description = "float\nScroll snap epsilon",
         type = "value"
       },
       GetScreenPosition = {
@@ -18524,6 +27824,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -18599,6 +27917,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -18693,7 +28017,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -18897,6 +28221,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -18977,9 +28307,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -19012,7 +28361,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -19058,12 +28407,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -19239,6 +28582,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -19293,6 +28640,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -19316,10 +28668,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -19338,6 +28686,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -19359,13 +28778,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -19386,11 +28805,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -19487,13 +28906,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -19514,11 +28933,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -19536,13 +28955,13 @@ local api = {
     childs = {
       CreateObject = {
         args = "(const String scriptObjectType)",
-        description = "(bool) CreateObject (const String scriptFileName, const String scriptObjectType)\nCreate script object. Return true if successful.",
+        description = "(bool) CreateObject (LuaFile* scriptFile, const String scriptObjectType)\nCreate script object. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
-      SetScriptFileName = {
-        args = "(const String scriptFileName)",
-        description = "Set script file name.",
+      SetScriptFile = {
+        args = "(LuaFile* scriptFile)",
+        description = "Set script file.",
         returns = "()",
         type = "method"
       },
@@ -19553,8 +28972,8 @@ local api = {
         type = "method"
       },
       SubscribeToEvent = {
-        args = "(const String eventName, const String functionName)",
-        description = "() SubscribeToEvent (void* sender, const String eventName, const String functionName)",
+        args = "(const String eventName, void* functionOrFunctionName)",
+        description = "() SubscribeToEvent (void* sender, const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "method"
       },
@@ -19574,10 +28993,11 @@ local api = {
         returns = "()",
         type = "method"
       },
-      GetScriptFileName = {
+      GetScriptFile = {
         args = "()",
-        description = "Return script file name.",
-        returns = "(const String)",
+        description = "Return script file.",
+        returns = "(LuaFile*)",
+        valuetype = "LuaFile",
         type = "method"
       },
       GetScriptObjectType = {
@@ -19586,8 +29006,9 @@ local api = {
         returns = "(const String)",
         type = "method"
       },
-      scriptFileName = {
-        description = "const String\nScript file name.",
+      scriptFile = {
+        valuetype = "LuaFile",
+        description = "const LuaFile*\nScript file.",
         type = "value"
       },
       scriptObjectType = {
@@ -19639,11 +29060,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -19664,13 +29156,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -19691,11 +29183,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -19740,6 +29232,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetShaderParameterAnimation = {
+        args = "(const String name, ValueAnimation* animation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set shader parameter animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetShaderParameterAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set shader parameter animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetShaderParameterAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set shader parameter animation speed.",
+        returns = "()",
+        type = "method"
+      },
       SetTexture = {
         args = "(TextureUnit unit, Texture* texture)",
         description = "Set texture.",
@@ -19770,6 +29280,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetScene = {
+        args = "(Scene* scene)",
+        description = "Associate the material with a scene to ensure that shader parameter animation happens in sync with scene update, respecting the scene time scale. If no scene is set, the global update events will be used.",
+        returns = "()",
+        type = "method"
+      },
       RemoveShaderParameter = {
         args = "(const String name)",
         description = "Remove shader parameter.",
@@ -19784,7 +29300,7 @@ local api = {
       },
       Clone = {
         args = "(const String cloneName = String::EMPTY)",
-        description = "Clone material.",
+        description = "Clone the material.",
         returns = "(Material*)",
         valuetype = "Material",
         type = "method"
@@ -19828,6 +29344,25 @@ local api = {
         valuetype = "Texture",
         type = "method"
       },
+      GetShaderParameterAnimation = {
+        args = "(const String name)",
+        description = "Return shader parameter animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetShaderParameterAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return shader parameter animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetShaderParameterAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return shader parameter animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
       GetCullMode = {
         args = "()",
         description = "Return normal culling mode.",
@@ -19865,6 +29400,13 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      GetScene = {
+        args = "()",
+        description = "Return the scene associated with the material for shader parameter animation updates.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
       cullMode = {
         description = "(Readonly) CullMode\nNormal culling mode.",
         type = "value"
@@ -19885,9 +29427,14 @@ local api = {
         description = "(Readonly) bool\nSpecular lighting flag.",
         type = "value"
       },
+      scene = {
+        valuetype = "Scene",
+        description = "Scene*\nAssociated scene for shader parameter animation updates.",
+        type = "value"
+      },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -19973,6 +29520,11 @@ local api = {
       Inverse = {
         args = "()",
         returns = "(Matrix3)",
+        type = "method"
+      },
+      ToString = {
+        args = "()",
+        returns = "(String)",
         type = "method"
       },
       m00 = {
@@ -20095,6 +29647,11 @@ local api = {
       Inverse = {
         args = "()",
         returns = "(Matrix3x4)",
+        type = "method"
+      },
+      ToString = {
+        args = "()",
+        returns = "(String)",
         type = "method"
       },
       m00 = {
@@ -20229,6 +29786,11 @@ local api = {
       Inverse = {
         args = "()",
         returns = "(Matrix4)",
+        type = "method"
+      },
+      ToString = {
+        args = "()",
+        returns = "(String)",
         type = "method"
       },
       m00 = {
@@ -20501,7 +30063,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -20539,7 +30107,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -20575,7 +30150,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -20778,6 +30358,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -20853,6 +30451,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -20947,7 +30551,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -21151,6 +30755,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -21231,9 +30841,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -21266,7 +30895,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -21312,12 +30941,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -21493,6 +31116,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -21547,6 +31174,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -21570,10 +31202,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -21592,6 +31220,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -21613,13 +31312,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -21640,11 +31339,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -21718,13 +31417,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -21745,11 +31444,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -21765,6 +31464,13 @@ local api = {
   },
   Model = {
     childs = {
+      Clone = {
+        args = "(const String cloneName = String::EMPTY)",
+        description = "Clone the model. The geometry data is deep-copied and can be modified in the clone without affecting the original.",
+        returns = "(Model*)",
+        valuetype = "Model",
+        type = "method"
+      },
       GetBoundingBox = {
         args = "()",
         description = "Return bounding box.",
@@ -21842,7 +31548,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -21948,11 +31654,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -21973,13 +31750,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -22000,11 +31777,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -22409,11 +32186,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -22434,13 +32282,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -22461,11 +32309,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -22524,25 +32372,31 @@ local api = {
       },
       RegisterRemoteEvent = {
         args = "(StringHash eventType)",
-        description = "() RegisterRemoteEvent (const String eventType)\nRegister a remote event as allowed to be sent and received. If no events are registered, all are allowed.",
+        description = "() RegisterRemoteEvent (const String eventType)\nRegister a remote event as allowed to be received. There is also a fixed blacklist of events that can not be allowed in any case, such as ConsoleCommand.",
         returns = "()",
         type = "method"
       },
       UnregisterRemoteEvent = {
         args = "(StringHash eventType)",
-        description = "() UnregisterRemoteEvent (const String eventType)\nUnregister a remote event as allowed to be sent and received.",
+        description = "() UnregisterRemoteEvent (const String eventType)\nUnregister a remote event as allowed to received.",
         returns = "()",
         type = "method"
       },
       UnregisterAllRemoteEvents = {
         args = "()",
-        description = "Unregister all remote events. This results in all being allowed.",
+        description = "Unregister all remote events.",
         returns = "()",
         type = "method"
       },
       SetPackageCacheDir = {
         args = "(const String path)",
         description = "Set the package download cache directory.",
+        returns = "()",
+        type = "method"
+      },
+      SendPackageToClients = {
+        args = "(Scene* scene, PackageFile* package)",
+        description = "Trigger all client connections in the specified scene to download a package file from the server. Can be used to download additional resource packages when clients are already joined in the scene. The package must have been added as a requirement to the scene, or else the eventual download will fail.",
         returns = "()",
         type = "method"
       },
@@ -22574,7 +32428,7 @@ local api = {
       },
       CheckRemoteEvent = {
         args = "(StringHash eventType)",
-        description = "Return whether a remote event is allowed to be sent and received. If no events are registered, all are allowed.",
+        description = "Return whether a remote event is allowed to be received.",
         returns = "(bool)",
         type = "method"
       },
@@ -22721,11 +32575,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -22746,13 +32671,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -22773,11 +32698,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -22821,8 +32746,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetPositionXYZ = {
-        args = "(float x, float y, float z)",
+      SetPosition2D = {
+        args = "(const Vector2& position)",
+        description = "() SetPosition2D (float x, float y)",
         returns = "()",
         type = "method"
       },
@@ -22832,8 +32758,8 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetRotationXYZ = {
-        args = "(float x, float y, float z)",
+      SetRotation2D = {
+        args = "(float rotation)",
         returns = "()",
         type = "method"
       },
@@ -22843,25 +32769,27 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetDirectionXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
       SetScale = {
         args = "(float scale)",
         description = "() SetScale (const Vector3& scale)\nSet uniform scale in parent space.",
         returns = "()",
         type = "method"
       },
-      SetScaleXYZ = {
-        args = "(float x, float y, float z)",
+      SetScale2D = {
+        args = "(const Vector2& scale)",
+        description = "() SetScale2D (float x, float y)",
         returns = "()",
         type = "method"
       },
       SetTransform = {
         args = "(const Vector3& position, const Quaternion& rotation)",
-        description = "() SetTransform (const Vector3& position, const Quaternion& rotation, float scale),\n() SetTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale)\nSet both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.",
+        description = "() SetTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale),\n() SetTransform (const Vector3& position, const Quaternion& rotation, float scale)\nSet both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.",
+        returns = "()",
+        type = "method"
+      },
+      SetTransform2D = {
+        args = "(const Vector2& position, float rotation)",
+        description = "() SetTransform2D (const Vector2& position, float rotation, const Vector2& scale),\n() SetTransform2D (const Vector2& position, float rotation, float scale)",
         returns = "()",
         type = "method"
       },
@@ -22871,8 +32799,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldPositionXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldPosition2D = {
+        args = "(const Vector2& position)",
+        description = "() SetWorldPosition2D (float x, float y)",
         returns = "()",
         type = "method"
       },
@@ -22882,8 +32811,8 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldRotationXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldRotation2D = {
+        args = "(float rotation)",
         returns = "()",
         type = "method"
       },
@@ -22893,88 +32822,85 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldDirectionXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
       SetWorldScale = {
         args = "(float scale)",
         description = "() SetWorldScale (const Vector3& scale)\nSet uniform scale in world space.",
         returns = "()",
         type = "method"
       },
-      SetWorldScaleXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldScale2D = {
+        args = "(const Vector2& scale)",
+        description = "() SetWorldScale2D (float x, float y)",
         returns = "()",
         type = "method"
       },
       SetWorldTransform = {
         args = "(const Vector3& position, const Quaternion& rotation)",
-        description = "() SetWorldTransform (const Vector3& position, const Quaternion& rotation, float scale),\n() SetWorldTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale)\nSet both position and rotation in world space as an atomic operation.",
+        description = "() SetWorldTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale),\n() SetWorldTransform (const Vector3& position, const Quaternion& rotation, float scale)\nSet both position and rotation in world space as an atomic operation.",
+        returns = "()",
+        type = "method"
+      },
+      SetWorldTransform2D = {
+        args = "(const Vector2& position, float rotation)",
+        description = "() SetWorldTransform2D (const Vector2& position, float rotation, const Vector2& scale),\n() SetWorldTransform2D (const Vector2& position, float rotation, float scale)",
         returns = "()",
         type = "method"
       },
       Translate = {
-        args = "(const Vector3& delta)",
-        description = "Move the scene node in parent space, which is the same as world space if the scene node is on the root level.",
+        args = "(const Vector3& delta, TransformSpace space = TS_LOCAL)",
+        description = "Move the scene node in the chosen transform space.",
         returns = "()",
         type = "method"
       },
-      TranslateXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
-      TranslateRelative = {
-        args = "(const Vector3& delta)",
-        description = "Move the scene node in parent space relative to its current rotation.",
-        returns = "()",
-        type = "method"
-      },
-      TranslateRelativeXYZ = {
-        args = "(float x, float y, float z)",
+      Translate2D = {
+        args = "(const Vector2& delta, TransformSpace space = TS_LOCAL)",
         returns = "()",
         type = "method"
       },
       Rotate = {
-        args = "(const Quaternion& delta, bool fixedAxis = false)",
-        description = "Rotate the scene node in parent space either relative to its current rotation axes, or a fixed axis.",
+        args = "(const Quaternion& delta, TransformSpace space = TS_LOCAL)",
+        description = "Rotate the scene node in the chosen transform space.",
         returns = "()",
         type = "method"
       },
-      RotateXYZ = {
-        args = "(float x, float y, float z, bool fixedAxis = false)",
+      Rotate2D = {
+        args = "(float delta, TransformSpace space = TS_LOCAL)",
+        returns = "()",
+        type = "method"
+      },
+      RotateAround = {
+        args = "(const Vector3& point, const Quaternion& delta, TransformSpace space = TS_LOCAL)",
+        description = "Rotate around a point in the chosen transform space.",
+        returns = "()",
+        type = "method"
+      },
+      RotateAround2D = {
+        args = "(const Vector2& point, float delta, TransformSpace space = TS_LOCAL)",
         returns = "()",
         type = "method"
       },
       Pitch = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the X axis.",
         returns = "()",
         type = "method"
       },
       Yaw = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the Y axis.",
         returns = "()",
         type = "method"
       },
       Roll = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the Z axis.",
         returns = "()",
         type = "method"
       },
       LookAt = {
         args = "(const Vector3& target)",
-        description = "() LookAt (const Vector3& target, const Vector3& upAxis)\nLook at a target world position.",
-        returns = "()",
-        type = "method"
-      },
-      LookAtXYZ = {
-        args = "(float x, float y, float z, float upX = 0.0f, float upY = 1.0f, float upZ = 0.0f)",
-        returns = "()",
+        description = "(bool) LookAt (const Vector3& target, const Vector3& upAxis, TransformSpace space = TS_WORLD)\nLook at a target position in the chosen transform space. Note that the up vector is always specified in world space. Return true if successful, or false if resulted in an illegal rotation, in which case the current rotation remains.",
+        returns = "(bool)",
         type = "method"
       },
       Scale = {
@@ -22983,14 +32909,32 @@ local api = {
         returns = "()",
         type = "method"
       },
-      ScaleXYZ = {
-        args = "(float x, float y, float z)",
+      Scale2D = {
+        args = "(const Vector2& scale)",
         returns = "()",
         type = "method"
       },
       SetEnabled = {
         args = "(bool enable)",
-        description = "() SetEnabled (bool enable, bool recursive)\nSet enabled/disabled state without recursion. Components in a disabled node become effectively disabled regardless of their own enable/disable state.",
+        description = "Set enabled/disabled state without recursion. Components in a disabled node become effectively disabled regardless of their own enable/disable state.",
+        returns = "()",
+        type = "method"
+      },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child nodes. Nodes' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the node's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child nodes. Unlike SetDeepEnabled this does not remember the nodes' own enabled state, but overwrites it.",
         returns = "()",
         type = "method"
       },
@@ -23014,8 +32958,8 @@ local api = {
         type = "method"
       },
       AddChild = {
-        args = "(Node* node)",
-        description = "Add a child scene node.",
+        args = "(Node* node, unsigned index = M_MAX_UNSIGNED)",
+        description = "Add a child scene node at a specific index. If index is not explicitly specified or is greater than current children size, append the new child at the end.",
         returns = "()",
         type = "method"
       },
@@ -23039,7 +32983,7 @@ local api = {
       },
       RemoveComponent = {
         args = "(Component* component)",
-        description = "() RemoveComponent (ShortStringHash type),\n() RemoveComponent (const String type)\nRemove a component from this node.",
+        description = "() RemoveComponent (StringHash type),\n() RemoveComponent (const String type)\nRemove a component from this node.",
         returns = "()",
         type = "method"
       },
@@ -23075,7 +33019,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -23094,6 +33038,13 @@ local api = {
       },
       CreateComponent = {
         args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      CloneComponent = {
+        args = "(Component* component, unsigned id = 0)",
+        description = "(Component*) CloneComponent (Component* component, CreateMode mode, unsigned id = 0)\nClone a component from another node using its create mode. Return the clone if successful or null on failure.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
@@ -23148,6 +33099,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the node's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       GetOwner = {
         args = "()",
         description = "Return owner connection in networking.",
@@ -23162,9 +33119,9 @@ local api = {
         valuetype = "Vector3",
         type = "method"
       },
-      GetPositionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetPosition2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetRotation = {
@@ -23174,14 +33131,10 @@ local api = {
         valuetype = "Quaternion",
         type = "method"
       },
-      GetRotationXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
-      GetRotationWXYZ = {
-        args = "(float w = 0.0f, float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetRotation2D = {
+        args = "()",
+        description = "Return rotation in parent space (for Urho2D).",
+        returns = "(float)",
         type = "method"
       },
       GetDirection = {
@@ -23190,31 +33143,16 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetDirectionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetUp = {
         args = "()",
         description = "Return up direction in parent space. Positive Y axis equals identity rotation.",
         returns = "(Vector3)",
         type = "method"
       },
-      GetUpXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetRight = {
         args = "()",
         description = "Return right direction in parent space. Positive X axis equals identity rotation.",
         returns = "(Vector3)",
-        type = "method"
-      },
-      GetRightXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
         type = "method"
       },
       GetScale = {
@@ -23224,9 +33162,9 @@ local api = {
         valuetype = "Vector3",
         type = "method"
       },
-      GetScaleXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetScale2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetTransform = {
@@ -23240,9 +33178,9 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldPositionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldPosition2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetWorldRotation = {
@@ -23250,14 +33188,9 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
-      GetWorldRotationXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
-      GetWorldRotationWXYZ = {
-        args = "(float w = 0.0f, float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldRotation2D = {
+        args = "()",
+        returns = "(float)",
         type = "method"
       },
       GetWorldDirection = {
@@ -23265,19 +33198,9 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldDirectionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetWorldUp = {
         args = "()",
         returns = "(Vector3)",
-        type = "method"
-      },
-      GetWorldUpXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
         type = "method"
       },
       GetWorldRight = {
@@ -23285,19 +33208,14 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldRightXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetWorldScale = {
         args = "()",
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldScaleXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldScale2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetWorldTransform = {
@@ -23312,10 +33230,20 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
+      LocalToWorld2D = {
+        args = "(const Vector2& vector)",
+        returns = "(Vector2)",
+        type = "method"
+      },
       WorldToLocal = {
         args = "(const Vector3& position)",
         description = "(Vector3) WorldToLocal (const Vector4& vector)",
         returns = "(Vector3)",
+        type = "method"
+      },
+      WorldToLocal2D = {
+        args = "(const Vector2& vector)",
+        returns = "(Vector2)",
         type = "method"
       },
       IsDirty = {
@@ -23346,13 +33274,13 @@ local api = {
         type = "method"
       },
       HasComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(bool) HasComponent (const String type)",
         returns = "(bool)",
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -23425,6 +33353,10 @@ local api = {
         description = "bool",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       owner = {
         valuetype = "Connection",
         description = "Connection*",
@@ -23435,9 +33367,17 @@ local api = {
         description = "Vector3&",
         type = "value"
       },
+      position2D = {
+        description = "Vector2",
+        type = "value"
+      },
       rotation = {
         valuetype = "Quaternion",
         description = "Quaternion&",
+        type = "value"
+      },
+      rotation2D = {
+        description = "float",
         type = "value"
       },
       direction = {
@@ -23457,6 +33397,10 @@ local api = {
         description = "Vector3&",
         type = "value"
       },
+      scale2D = {
+        description = "Vector2",
+        type = "value"
+      },
       transform = {
         description = "(Readonly) Matrix3x4",
         type = "value"
@@ -23465,8 +33409,16 @@ local api = {
         description = "Vector3",
         type = "value"
       },
+      worldPosition2D = {
+        description = "Vector2",
+        type = "value"
+      },
       worldRotation = {
         description = "Quaternion",
+        type = "value"
+      },
+      worldRotation2D = {
+        description = "float",
         type = "value"
       },
       worldDirection = {
@@ -23485,6 +33437,10 @@ local api = {
         description = "Vector3",
         type = "value"
       },
+      worldScale2D = {
+        description = "Vector2",
+        type = "value"
+      },
       worldTransform = {
         valuetype = "Matrix3x4",
         description = "(Readonly) Matrix3x4&",
@@ -23500,6 +33456,77 @@ local api = {
       },
       numNetworkComponents = {
         description = "(Readonly) unsigned",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -23521,13 +33548,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -23548,11 +33575,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -23571,13 +33598,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -23598,11 +33625,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -23611,6 +33638,95 @@ local api = {
       },
       category = {
         description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ObjectAnimation = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      AddAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Add attribute animation, attribute name can in following format: \"attribute\" or \"#0/#1/attribute\" or \"\"#0/#1/@component#1/attribute.",
+        returns = "()",
+        type = "method"
+      },
+      RemoveAttributeAnimation = {
+        args = "(const String name)",
+        description = "() RemoveAttributeAnimation (ValueAnimation* attributeAnimation)\nRemove attribute animation, attribute name can in following format: \"attribute\" or \"#0/#1/attribute\" or \"\"#0/#1/@component#1/attribute.",
+        returns = "()",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation by name.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode by name.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed by name.",
+        returns = "(float)",
+        type = "method"
+      },
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
         type = "value"
       },
     },
@@ -23650,13 +33766,13 @@ local api = {
         type = "method"
       },
       Raycast = {
-        args = "(const Ray& ray, RayQueryLevel level, float maxDistance, char drawableFlags)",
+        args = "(const Ray& ray, RayQueryLevel level, float maxDistance, char drawableFlags, unsigned viewMask = DEFAULT_VIEWMASK)",
         returns = "(const PODVector<RayQueryResult>&)",
         valuetype = "PODVector<RayQueryResult>",
         type = "method"
       },
       RaycastSingle = {
-        args = "(const Ray& ray, RayQueryLevel level, float maxDistance, char drawableFlags)",
+        args = "(const Ray& ray, RayQueryLevel level, float maxDistance, char drawableFlags, unsigned viewMask = DEFAULT_VIEWMASK)",
         returns = "(RayQueryResult)",
         type = "method"
       },
@@ -23727,11 +33843,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -23752,13 +33939,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -23779,11 +33966,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -23920,11 +34107,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -23945,13 +34203,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -23972,11 +34230,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -24110,13 +34368,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -24137,11 +34395,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -24155,18 +34413,12 @@ local api = {
     },
     type = "class"
   },
-  ParticleEmitter = {
+  ParticleEffect = {
     childs = {
-      Load = {
-        args = "(XMLFile* file)",
-        description = "Load emitter parameters from an XML file.",
-        returns = "(bool)",
-        type = "method"
-      },
-      Save = {
-        args = "(XMLFile* file)",
-        description = "Save particle emitter parameters to an XML file. Return true if successful.",
-        returns = "(bool)",
+      SetMaterial = {
+        args = "(Material* material)",
+        description = "Set material.",
+        returns = "()",
         type = "method"
       },
       SetNumParticles = {
@@ -24175,21 +34427,33 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetEmissionRate = {
-        args = "(float rate)",
-        description = "Set emission rate (both minimum and maximum.)",
+      SetUpdateInvisible = {
+        args = "(bool enable)",
+        description = "Set whether to update when particles are not visible.",
         returns = "()",
         type = "method"
       },
-      SetMinEmissionRate = {
-        args = "(float rate)",
-        description = "Set minimum emission rate.",
+      SetRelative = {
+        args = "(bool enable)",
+        description = "Set whether billboards are relative to the scene node. Default true.",
         returns = "()",
         type = "method"
       },
-      SetMaxEmissionRate = {
-        args = "(float rate)",
-        description = "Set maximum emission rate.",
+      SetScaled = {
+        args = "(bool enable)",
+        description = "Set scaled.",
+        returns = "()",
+        type = "method"
+      },
+      SetSorted = {
+        args = "(bool enable)",
+        description = "Set sorted.",
+        returns = "()",
+        type = "method"
+      },
+      SetAnimationLodBias = {
+        args = "(float lodBias)",
+        description = "Set animation LOD bias.",
         returns = "()",
         type = "method"
       },
@@ -24205,66 +34469,6 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetActiveTime = {
-        args = "(float time)",
-        description = "Set emission active period length (0 = infinite.)",
-        returns = "()",
-        type = "method"
-      },
-      SetInactiveTime = {
-        args = "(float time)",
-        description = "Set emission inactive period length (0 = infinite.)",
-        returns = "()",
-        type = "method"
-      },
-      SetEmitting = {
-        args = "(bool enable, bool resetPeriod = false)",
-        description = "Set whether should be emitting and optionally reset emission period.",
-        returns = "()",
-        type = "method"
-      },
-      SetUpdateInvisible = {
-        args = "(bool enable)",
-        description = "Set whether to update when particles are not visible.",
-        returns = "()",
-        type = "method"
-      },
-      SetTimeToLive = {
-        args = "(float time)",
-        description = "Set particle time to live (both minimum and maximum.)",
-        returns = "()",
-        type = "method"
-      },
-      SetMinTimeToLive = {
-        args = "(float time)",
-        description = "Set particle minimum time to live.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxTimeToLive = {
-        args = "(float time)",
-        description = "Set particle maximum time to live.",
-        returns = "()",
-        type = "method"
-      },
-      SetParticleSize = {
-        args = "(const Vector2& size)",
-        description = "Set particle size (both minimum and maximum.)",
-        returns = "()",
-        type = "method"
-      },
-      SetMinParticleSize = {
-        args = "(const Vector2& size)",
-        description = "Set particle minimum size.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxParticleSize = {
-        args = "(const Vector2& size)",
-        description = "Set particle maximum size.",
-        returns = "()",
-        type = "method"
-      },
       SetMinDirection = {
         args = "(const Vector3& direction)",
         description = "Set negative direction limit.",
@@ -24274,60 +34478,6 @@ local api = {
       SetMaxDirection = {
         args = "(const Vector3& direction)",
         description = "Set positive direction limit.",
-        returns = "()",
-        type = "method"
-      },
-      SetVelocity = {
-        args = "(float velocity)",
-        description = "Set particle velocity (both minimum and maximum.)",
-        returns = "()",
-        type = "method"
-      },
-      SetMinVelocity = {
-        args = "(float velocity)",
-        description = "Set particle minimum velocity.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxVelocity = {
-        args = "(float velocity)",
-        description = "Set particle maximum velocity.",
-        returns = "()",
-        type = "method"
-      },
-      SetRotation = {
-        args = "(float rotation)",
-        description = "Set particle rotation (both minimum and maximum.)",
-        returns = "()",
-        type = "method"
-      },
-      SetMinRotation = {
-        args = "(float rotation)",
-        description = "Set particle minimum rotation.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxRotation = {
-        args = "(float rotation)",
-        description = "Set particle maximum rotation.",
-        returns = "()",
-        type = "method"
-      },
-      SetRotationSpeed = {
-        args = "(float speed)",
-        description = "Set particle rotation speed (both minimum and maximum.)",
-        returns = "()",
-        type = "method"
-      },
-      SetMinRotationSpeed = {
-        args = "(float speed)",
-        description = "Set particle minimum rotation speed.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxRotationSpeed = {
-        args = "(float speed)",
-        description = "Set particle maximum rotation speed.",
         returns = "()",
         type = "method"
       },
@@ -24343,6 +34493,90 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetActiveTime = {
+        args = "(float time)",
+        description = "Set emission active period length (0 = infinite.)",
+        returns = "()",
+        type = "method"
+      },
+      SetInactiveTime = {
+        args = "(float time)",
+        description = "Set emission inactive period length (0 = infinite.)",
+        returns = "()",
+        type = "method"
+      },
+      SetMinEmissionRate = {
+        args = "(float rate)",
+        description = "Set minimum emission rate.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxEmissionRate = {
+        args = "(float rate)",
+        description = "Set maximum emission rate.",
+        returns = "()",
+        type = "method"
+      },
+      SetMinParticleSize = {
+        args = "(const Vector2& size)",
+        description = "Set particle minimum size.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxParticleSize = {
+        args = "(const Vector2& size)",
+        description = "Set particle maximum size.",
+        returns = "()",
+        type = "method"
+      },
+      SetMinTimeToLive = {
+        args = "(float time)",
+        description = "Set particle minimum time to live.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxTimeToLive = {
+        args = "(float time)",
+        description = "Set particle maximum time to live.",
+        returns = "()",
+        type = "method"
+      },
+      SetMinVelocity = {
+        args = "(float velocity)",
+        description = "Set particle minimum velocity.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxVelocity = {
+        args = "(float velocity)",
+        description = "Set particle maximum velocity.",
+        returns = "()",
+        type = "method"
+      },
+      SetMinRotation = {
+        args = "(float rotation)",
+        description = "Set particle minimum rotation.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxRotation = {
+        args = "(float rotation)",
+        description = "Set particle maximum rotation.",
+        returns = "()",
+        type = "method"
+      },
+      SetMinRotationSpeed = {
+        args = "(float speed)",
+        description = "Set particle minimum rotation speed.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxRotationSpeed = {
+        args = "(float speed)",
+        description = "Set particle maximum rotation speed.",
+        returns = "()",
+        type = "method"
+      },
       SetSizeAdd = {
         args = "(float sizeAdd)",
         description = "Set particle size additive modifier.",
@@ -24355,22 +34589,23 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetColor = {
-        args = "(const Color& color)",
-        description = "Set color of particles.",
-        returns = "()",
-        type = "method"
-      },
-      SetNumColors = {
-        args = "(unsigned num)",
+      SetColorFrame = {
+        args = "(unsigned index, const ColorFrame& colorFrame)",
         description = "Set number of color animation frames.",
         returns = "()",
         type = "method"
       },
-      SetNumTextureFrames = {
-        args = "(unsigned num)",
+      SetTextureFrame = {
+        args = "(unsigned index, const TextureFrame& textureFrame)",
         description = "Set number of texture animation frames.",
         returns = "()",
+        type = "method"
+      },
+      GetMaterial = {
+        args = "()",
+        description = "Return material.",
+        returns = "(Material*)",
+        valuetype = "Material",
         type = "method"
       },
       GetNumParticles = {
@@ -24379,27 +34614,33 @@ local api = {
         returns = "(unsigned)",
         type = "method"
       },
-      IsEmitting = {
-        args = "()",
-        description = "Return whether is currently emitting.",
-        returns = "(bool)",
-        type = "method"
-      },
       GetUpdateInvisible = {
         args = "()",
         description = "Return whether to update when particles are not visible.",
         returns = "(bool)",
         type = "method"
       },
-      GetMinEmissionRate = {
+      IsRelative = {
         args = "()",
-        description = "Return minimum emission rate.",
-        returns = "(float)",
+        description = "Return whether billboards are relative to the scene node.",
+        returns = "(bool)",
         type = "method"
       },
-      GetMaxEmissionRate = {
+      IsScaled = {
         args = "()",
-        description = "Return maximum emission rate.",
+        description = "Return whether scene node scale affects billboards' size.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsSorted = {
+        args = "()",
+        description = "Return whether billboards are sorted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetAnimationLodBias = {
+        args = "()",
+        description = "Return animation Lod bias.",
         returns = "(float)",
         type = "method"
       },
@@ -24416,6 +34657,33 @@ local api = {
         valuetype = "Vector3",
         type = "method"
       },
+      GetMinDirection = {
+        args = "()",
+        description = "Return negative direction limit.",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
+      GetMaxDirection = {
+        args = "()",
+        description = "Return positive direction limit.",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
+      GetConstantForce = {
+        args = "()",
+        description = "Return constant force acting on particles.",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
+      GetDampingForce = {
+        args = "()",
+        description = "Return particle velocity damping force.",
+        returns = "(float)",
+        type = "method"
+      },
       GetActiveTime = {
         args = "()",
         description = "Return emission active period length (0 = infinite.)",
@@ -24428,15 +34696,15 @@ local api = {
         returns = "(float)",
         type = "method"
       },
-      GetMinTimeToLive = {
+      GetMinEmissionRate = {
         args = "()",
-        description = "Return particle minimum time to live.",
+        description = "Return minimum emission rate.",
         returns = "(float)",
         type = "method"
       },
-      GetMaxTimeToLive = {
+      GetMaxEmissionRate = {
         args = "()",
-        description = "Return particle maximum time to live.",
+        description = "Return maximum emission rate.",
         returns = "(float)",
         type = "method"
       },
@@ -24454,18 +34722,16 @@ local api = {
         valuetype = "Vector2",
         type = "method"
       },
-      GetMinDirection = {
+      GetMinTimeToLive = {
         args = "()",
-        description = "Return negative direction limit.",
-        returns = "(const Vector3&)",
-        valuetype = "Vector3",
+        description = "Return particle minimum time to live.",
+        returns = "(float)",
         type = "method"
       },
-      GetMaxDirection = {
+      GetMaxTimeToLive = {
         args = "()",
-        description = "Return positive direction limit.",
-        returns = "(const Vector3&)",
-        valuetype = "Vector3",
+        description = "Return particle maximum time to live.",
+        returns = "(float)",
         type = "method"
       },
       GetMinVelocity = {
@@ -24504,19 +34770,6 @@ local api = {
         returns = "(float)",
         type = "method"
       },
-      GetConstantForce = {
-        args = "()",
-        description = "Return constant force acting on particles.",
-        returns = "(const Vector3&)",
-        valuetype = "Vector3",
-        type = "method"
-      },
-      GetDampingForce = {
-        args = "()",
-        description = "Return particle velocity damping force.",
-        returns = "(float)",
-        type = "method"
-      },
       GetSizeAdd = {
         args = "()",
         description = "Return particle size additive modifier.",
@@ -24529,15 +34782,16 @@ local api = {
         returns = "(float)",
         type = "method"
       },
-      GetNumColors = {
+      GetNumColorFrames = {
         args = "()",
         description = "Return number of color animation frames.",
         returns = "(unsigned)",
         type = "method"
       },
-      GetColor = {
+      GetColorFrame = {
         args = "(unsigned index)",
-        returns = "(ColorFrame*)",
+        description = "Return a color animation frame, or null if outside range.",
+        returns = "(const ColorFrame*)",
         valuetype = "ColorFrame",
         type = "method"
       },
@@ -24549,32 +34803,38 @@ local api = {
       },
       GetTextureFrame = {
         args = "(unsigned index)",
-        returns = "(TextureFrame*)",
+        description = "Return a texture animation frame, or null if outside range.",
+        returns = "(const TextureFrame*)",
         valuetype = "TextureFrame",
         type = "method"
       },
+      material = {
+        valuetype = "Material",
+        description = "Material*\nMaterial.",
+        type = "value"
+      },
       numParticles = {
-        description = "unsigned",
-        type = "value"
-      },
-      emissionRate = {
-        description = "float",
-        type = "value"
-      },
-      emitting = {
-        description = "bool\nCurrently emitting flag.",
+        description = "unsigned\nNumber of particles.",
         type = "value"
       },
       updateInvisible = {
         description = "bool\nUpdate when invisible flag.",
         type = "value"
       },
-      minEmissionRate = {
-        description = "float",
+      relative = {
+        description = "bool\nBillboards relative flag.",
         type = "value"
       },
-      maxEmissionRate = {
-        description = "float",
+      scaled = {
+        description = "bool\nScale affects billboard scale flag.",
+        type = "value"
+      },
+      sorted = {
+        description = "bool\nBillboards sorted flag.",
+        type = "value"
+      },
+      animationLodBias = {
+        description = "float\nAnimation LOD bias.",
         type = "value"
       },
       emitterType = {
@@ -24583,7 +34843,26 @@ local api = {
       },
       emitterSize = {
         valuetype = "Vector3",
-        description = "Vector3&\nEmitter size.",
+        description = "const Vector3&\nEmitter size.",
+        type = "value"
+      },
+      minDirection = {
+        valuetype = "Vector3",
+        description = "const Vector3&",
+        type = "value"
+      },
+      maxDirection = {
+        valuetype = "Vector3",
+        description = "const Vector3&",
+        type = "value"
+      },
+      constantForce = {
+        valuetype = "Vector3",
+        description = "const Vector3&\nParticle constant force.",
+        type = "value"
+      },
+      dampingForce = {
+        description = "float\nParticle velocity damping force.",
         type = "value"
       },
       activeTime = {
@@ -24594,8 +34873,22 @@ local api = {
         description = "float\nInactive period.",
         type = "value"
       },
-      timeToLive = {
+      minEmissionRate = {
         description = "float",
+        type = "value"
+      },
+      maxEmissionRate = {
+        description = "float",
+        type = "value"
+      },
+      minParticleSize = {
+        valuetype = "Vector2",
+        description = "const Vector2&",
+        type = "value"
+      },
+      maxParticleSize = {
+        valuetype = "Vector2",
+        description = "const Vector2&",
         type = "value"
       },
       minTimeToLive = {
@@ -24603,35 +34896,6 @@ local api = {
         type = "value"
       },
       maxTimeToLive = {
-        description = "float",
-        type = "value"
-      },
-      particleSize = {
-        valuetype = "Vector2",
-        description = "Vector2&",
-        type = "value"
-      },
-      minParticleSize = {
-        valuetype = "Vector2",
-        description = "Vector2&",
-        type = "value"
-      },
-      maxParticleSize = {
-        valuetype = "Vector2",
-        description = "Vector2&",
-        type = "value"
-      },
-      minDirection = {
-        valuetype = "Vector3",
-        description = "Vector3&",
-        type = "value"
-      },
-      maxDirection = {
-        valuetype = "Vector3",
-        description = "Vector3&",
-        type = "value"
-      },
-      velocity = {
         description = "float",
         type = "value"
       },
@@ -24643,19 +34907,11 @@ local api = {
         description = "float",
         type = "value"
       },
-      rotation = {
-        description = "float",
-        type = "value"
-      },
       minRotation = {
         description = "float",
         type = "value"
       },
       maxRotation = {
-        description = "float",
-        type = "value"
-      },
-      rotationSpeed = {
         description = "float",
         type = "value"
       },
@@ -24667,15 +34923,6 @@ local api = {
         description = "float",
         type = "value"
       },
-      constantForce = {
-        valuetype = "Vector3",
-        description = "Vector3&\nParticle constant force.",
-        type = "value"
-      },
-      dampingForce = {
-        description = "float\nParticle velocity damping force.",
-        type = "value"
-      },
       sizeAdd = {
         description = "float\nParticle size additive parameter.",
         type = "value"
@@ -24684,12 +34931,194 @@ local api = {
         description = "float\nParticle size multiplicative parameter.",
         type = "value"
       },
-      numColors = {
+      numColorFrames = {
         description = "unsigned",
         type = "value"
       },
       numTextureFrames = {
         description = "unsigned",
+        type = "value"
+      },
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  ParticleEffect2D = {
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    type = "class"
+  },
+  ParticleEmitter = {
+    childs = {
+      SetEffect = {
+        args = "(ParticleEffect* effect)",
+        description = "Set particle effect.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumParticles = {
+        args = "(unsigned num)",
+        description = "Set maximum number of particles.",
+        returns = "()",
+        type = "method"
+      },
+      SetEmitting = {
+        args = "(bool enable)",
+        description = "Set whether should be emitting. If the state was changed, also resets the emission period timer.",
+        returns = "()",
+        type = "method"
+      },
+      SetSerializeParticles = {
+        args = "(bool enable)",
+        description = "Set whether particles should be serialized. Default true, set false to reduce scene file size.",
+        returns = "()",
+        type = "method"
+      },
+      ResetEmissionTimer = {
+        args = "()",
+        description = "Reset the emission period timer.",
+        returns = "()",
+        type = "method"
+      },
+      RemoveAllParticles = {
+        args = "()",
+        description = "Remove all current particles.",
+        returns = "()",
+        type = "method"
+      },
+      Reset = {
+        args = "()",
+        description = "Reset the particle emitter completely. Removes current particles, sets emitting state on, and resets the emission timer.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyEffect = {
+        args = "()",
+        description = "Apply not continuously updated values such as the material, the number of particles and sorting mode from the particle effect. Call this if you change the effect programmatically.",
+        returns = "()",
+        type = "method"
+      },
+      GetEffect = {
+        args = "()",
+        description = "Return particle effect.",
+        returns = "(ParticleEffect*)",
+        valuetype = "ParticleEffect",
+        type = "method"
+      },
+      GetNumParticles = {
+        args = "()",
+        description = "Return maximum number of particles.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      IsEmitting = {
+        args = "()",
+        description = "Return whether is currently emitting.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetSerializeParticles = {
+        args = "()",
+        description = "Return whether particles are to be serialized.",
+        returns = "(bool)",
+        type = "method"
+      },
+      effect = {
+        valuetype = "ParticleEffect",
+        description = "ParticleEffect*\nParticle effect.",
+        type = "value"
+      },
+      numParticles = {
+        description = "unsigned",
+        type = "value"
+      },
+      emitting = {
+        description = "bool\nCurrently emitting flag.",
+        type = "value"
+      },
+      serializeParticles = {
+        description = "bool\nSerialize particles flag.",
         type = "value"
       },
       SetMaterial = {
@@ -24722,9 +35151,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetFaceCamera = {
-        args = "(bool enable)",
-        description = "Set whether billboards face the camera automatically. Default true.",
+      SetFaceCameraMode = {
+        args = "(FaceCameraMode mode)",
+        description = "Set how the billboards should rotate in relation to the camera. Default is to follow camera rotation on all axes (FC_ROTATE_XYZ.)",
         returns = "()",
         type = "method"
       },
@@ -24778,10 +35207,10 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      GetFaceCamera = {
+      GetFaceCameraMode = {
         args = "()",
-        description = "Return whether faces the camera automatically.",
-        returns = "(bool)",
+        description = "Return how the billboards rotate in relation to the camera.",
+        returns = "(FaceCameraMode)",
         type = "method"
       },
       GetAnimationLodBias = {
@@ -24811,8 +35240,8 @@ local api = {
         description = "bool\nBillboards sorted flag.",
         type = "value"
       },
-      faceCamera = {
-        description = "bool\nFace camera flag.",
+      faceCameraMode = {
+        description = "FaceCameraMode\nBillboard rotation mode in relation to the camera.",
         type = "value"
       },
       animationLodBias = {
@@ -24979,7 +35408,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -25097,11 +35526,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -25122,13 +35622,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -25149,11 +35649,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -25169,27 +35669,33 @@ local api = {
   },
   ParticleEmitter2D = {
     childs = {
-      SetModel = {
-        args = "(ParticleModel2D* model)",
-        description = "Set particle model.",
+      SetEffect = {
+        args = "(ParticleEffect2D* effect)",
+        description = "Set particle effect.",
         returns = "()",
         type = "method"
       },
-      GetModel = {
+      GetEffect = {
         args = "()",
-        description = "Return particle model.",
-        returns = "(ParticleModel2D*)",
-        valuetype = "ParticleModel2D",
+        description = "Return particle effect.",
+        returns = "(ParticleEffect2D*)",
+        valuetype = "ParticleEffect2D",
         type = "method"
       },
-      model = {
-        valuetype = "ParticleModel2D",
-        description = "ParticleModel2D*\nParticle model.",
+      effect = {
+        valuetype = "ParticleEffect2D",
+        description = "ParticleEffect2D*\nParticle effect.",
         type = "value"
       },
-      SetPixelsPerUnit = {
-        args = "(float pixelsPerUnit)",
-        description = "Set pixels per coordinate unit.",
+      SetLayer = {
+        args = "(int layer)",
+        description = "Set layer.",
+        returns = "()",
+        type = "method"
+      },
+      SetOrderInLayer = {
+        args = "(int orderInLayer)",
+        description = "Set order in layer.",
         returns = "()",
         type = "method"
       },
@@ -25199,28 +35705,28 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
-        returns = "()",
-        type = "method"
-      },
       SetBlendMode = {
         args = "(BlendMode mode)",
         description = "Set blend mode.",
         returns = "()",
         type = "method"
       },
-      SetZValue = {
-        args = "(float zValue)",
-        description = "Set Z value.",
+      SetMaterial = {
+        args = "(Material* material)",
+        description = "Set material.",
         returns = "()",
         type = "method"
       },
-      GetPixelsPerUnit = {
+      GetLayer = {
         args = "()",
-        description = "Return pixels per coordinate unit.",
-        returns = "(float)",
+        description = "Return layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetOrderInLayer = {
+        args = "()",
+        description = "Return order in layer.",
+        returns = "(int)",
         type = "method"
       },
       GetSprite = {
@@ -25230,11 +35736,11 @@ local api = {
         valuetype = "Sprite2D",
         type = "method"
       },
-      GetMaterial = {
+      GetTexture = {
         args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
+        description = "Return texture.",
+        returns = "(Texture2D*)",
+        valuetype = "Texture2D",
         type = "method"
       },
       GetBlendMode = {
@@ -25243,14 +35749,19 @@ local api = {
         returns = "(BlendMode)",
         type = "method"
       },
-      GetZValue = {
+      GetMaterial = {
         args = "()",
-        description = "Return Z value.",
-        returns = "(float)",
+        description = "Return material.",
+        returns = "(Material*)",
+        valuetype = "Material",
         type = "method"
       },
-      pixelsPerUnit = {
-        description = "float\nPixels per coordinate unit.",
+      layer = {
+        description = "int\nLayer.",
+        type = "value"
+      },
+      orderInLayer = {
+        description = "int\nOrder in layer.",
         type = "value"
       },
       sprite = {
@@ -25258,17 +35769,18 @@ local api = {
         description = "Sprite2D*\nSprite.",
         type = "value"
       },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
+      texture = {
+        valuetype = "Texture2D",
+        description = "(Readonly) Texture2D*",
         type = "value"
       },
       blendMode = {
         description = "BlendMode\nBlend mode.",
         type = "value"
       },
-      zValue = {
-        description = "float\nZ value.",
+      material = {
+        valuetype = "Material",
+        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -25431,7 +35943,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -25549,11 +36061,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -25574,13 +36157,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -25601,11 +36184,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -25619,52 +36202,49 @@ local api = {
     },
     type = "class"
   },
-  ParticleModel2D = {
-      Load = {
-        args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
-      Save = {
-        args = "(Serializer& dest)",
-        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
-        returns = "(bool)",
-        type = "method"
-      },
-      GetName = {
+  Pass = {
+    childs = {
+      IsSM3 = {
         args = "()",
-        description = "Return name.",
+        description = "Return whether requires %Shader %Model 3.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsDesktop = {
+        args = "()",
+        description = "Return whether requires desktop level hardware.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetVertexShader = {
+        args = "()",
+        description = "Return vertex shader name.",
         returns = "(const String)",
         type = "method"
       },
-      GetNameHash = {
+      GetPixelShader = {
         args = "()",
-        description = "Return name hash.",
-        returns = "(StringHash)",
+        description = "Return pixel shader name.",
+        returns = "(const String)",
         type = "method"
       },
-      GetMemoryUse = {
-        args = "()",
-        description = "Return memory use in bytes, possibly approximate.",
-        returns = "(unsigned)",
-        type = "method"
-      },
-      name = {
-        description = "(Readonly) String\nName.",
+      SM3 = {
+        description = "(Readonly) bool",
         type = "value"
       },
-      nameHash = {
-        description = "(Readonly) StringHash\nName hash.",
+      desktop = {
+        description = "(Readonly) bool",
         type = "value"
       },
-      memoryUse = {
-        description = "(Readonly) unsigned\nMemory use in bytes.",
+      vertexShader = {
+        description = "(Readonly) const String",
         type = "value"
       },
-    type = "class"
-  },
-  Pass = {
+      pixelShader = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
     type = "class"
   },
   PhysicsRaycastResult = {
@@ -25700,6 +36280,39 @@ local api = {
     },
     type = "class"
   },
+  PhysicsRaycastResult2D = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(PhysicsRaycastResult2D*)",
+        valuetype = "PhysicsRaycastResult2D",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      position = {
+        description = "Vector2",
+        type = "value"
+      },
+      normal = {
+        description = "Vector2",
+        type = "value"
+      },
+      distance = {
+        description = "float",
+        type = "value"
+      },
+      body = {
+        valuetype = "RigidBody2D",
+        description = "RigidBody2D*",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   PhysicsWorld = {
     childs = {
       Update = {
@@ -25716,13 +36329,19 @@ local api = {
       },
       SetFps = {
         args = "(int fps)",
-        description = "Set simulation steps per second.",
+        description = "Set simulation substeps per second.",
         returns = "()",
         type = "method"
       },
       SetGravity = {
         args = "(Vector3 gravity)",
         description = "Set gravity.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxSubSteps = {
+        args = "(int num)",
+        description = "Set maximum number of physics substeps per frame. 0 (default) is unlimited. Positive values cap the amount. Use a negative value to enable an adaptive timestep. This may cause inconsistent physics behavior.",
         returns = "()",
         type = "method"
       },
@@ -25772,6 +36391,18 @@ local api = {
         returns = "(PhysicsRaycastResult)",
         type = "method"
       },
+      ConvexCast = {
+        args = "(CollisionShape* shape, const Vector3& startPos, const Quaternion& startRot, const Vector3& endPos, const Quaternion& endRot, unsigned collisionMask = M_MAX_UNSIGNED)",
+        returns = "(PhysicsRaycastResult)",
+        type = "method"
+      },
+      GetRigidBodies = {
+        args = "(const Sphere& sphere, unsigned collisionMask = M_MAX_UNSIGNED)",
+        description = "(const PODVector<RigidBody*>&) GetRigidBodies (const BoundingBox& box, unsigned collisionMask = M_MAX_UNSIGNED),\n(const PODVector<RigidBody*>&) GetRigidBodies (const RigidBody* body)",
+        returns = "(const PODVector<RigidBody*>&)",
+        valuetype = "PODVector<RigidBody*>",
+        type = "method"
+      },
       DrawDebugGeometry = {
         args = "(bool depthTest)",
         description = "Add debug geometry to the debug renderer.",
@@ -25788,6 +36419,12 @@ local api = {
         args = "()",
         description = "Return gravity.",
         returns = "(Vector3)",
+        type = "method"
+      },
+      GetMaxSubSteps = {
+        args = "()",
+        description = "Return maximum number of physics substeps per frame.",
+        returns = "(int)",
         type = "method"
       },
       GetNumIterations = {
@@ -25830,6 +36467,10 @@ local api = {
         description = "Vector3",
         type = "value"
       },
+      maxSubSteps = {
+        description = "int\nMaximum number of simulation substeps per frame. 0 (default) unlimited, or negative values for adaptive timestep.",
+        type = "value"
+      },
       numIterations = {
         description = "int",
         type = "value"
@@ -25847,7 +36488,7 @@ local api = {
         type = "value"
       },
       fps = {
-        description = "int\nSimulation steps per second.",
+        description = "int\nSimulation substeps per second.",
         type = "value"
       },
       maxNetworkAngularVelocity = {
@@ -25903,11 +36544,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -25928,13 +36640,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -25955,11 +36667,434 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  PhysicsWorld2D = {
+    childs = {
+      DrawDebugGeometry = {
+        args = "()",
+        description = "Add debug geometry to the debug renderer.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawShape = {
+        args = "(bool drawShape)",
+        description = "Set draw shape.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawJoint = {
+        args = "(bool drawJoint)",
+        description = "Set draw joint.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawAabb = {
+        args = "(bool drawAabb)",
+        description = "Set draw aabb.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawPair = {
+        args = "(bool drawPair)",
+        description = "Set draw pair.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawCenterOfMass = {
+        args = "(bool drawCenterOfMass)",
+        description = "Set draw center of mass.",
+        returns = "()",
+        type = "method"
+      },
+      SetAllowSleeping = {
+        args = "(bool enable)",
+        description = "Set allow sleeping.",
+        returns = "()",
+        type = "method"
+      },
+      SetWarmStarting = {
+        args = "(bool enable)",
+        description = "Set warm starting.",
+        returns = "()",
+        type = "method"
+      },
+      SetContinuousPhysics = {
+        args = "(bool enable)",
+        description = "Set continuous physics.",
+        returns = "()",
+        type = "method"
+      },
+      SetSubStepping = {
+        args = "(bool enable)",
+        description = "Set sub stepping.",
+        returns = "()",
+        type = "method"
+      },
+      SetGravity = {
+        args = "(const Vector2& gravity)",
+        description = "Set gravity.",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoClearForces = {
+        args = "(bool enable)",
+        description = "Set auto clear forces.",
+        returns = "()",
+        type = "method"
+      },
+      SetVelocityIterations = {
+        args = "(int velocityIterations)",
+        description = "Set velocity iterations.",
+        returns = "()",
+        type = "method"
+      },
+      SetPositionIterations = {
+        args = "(int positionIterations)",
+        description = "Set position iterations.",
+        returns = "()",
+        type = "method"
+      },
+      Raycast = {
+        args = "(const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED)",
+        returns = "(const PODVector<PhysicsRaycastResult2D>&)",
+        valuetype = "PODVector<PhysicsRaycastResult2D>",
+        type = "method"
+      },
+      RaycastSingle = {
+        args = "(const Vector2& startPoint, const Vector2& endPoint, unsigned collisionMask = M_MAX_UNSIGNED)",
+        returns = "(PhysicsRaycastResult2D)",
+        type = "method"
+      },
+      GetRigidBody = {
+        args = "(const Vector2& point, unsigned collisionMask = M_MAX_UNSIGNED)",
+        description = "(RigidBody2D*) GetRigidBody (int screenX, int screenY, unsigned collisionMask = M_MAX_UNSIGNED)\nReturn rigid body at point.",
+        returns = "(RigidBody2D*)",
+        valuetype = "RigidBody2D",
+        type = "method"
+      },
+      GetRigidBodies = {
+        args = "(const Rect& aabb, unsigned collisionMask = M_MAX_UNSIGNED)",
+        returns = "(const PODVector<RigidBody2D*>&)",
+        valuetype = "PODVector<RigidBody2D*>",
+        type = "method"
+      },
+      GetDrawShape = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetDrawJoint = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetDrawAabb = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetDrawPair = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetDrawCenterOfMass = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetAllowSleeping = {
+        args = "()",
+        description = "Return allow sleeping.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetWarmStarting = {
+        args = "()",
+        description = "Return warm starting.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetContinuousPhysics = {
+        args = "()",
+        description = "Return continuous physics.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetSubStepping = {
+        args = "()",
+        description = "Return sub stepping.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetAutoClearForces = {
+        args = "()",
+        description = "Return auto clear forces.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetGravity = {
+        args = "()",
+        description = "Return gravity.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetVelocityIterations = {
+        args = "()",
+        description = "Return velocity iterations.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetPositionIterations = {
+        args = "()",
+        description = "Return position iterations.",
+        returns = "(int)",
+        type = "method"
+      },
+      drawShape = {
+        description = "bool",
+        type = "value"
+      },
+      drawJoint = {
+        description = "bool",
+        type = "value"
+      },
+      drawAabb = {
+        description = "bool",
+        type = "value"
+      },
+      drawPair = {
+        description = "bool",
+        type = "value"
+      },
+      drawCenterOfMass = {
+        description = "bool",
+        type = "value"
+      },
+      allowSleeping = {
+        description = "bool",
+        type = "value"
+      },
+      warmStarting = {
+        description = "bool",
+        type = "value"
+      },
+      continuousPhysics = {
+        description = "bool",
+        type = "value"
+      },
+      subStepping = {
+        description = "bool",
+        type = "value"
+      },
+      autoClearForces = {
+        description = "bool",
+        type = "value"
+      },
+      gravity = {
+        valuetype = "Vector2",
+        description = "Vector2&\nGravity.",
+        type = "value"
+      },
+      velocityIterations = {
+        description = "int\nVelocity iterations.",
+        type = "value"
+      },
+      positionIterations = {
+        description = "int\nPosition iterations.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -25997,6 +37132,11 @@ local api = {
         args = "(const Matrix3& transform)",
         description = "() Transform (const Matrix3x4& transform),\n() Transform (const Matrix4& transform)",
         returns = "()",
+        type = "method"
+      },
+      Project = {
+        args = "(const Vector3& point)",
+        returns = "(Vector3)",
         type = "method"
       },
       Distance = {
@@ -26105,11 +37245,28 @@ local api = {
     },
     type = "class"
   },
+  PropertySet2D = {
+    childs = {
+      HasProperty = {
+        args = "(const String name)",
+        description = "Return has property.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetProperty = {
+        args = "(const String name)",
+        description = "Return property value.",
+        returns = "(const String)",
+        type = "method"
+      },
+    },
+    type = "class"
+  },
   Quaternion = {
     childs = {
       new = {
         args = "()",
-        description = "(Quaternion*) new (const Quaternion& quat),\n(Quaternion*) new (float w, float x, float y, float z),\n(Quaternion*) new (float angle, const Vector3& axis),\n(Quaternion*) new (float x, float y, float z),\n(Quaternion*) new (const Vector3& start, const Vector3& end),\n(Quaternion*) new (const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis),\n(Quaternion*) new (const Matrix3& matrix)",
+        description = "(Quaternion*) new (const Quaternion& quat),\n(Quaternion*) new (float w, float x, float y, float z),\n(Quaternion*) new (float angle, const Vector3& axis),\n(Quaternion*) new (float angle),\n(Quaternion*) new (float x, float y, float z),\n(Quaternion*) new (const Vector3& start, const Vector3& end),\n(Quaternion*) new (const Vector3& xAxis, const Vector3& yAxis, const Vector3& zAxis),\n(Quaternion*) new (const Matrix3& matrix)",
         returns = "(Quaternion*)",
         valuetype = "Quaternion",
         type = "method"
@@ -26146,7 +37303,7 @@ local api = {
       },
       FromLookRotation = {
         args = "(const Vector3& direction, const Vector3& up)",
-        returns = "()",
+        returns = "(bool)",
         type = "method"
       },
       Normalize = {
@@ -26176,6 +37333,11 @@ local api = {
       },
       Equals = {
         args = "(const Quaternion& rhs)",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsNaN = {
+        args = "()",
         returns = "(bool)",
         type = "method"
       },
@@ -26808,12 +37970,6 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetMaxShadowCascades = {
-        args = "(int cascades)",
-        description = "Set maximum number of directional light shadow map cascades. Affects the size of directional light shadow maps.",
-        returns = "()",
-        type = "method"
-      },
       SetDynamicInstancing = {
         args = "(bool enable)",
         description = "Set dynamic instancing on/off.",
@@ -26853,6 +38009,18 @@ local api = {
       SetOccluderSizeThreshold = {
         args = "(float screenSize)",
         description = "Set required screen size (1.0 = full screen) for occluders.",
+        returns = "()",
+        type = "method"
+      },
+      SetMobileShadowBiasMul = {
+        args = "(float mul)",
+        description = "Set shadow depth bias multiplier for mobile platforms (OpenGL ES.) No effect on desktops. Default 2.",
+        returns = "()",
+        type = "method"
+      },
+      SetMobileShadowBiasAdd = {
+        args = "(float add)",
+        description = "Set shadow depth bias addition for mobile platforms (OpenGL ES.)  No effect on desktops. Default 0.0001.",
         returns = "()",
         type = "method"
       },
@@ -26948,12 +38116,6 @@ local api = {
         returns = "(int)",
         type = "method"
       },
-      GetMaxShadowCascades = {
-        args = "()",
-        description = "Return maximum number of directional light shadow map cascades.",
-        returns = "(int)",
-        type = "method"
-      },
       GetDynamicInstancing = {
         args = "()",
         description = "Return whether dynamic instancing is in use.",
@@ -26993,6 +38155,18 @@ local api = {
       GetOccluderSizeThreshold = {
         args = "()",
         description = "Return occluder screen size threshold.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMobileShadowBiasMul = {
+        args = "()",
+        description = "Return shadow depth bias multiplier for mobile platforms.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMobileShadowBiasAdd = {
+        args = "()",
+        description = "Return shadow depth bias addition for mobile platforms.",
         returns = "(float)",
         type = "method"
       },
@@ -27045,13 +38219,6 @@ local api = {
         valuetype = "Zone",
         type = "method"
       },
-      GetQuadDirLight = {
-        args = "()",
-        description = "Return the directional light for fullscreen quad rendering.",
-        returns = "(Light*)",
-        valuetype = "Light",
-        type = "method"
-      },
       GetDefaultMaterial = {
         args = "()",
         description = "Return the default material.",
@@ -27071,33 +38238,6 @@ local api = {
         description = "Return the default spotlight attenuation texture.",
         returns = "(Texture2D*)",
         valuetype = "Texture2D",
-        type = "method"
-      },
-      GetFaceSelectCubeMap = {
-        args = "()",
-        description = "Return the shadowed pointlight face selection cube map.",
-        returns = "(TextureCube*)",
-        valuetype = "TextureCube",
-        type = "method"
-      },
-      GetIndirectionCubeMap = {
-        args = "()",
-        description = "Return the shadowed pointlight indirection cube map.",
-        returns = "(TextureCube*)",
-        valuetype = "TextureCube",
-        type = "method"
-      },
-      GetInstancingBuffer = {
-        args = "()",
-        returns = "(VertexBuffer*)",
-        valuetype = "VertexBuffer",
-        type = "method"
-      },
-      GetFrameInfo = {
-        args = "()",
-        description = "Return the frame update parameters.",
-        returns = "(const FrameInfo&)",
-        valuetype = "FrameInfo",
         type = "method"
       },
       DrawDebugGeometry = {
@@ -27159,10 +38299,6 @@ local api = {
         description = "int\nMaximum number of shadow maps per resolution.",
         type = "value"
       },
-      maxShadowCascades = {
-        description = "int\nMaximum number of directional light shadow cascades.",
-        type = "value"
-      },
       dynamicInstancing = {
         description = "bool\nDynamic instancing flag.",
         type = "value"
@@ -27191,8 +38327,16 @@ local api = {
         description = "float\nOccluder screen size threshold.",
         type = "value"
       },
+      mobileShadowBiasMul = {
+        description = "float\nMobile platform shadow depth bias multiplier.",
+        type = "value"
+      },
+      mobileShadowBiasAdd = {
+        description = "float\nMobile platform shadow depth bias addition.",
+        type = "value"
+      },
       numViews = {
-        description = "(Readonly) unsigned\nNumber of views.",
+        description = "(Readonly) unsigned",
         type = "value"
       },
       numPrimitives = {
@@ -27230,7 +38374,7 @@ local api = {
     childs = {
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -27283,12 +38427,18 @@ local api = {
       },
       ReloadResource = {
         args = "(Resource* resource)",
-        description = "Reload a resource. Return false and release it if fails.",
+        description = "Reload a resource. Return true on success. The resource will not be removed from the cache in case of failure.",
         returns = "(bool)",
         type = "method"
       },
+      ReloadResourceWithDependencies = {
+        args = "(const String fileName)",
+        description = "Reload a resource based on filename. Causes also reload of dependent resources if necessary.",
+        returns = "()",
+        type = "method"
+      },
       SetMemoryBudget = {
-        args = "(ShortStringHash type, unsigned budget)",
+        args = "(StringHash type, unsigned budget)",
         description = "() SetMemoryBudget (const String type, unsigned budget)\nSet memory budget for a specific resource type, default 0 is unlimited.",
         returns = "()",
         type = "method"
@@ -27311,17 +38461,33 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetFinishBackgroundResourcesMs = {
+        args = "(int ms)",
+        returns = "()",
+        type = "method"
+      },
       GetFile = {
         args = "(const String name)",
-        description = "Open and return a file from the resource load paths or from inside a package file. If not found, use a fallback search with absolute path. Return null if fails.",
+        description = "Open and return a file from the resource load paths or from inside a package file. If not found, use a fallback search with absolute path. Return null if fails. Can be called from outside the main thread.",
         returns = "(File*)",
         valuetype = "File",
         type = "method"
       },
       GetResource = {
-        args = "(const String type, const String name, bool SendEventOnFailure = true)",
+        args = "(const String type, const String name, bool sendEventOnFailure = true)",
         returns = "(Resource*)",
         valuetype = "Resource",
+        type = "method"
+      },
+      BackgroundLoadResource = {
+        args = "(const String type, const String name, bool sendEventOnFailure = true)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetNumBackgroundLoadResources = {
+        args = "()",
+        description = "Return number of pending background-loaded resources.",
+        returns = "(unsigned)",
         type = "method"
       },
       Exists = {
@@ -27331,13 +38497,13 @@ local api = {
         type = "method"
       },
       GetMemoryBudget = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "Return memory budget for a resource type.",
         returns = "(unsigned)",
         type = "method"
       },
       GetMemoryUse = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "Return total memory use for a resource type.",
         returns = "(unsigned)",
         type = "method"
@@ -27368,8 +38534,14 @@ local api = {
       },
       GetSearchPackagesFirst = {
         args = "()",
-        description = "Define whether when getting resources should check package files or directories first.",
+        description = "Return whether when getting resources should check package files or directories first.",
         returns = "(bool)",
+        type = "method"
+      },
+      GetFinishBackgroundResourcesMs = {
+        args = "()",
+        description = "Return how many milliseconds maximum to spend on finishing background loaded resources.",
+        returns = "(int)",
         type = "method"
       },
       GetPreferredResourceDir = {
@@ -27395,15 +38567,23 @@ local api = {
         type = "value"
       },
       autoReloadResources = {
-        description = "(Readonly) bool\nAutomatic resource reloading flag.",
+        description = "bool\nAutomatic resource reloading flag.",
         type = "value"
       },
       returnFailedResources = {
-        description = "(Readonly) bool\nReturn failed resources flag.",
+        description = "bool\nReturn failed resources flag.",
         type = "value"
       },
       searchPackagesFirst = {
-        description = "(Readonly) bool\nSearch priority flag.",
+        description = "bool\nSearch priority flag.",
+        type = "value"
+      },
+      numBackgroundLoadResources = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      finishBackgroundResourcesMs = {
+        description = "int\nHow many milliseconds maximum per frame to spend on finishing background loaded resources.",
         type = "value"
       },
     },
@@ -27413,7 +38593,7 @@ local api = {
     childs = {
       new = {
         args = "()",
-        description = "(ResourceRef*) new (ShortStringHash type),\n(ResourceRef*) new (ShortStringHash type, String name),\n(ResourceRef*) new (const ResourceRef& rhs)",
+        description = "(ResourceRef*) new (StringHash type),\n(ResourceRef*) new (StringHash type, String name),\n(ResourceRef*) new (const ResourceRef& rhs)",
         returns = "(ResourceRef*)",
         valuetype = "ResourceRef",
         type = "method"
@@ -27424,7 +38604,7 @@ local api = {
         type = "method"
       },
       type = {
-        description = "ShortStringHash",
+        description = "StringHash",
         type = "value"
       },
       name = {
@@ -27438,7 +38618,7 @@ local api = {
     childs = {
       new = {
         args = "()",
-        description = "(ResourceRefList*) new (ShortStringHash type)",
+        description = "(ResourceRefList*) new (StringHash type)",
         returns = "(ResourceRefList*)",
         valuetype = "ResourceRefList",
         type = "method"
@@ -27449,7 +38629,7 @@ local api = {
         type = "method"
       },
       type = {
-        description = "ShortStringHash",
+        description = "StringHash",
         type = "value"
       },
     },
@@ -27589,9 +38769,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetPhantom = {
+      SetTrigger = {
         args = "(bool enable)",
-        description = "Set rigid body phantom mode. In phantom mode collisions are reported but do not apply forces.",
+        description = "Set rigid body trigger mode. In trigger mode collisions are reported but do not apply forces.",
         returns = "()",
         type = "method"
       },
@@ -27616,6 +38796,18 @@ local api = {
       SetCollisionEventMode = {
         args = "(CollisionEventMode mode)",
         description = "Set collision event signaling mode. Default is to signal when rigid bodies are active.",
+        returns = "()",
+        type = "method"
+      },
+      DisableMassUpdate = {
+        args = "()",
+        description = "Disable mass update. Call this to optimize performance when adding or editing multiple collision shapes in the same node.",
+        returns = "()",
+        type = "method"
+      },
+      EnableMassUpdate = {
+        args = "()",
+        description = "Re-enable mass update and recalculate the mass/inertia by calling UpdateMass(). Call when collision shape changes are finished.",
         returns = "()",
         type = "method"
       },
@@ -27808,9 +39000,9 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      IsPhantom = {
+      IsTrigger = {
         args = "()",
-        description = "Return phantom mode flag.",
+        description = "Return whether this RigidBody is acting as a trigger.",
         returns = "(bool)",
         type = "method"
       },
@@ -27933,8 +39125,8 @@ local api = {
         description = "bool\nKinematic flag.",
         type = "value"
       },
-      phantom = {
-        description = "bool\nPhantom flag.",
+      trigger = {
+        description = "bool\nTrigger flag.",
         type = "value"
       },
       active = {
@@ -27998,11 +39190,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -28023,13 +39286,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -28050,11 +39313,452 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  RigidBody2D = {
+    childs = {
+      SetBodyType = {
+        args = "(BodyType2D bodyType)",
+        description = "Set body type.",
+        returns = "()",
+        type = "method"
+      },
+      SetMass = {
+        args = "(float mass)",
+        description = "Set Mass.",
+        returns = "()",
+        type = "method"
+      },
+      SetInertia = {
+        args = "(float inertia)",
+        description = "Set inertia.",
+        returns = "()",
+        type = "method"
+      },
+      SetMassCenter = {
+        args = "(Vector2 center)",
+        description = "Set mass center.",
+        returns = "()",
+        type = "method"
+      },
+      SetUseFixtureMass = {
+        args = "(bool useFixtureMass)",
+        description = "Use fixture mass (default is true).",
+        returns = "()",
+        type = "method"
+      },
+      SetLinearDamping = {
+        args = "(float linearDamping)",
+        description = "Set linear damping.",
+        returns = "()",
+        type = "method"
+      },
+      SetAngularDamping = {
+        args = "(float angularDamping)",
+        description = "Set angular damping.",
+        returns = "()",
+        type = "method"
+      },
+      SetAllowSleep = {
+        args = "(bool allowSleep)",
+        description = "Set allow sleep.",
+        returns = "()",
+        type = "method"
+      },
+      SetFixedRotation = {
+        args = "(bool fixedRotation)",
+        description = "Set fixed rotation.",
+        returns = "()",
+        type = "method"
+      },
+      SetBullet = {
+        args = "(bool bullet)",
+        description = "Set bullet.",
+        returns = "()",
+        type = "method"
+      },
+      SetGravityScale = {
+        args = "(float gravityScale)",
+        description = "Set gravity scale.",
+        returns = "()",
+        type = "method"
+      },
+      SetAwake = {
+        args = "(bool awake)",
+        description = "Set awake.",
+        returns = "()",
+        type = "method"
+      },
+      SetLinearVelocity = {
+        args = "(Vector2 linearVelocity)",
+        description = "Set linear velocity.",
+        returns = "()",
+        type = "method"
+      },
+      SetAngularVelocity = {
+        args = "(float angularVelocity)",
+        description = "Set angular velocity.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyForce = {
+        args = "(const Vector2& force, const Vector2& point, bool wake)",
+        description = "Apply force.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyForceToCenter = {
+        args = "(const Vector2& force, bool wake)",
+        description = "Apply force to center.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyTorque = {
+        args = "(float torque, bool wake)",
+        description = "Apply Torque.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyLinearImpulse = {
+        args = "(const Vector2& impulse, const Vector2& point, bool wake)",
+        description = "Apply linear impulse.",
+        returns = "()",
+        type = "method"
+      },
+      ApplyAngularImpulse = {
+        args = "(float impulse, bool wake)",
+        description = "Apply angular impulse.",
+        returns = "()",
+        type = "method"
+      },
+      GetBodyType = {
+        args = "()",
+        returns = "(BodyType2D)",
+        type = "method"
+      },
+      GetMass = {
+        args = "()",
+        description = "Return Mass.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetInertia = {
+        args = "()",
+        description = "Return inertia.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMassCenter = {
+        args = "()",
+        description = "Return mass center.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      GetUseFixtureMass = {
+        args = "()",
+        description = "Return use fixture mass.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetLinearDamping = {
+        args = "()",
+        description = "Return linear damping.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAngularDamping = {
+        args = "()",
+        description = "Return angular damping.",
+        returns = "(float)",
+        type = "method"
+      },
+      IsAllowSleep = {
+        args = "()",
+        description = "Return allow sleep.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsFixedRotation = {
+        args = "()",
+        description = "Return fixed rotation.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsBullet = {
+        args = "()",
+        description = "Return bullet.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetGravityScale = {
+        args = "()",
+        description = "Return gravity scale.",
+        returns = "(float)",
+        type = "method"
+      },
+      IsAwake = {
+        args = "()",
+        description = "Return awake.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetLinearVelocity = {
+        args = "()",
+        description = "Return linear velocity.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      GetAngularVelocity = {
+        args = "()",
+        description = "Return angular velocity.",
+        returns = "(float)",
+        type = "method"
+      },
+      bodyType = {
+        description = "BodyType2D",
+        type = "value"
+      },
+      mass = {
+        description = "float",
+        type = "value"
+      },
+      inertia = {
+        description = "float",
+        type = "value"
+      },
+      massCenter = {
+        description = "Vector2",
+        type = "value"
+      },
+      useFixtureMass = {
+        description = "bool\nUse fixture mass.",
+        type = "value"
+      },
+      linearDamping = {
+        description = "float",
+        type = "value"
+      },
+      angularDamping = {
+        description = "float",
+        type = "value"
+      },
+      allowSleep = {
+        description = "bool",
+        type = "value"
+      },
+      fixedRotation = {
+        description = "bool",
+        type = "value"
+      },
+      bullet = {
+        description = "bool",
+        type = "value"
+      },
+      gravityScale = {
+        description = "float",
+        type = "value"
+      },
+      awake = {
+        description = "bool",
+        type = "value"
+      },
+      linearVelocity = {
+        description = "Vector2",
+        type = "value"
+      },
+      angularVelocity = {
+        description = "float",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -28120,14 +39824,14 @@ local api = {
         type = "method"
       },
       LoadAsync = {
-        args = "(File* file)",
-        description = "(bool) LoadAsync (const String fileName)\nLoad from a binary file asynchronously. Return true if started successfully.",
+        args = "(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES)",
+        description = "(bool) LoadAsync (const String fileName, LoadMode mode = LOAD_SCENE_AND_RESOURCES)\nLoad from a binary file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.",
         returns = "(bool)",
         type = "method"
       },
       LoadAsyncXML = {
-        args = "(File* file)",
-        description = "(bool) LoadAsyncXML (const String fileName)\nLoad from an XML file asynchronously. Return true if started successfully.",
+        args = "(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES)",
+        description = "(bool) LoadAsyncXML (const String fileName, LoadMode mode = LOAD_SCENE_AND_RESOURCES)\nLoad from an XML file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.",
         returns = "(bool)",
         type = "method"
       },
@@ -28173,6 +39877,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetAsyncLoadingMs = {
+        args = "(int ms)",
+        description = "Set maximum milliseconds per frame to spend on async scene loading.",
+        returns = "()",
+        type = "method"
+      },
       GetNode = {
         args = "(unsigned id)",
         description = "Return node from the whole scene by ID, or null if not found.",
@@ -28196,6 +39906,12 @@ local api = {
         args = "()",
         description = "Return asynchronous loading progress between 0.0 and 1.0, or 1.0 if not in progress.",
         returns = "(float)",
+        type = "method"
+      },
+      GetAsyncLoadMode = {
+        args = "()",
+        description = "Return the load mode of the current asynchronous loading operation.",
+        returns = "(LoadMode)",
         type = "method"
       },
       GetFileName = {
@@ -28234,8 +39950,14 @@ local api = {
         returns = "(float)",
         type = "method"
       },
+      GetAsyncLoadingMs = {
+        args = "()",
+        description = "Return maximum milliseconds per frame to spend on async loading.",
+        returns = "(int)",
+        type = "method"
+      },
       GetVarName = {
-        args = "(ShortStringHash hash)",
+        args = "(StringHash hash)",
         description = "Return a node user variable name, or empty if not registered.",
         returns = "(const String)",
         type = "method"
@@ -28354,6 +40076,10 @@ local api = {
         description = "(Readonly) float\nAsynchronous loading progress.",
         type = "value"
       },
+      asyncLoadMode = {
+        description = "(Readonly) LoadMode",
+        type = "value"
+      },
       fileName = {
         description = "const String\nSource file name.",
         type = "value"
@@ -28376,6 +40102,10 @@ local api = {
       },
       snapThreshold = {
         description = "float\nMotion smoothing snap threshold.",
+        type = "value"
+      },
+      asyncLoadingMs = {
+        description = "int\nMaximum milliseconds per frame to spend on async scene loading.",
         type = "value"
       },
       threadedUpdate = {
@@ -28403,8 +40133,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetPositionXYZ = {
-        args = "(float x, float y, float z)",
+      SetPosition2D = {
+        args = "(const Vector2& position)",
+        description = "() SetPosition2D (float x, float y)",
         returns = "()",
         type = "method"
       },
@@ -28414,8 +40145,8 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetRotationXYZ = {
-        args = "(float x, float y, float z)",
+      SetRotation2D = {
+        args = "(float rotation)",
         returns = "()",
         type = "method"
       },
@@ -28425,25 +40156,27 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetDirectionXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
       SetScale = {
         args = "(float scale)",
         description = "() SetScale (const Vector3& scale)\nSet uniform scale in parent space.",
         returns = "()",
         type = "method"
       },
-      SetScaleXYZ = {
-        args = "(float x, float y, float z)",
+      SetScale2D = {
+        args = "(const Vector2& scale)",
+        description = "() SetScale2D (float x, float y)",
         returns = "()",
         type = "method"
       },
       SetTransform = {
         args = "(const Vector3& position, const Quaternion& rotation)",
-        description = "() SetTransform (const Vector3& position, const Quaternion& rotation, float scale),\n() SetTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale)\nSet both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.",
+        description = "() SetTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale),\n() SetTransform (const Vector3& position, const Quaternion& rotation, float scale)\nSet both position and rotation in parent space as an atomic operation. This is faster than setting position and rotation separately.",
+        returns = "()",
+        type = "method"
+      },
+      SetTransform2D = {
+        args = "(const Vector2& position, float rotation)",
+        description = "() SetTransform2D (const Vector2& position, float rotation, const Vector2& scale),\n() SetTransform2D (const Vector2& position, float rotation, float scale)",
         returns = "()",
         type = "method"
       },
@@ -28453,8 +40186,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldPositionXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldPosition2D = {
+        args = "(const Vector2& position)",
+        description = "() SetWorldPosition2D (float x, float y)",
         returns = "()",
         type = "method"
       },
@@ -28464,8 +40198,8 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldRotationXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldRotation2D = {
+        args = "(float rotation)",
         returns = "()",
         type = "method"
       },
@@ -28475,88 +40209,85 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetWorldDirectionXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
       SetWorldScale = {
         args = "(float scale)",
         description = "() SetWorldScale (const Vector3& scale)\nSet uniform scale in world space.",
         returns = "()",
         type = "method"
       },
-      SetWorldScaleXYZ = {
-        args = "(float x, float y, float z)",
+      SetWorldScale2D = {
+        args = "(const Vector2& scale)",
+        description = "() SetWorldScale2D (float x, float y)",
         returns = "()",
         type = "method"
       },
       SetWorldTransform = {
         args = "(const Vector3& position, const Quaternion& rotation)",
-        description = "() SetWorldTransform (const Vector3& position, const Quaternion& rotation, float scale),\n() SetWorldTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale)\nSet both position and rotation in world space as an atomic operation.",
+        description = "() SetWorldTransform (const Vector3& position, const Quaternion& rotation, const Vector3& scale),\n() SetWorldTransform (const Vector3& position, const Quaternion& rotation, float scale)\nSet both position and rotation in world space as an atomic operation.",
+        returns = "()",
+        type = "method"
+      },
+      SetWorldTransform2D = {
+        args = "(const Vector2& position, float rotation)",
+        description = "() SetWorldTransform2D (const Vector2& position, float rotation, const Vector2& scale),\n() SetWorldTransform2D (const Vector2& position, float rotation, float scale)",
         returns = "()",
         type = "method"
       },
       Translate = {
-        args = "(const Vector3& delta)",
-        description = "Move the scene node in parent space, which is the same as world space if the scene node is on the root level.",
+        args = "(const Vector3& delta, TransformSpace space = TS_LOCAL)",
+        description = "Move the scene node in the chosen transform space.",
         returns = "()",
         type = "method"
       },
-      TranslateXYZ = {
-        args = "(float x, float y, float z)",
-        returns = "()",
-        type = "method"
-      },
-      TranslateRelative = {
-        args = "(const Vector3& delta)",
-        description = "Move the scene node in parent space relative to its current rotation.",
-        returns = "()",
-        type = "method"
-      },
-      TranslateRelativeXYZ = {
-        args = "(float x, float y, float z)",
+      Translate2D = {
+        args = "(const Vector2& delta, TransformSpace space = TS_LOCAL)",
         returns = "()",
         type = "method"
       },
       Rotate = {
-        args = "(const Quaternion& delta, bool fixedAxis = false)",
-        description = "Rotate the scene node in parent space either relative to its current rotation axes, or a fixed axis.",
+        args = "(const Quaternion& delta, TransformSpace space = TS_LOCAL)",
+        description = "Rotate the scene node in the chosen transform space.",
         returns = "()",
         type = "method"
       },
-      RotateXYZ = {
-        args = "(float x, float y, float z, bool fixedAxis = false)",
+      Rotate2D = {
+        args = "(float delta, TransformSpace space = TS_LOCAL)",
+        returns = "()",
+        type = "method"
+      },
+      RotateAround = {
+        args = "(const Vector3& point, const Quaternion& delta, TransformSpace space = TS_LOCAL)",
+        description = "Rotate around a point in the chosen transform space.",
+        returns = "()",
+        type = "method"
+      },
+      RotateAround2D = {
+        args = "(const Vector2& point, float delta, TransformSpace space = TS_LOCAL)",
         returns = "()",
         type = "method"
       },
       Pitch = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the X axis.",
         returns = "()",
         type = "method"
       },
       Yaw = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the Y axis.",
         returns = "()",
         type = "method"
       },
       Roll = {
-        args = "(float angle, bool fixedAxis = false)",
+        args = "(float angle, TransformSpace space = TS_LOCAL)",
         description = "Rotate around the Z axis.",
         returns = "()",
         type = "method"
       },
       LookAt = {
         args = "(const Vector3& target)",
-        description = "() LookAt (const Vector3& target, const Vector3& upAxis)\nLook at a target world position.",
-        returns = "()",
-        type = "method"
-      },
-      LookAtXYZ = {
-        args = "(float x, float y, float z, float upX = 0.0f, float upY = 1.0f, float upZ = 0.0f)",
-        returns = "()",
+        description = "(bool) LookAt (const Vector3& target, const Vector3& upAxis, TransformSpace space = TS_WORLD)\nLook at a target position in the chosen transform space. Note that the up vector is always specified in world space. Return true if successful, or false if resulted in an illegal rotation, in which case the current rotation remains.",
+        returns = "(bool)",
         type = "method"
       },
       Scale = {
@@ -28565,14 +40296,32 @@ local api = {
         returns = "()",
         type = "method"
       },
-      ScaleXYZ = {
-        args = "(float x, float y, float z)",
+      Scale2D = {
+        args = "(const Vector2& scale)",
         returns = "()",
         type = "method"
       },
       SetEnabled = {
         args = "(bool enable)",
-        description = "() SetEnabled (bool enable, bool recursive)\nSet enabled/disabled state without recursion. Components in a disabled node become effectively disabled regardless of their own enable/disable state.",
+        description = "Set enabled/disabled state without recursion. Components in a disabled node become effectively disabled regardless of their own enable/disable state.",
+        returns = "()",
+        type = "method"
+      },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child nodes. Nodes' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the node's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child nodes. Unlike SetDeepEnabled this does not remember the nodes' own enabled state, but overwrites it.",
         returns = "()",
         type = "method"
       },
@@ -28596,8 +40345,8 @@ local api = {
         type = "method"
       },
       AddChild = {
-        args = "(Node* node)",
-        description = "Add a child scene node.",
+        args = "(Node* node, unsigned index = M_MAX_UNSIGNED)",
+        description = "Add a child scene node at a specific index. If index is not explicitly specified or is greater than current children size, append the new child at the end.",
         returns = "()",
         type = "method"
       },
@@ -28621,7 +40370,7 @@ local api = {
       },
       RemoveComponent = {
         args = "(Component* component)",
-        description = "() RemoveComponent (ShortStringHash type),\n() RemoveComponent (const String type)\nRemove a component from this node.",
+        description = "() RemoveComponent (StringHash type),\n() RemoveComponent (const String type)\nRemove a component from this node.",
         returns = "()",
         type = "method"
       },
@@ -28657,7 +40406,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -28676,6 +40425,13 @@ local api = {
       },
       CreateComponent = {
         args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      CloneComponent = {
+        args = "(Component* component, unsigned id = 0)",
+        description = "(Component*) CloneComponent (Component* component, CreateMode mode, unsigned id = 0)\nClone a component from another node using its create mode. Return the clone if successful or null on failure.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
@@ -28730,6 +40486,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the node's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       GetOwner = {
         args = "()",
         description = "Return owner connection in networking.",
@@ -28744,9 +40506,9 @@ local api = {
         valuetype = "Vector3",
         type = "method"
       },
-      GetPositionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetPosition2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetRotation = {
@@ -28756,14 +40518,10 @@ local api = {
         valuetype = "Quaternion",
         type = "method"
       },
-      GetRotationXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
-      GetRotationWXYZ = {
-        args = "(float w = 0.0f, float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetRotation2D = {
+        args = "()",
+        description = "Return rotation in parent space (for Urho2D).",
+        returns = "(float)",
         type = "method"
       },
       GetDirection = {
@@ -28772,31 +40530,16 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetDirectionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetUp = {
         args = "()",
         description = "Return up direction in parent space. Positive Y axis equals identity rotation.",
         returns = "(Vector3)",
         type = "method"
       },
-      GetUpXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetRight = {
         args = "()",
         description = "Return right direction in parent space. Positive X axis equals identity rotation.",
         returns = "(Vector3)",
-        type = "method"
-      },
-      GetRightXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
         type = "method"
       },
       GetScale = {
@@ -28806,9 +40549,9 @@ local api = {
         valuetype = "Vector3",
         type = "method"
       },
-      GetScaleXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetScale2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetTransform = {
@@ -28822,9 +40565,9 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldPositionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldPosition2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetWorldRotation = {
@@ -28832,14 +40575,9 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
-      GetWorldRotationXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
-      GetWorldRotationWXYZ = {
-        args = "(float w = 0.0f, float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldRotation2D = {
+        args = "()",
+        returns = "(float)",
         type = "method"
       },
       GetWorldDirection = {
@@ -28847,19 +40585,9 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldDirectionXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetWorldUp = {
         args = "()",
         returns = "(Vector3)",
-        type = "method"
-      },
-      GetWorldUpXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
         type = "method"
       },
       GetWorldRight = {
@@ -28867,19 +40595,14 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldRightXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
-        type = "method"
-      },
       GetWorldScale = {
         args = "()",
         returns = "(Vector3)",
         type = "method"
       },
-      GetWorldScaleXYZ = {
-        args = "(float x = 0.0f, float y = 0.0f, float z = 0.0f)",
-        returns = "()",
+      GetWorldScale2D = {
+        args = "()",
+        returns = "(Vector2)",
         type = "method"
       },
       GetWorldTransform = {
@@ -28894,10 +40617,20 @@ local api = {
         returns = "(Vector3)",
         type = "method"
       },
+      LocalToWorld2D = {
+        args = "(const Vector2& vector)",
+        returns = "(Vector2)",
+        type = "method"
+      },
       WorldToLocal = {
         args = "(const Vector3& position)",
         description = "(Vector3) WorldToLocal (const Vector4& vector)",
         returns = "(Vector3)",
+        type = "method"
+      },
+      WorldToLocal2D = {
+        args = "(const Vector2& vector)",
+        returns = "(Vector2)",
         type = "method"
       },
       IsDirty = {
@@ -28928,13 +40661,13 @@ local api = {
         type = "method"
       },
       HasComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(bool) HasComponent (const String type)",
         returns = "(bool)",
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -29007,6 +40740,10 @@ local api = {
         description = "bool",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       owner = {
         valuetype = "Connection",
         description = "Connection*",
@@ -29017,9 +40754,17 @@ local api = {
         description = "Vector3&",
         type = "value"
       },
+      position2D = {
+        description = "Vector2",
+        type = "value"
+      },
       rotation = {
         valuetype = "Quaternion",
         description = "Quaternion&",
+        type = "value"
+      },
+      rotation2D = {
+        description = "float",
         type = "value"
       },
       direction = {
@@ -29039,6 +40784,10 @@ local api = {
         description = "Vector3&",
         type = "value"
       },
+      scale2D = {
+        description = "Vector2",
+        type = "value"
+      },
       transform = {
         description = "(Readonly) Matrix3x4",
         type = "value"
@@ -29047,8 +40796,16 @@ local api = {
         description = "Vector3",
         type = "value"
       },
+      worldPosition2D = {
+        description = "Vector2",
+        type = "value"
+      },
       worldRotation = {
         description = "Quaternion",
+        type = "value"
+      },
+      worldRotation2D = {
+        description = "float",
         type = "value"
       },
       worldDirection = {
@@ -29067,6 +40824,10 @@ local api = {
         description = "Vector3",
         type = "value"
       },
+      worldScale2D = {
+        description = "Vector2",
+        type = "value"
+      },
       worldTransform = {
         valuetype = "Matrix3x4",
         description = "(Readonly) Matrix3x4&",
@@ -29082,6 +40843,77 @@ local api = {
       },
       numNetworkComponents = {
         description = "(Readonly) unsigned",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -29103,13 +40935,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -29130,11 +40962,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -29492,6 +41324,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -29567,6 +41417,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -29661,7 +41517,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -29865,6 +41721,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -29945,9 +41807,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -29980,7 +41861,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -30026,12 +41907,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -30207,6 +42082,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -30261,6 +42140,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -30284,10 +42168,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -30306,6 +42186,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -30327,13 +42278,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -30354,11 +42305,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -30421,6 +42372,30 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetScrollDeceleration = {
+        args = "(float deceleration)",
+        description = "Set scroll deceleration.",
+        returns = "()",
+        type = "method"
+      },
+      SetScrollSnapEpsilon = {
+        args = "(float snap)",
+        description = "Set scroll snap epsilon",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoDisableChildren = {
+        args = "(bool disable)",
+        description = "Set whether child elements should be disabled while touch scrolling.",
+        returns = "()",
+        type = "method"
+      },
+      SetAutoDisableThreshold = {
+        args = "(float amount)",
+        description = "Set how much touch movement is needed to trigger child element disabling.",
+        returns = "()",
+        type = "method"
+      },
       GetViewPosition = {
         args = "()",
         description = "Return view offset from the top-left corner.",
@@ -30474,6 +42449,30 @@ local api = {
         returns = "(float)",
         type = "method"
       },
+      GetScrollDeceleration = {
+        args = "()",
+        description = "Return scroll deceleration.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetScrollSnapEpsilon = {
+        args = "()",
+        description = "Return scroll snap epsilon",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAutoDisableChildren = {
+        args = "()",
+        description = "Return whether child element will be disabled while touch scrolling.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetAutoDisableThreshold = {
+        args = "()",
+        description = "Return how much touch movement is needed to trigger child element disabling.",
+        returns = "(float)",
+        type = "method"
+      },
       viewPosition = {
         valuetype = "IntVector2",
         description = "IntVector2&\nCurrent view offset from the top-left corner.",
@@ -30509,6 +42508,14 @@ local api = {
       },
       pageStep = {
         description = "float\nArrow key page step.",
+        type = "value"
+      },
+      scrollDeceleration = {
+        description = "float\nScroll deceleration",
+        type = "value"
+      },
+      scrollSnapEpsilon = {
+        description = "float\nScroll snap epsilon",
         type = "value"
       },
       GetScreenPosition = {
@@ -30698,6 +42705,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -30773,6 +42798,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -30867,7 +42898,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -31071,6 +43102,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -31151,9 +43188,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -31186,7 +43242,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -31232,12 +43288,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -31413,6 +43463,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -31467,6 +43521,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -31490,10 +43549,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -31512,6 +43567,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -31533,13 +43659,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -31560,11 +43686,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -31599,13 +43725,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -31626,11 +43752,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -31750,6 +43876,24 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      WriteMatrix3 = {
+        args = "(const Matrix3& value)",
+        description = "Write a Matrix3.",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix3x4 = {
+        args = "(const Matrix3x4& value)",
+        description = "Write a Matrix3x4.",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix4 = {
+        args = "(const Matrix4& value)",
+        description = "Write a Matrix4.",
+        returns = "(bool)",
+        type = "method"
+      },
       WriteColor = {
         args = "(const Color& value)",
         description = "Write a color.",
@@ -31777,12 +43921,6 @@ local api = {
       WriteStringHash = {
         args = "(const StringHash& value)",
         description = "Write a 32-bit StringHash.",
-        returns = "(bool)",
-        type = "method"
-      },
-      WriteShortStringHash = {
-        args = "(const ShortStringHash& value)",
-        description = "Write a 16-bit ShortStringHash.",
         returns = "(bool)",
         type = "method"
       },
@@ -31844,41 +43982,6 @@ local api = {
         description = "Write a text line. Char codes 13 & 10 will be automatically appended.",
         returns = "(bool)",
         type = "method"
-      },
-    },
-    type = "class"
-  },
-  ShortStringHash = {
-    childs = {
-      new = {
-        args = "()",
-        description = "(ShortStringHash*) new (const ShortStringHash& rhs),\n(ShortStringHash*) new (const StringHash& rhs),\n(ShortStringHash*) new (short value),\n(ShortStringHash*) new (const String str)",
-        returns = "(ShortStringHash*)",
-        valuetype = "ShortStringHash",
-        type = "method"
-      },
-      delete = {
-        args = "()",
-        returns = "()",
-        type = "method"
-      },
-      Value = {
-        args = "()",
-        returns = "(short)",
-        type = "method"
-      },
-      Calculate = {
-        args = "(const char* str)",
-        returns = "(short)",
-        type = "method"
-      },
-      ZERO = {
-        description = "const ShortStringHash",
-        type = "value"
-      },
-      value = {
-        description = "(Readonly) short",
-        type = "value"
       },
     },
     type = "class"
@@ -32163,7 +44266,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -32281,11 +44384,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -32306,13 +44480,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -32333,11 +44507,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -32465,7 +44639,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -32503,7 +44683,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -32539,7 +44726,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -32742,6 +44934,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -32817,6 +45027,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -32911,7 +45127,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -33115,6 +45331,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -33195,9 +45417,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -33230,7 +45471,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -33276,12 +45517,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -33457,6 +45692,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -33511,6 +45750,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -33534,10 +45778,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -33556,6 +45796,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -33577,13 +45888,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -33604,11 +45915,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -33737,7 +46048,7 @@ local api = {
       },
       IsCompressed = {
         args = "()",
-        description = "Return whether is compressed in Ogg Vorbis format.",
+        description = "Return whether is compressed.",
         returns = "(bool)",
         type = "method"
       },
@@ -33779,7 +46090,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -33868,11 +46179,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -33893,13 +46275,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -33920,11 +46302,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -34042,21 +46424,9 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      PlayLockless = {
-        args = "(Sound* sound)",
-        description = "Play a sound without locking the audio mutex. Called internally.",
-        returns = "()",
-        type = "method"
-      },
-      StopLockless = {
-        args = "()",
-        description = "Stop sound without locking the audio mutex. Called internally.",
-        returns = "()",
-        type = "method"
-      },
       sound = {
         valuetype = "Sound",
-        description = "(Readonly) Sound*\nSound.",
+        description = "(Readonly) Sound*\nSound that is being played.",
         type = "value"
       },
       soundType = {
@@ -34136,11 +46506,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -34161,13 +46602,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -34188,11 +46629,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -34409,21 +46850,9 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      PlayLockless = {
-        args = "(Sound* sound)",
-        description = "Play a sound without locking the audio mutex. Called internally.",
-        returns = "()",
-        type = "method"
-      },
-      StopLockless = {
-        args = "()",
-        description = "Stop sound without locking the audio mutex. Called internally.",
-        returns = "()",
-        type = "method"
-      },
       sound = {
         valuetype = "Sound",
-        description = "(Readonly) Sound*\nSound.",
+        description = "(Readonly) Sound*\nSound that is being played.",
         type = "value"
       },
       soundType = {
@@ -34503,11 +46932,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -34528,13 +47028,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -34555,11 +47055,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -34638,22 +47138,81 @@ local api = {
   },
   Spline = {
     childs = {
-      SetInterpolationMode = {
-        args = "(InterpolationMode interpolationMode)",
-        description = "Set the Interpolation Mode.",
+      new = {
+        args = "()",
+        description = "(Spline*) new (InterpolationMode mode),\n(Spline*) new (const Spline& rhs)",
+        returns = "(Spline*)",
+        valuetype = "Spline",
+        type = "method"
+      },
+      delete = {
+        args = "()",
         returns = "()",
         type = "method"
       },
-      SetSpeed = {
-        args = "(float speed)",
-        description = "Set the movement Speed.",
+      GetPoint = {
+        args = "(float f)",
+        returns = "(Variant)",
+        type = "method"
+      },
+      GetKnot = {
+        args = "(unsigned index)",
+        returns = "(Variant)",
+        type = "method"
+      },
+      SetKnot = {
+        args = "(const Variant& knot, unsigned tolua_var_1)",
         returns = "()",
         type = "method"
       },
-      SetPosition = {
+      AddKnot = {
+        args = "(const Variant& knot)",
+        description = "() AddKnot (const Variant& knot, unsigned index)",
+        returns = "()",
+        type = "method"
+      },
+      RemoveKnot = {
+        args = "()",
+        description = "() RemoveKnot (unsigned index)",
+        returns = "()",
+        type = "method"
+      },
+      Clear = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      interpolationMode = {
+        description = "InterpolationMode",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  SplinePath = {
+    childs = {
+      AddControlPoint = {
+        args = "(Node* point, unsigned index = M_MAX_UNSIGNED)",
+        description = "Add a Node to the SplinePath as a Control Point.",
+        returns = "()",
+        type = "method"
+      },
+      RemoveControlPoint = {
+        args = "(Node* point)",
+        description = "Remove a Node Control Point from the SplinePath.",
+        returns = "()",
+        type = "method"
+      },
+      ClearControlPoints = {
+        args = "()",
+        description = "Clear the Control Points from the SplinePath.",
+        returns = "()",
+        type = "method"
+      },
+      GetPoint = {
         args = "(float factor)",
-        description = "Set the parent node's position on the Spline.",
-        returns = "()",
+        description = "Get a point on the SplinePath from 0.f to 1.f where 0 is the start and 1 is the end.",
+        returns = "(Vector3)",
         type = "method"
       },
       GetInterpolationMode = {
@@ -34662,39 +47221,26 @@ local api = {
         returns = "(InterpolationMode)",
         type = "method"
       },
-      GetSpeed = {
-        args = "()",
-        description = "Get the movement Speed.",
-        returns = "(float)",
-        type = "method"
-      },
       GetPosition = {
         args = "()",
-        description = "Get the parent node's last position on the spline.",
         returns = "(Vector3)",
         type = "method"
       },
-      Push = {
-        args = "(const Vector3& controlPoint)",
-        description = "Add a Control Point to the end.",
+      SetInterpolationMode = {
+        args = "(InterpolationMode mode)",
+        description = "Set the Interpolation Mode.",
         returns = "()",
         type = "method"
       },
-      Pop = {
-        args = "()",
-        description = "Remove a Control Point from the end.",
-        returns = "()",
-        type = "method"
-      },
-      GetPoint = {
+      SetPosition = {
         args = "(float factor)",
-        description = "Get a point on the spline from 0.f to 1.f where 0 is the start and 1 is the end.",
-        returns = "(Vector3)",
+        description = "Set the controlled Node's position on the SplinePath.",
+        returns = "()",
         type = "method"
       },
       Move = {
         args = "(float timeStep)",
-        description = "Move the parent node to the next position along the Spline based off the Speed value.",
+        description = "Move the controlled Node to the next position along the SplinePath based off the Speed value.",
         returns = "()",
         type = "method"
       },
@@ -34706,16 +47252,17 @@ local api = {
       },
       IsFinished = {
         args = "()",
-        description = "Returns whether the movement along the Spline complete.",
+        description = "Returns whether the movement along the SplinePath is complete.",
         returns = "(bool)",
         type = "method"
       },
-      interpolationMode = {
-        description = "InterpolationMode\nThe Interpolation Mode of the Spline.",
-        type = "value"
-      },
       speed = {
         description = "float\nThe Speed of movement along the Spline.",
+        type = "value"
+      },
+      controlledNode = {
+        valuetype = "Node",
+        description = "Node*\nNode to be moved along the SplinePath.",
         type = "value"
       },
       SetEnabled = {
@@ -34763,11 +47310,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -34788,13 +47406,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -34815,11 +47433,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -35173,6 +47791,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -35248,6 +47884,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -35342,7 +47984,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -35546,6 +48188,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -35626,9 +48274,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -35661,7 +48328,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -35707,12 +48374,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -35888,6 +48549,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -35942,6 +48607,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -35965,10 +48635,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -35987,6 +48653,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -36008,13 +48745,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -36035,11 +48772,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -36073,6 +48810,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetOffset = {
+        args = "(const IntVector2& offset)",
+        description = "Set offset.",
+        returns = "()",
+        type = "method"
+      },
       SetSpriteSheet = {
         args = "(SpriteSheet2D* spriteSheet)",
         description = "Set sprite sheet.",
@@ -36100,6 +48843,13 @@ local api = {
         valuetype = "Vector2",
         type = "method"
       },
+      GetOffset = {
+        args = "()",
+        description = "Return offset.",
+        returns = "(const IntVector2&)",
+        valuetype = "IntVector2",
+        type = "method"
+      },
       GetSpriteSheet = {
         args = "()",
         description = "Return sprite sheet.",
@@ -36120,6 +48870,10 @@ local api = {
         description = "Vector2\nHot spot.",
         type = "value"
       },
+      offset = {
+        description = "IntVector2\nOffset (for trimmed sprite).",
+        type = "value"
+      },
       spriteSheet = {
         valuetype = "SpriteSheet2D",
         description = "SpriteSheet2D*\nSprite sheet.",
@@ -36127,7 +48881,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -36188,19 +48942,13 @@ local api = {
       },
       DefineSprite = {
         args = "(const String name, const IntRect& rectangle)",
-        description = "() DefineSprite (const String name, const IntRect& rectangle, const Vector2& hotSpot)",
-        returns = "()",
-        type = "method"
-      },
-      UpdateSprite = {
-        args = "(const String name, const IntRect& rectangle)",
-        description = "() UpdateSprite (const String name, const IntRect& rectangle, const Vector2& hotSpot)",
+        description = "() DefineSprite (const String name, const IntRect& rectangle, const Vector2& hotSpot),\n() DefineSprite (const String name, const IntRect& rectangle, const Vector2& hotSpot, const IntVector2& originSize)",
         returns = "()",
         type = "method"
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -36490,7 +49238,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -36608,11 +49356,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -36633,13 +49452,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -36660,11 +49479,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -36673,19 +49492,6 @@ local api = {
       },
       category = {
         description = "(Readonly) const String",
-        type = "value"
-      },
-    },
-    type = "class"
-  },
-  StaticModelGeometryData = {
-    childs = {
-      center = {
-        description = "Vector3",
-        type = "value"
-      },
-      lodLevel = {
-        description = "unsigned",
         type = "value"
       },
     },
@@ -36973,7 +49779,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -37091,11 +49897,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -37116,13 +49993,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -37143,11 +50020,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -37219,9 +50096,15 @@ local api = {
         description = "Color&\nColor.",
         type = "value"
       },
-      SetPixelsPerUnit = {
-        args = "(float pixelsPerUnit)",
-        description = "Set pixels per coordinate unit.",
+      SetLayer = {
+        args = "(int layer)",
+        description = "Set layer.",
+        returns = "()",
+        type = "method"
+      },
+      SetOrderInLayer = {
+        args = "(int orderInLayer)",
+        description = "Set order in layer.",
         returns = "()",
         type = "method"
       },
@@ -37231,28 +50114,28 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
-        returns = "()",
-        type = "method"
-      },
       SetBlendMode = {
         args = "(BlendMode mode)",
         description = "Set blend mode.",
         returns = "()",
         type = "method"
       },
-      SetZValue = {
-        args = "(float zValue)",
-        description = "Set Z value.",
+      SetMaterial = {
+        args = "(Material* material)",
+        description = "Set material.",
         returns = "()",
         type = "method"
       },
-      GetPixelsPerUnit = {
+      GetLayer = {
         args = "()",
-        description = "Return pixels per coordinate unit.",
-        returns = "(float)",
+        description = "Return layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetOrderInLayer = {
+        args = "()",
+        description = "Return order in layer.",
+        returns = "(int)",
         type = "method"
       },
       GetSprite = {
@@ -37262,11 +50145,11 @@ local api = {
         valuetype = "Sprite2D",
         type = "method"
       },
-      GetMaterial = {
+      GetTexture = {
         args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
+        description = "Return texture.",
+        returns = "(Texture2D*)",
+        valuetype = "Texture2D",
         type = "method"
       },
       GetBlendMode = {
@@ -37275,14 +50158,19 @@ local api = {
         returns = "(BlendMode)",
         type = "method"
       },
-      GetZValue = {
+      GetMaterial = {
         args = "()",
-        description = "Return Z value.",
-        returns = "(float)",
+        description = "Return material.",
+        returns = "(Material*)",
+        valuetype = "Material",
         type = "method"
       },
-      pixelsPerUnit = {
-        description = "float\nPixels per coordinate unit.",
+      layer = {
+        description = "int\nLayer.",
+        type = "value"
+      },
+      orderInLayer = {
+        description = "int\nOrder in layer.",
         type = "value"
       },
       sprite = {
@@ -37290,17 +50178,18 @@ local api = {
         description = "Sprite2D*\nSprite.",
         type = "value"
       },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
+      texture = {
+        valuetype = "Texture2D",
+        description = "(Readonly) Texture2D*",
         type = "value"
       },
       blendMode = {
         description = "BlendMode\nBlend mode.",
         type = "value"
       },
-      zValue = {
-        description = "float\nZ value.",
+      material = {
+        valuetype = "Material",
+        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -37463,7 +50352,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -37581,11 +50470,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -37606,13 +50566,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -37633,11 +50593,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -37704,14 +50664,25 @@ local api = {
   Technique = {
     childs = {
       HasPass = {
-        args = "(const String type)",
+        args = "(const StringHash type)",
         returns = "(bool)",
         type = "method"
       },
       GetPass = {
-        args = "(const String type)",
+        args = "(const StringHash type)",
         returns = "(Pass*)",
         valuetype = "Pass",
+        type = "method"
+      },
+      GetSupportedPass = {
+        args = "(const StringHash type)",
+        returns = "(Pass*)",
+        valuetype = "Pass",
+        type = "method"
+      },
+      IsSupported = {
+        args = "()",
+        returns = "(bool)",
         type = "method"
       },
       IsSM3 = {
@@ -37720,13 +50691,48 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsDesktop = {
+        args = "()",
+        description = "Return whether requires desktop level hardware.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetNumPasses = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetPassTypes = {
+        args = "()",
+        returns = "(const Vector<StringHash>&)",
+        valuetype = "Vector<StringHash>",
+        type = "method"
+      },
+      GetPasses = {
+        args = "()",
+        returns = "(const PODVector<Pass*>&)",
+        valuetype = "PODVector<Pass*>",
+        type = "method"
+      },
+      supported = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       SM3 = {
         description = "(Readonly) bool",
         type = "value"
       },
+      desktop = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      numPasses = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -37867,6 +50873,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      ApplyHeightMap = {
+        args = "()",
+        description = "Apply changes from the heightmap image.",
+        returns = "()",
+        type = "method"
+      },
       GetPatchSize = {
         args = "()",
         description = "Return patch quads per side.",
@@ -37931,6 +50943,12 @@ local api = {
         args = "(const Vector3& worldPosition)",
         description = "Return normal at world coordinates.",
         returns = "(Vector3)",
+        type = "method"
+      },
+      WorldToHeightMap = {
+        args = "(const Vector3& worldPosition)",
+        description = "Convert world position to heightmap pixel position. Note that the internal height data representation is reversed vertically, but in the heightmap image north is at the top.",
+        returns = "(IntVector2)",
         type = "method"
       },
       GetHeightData = {
@@ -38137,11 +51155,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -38162,13 +51251,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -38189,11 +51278,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -38556,7 +51645,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -38674,11 +51763,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -38699,13 +51859,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -38726,11 +51886,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -38759,7 +51919,7 @@ local api = {
       },
       SetFont = {
         args = "(const String fontName, int size = DEFAULT_FONT_SIZE)",
-        description = "(bool) SetFont (Font* font, int size = DEFAULT_FONT_SIZE)\nSet font and font size.",
+        description = "(bool) SetFont (Font* font, int size = DEFAULT_FONT_SIZE)\nSet font and font size and use signed distance field.",
         returns = "(bool)",
         type = "method"
       },
@@ -39198,6 +52358,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -39273,6 +52451,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -39367,7 +52551,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -39571,6 +52755,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -39651,9 +52841,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -39686,7 +52895,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -39732,12 +52941,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -39913,6 +53116,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -39967,6 +53174,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -39990,10 +53202,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -40012,6 +53220,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -40033,13 +53312,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -40060,11 +53339,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -40093,7 +53372,7 @@ local api = {
       },
       SetFont = {
         args = "(const String fontName, int size = DEFAULT_FONT_SIZE)",
-        description = "(bool) SetFont (Font* font, int size = DEFAULT_FONT_SIZE)\nSet font and font size. Return true if successful.",
+        description = "(bool) SetFont (Font* font, int size = DEFAULT_FONT_SIZE)\nSet font and font size and use signed distance field font. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -40181,9 +53460,9 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetFaceCamera = {
-        args = "(bool enable)",
-        description = "Set whether to face the camera automatically.",
+      SetFaceCameraMode = {
+        args = "(FaceCameraMode mode)",
+        description = "Set how the text should rotate in relation to the camera. Default is to not rotate (FC_NONE.)",
         returns = "()",
         type = "method"
       },
@@ -40317,10 +53596,10 @@ local api = {
         returns = "(float)",
         type = "method"
       },
-      GetFaceCamera = {
+      GetFaceCameraMode = {
         args = "()",
-        description = "Return whether faces the camera automatically.",
-        returns = "(bool)",
+        description = "Return how the text rotates in relation to the camera.",
+        returns = "(FaceCameraMode)",
         type = "method"
       },
       font = {
@@ -40399,8 +53678,8 @@ local api = {
         description = "float",
         type = "value"
       },
-      faceCamera = {
-        description = "bool\nFace camera flag.",
+      faceCameraMode = {
+        description = "FaceCameraMode\nText rotation mode in relation to the camera.",
         type = "value"
       },
       SetDrawDistance = {
@@ -40563,7 +53842,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -40681,11 +53960,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -40706,13 +54056,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -40733,11 +54083,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -40914,7 +54264,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -40975,7 +54325,7 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      Load = {
+      SetData = {
         args = "(Image* image, bool useAlpha = false)",
         returns = "(bool)",
         type = "method"
@@ -41152,7 +54502,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -41364,7 +54714,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -41431,6 +54781,754 @@ local api = {
     },
     type = "class"
   },
+  Tile2D = {
+    childs = {
+      GetGid = {
+        args = "()",
+        description = "Return gid.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetSprite = {
+        args = "()",
+        description = "Return sprite.",
+        returns = "(Sprite2D*)",
+        valuetype = "Sprite2D",
+        type = "method"
+      },
+      HasProperty = {
+        args = "(const String name)",
+        description = "Return has property.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetProperty = {
+        args = "(const String name)",
+        description = "Return property.",
+        returns = "(const String)",
+        type = "method"
+      },
+      gid = {
+        description = "(Readonly) int\nGid.",
+        type = "value"
+      },
+      sprite = {
+        valuetype = "Sprite2D",
+        description = "(Readonly) Sprite2D*\nSprite.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  TileMap2D = {
+    childs = {
+      SetTmxFile = {
+        args = "(TmxFile2D* tmxFile)",
+        description = "Set tmx file.",
+        returns = "()",
+        type = "method"
+      },
+      GetTmxFile = {
+        args = "()",
+        description = "Return tmx file.",
+        returns = "(TmxFile2D*)",
+        valuetype = "TmxFile2D",
+        type = "method"
+      },
+      GetInfo = {
+        args = "()",
+        description = "Return information.",
+        returns = "(const TileMapInfo2D&)",
+        valuetype = "TileMapInfo2D",
+        type = "method"
+      },
+      GetNumLayers = {
+        args = "()",
+        description = "Return number of layers.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLayer = {
+        args = "(unsigned index)",
+        description = "Return tile map layer at index.",
+        returns = "(TileMapLayer2D*)",
+        valuetype = "TileMapLayer2D",
+        type = "method"
+      },
+      TileIndexToPosition = {
+        args = "(int x, int y)",
+        description = "Convert tile index to position.",
+        returns = "(Vector2)",
+        type = "method"
+      },
+      PositionToTileIndex = {
+        args = "(const Vector2& position, int x = 0, int y = 0)",
+        returns = "(bool)",
+        type = "method"
+      },
+      tmxFile = {
+        valuetype = "TmxFile2D",
+        description = "TmxFile2D*\nTmx file.",
+        type = "value"
+      },
+      info = {
+        valuetype = "TileMapInfo2D",
+        description = "(Readonly) TileMapInfo2D&\nTile map information.",
+        type = "value"
+      },
+      numLayers = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  TileMapInfo2D = {
+    childs = {
+      GetMapWidth = {
+        args = "()",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMapHeight = {
+        args = "()",
+        returns = "(float)",
+        type = "method"
+      },
+      orientation = {
+        description = "Orientation2D",
+        type = "value"
+      },
+      width = {
+        description = "int",
+        type = "value"
+      },
+      height = {
+        description = "int",
+        type = "value"
+      },
+      tileWidth = {
+        description = "float",
+        type = "value"
+      },
+      tileHeight = {
+        description = "float",
+        type = "value"
+      },
+      mapWidth = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+      mapHeight = {
+        description = "(Readonly) float",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  TileMapLayer2D = {
+    childs = {
+      SetDrawOrder = {
+        args = "(int drawOrder)",
+        description = "Set draw order",
+        returns = "()",
+        type = "method"
+      },
+      SetVisible = {
+        args = "(bool visible)",
+        description = "Set visible.",
+        returns = "()",
+        type = "method"
+      },
+      GetDrawOrder = {
+        args = "()",
+        description = "Return draw order.",
+        returns = "(int)",
+        type = "method"
+      },
+      IsVisible = {
+        args = "()",
+        description = "Return visible.",
+        returns = "(bool)",
+        type = "method"
+      },
+      HasProperty = {
+        args = "(const String name)",
+        description = "Return has property",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetProperty = {
+        args = "(const String name)",
+        description = "Return property.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetLayerType = {
+        args = "()",
+        description = "Return layer type.",
+        returns = "(TileMapLayerType2D)",
+        type = "method"
+      },
+      GetWidth = {
+        args = "()",
+        description = "Return width (for tile layer only).",
+        returns = "(int)",
+        type = "method"
+      },
+      GetHeight = {
+        args = "()",
+        description = "Return height (for tile layer only).",
+        returns = "(int)",
+        type = "method"
+      },
+      GetTileNode = {
+        args = "(int x, int y)",
+        description = "Return tile node (for tile layer only).",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetTile = {
+        args = "(int x, int y)",
+        description = "Return tile (for tile layer only).",
+        returns = "(Tile2D*)",
+        valuetype = "Tile2D",
+        type = "method"
+      },
+      GetNumObjects = {
+        args = "()",
+        description = "Return number of tile map objects (for object group only).",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetObject = {
+        args = "(unsigned index)",
+        description = "Return tile map object (for object group only).",
+        returns = "(TileMapObject2D*)",
+        valuetype = "TileMapObject2D",
+        type = "method"
+      },
+      GetObjectNode = {
+        args = "(unsigned index)",
+        description = "Return object node (for object group only).",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetImageNode = {
+        args = "()",
+        description = "Return image node (for image layer only).",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      drawOrder = {
+        description = "(Readonly) int\nDraw order.",
+        type = "value"
+      },
+      visible = {
+        description = "(Readonly) bool\nVisible.",
+        type = "value"
+      },
+      layerType = {
+        description = "(Readonly) TileMapLayerType2D",
+        type = "value"
+      },
+      width = {
+        description = "(Readonly) int",
+        type = "value"
+      },
+      height = {
+        description = "(Readonly) int",
+        type = "value"
+      },
+      numObjects = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      imageNode = {
+        valuetype = "Node",
+        description = "(Readonly) Node*",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  TileMapObject2D = {
+    childs = {
+      GetObjectType = {
+        args = "()",
+        description = "Return type.",
+        returns = "(TileMapObjectType2D)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetPosition = {
+        args = "()",
+        description = "Return position.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetSize = {
+        args = "()",
+        description = "Return size (for rectangle and ellipse).",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetNumPoints = {
+        args = "()",
+        description = "Return number of points (use for script).",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetPoint = {
+        args = "(unsigned index)",
+        description = "Return point at index (use for script).",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetTileGid = {
+        args = "()",
+        description = "Return tile Gid.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetTileSprite = {
+        args = "()",
+        description = "Return tile sprite.",
+        returns = "(Sprite2D*)",
+        valuetype = "Sprite2D",
+        type = "method"
+      },
+      HasProperty = {
+        args = "(const String name)",
+        description = "Return has property.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetProperty = {
+        args = "(const String name)",
+        description = "Return property value.",
+        returns = "(const String)",
+        type = "method"
+      },
+      objectType = {
+        description = "(Readonly) TileMapObjectType2D\nObject type.",
+        type = "value"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      type = {
+        description = "(Readonly) String\nType.",
+        type = "value"
+      },
+      position = {
+        description = "(Readonly) Vector2\nPosition.",
+        type = "value"
+      },
+      size = {
+        description = "(Readonly) Vector2\nSize (for rectangle and ellipse).",
+        type = "value"
+      },
+      numPoints = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      tileGid = {
+        description = "(Readonly) int",
+        type = "value"
+      },
+      tileSprite = {
+        valuetype = "Sprite2D",
+        description = "(Readonly) Sprite2D*",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   Time = {
     childs = {
       GetFrameNumber = {
@@ -41460,6 +55558,12 @@ local api = {
       GetSystemTime = {
         args = "()",
         description = "Get system time as milliseconds.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetTimeSinceEpoch = {
+        args = "()",
+        description = "Get system time as seconds since 1.1.1970.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -41494,13 +55598,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -41521,11 +55625,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -41537,6 +55641,51 @@ local api = {
         type = "value"
       },
     },
+    type = "class"
+  },
+  TmxFile2D = {
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
     type = "class"
   },
   ToolTip = {
@@ -41755,6 +55904,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -41830,6 +55997,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -41924,7 +56097,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -42128,6 +56301,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -42208,9 +56387,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -42243,7 +56441,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -42289,12 +56487,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -42470,6 +56662,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -42524,6 +56720,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -42547,10 +56748,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -42569,6 +56766,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -42590,13 +56858,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -42617,11 +56885,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -42637,6 +56905,12 @@ local api = {
   },
   TouchState = {
     childs = {
+      GetTouchedElement = {
+        args = "()",
+        returns = "(UIElement*)",
+        valuetype = "UIElement",
+        type = "method"
+      },
       touchID = {
         description = "int",
         type = "value"
@@ -42655,6 +56929,11 @@ local api = {
       },
       pressure = {
         description = "float",
+        type = "value"
+      },
+      touchedElement = {
+        valuetype = "UIElement",
+        description = "(Readonly) UIElement*",
         type = "value"
       },
     },
@@ -42723,7 +57002,7 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      SetClipBoardText = {
+      SetClipboardText = {
         args = "(const String text)",
         description = "Set clipboard text.",
         returns = "()",
@@ -42765,7 +57044,7 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetUseSystemClipBoard = {
+      SetUseSystemClipboard = {
         args = "(bool enable)",
         description = "Set whether to use system clipboard. Default false.",
         returns = "()",
@@ -42838,13 +57117,13 @@ local api = {
         type = "method"
       },
       GetDragElement = {
-        args = "()",
-        description = "Return currently dragged element.",
+        args = "(unsigned index)",
+        description = "Return the drag element at index.",
         returns = "(UIElement*)",
         valuetype = "UIElement",
         type = "method"
       },
-      GetClipBoardText = {
+      GetClipboardText = {
         args = "()",
         description = "Return clipboard text.",
         returns = "(const String)",
@@ -42886,7 +57165,7 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      GetUseSystemClipBoard = {
+      GetUseSystemClipboard = {
         args = "()",
         description = "Return whether is using the system clipboard.",
         returns = "(bool)",
@@ -42916,6 +57195,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsDragging = {
+        args = "()",
+        description = "Return whether a drag is in progress.",
+        returns = "(bool)",
+        type = "method"
+      },
       root = {
         valuetype = "UIElement",
         description = "(Readonly) UIElement*",
@@ -42923,12 +57208,12 @@ local api = {
       },
       rootModalElement = {
         valuetype = "UIElement",
-        description = "(Readonly) UIElement*\nUI root modal element.",
+        description = "(Readonly) UIElement*",
         type = "value"
       },
       cursor = {
         valuetype = "Cursor",
-        description = "Cursor*\nCursor.",
+        description = "Cursor*",
         type = "value"
       },
       cursorPosition = {
@@ -42937,7 +57222,7 @@ local api = {
       },
       focusElement = {
         valuetype = "UIElement",
-        description = "(Readonly) UIElement*\nCurrently focused element",
+        description = "(Readonly) UIElement*",
         type = "value"
       },
       frontElement = {
@@ -42945,53 +57230,48 @@ local api = {
         description = "(Readonly) UIElement*",
         type = "value"
       },
-      dragElement = {
-        valuetype = "UIElement",
-        description = "(Readonly) UIElement*\nUI element being dragged.",
-        type = "value"
-      },
-      clipBoardText = {
+      clipboardText = {
         description = "String",
         type = "value"
       },
       doubleClickInterval = {
-        description = "float\nSeconds between clicks to register a double click.",
+        description = "float",
         type = "value"
       },
       dragBeginInterval = {
-        description = "float\nSeconds from mouse button down to begin a drag if there has been no movement exceeding pixel threshold.",
+        description = "float",
         type = "value"
       },
       dragBeginDistance = {
-        description = "int\nDrag begin event distance threshold in pixels.",
+        description = "int",
         type = "value"
       },
       defaultToolTipDelay = {
-        description = "float\nTooltip default display delay in seconds.",
+        description = "float",
         type = "value"
       },
       maxFontTextureSize = {
-        description = "int\nFont texture maximum size.",
+        description = "int",
         type = "value"
       },
       nonFocusedMouseWheel = {
-        description = "bool\nFlag to switch mouse wheel event to be sent to non-focused element at cursor.",
+        description = "bool",
         type = "value"
       },
-      useSystemClipBoard = {
-        description = "bool\nFlag for using operating system clipboard instead of internal.",
+      useSystemClipboard = {
+        description = "bool",
         type = "value"
       },
       useScreenKeyboard = {
-        description = "bool\nFlag for showing the on-screen keyboard on focusing a %LineEdit.",
+        description = "bool",
         type = "value"
       },
       useMutableGlyphs = {
-        description = "bool\nFlag for using mutable (eraseable) font glyphs.",
+        description = "bool",
         type = "value"
       },
       forceAutoHint = {
-        description = "bool\nFlag for forcing FreeType autohinting.",
+        description = "bool",
         type = "value"
       },
       modalElement = {
@@ -43001,13 +57281,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -43028,11 +57308,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -43246,6 +57526,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -43321,6 +57619,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -43415,7 +57719,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -43619,6 +57923,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -43699,9 +58009,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -43734,7 +58063,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -43780,12 +58109,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -43961,6 +58284,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -44015,6 +58342,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -44038,10 +58370,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -44060,6 +58388,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -44081,13 +58480,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -44108,11 +58507,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -44126,11 +58525,129 @@ local api = {
     },
     type = "class"
   },
+  ValueAnimation = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      SetInterpolationMethod = {
+        args = "(InterpMethod method)",
+        description = "Set interpolation method.",
+        returns = "()",
+        type = "method"
+      },
+      SetSplineTension = {
+        args = "(float tension)",
+        description = "Set spline tension, should be between 0.0f and 1.0f, but this is not a must.",
+        returns = "()",
+        type = "method"
+      },
+      SetValueType = {
+        args = "(VariantType valueType)",
+        description = "Set value type.",
+        returns = "()",
+        type = "method"
+      },
+      SetKeyFrame = {
+        args = "(float time, const Variant& value)",
+        description = "Set key frame.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetEventFrame = {
+        args = "(float time, const StringHash& eventType)",
+        description = "() SetEventFrame (float time, const StringHash& eventType, const VariantMap& eventData)",
+        returns = "()",
+        type = "method"
+      },
+      GetInterpolationMethod = {
+        args = "()",
+        description = "Return interpolation method.",
+        returns = "(InterpMethod)",
+        type = "method"
+      },
+      GetSplineTension = {
+        args = "()",
+        description = "Return spline tension.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetValueType = {
+        args = "()",
+        description = "Return value type.",
+        returns = "(VariantType)",
+        type = "method"
+      },
+      interpolationMethod = {
+        description = "InterpMethod\nInterpolation method.",
+        type = "value"
+      },
+      splineTension = {
+        description = "float\nSpline tension.",
+        type = "value"
+      },
+      valueType = {
+        description = "VariantType\nValue type.",
+        type = "value"
+      },
+      Load = {
+        args = "(Deserializer& source)",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
+        returns = "(bool)",
+        type = "method"
+      },
+      Save = {
+        args = "(Serializer& dest)",
+        description = "(bool) Save (const String fileName)\nSave resource. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetName = {
+        args = "()",
+        description = "Return name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetNameHash = {
+        args = "()",
+        description = "Return name hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetMemoryUse = {
+        args = "()",
+        description = "Return memory use in bytes, possibly approximate.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      name = {
+        description = "(Readonly) String\nName.",
+        type = "value"
+      },
+      nameHash = {
+        description = "(Readonly) StringHash\nName hash.",
+        type = "value"
+      },
+      memoryUse = {
+        description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   Variant = {
     childs = {
       new = {
         args = "()",
-        description = "(Variant*) new (int value),\n(Variant*) new (unsigned value),\n(Variant*) new (const StringHash& value),\n(Variant*) new (const ShortStringHash& value),\n(Variant*) new (bool value),\n(Variant*) new (float value),\n(Variant*) new (const Vector2& value),\n(Variant*) new (const Vector3& value),\n(Variant*) new (const Vector4& value),\n(Variant*) new (const Quaternion& value),\n(Variant*) new (const Color& value),\n(Variant*) new (const String value),\n(Variant*) new (const char* value),\n(Variant*) new (const ResourceRef& value),\n(Variant*) new (const ResourceRefList& value),\n(Variant*) new (const IntRect& value),\n(Variant*) new (const IntVector2& value),\n(Variant*) new (const String type, const String value),\n(Variant*) new (VariantType type, const String value),\n(Variant*) new (VariantType type, const char* value),\n(Variant*) new (const Variant& value)",
+        description = "(Variant*) new (int value),\n(Variant*) new (unsigned value),\n(Variant*) new (const StringHash& value),\n(Variant*) new (bool value),\n(Variant*) new (float value),\n(Variant*) new (const Vector2& value),\n(Variant*) new (const Vector3& value),\n(Variant*) new (const Vector4& value),\n(Variant*) new (const Quaternion& value),\n(Variant*) new (const Color& value),\n(Variant*) new (const String value),\n(Variant*) new (const char* value),\n(Variant*) new (const ResourceRef& value),\n(Variant*) new (const ResourceRefList& value),\n(Variant*) new (const IntRect& value),\n(Variant*) new (const IntVector2& value),\n(Variant*) new (const Matrix3& value),\n(Variant*) new (const Matrix3x4& value),\n(Variant*) new (const Matrix4& value),\n(Variant*) new (const String type, const String value),\n(Variant*) new (VariantType type, const String value),\n(Variant*) new (VariantType type, const char* value),\n(Variant*) new (const Variant& value)",
         returns = "(Variant*)",
         valuetype = "Variant",
         type = "method"
@@ -44157,11 +58674,6 @@ local api = {
       },
       SetStringHash = {
         args = "(const StringHash& value)",
-        returns = "()",
-        type = "method"
-      },
-      SetShortStringHash = {
-        args = "(const ShortStringHash& value)",
         returns = "()",
         type = "method"
       },
@@ -44230,6 +58742,21 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetMatrix3 = {
+        args = "(const Matrix3& value)",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix3x4 = {
+        args = "(const Matrix3x4& value)",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix4 = {
+        args = "(const Matrix4& value)",
+        returns = "()",
+        type = "method"
+      },
       GetInt = {
         args = "()",
         returns = "(int)",
@@ -44243,11 +58770,6 @@ local api = {
       GetStringHash = {
         args = "()",
         returns = "(StringHash)",
-        type = "method"
-      },
-      GetShortStringHash = {
-        args = "()",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       GetBool = {
@@ -44324,6 +58846,24 @@ local api = {
         valuetype = "IntVector2",
         type = "method"
       },
+      GetMatrix3 = {
+        args = "()",
+        returns = "(const Matrix3&)",
+        valuetype = "Matrix3",
+        type = "method"
+      },
+      GetMatrix3x4 = {
+        args = "()",
+        returns = "(const Matrix3x4&)",
+        valuetype = "Matrix3x4",
+        type = "method"
+      },
+      GetMatrix4 = {
+        args = "()",
+        returns = "(const Matrix4&)",
+        valuetype = "Matrix4",
+        type = "method"
+      },
       GetType = {
         args = "()",
         returns = "(VariantType)",
@@ -44393,11 +58933,6 @@ local api = {
       },
       SetStringHash = {
         args = "(const String key, const StringHash& value)",
-        returns = "()",
-        type = "method"
-      },
-      SetShortStringHash = {
-        args = "(const String key, const ShortStringHash& value)",
         returns = "()",
         type = "method"
       },
@@ -44471,6 +59006,21 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetMatrix3 = {
+        args = "(const String key, const Matrix3 value)",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix3x4 = {
+        args = "(const String key, const Matrix3x4 value)",
+        returns = "()",
+        type = "method"
+      },
+      SetMatrix4 = {
+        args = "(const String key, const Matrix4 value)",
+        returns = "()",
+        type = "method"
+      },
       GetInt = {
         args = "(const String key)",
         returns = "(int)",
@@ -44484,11 +59034,6 @@ local api = {
       GetStringHash = {
         args = "(const String key)",
         returns = "(StringHash)",
-        type = "method"
-      },
-      GetShortStringHash = {
-        args = "(const String key)",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       GetBool = {
@@ -44570,6 +59115,24 @@ local api = {
         returns = "(const void*)",
         type = "method"
       },
+      GetMatrix3 = {
+        args = "(const String key)",
+        returns = "(const Matrix3&)",
+        valuetype = "Matrix3",
+        type = "method"
+      },
+      GetMatrix3x4 = {
+        args = "(const String key)",
+        returns = "(const Matrix3x4&)",
+        valuetype = "Matrix3x4",
+        type = "method"
+      },
+      GetMatrix4 = {
+        args = "(const String key)",
+        returns = "(const Matrix4&)",
+        valuetype = "Matrix4",
+        type = "method"
+      },
     },
     type = "class"
   },
@@ -44627,6 +59190,11 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsNaN = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
       Normalized = {
         args = "()",
         returns = "(Vector2)",
@@ -44676,7 +59244,7 @@ local api = {
     childs = {
       new = {
         args = "()",
-        description = "(Vector3*) new (const Vector3& vector),\n(Vector3*) new (const Vector2& vector, float z),\n(Vector3*) new (float x, float y, float z)",
+        description = "(Vector3*) new (const Vector3& vector),\n(Vector3*) new (const Vector2& vector, float z),\n(Vector3*) new (const Vector2& vector),\n(Vector3*) new (float x, float y, float z),\n(Vector3*) new (float x, float y)",
         returns = "(Vector3*)",
         valuetype = "Vector3",
         type = "method"
@@ -44728,6 +59296,11 @@ local api = {
       },
       Equals = {
         args = "(const Vector3& rhs)",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsNaN = {
+        args = "()",
         returns = "(bool)",
         type = "method"
       },
@@ -44829,6 +59402,11 @@ local api = {
       },
       Equals = {
         args = "(const Vector4& rhs)",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsNaN = {
+        args = "()",
         returns = "(bool)",
         type = "method"
       },
@@ -45029,6 +59607,21 @@ local api = {
         returns = "(Quaternion)",
         type = "method"
       },
+      ReadMatrix3 = {
+        args = "()",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      ReadMatrix3x4 = {
+        args = "()",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      ReadMatrix4 = {
+        args = "()",
+        returns = "(Matrix4)",
+        type = "method"
+      },
       ReadColor = {
         args = "()",
         returns = "(Color)",
@@ -45052,11 +59645,6 @@ local api = {
       ReadStringHash = {
         args = "()",
         returns = "(StringHash)",
-        type = "method"
-      },
-      ReadShortStringHash = {
-        args = "()",
-        returns = "(ShortStringHash)",
         type = "method"
       },
       ReadBuffer = {
@@ -45195,6 +59783,21 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      WriteMatrix3 = {
+        args = "(const Matrix3& value)",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix3x4 = {
+        args = "(const Matrix3x4& value)",
+        returns = "(bool)",
+        type = "method"
+      },
+      WriteMatrix4 = {
+        args = "(const Matrix4& value)",
+        returns = "(bool)",
+        type = "method"
+      },
       WriteColor = {
         args = "(const Color& value)",
         returns = "(bool)",
@@ -45217,11 +59820,6 @@ local api = {
       },
       WriteStringHash = {
         args = "(const StringHash& value)",
-        returns = "(bool)",
-        type = "method"
-      },
-      WriteShortStringHash = {
-        args = "(const ShortStringHash& value)",
         returns = "(bool)",
         type = "method"
       },
@@ -45444,6 +60042,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetModalAutoDismiss = {
+        args = "(bool enable)",
+        description = "Set whether model window can be dismissed with the escape key. Default true.",
+        returns = "()",
+        type = "method"
+      },
       IsMovable = {
         args = "()",
         description = "Return whether is movable.",
@@ -45502,6 +60106,12 @@ local api = {
         valuetype = "IntVector2",
         type = "method"
       },
+      GetModalAutoDismiss = {
+        args = "()",
+        description = "Return whether can be dismissed with escape key.",
+        returns = "(bool)",
+        type = "method"
+      },
       movable = {
         description = "bool\nMovable flag.",
         type = "value"
@@ -45542,6 +60152,10 @@ local api = {
         description = "IntVector2&\nModal frame size, used when modal flag is set.",
         type = "value"
       },
+      modalAutoDismiss = {
+        description = "bool\nModal auto dismiss (with escape key) flag. Default true.",
+        type = "value"
+      },
       SetTexture = {
         args = "(Texture* texture)",
         description = "Set texture.",
@@ -45562,7 +60176,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -45600,7 +60220,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -45636,7 +60263,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -45839,6 +60471,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -45914,6 +60564,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -46008,7 +60664,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -46212,6 +60868,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -46292,9 +60954,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -46327,7 +61008,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -46373,12 +61054,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -46554,6 +61229,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -46608,6 +61287,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -46631,10 +61315,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -46653,6 +61333,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -46674,13 +61425,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -46701,11 +61452,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -46757,6 +61508,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDrawDebug = {
+        args = "(bool enable)",
+        description = "Set whether to render debug geometry. Default true.",
+        returns = "()",
+        type = "method"
+      },
       GetScene = {
         args = "()",
         description = "Return scene.",
@@ -46785,6 +61542,28 @@ local api = {
         valuetype = "RenderPath",
         type = "method"
       },
+      GetDrawDebug = {
+        args = "()",
+        description = "Return whether to draw debug geometry.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetScreenRay = {
+        args = "(int x, int y)",
+        description = "Return ray corresponding to normalized screen coordinates.",
+        returns = "(Ray)",
+        type = "method"
+      },
+      WorldToScreenPoint = {
+        args = "(const Vector3& worldPos)",
+        returns = "(IntVector2)",
+        type = "method"
+      },
+      ScreenToWorldPoint = {
+        args = "(int x, int y, float depth)",
+        returns = "(Vector3)",
+        type = "method"
+      },
       scene = {
         valuetype = "Scene",
         description = "Scene*\nScene pointer.",
@@ -46803,6 +61582,10 @@ local api = {
       renderPath = {
         valuetype = "RenderPath",
         description = "RenderPath*\nRendering path.",
+        type = "value"
+      },
+      drawDebug = {
+        description = "bool\nDebug draw flag.",
         type = "value"
       },
     },
@@ -46875,6 +61658,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetModalAutoDismiss = {
+        args = "(bool enable)",
+        description = "Set whether model window can be dismissed with the escape key. Default true.",
+        returns = "()",
+        type = "method"
+      },
       IsMovable = {
         args = "()",
         description = "Return whether is movable.",
@@ -46933,6 +61722,12 @@ local api = {
         valuetype = "IntVector2",
         type = "method"
       },
+      GetModalAutoDismiss = {
+        args = "()",
+        description = "Return whether can be dismissed with escape key.",
+        returns = "(bool)",
+        type = "method"
+      },
       movable = {
         description = "bool\nMovable flag.",
         type = "value"
@@ -46973,6 +61768,10 @@ local api = {
         description = "IntVector2&\nModal frame size, used when modal flag is set.",
         type = "value"
       },
+      modalAutoDismiss = {
+        description = "bool\nModal auto dismiss (with escape key) flag. Default true.",
+        type = "value"
+      },
       SetTexture = {
         args = "(Texture* texture)",
         description = "Set texture.",
@@ -46993,7 +61792,13 @@ local api = {
       },
       SetBorder = {
         args = "(const IntRect& rect)",
-        description = "Set image border dimensions.",
+        description = "Set border dimensions on the screen.",
+        returns = "()",
+        type = "method"
+      },
+      SetImageBorder = {
+        args = "(const IntRect& rect)",
+        description = "Set border dimensions on the image. If zero (default) uses the screen dimensions, resulting in pixel-perfect borders.",
         returns = "()",
         type = "method"
       },
@@ -47031,7 +61836,14 @@ local api = {
       },
       GetBorder = {
         args = "()",
-        description = "Return image border dimensions.",
+        description = "Return border screen dimensions.",
+        returns = "(const IntRect&)",
+        valuetype = "IntRect",
+        type = "method"
+      },
+      GetImageBorder = {
+        args = "()",
+        description = "Return border image dimensions. Zero rect uses border screen dimensions.",
         returns = "(const IntRect&)",
         valuetype = "IntRect",
         type = "method"
@@ -47067,7 +61879,12 @@ local api = {
       },
       border = {
         valuetype = "IntRect",
-        description = "IntRect&\nImage border dimensions.",
+        description = "IntRect&\nBorder dimensions on screen.",
+        type = "value"
+      },
+      imageBorder = {
+        valuetype = "IntRect",
+        description = "IntRect&\nBorder dimensions on the image.",
         type = "value"
       },
       hoverOffset = {
@@ -47270,6 +62087,24 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetDeepEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Elements' own enabled state is remembered (IsEnabledSelf) and can be restored.",
+        returns = "()",
+        type = "method"
+      },
+      ResetDeepEnabled = {
+        args = "()",
+        description = "Reset enabled state to the element's remembered state prior to calling SetDeepEnabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetEnabledRecursive = {
+        args = "(bool enable)",
+        description = "Set enabled state on self and child elements. Unlike SetDeepEnabled this does not remember the elements' own enabled state, but overwrites it.",
+        returns = "()",
+        type = "method"
+      },
       SetEditable = {
         args = "(bool enable)",
         description = "Set whether value is editable through input. Not applicable to all elements. Default true.",
@@ -47345,6 +62180,12 @@ local api = {
       SetLayoutBorder = {
         args = "(const IntRect& border)",
         description = "Set layout border.",
+        returns = "()",
+        type = "method"
+      },
+      SetLayoutFlexScale = {
+        args = "(const Vector2& scale)",
+        description = "Set layout flex scale.",
         returns = "()",
         type = "method"
       },
@@ -47439,7 +62280,7 @@ local api = {
         type = "method"
       },
       SetVar = {
-        args = "(ShortStringHash key, const Variant& value)",
+        args = "(StringHash key, const Variant& value)",
         description = "Set a user variable.",
         returns = "()",
         type = "method"
@@ -47643,6 +62484,12 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      IsEnabledSelf = {
+        args = "()",
+        description = "Returns the element's last own enabled state. May be different than the value returned by IsEnabled when SetDeepEnabled has been used.",
+        returns = "(bool)",
+        type = "method"
+      },
       IsEditable = {
         args = "()",
         description = "Return whether value is editable through input.",
@@ -47723,9 +62570,28 @@ local api = {
         valuetype = "IntRect",
         type = "method"
       },
+      GetLayoutFlexScale = {
+        args = "()",
+        description = "Return layout flex scale.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
       GetNumChildren = {
         args = "(bool recursive = false)",
         description = "Return number of child elements.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDragButtonCombo = {
+        args = "()",
+        description = "Return the drag button combo if this element is being dragged.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetDragButtonCount = {
+        args = "()",
+        description = "Return the number of buttons dragging this element.",
         returns = "(unsigned)",
         type = "method"
       },
@@ -47758,7 +62624,7 @@ local api = {
         type = "method"
       },
       GetVar = {
-        args = "(ShortStringHash key)",
+        args = "(StringHash key)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
@@ -47804,12 +62670,6 @@ local api = {
         args = "()",
         description = "Sort child elements if sorting enabled and order dirty. Called by UI.",
         returns = "()",
-        type = "method"
-      },
-      GetLayoutMinSize = {
-        args = "()",
-        description = "Return minimum layout element size in the layout direction. Only valid after layout has been calculated.",
-        returns = "(int)",
         type = "method"
       },
       GetIndent = {
@@ -47985,6 +62845,10 @@ local api = {
         description = "bool\nInput enabled flag.",
         type = "value"
       },
+      enabledSelf = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
       editable = {
         description = "bool\nValue editable flag.",
         type = "value"
@@ -48039,6 +62903,11 @@ local api = {
         description = "IntRect&\nLayout borders.",
         type = "value"
       },
+      layoutFlexScale = {
+        valuetype = "Vector2",
+        description = "Vector2&\nLayout flex scale.",
+        type = "value"
+      },
       numChildren = {
         description = "(Readonly) unsigned",
         type = "value"
@@ -48062,10 +62931,6 @@ local api = {
         description = "(Readonly) IntRect",
         type = "value"
       },
-      layoutMinSize = {
-        description = "(Readonly) int\nLayout element minimum size in layout direction.",
-        type = "value"
-      },
       indent = {
         description = "int\nHorizontal indentation.",
         type = "value"
@@ -48084,6 +62949,77 @@ local api = {
       },
       elementEventSender = {
         description = "bool\nFlag whether node should send child added / removed events by itself.",
+        type = "value"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
         type = "value"
       },
       SetTemporary = {
@@ -48105,13 +63041,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -48132,11 +63068,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -48184,7 +63120,7 @@ local api = {
       },
       SetAttribute = {
         args = "(const String name, const String value)",
-        description = "Set an attribute.\nSet an attribute. Only valid if it is an attribute only XPath query result.",
+        description = "(bool) SetAttribute (const String value)\nSet an attribute.\nSet an attribute. Only valid if it is an attribute only XPath query result.",
         returns = "(bool)",
         type = "method"
       },
@@ -48298,7 +63234,25 @@ local api = {
       },
       SetVectorVariant = {
         args = "(const String name, const Variant& value)",
-        description = "Set a float or Vector attribute stored in a variant.",
+        description = "Set a float, Vector or Matrix attribute stored in a variant.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetMatrix3 = {
+        args = "(const String name, const Matrix3& value)",
+        description = "Set a Matrix3 attribute.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetMatrix3x4 = {
+        args = "(const String name, const Matrix3x4& value)",
+        description = "Set a Matrix3x4 attribute.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetMatrix4 = {
+        args = "(const String name, const Matrix4& value)",
+        description = "Set a Matrix4 attribute.",
         returns = "(bool)",
         type = "method"
       },
@@ -48361,6 +63315,36 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      GetValue = {
+        args = "()",
+        description = "Return inner value, or empty if missing for nodes like <node>value</node>",
+        returns = "(String)",
+        type = "method"
+      },
+      GetAttribute = {
+        args = "(const String name = String::EMPTY)",
+        description = "Return attribute, or empty if missing.",
+        returns = "(String)",
+        type = "method"
+      },
+      GetAttributeLower = {
+        args = "(const String name)",
+        description = "Return attribute in lowercase, or empty if missing.",
+        returns = "(String)",
+        type = "method"
+      },
+      GetAttributeUpper = {
+        args = "(const String name)",
+        description = "Return attribute in lowercase, or empty if missing.",
+        returns = "(String)",
+        type = "method"
+      },
+      GetAttributeNames = {
+        args = "()",
+        description = "Return names of all attributes.",
+        returns = "(Vector<String>)",
+        type = "method"
+      },
       GetBool = {
         args = "(const String name)",
         description = "Return bool attribute, or false if missing.",
@@ -48371,12 +63355,6 @@ local api = {
         args = "()",
         description = "Return bounding box attribute, or empty if missing.",
         returns = "(BoundingBox)",
-        type = "method"
-      },
-      GetValue = {
-        args = "()",
-        description = "Return inner value, or empty if missing for nodes like <node>value</node>",
-        returns = "(String)",
         type = "method"
       },
       GetColor = {
@@ -48459,19 +63437,19 @@ local api = {
       },
       GetVector2 = {
         args = "(const String name)",
-        description = "Return a Vector2 attribute, or default if missing.",
+        description = "Return a Vector2 attribute, or zero vector if missing.",
         returns = "(Vector2)",
         type = "method"
       },
       GetVector3 = {
         args = "(const String name)",
-        description = "Return a Vector3 attribute, or default if missing.",
+        description = "Return a Vector3 attribute, or zero vector if missing.",
         returns = "(Vector3)",
         type = "method"
       },
       GetVector4 = {
         args = "(const String name)",
-        description = "Return a Vector4 attribute, or default if missing.",
+        description = "Return a Vector4 attribute, or zero vector if missing.",
         returns = "(Vector4)",
         type = "method"
       },
@@ -48479,6 +63457,24 @@ local api = {
         args = "(const String name)",
         description = "Return any Vector attribute as Vector4. Missing coordinates will be zero.",
         returns = "(Vector4)",
+        type = "method"
+      },
+      GetMatrix3 = {
+        args = "(const String name)",
+        description = "Return a Matrix3 attribute, or zero matrix if missing.",
+        returns = "(Matrix3)",
+        type = "method"
+      },
+      GetMatrix3x4 = {
+        args = "(const String name)",
+        description = "Return a Matrix3x4 attribute, or zero matrix if missing.",
+        returns = "(Matrix3x4)",
+        type = "method"
+      },
+      GetMatrix4 = {
+        args = "(const String name)",
+        description = "Return a Matrix4 attribute, or zero matrix if missing.",
+        returns = "(Matrix4)",
         type = "method"
       },
       GetFile = {
@@ -48500,12 +63496,12 @@ local api = {
         description = "(Readonly) String",
         type = "value"
       },
-      value = {
-        description = "(Readonly) String",
-        type = "value"
-      },
       parent = {
         description = "(Readonly) XMLElement",
+        type = "value"
+      },
+      value = {
+        description = "(Readonly) String",
         type = "value"
       },
       numAttributes = {
@@ -48533,6 +63529,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      FromString = {
+        args = "(const String source)",
+        description = "Deserialize from a string. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
       CreateRoot = {
         args = "(const String name = String::EMPTY)",
         description = "Clear the document and create a root element.",
@@ -48545,6 +63547,12 @@ local api = {
         returns = "(XMLElement)",
         type = "method"
       },
+      ToString = {
+        args = "()",
+        description = "Serialize the XML content to a string.",
+        returns = "(String)",
+        type = "method"
+      },
       Patch = {
         args = "(XMLFile* patchFile)",
         description = "() Patch (XMLElement patchElement)\nPatch the XMLFile with another XMLFile. Based on RFC 5261.",
@@ -48553,7 +63561,7 @@ local api = {
       },
       Load = {
         args = "(Deserializer& source)",
-        description = "(bool) Load (const String fileName)\nLoad resource. Return true if successful.",
+        description = "(bool) Load (const String fileName)\nLoad resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.",
         returns = "(bool)",
         type = "method"
       },
@@ -48654,13 +63662,19 @@ local api = {
       },
       SetOverride = {
         args = "(bool enable)",
-        description = "Set override mode. If camera is inside an override zone, it will also be used for all drawables.",
+        description = "Set override mode. If camera is inside an override zone, that zone will be used for all rendered objects instead of their own zone.",
         returns = "()",
         type = "method"
       },
       SetAmbientGradient = {
         args = "(bool enable)",
         description = "Set ambient gradient mode. In gradient mode ambient color is interpolated from neighbor zones.",
+        returns = "()",
+        type = "method"
+      },
+      SetZoneTexture = {
+        args = "(Texture* texture)",
+        description = "Set zone texture. This will be bound to the zone texture unit when rendering objects inside the zone. Note that the default shaders do not use it.",
         returns = "()",
         type = "method"
       },
@@ -48747,6 +63761,13 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      GetZoneTexture = {
+        args = "()",
+        description = "Return zone texture.",
+        returns = "(Texture*)",
+        valuetype = "Texture",
+        type = "method"
+      },
       IsInside = {
         args = "(const Vector3& point)",
         description = "Check whether a point is inside.",
@@ -48813,6 +63834,11 @@ local api = {
       },
       ambientGradient = {
         description = "bool\nAmbient gradient mode flag.",
+        type = "value"
+      },
+      zoneTexture = {
+        valuetype = "Texture",
+        description = "Texture*\nZone texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -48975,7 +64001,7 @@ local api = {
       },
       IsInView = {
         args = "()",
-        description = "(bool) IsInView (Camera* tolua_var_1)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
+        description = "(bool) IsInView (Camera* tolua_var_2)\nReturn whether is in view this frame from any viewport camera. Excludes shadow map cameras.",
         returns = "(bool)",
         type = "method"
       },
@@ -49093,11 +64119,82 @@ local api = {
         type = "method"
       },
       GetComponent = {
-        args = "(ShortStringHash type)",
+        args = "(StringHash type)",
         description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
         returns = "(Component*)",
         valuetype = "Component",
         type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
       },
       SetTemporary = {
         args = "(bool enable)",
@@ -49118,13 +64215,13 @@ local api = {
       GetType = {
         args = "()",
         description = "Return type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetBaseType = {
         args = "()",
         description = "Return base class type hash.",
-        returns = "(ShortStringHash)",
+        returns = "(StringHash)",
         type = "method"
       },
       GetTypeName = {
@@ -49145,11 +64242,11 @@ local api = {
         type = "method"
       },
       type = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       baseType = {
-        description = "(Readonly) ShortStringHash",
+        description = "(Readonly) StringHash",
         type = "value"
       },
       typeName = {
@@ -49194,8 +64291,28 @@ local api = {
         description = "(Readonly) int for 'BlendMode'",
         type = "value"
       },
+      BLEND_SUBTRACT = {
+        description = "(Readonly) int for 'BlendMode'",
+        type = "value"
+      },
+      BLEND_SUBTRACTALPHA = {
+        description = "(Readonly) int for 'BlendMode'",
+        type = "value"
+      },
       MAX_BLENDMODES = {
         description = "(Readonly) int for 'BlendMode'",
+        type = "value"
+      },
+      BT_STATIC = {
+        description = "(Readonly) int for 'BodyType2D'",
+        type = "value"
+      },
+      BT_DYNAMIC = {
+        description = "(Readonly) int for 'BodyType2D'",
+        type = "value"
+      },
+      BT_KINEMATIC = {
+        description = "(Readonly) int for 'BodyType2D'",
         type = "value"
       },
       COLLISION_NEVER = {
@@ -49402,170 +64519,6 @@ local api = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
       },
-      CM_LOOP = {
-        description = "(Readonly) int for 'CycleMode'",
-        type = "value"
-      },
-      CM_CLAMP = {
-        description = "(Readonly) int for 'CycleMode'",
-        type = "value"
-      },
-      CM_PINGPONG = {
-        description = "(Readonly) int for 'CycleMode'",
-        type = "value"
-      },
-      DLPS_NONE = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SPOT = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINT = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTMASK = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SPOTSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTMASKSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SPOTSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTMASKSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_SPOTSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_POINTMASKSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHO = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSPOT = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINT = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTMASK = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSPOTSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTMASKSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSPOTSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTMASKSHADOW = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOSPOTSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLPS_ORTHOPOINTMASKSHADOWSPEC = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      MAX_DEFERRED_LIGHT_PS_VARIATIONS = {
-        description = "(Readonly) int for 'DeferredLightPSVariation'",
-        type = "value"
-      },
-      DLVS_NONE = {
-        description = "(Readonly) int for 'DeferredLightVSVariation'",
-        type = "value"
-      },
-      DLVS_DIR = {
-        description = "(Readonly) int for 'DeferredLightVSVariation'",
-        type = "value"
-      },
-      DLVS_ORTHO = {
-        description = "(Readonly) int for 'DeferredLightVSVariation'",
-        type = "value"
-      },
-      DLVS_ORTHODIR = {
-        description = "(Readonly) int for 'DeferredLightVSVariation'",
-        type = "value"
-      },
-      MAX_DEFERRED_LIGHT_VS_VARIATIONS = {
-        description = "(Readonly) int for 'DeferredLightVSVariation'",
-        type = "value"
-      },
       EMITTER_SPHERE = {
         description = "(Readonly) int for 'EmitterType'",
         type = "value"
@@ -49580,6 +64533,46 @@ local api = {
       },
       EMITTER_TYPE_RADIAL = {
         description = "(Readonly) int for 'EmitterType2D'",
+        type = "value"
+      },
+      FC_NONE = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_ROTATE_XYZ = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_ROTATE_Y = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_LOOKAT_XYZ = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_LOOKAT_Y = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_NONE = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_ROTATE_XYZ = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_ROTATE_Y = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_LOOKAT_XYZ = {
+        description = "(Readonly) int for 'FaceCameraMode'",
+        type = "value"
+      },
+      FC_LOOKAT_Y = {
+        description = "(Readonly) int for 'FaceCameraMode'",
         type = "value"
       },
       FILE_READ = {
@@ -49710,6 +64703,14 @@ local api = {
         description = "(Readonly) int for 'HttpRequestState'",
         type = "value"
       },
+      IM_LINEAR = {
+        description = "(Readonly) int for 'InterpMethod'",
+        type = "value"
+      },
+      IM_SPLINE = {
+        description = "(Readonly) int for 'InterpMethod'",
+        type = "value"
+      },
       BEZIER_CURVE = {
         description = "(Readonly) int for 'InterpolationMode'",
         type = "value"
@@ -49726,6 +64727,18 @@ local api = {
         description = "(Readonly) int for 'Intersection'",
         type = "value"
       },
+      JSON_ANY = {
+        description = "(Readonly) int for 'JSONValueType'",
+        type = "value"
+      },
+      JSON_OBJECT = {
+        description = "(Readonly) int for 'JSONValueType'",
+        type = "value"
+      },
+      JSON_ARRAY = {
+        description = "(Readonly) int for 'JSONValueType'",
+        type = "value"
+      },
       LM_FREE = {
         description = "(Readonly) int for 'LayoutMode'",
         type = "value"
@@ -49736,74 +64749,6 @@ local api = {
       },
       LM_VERTICAL = {
         description = "(Readonly) int for 'LayoutMode'",
-        type = "value"
-      },
-      LPS_NONE = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SPOT = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINT = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTMASK = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SPOTSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTMASKSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SHADOW = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SPOTSHADOW = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTSHADOW = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTMASKSHADOW = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SHADOWSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_SPOTSHADOWSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTSHADOWSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      LPS_POINTMASKSHADOWSPEC = {
-        description = "(Readonly) int for 'LightPSVariation'",
-        type = "value"
-      },
-      MAX_LIGHT_PS_VARIATIONS = {
-        description = "(Readonly) int for 'LightPSVariation'",
         type = "value"
       },
       LIGHT_DIRECTIONAL = {
@@ -49818,56 +64763,16 @@ local api = {
         description = "(Readonly) int for 'LightType'",
         type = "value"
       },
-      LVS_DIR = {
-        description = "(Readonly) int for 'LightVSVariation'",
+      LOAD_RESOURCES_ONLY = {
+        description = "(Readonly) int for 'LoadMode'",
         type = "value"
       },
-      LVS_SPOT = {
-        description = "(Readonly) int for 'LightVSVariation'",
+      LOAD_SCENE = {
+        description = "(Readonly) int for 'LoadMode'",
         type = "value"
       },
-      LVS_POINT = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_SPEC = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_SPOTSPEC = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_POINTSPEC = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_SHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_SPOTSHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_POINTSHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_DIRSPECSHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_SPOTSPECSHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      LVS_POINTSPECSHADOW = {
-        description = "(Readonly) int for 'LightVSVariation'",
-        type = "value"
-      },
-      MAX_LIGHT_VS_VARIATIONS = {
-        description = "(Readonly) int for 'LightVSVariation'",
+      LOAD_SCENE_AND_RESOURCES = {
+        description = "(Readonly) int for 'LoadMode'",
         type = "value"
       },
       LOCK_NONE = {
@@ -49886,12 +64791,48 @@ local api = {
         description = "(Readonly) int for 'LockState'",
         type = "value"
       },
+      LM_DEFAULT = {
+        description = "(Readonly) int for 'LoopMode2D'",
+        type = "value"
+      },
+      LM_FORCE_LOOPED = {
+        description = "(Readonly) int for 'LoopMode2D'",
+        type = "value"
+      },
+      LM_FORCE_CLAMPED = {
+        description = "(Readonly) int for 'LoopMode2D'",
+        type = "value"
+      },
+      MM_ABSOLUTE = {
+        description = "(Readonly) int for 'MouseMode'",
+        type = "value"
+      },
+      MM_RELATIVE = {
+        description = "(Readonly) int for 'MouseMode'",
+        type = "value"
+      },
+      MM_WRAP = {
+        description = "(Readonly) int for 'MouseMode'",
+        type = "value"
+      },
       O_HORIZONTAL = {
         description = "(Readonly) int for 'Orientation'",
         type = "value"
       },
       O_VERTICAL = {
         description = "(Readonly) int for 'Orientation'",
+        type = "value"
+      },
+      O_ORTHOGONAL = {
+        description = "(Readonly) int for 'Orientation2D'",
+        type = "value"
+      },
+      O_ISOMETRIC = {
+        description = "(Readonly) int for 'Orientation2D'",
+        type = "value"
+      },
+      O_STAGGERED = {
+        description = "(Readonly) int for 'Orientation2D'",
         type = "value"
       },
       LIGHTING_UNLIT = {
@@ -49911,6 +64852,22 @@ local api = {
         type = "value"
       },
       LINE_LIST = {
+        description = "(Readonly) int for 'PrimitiveType'",
+        type = "value"
+      },
+      POINT_LIST = {
+        description = "(Readonly) int for 'PrimitiveType'",
+        type = "value"
+      },
+      TRIANGLE_STRIP = {
+        description = "(Readonly) int for 'PrimitiveType'",
+        type = "value"
+      },
+      LINE_STRIP = {
+        description = "(Readonly) int for 'PrimitiveType'",
+        type = "value"
+      },
+      TRIANGLE_FAN = {
         description = "(Readonly) int for 'PrimitiveType'",
         type = "value"
       },
@@ -50198,6 +65155,10 @@ local api = {
         description = "(Readonly) int for 'TextureUnit'",
         type = "value"
       },
+      TU_ZONE = {
+        description = "(Readonly) int for 'TextureUnit'",
+        type = "value"
+      },
       MAX_TEXTURE_UNITS = {
         description = "(Readonly) int for 'TextureUnit'",
         type = "value"
@@ -50216,6 +65177,58 @@ local api = {
       },
       TEXTURE_DEPTHSTENCIL = {
         description = "(Readonly) int for 'TextureUsage'",
+        type = "value"
+      },
+      LT_TILE_LAYER = {
+        description = "(Readonly) int for 'TileMapLayerType2D'",
+        type = "value"
+      },
+      LT_OBJECT_GROUP = {
+        description = "(Readonly) int for 'TileMapLayerType2D'",
+        type = "value"
+      },
+      LT_IMAGE_LAYER = {
+        description = "(Readonly) int for 'TileMapLayerType2D'",
+        type = "value"
+      },
+      LT_INVALID = {
+        description = "(Readonly) int for 'TileMapLayerType2D'",
+        type = "value"
+      },
+      OT_RECTANGLE = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      OT_ELLIPSE = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      OT_POLYGON = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      OT_POLYLINE = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      OT_TILE = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      OT_INVALID = {
+        description = "(Readonly) int for 'TileMapObjectType2D'",
+        type = "value"
+      },
+      TS_LOCAL = {
+        description = "(Readonly) int for 'TransformSpace'",
+        type = "value"
+      },
+      TS_PARENT = {
+        description = "(Readonly) int for 'TransformSpace'",
+        type = "value"
+      },
+      TS_WORLD = {
+        description = "(Readonly) int for 'TransformSpace'",
         type = "value"
       },
       TM_BREADTH_FIRST = {
@@ -50302,6 +65315,18 @@ local api = {
         description = "(Readonly) int for 'VariantType'",
         type = "value"
       },
+      VAR_MATRIX3 = {
+        description = "(Readonly) int for 'VariantType'",
+        type = "value"
+      },
+      VAR_MATRIX3X4 = {
+        description = "(Readonly) int for 'VariantType'",
+        type = "value"
+      },
+      VAR_MATRIX4 = {
+        description = "(Readonly) int for 'VariantType'",
+        type = "value"
+      },
       MAX_VAR_TYPES = {
         description = "(Readonly) int for 'VariantType'",
         type = "value"
@@ -50362,30 +65387,6 @@ local api = {
         description = "(Readonly) int for 'VertexElement'",
         type = "value"
       },
-      VLVS_NOLIGHTS = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
-      VLVS_1LIGHT = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
-      VLVS_2LIGHTS = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
-      VLVS_3LIGHTS = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
-      VLVS_4LIGHTS = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
-      MAX_VERTEXLIGHT_VS_VARIATIONS = {
-        description = "(Readonly) int for 'VertexLightVSVariation'",
-        type = "value"
-      },
       VA_TOP = {
         description = "(Readonly) int for 'VerticalAlignment'",
         type = "value"
@@ -50438,6 +65439,18 @@ local api = {
         description = "(Readonly) int for 'WindowDragMode'",
         type = "value"
       },
+      WM_LOOP = {
+        description = "(Readonly) int for 'WrapMode'",
+        type = "value"
+      },
+      WM_ONCE = {
+        description = "(Readonly) int for 'WrapMode'",
+        type = "value"
+      },
+      WM_CLAMP = {
+        description = "(Readonly) int for 'WrapMode'",
+        type = "value"
+      },
 
   -- Global Functions
 
@@ -50446,14 +65459,64 @@ local api = {
         returns = "(float)",
         type = "function"
       },
+      AbsInt = {
+        args = "(int value)",
+        returns = "(int)",
+        type = "function"
+      },
+      Acos = {
+        args = "(float x)",
+        returns = "(float)",
+        type = "function"
+      },
       AddTrailingSlash = {
         args = "(const String pathName)",
         returns = "(String)",
         type = "function"
       },
+      Asin = {
+        args = "(float x)",
+        returns = "(float)",
+        type = "function"
+      },
+      Atan = {
+        args = "(float x)",
+        returns = "(float)",
+        type = "function"
+      },
+      Atan2 = {
+        args = "(float y, float x)",
+        returns = "(float)",
+        type = "function"
+      },
       Clamp = {
         args = "(float value, float min, float max)",
         returns = "(float)",
+        type = "function"
+      },
+      ClampInt = {
+        args = "(int value, int min, int max)",
+        returns = "(int)",
+        type = "function"
+      },
+      CompressVectorBuffer = {
+        args = "(VectorBuffer& src)",
+        returns = "(VectorBuffer)",
+        type = "function"
+      },
+      Cos = {
+        args = "(float angle)",
+        returns = "(float)",
+        type = "function"
+      },
+      CountSetBits = {
+        args = "(unsigned value)",
+        returns = "(unsigned)",
+        type = "function"
+      },
+      DecompressVectorBuffer = {
+        args = "(VectorBuffer& src)",
+        returns = "(VectorBuffer)",
         type = "function"
       },
       Equals = {
@@ -50653,6 +65716,16 @@ local api = {
         returns = "(bool)",
         type = "function"
       },
+      IsNaN = {
+        args = "(float value)",
+        returns = "(bool)",
+        type = "function"
+      },
+      IsPowerOfTwo = {
+        args = "(unsigned value)",
+        returns = "(bool)",
+        type = "function"
+      },
       Lerp = {
         args = "(float lhs, float rhs, float t)",
         returns = "(float)",
@@ -50663,9 +65736,24 @@ local api = {
         returns = "(float)",
         type = "function"
       },
+      MaxInt = {
+        args = "(int lhs, int rhs)",
+        returns = "(int)",
+        type = "function"
+      },
       Min = {
         args = "(float lhs, float rhs)",
         returns = "(float)",
+        type = "function"
+      },
+      MinInt = {
+        args = "(int lhs, int rhs)",
+        returns = "(int)",
+        type = "function"
+      },
+      NextPowerOfTwo = {
+        args = "(unsigned value)",
+        returns = "(unsigned)",
         type = "function"
       },
       OpenConsoleWindow = {
@@ -50704,12 +65792,12 @@ local api = {
         type = "function"
       },
       RandomInt = {
-        args = "(int range)",
+        args = "(int min, int max)",
         returns = "(int)",
         type = "function"
       },
       RandomInt = {
-        args = "(int min, int max)",
+        args = "(int range)",
         returns = "(int)",
         type = "function"
       },
@@ -50726,6 +65814,11 @@ local api = {
       ReplaceExtension = {
         args = "(const String fullPath, const String newExtension)",
         returns = "(String)",
+        type = "function"
+      },
+      SDBMHash = {
+        args = "(unsigned hash, char c)",
+        returns = "(unsigned)",
         type = "function"
       },
       SendEvent = {
@@ -50748,19 +65841,29 @@ local api = {
         returns = "(float)",
         type = "function"
       },
+      Sin = {
+        args = "(float angle)",
+        returns = "(float)",
+        type = "function"
+      },
       SmoothStep = {
         args = "(float lhs, float rhs, float t)",
         returns = "(float)",
         type = "function"
       },
       SubscribeToEvent = {
-        args = "(void* sender, const String eventName, const String functionName)",
+        args = "(const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "function"
       },
       SubscribeToEvent = {
-        args = "(const String eventName, const String functionName)",
+        args = "(void* sender, const String eventName, void* functionOrFunctionName)",
         returns = "()",
+        type = "function"
+      },
+      Tan = {
+        args = "(float angle)",
+        returns = "(float)",
         type = "function"
       },
       ToBool = {
@@ -50796,6 +65899,21 @@ local api = {
       ToLower = {
         args = "(unsigned ch)",
         returns = "(unsigned)",
+        type = "function"
+      },
+      ToMatrix3 = {
+        args = "(const String source)",
+        returns = "(Matrix3)",
+        type = "function"
+      },
+      ToMatrix3x4 = {
+        args = "(const String source)",
+        returns = "(Matrix3x4)",
+        type = "function"
+      },
+      ToMatrix4 = {
+        args = "(const String source)",
+        returns = "(Matrix4)",
         type = "function"
       },
       ToQuaternion = {
@@ -50849,12 +65967,17 @@ local api = {
         type = "function"
       },
       UnsubscribeFromEvent = {
-        args = "(const String eventName, const String functionName = String::EMPTY)",
+        args = "(void* sender, const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "function"
       },
       UnsubscribeFromEvent = {
-        args = "(void* sender, const String eventName, const String functionName = String::EMPTY)",
+        args = "(const String eventName)",
+        returns = "()",
+        type = "function"
+      },
+      UnsubscribeFromEvent = {
+        args = "(const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "function"
       },
@@ -51108,6 +66231,10 @@ local api = {
         description = "const unsigned",
         type = "value"
       },
+      DRAWABLE_PROXYGEOMETRY = {
+        description = "const unsigned",
+        type = "value"
+      },
       DRAWABLE_ZONE = {
         description = "const unsigned",
         type = "value"
@@ -51137,10 +66264,6 @@ local api = {
         type = "value"
       },
       HAT_UP = {
-        description = "const int",
-        type = "value"
-      },
-      INSTANCING_BUFFER_DEFAULT_SIZE = {
         description = "const int",
         type = "value"
       },
@@ -51188,15 +66311,11 @@ local api = {
         description = "const int",
         type = "value"
       },
-      KEY_ADD = {
-        description = "const int",
-        type = "value"
-      },
       KEY_ALT = {
         description = "const int",
         type = "value"
       },
-      KEY_APPS = {
+      KEY_APPLICATION = {
         description = "const int",
         type = "value"
       },
@@ -51224,15 +66343,7 @@ local api = {
         description = "const int",
         type = "value"
       },
-      KEY_DECIMAL = {
-        description = "const int",
-        type = "value"
-      },
       KEY_DELETE = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_DIVIDE = {
         description = "const int",
         type = "value"
       },
@@ -51356,6 +66467,10 @@ local api = {
         description = "const int",
         type = "value"
       },
+      KEY_GUI = {
+        description = "const int",
+        type = "value"
+      },
       KEY_H = {
         description = "const int",
         type = "value"
@@ -51380,7 +66495,67 @@ local api = {
         description = "const int",
         type = "value"
       },
+      KEY_KP_0 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_1 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_2 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_3 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_4 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_5 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_6 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_7 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_8 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_9 = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_DIVIDE = {
+        description = "const int",
+        type = "value"
+      },
       KEY_KP_ENTER = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_MINUS = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_MULTIPLY = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_PERIOD = {
+        description = "const int",
+        type = "value"
+      },
+      KEY_KP_PLUS = {
         description = "const int",
         type = "value"
       },
@@ -51400,11 +66575,11 @@ local api = {
         description = "const int",
         type = "value"
       },
-      KEY_LSHIFT = {
+      KEY_LGUI = {
         description = "const int",
         type = "value"
       },
-      KEY_LWIN = {
+      KEY_LSHIFT = {
         description = "const int",
         type = "value"
       },
@@ -51412,55 +66587,11 @@ local api = {
         description = "const int",
         type = "value"
       },
-      KEY_MULTIPLY = {
-        description = "const int",
-        type = "value"
-      },
       KEY_N = {
         description = "const int",
         type = "value"
       },
-      KEY_NUMLOCK = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD0 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD1 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD2 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD3 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD4 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD5 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD6 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD7 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD8 = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_NUMPAD9 = {
+      KEY_NUMLOCKCLEAR = {
         description = "const int",
         type = "value"
       },
@@ -51512,15 +66643,15 @@ local api = {
         description = "const int",
         type = "value"
       },
+      KEY_RGUI = {
+        description = "const int",
+        type = "value"
+      },
       KEY_RIGHT = {
         description = "const int",
         type = "value"
       },
       KEY_RSHIFT = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_RWIN = {
         description = "const int",
         type = "value"
       },
@@ -51541,10 +66672,6 @@ local api = {
         type = "value"
       },
       KEY_SPACE = {
-        description = "const int",
-        type = "value"
-      },
-      KEY_SUBTRACT = {
         description = "const int",
         type = "value"
       },
@@ -51640,6 +66767,10 @@ local api = {
         description = "const float",
         type = "value"
       },
+      M_HALF_PI = {
+        description = "const float",
+        type = "value"
+      },
       M_INFINITY = {
         description = "const float",
         type = "value"
@@ -51692,6 +66823,10 @@ local api = {
         description = "const unsigned",
         type = "value"
       },
+      PIXEL_SIZE = {
+        description = "const float",
+        type = "value"
+      },
       QUALITY_HIGH = {
         description = "const int",
         type = "value"
@@ -51724,6 +66859,986 @@ local api = {
         description = "const int",
         type = "value"
       },
+      SCANCODE_0 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_3 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_4 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_5 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_6 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_7 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_8 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_9 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_A = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_BACK = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_BOOKMARKS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_FORWARD = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_HOME = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_REFRESH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_SEARCH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AC_STOP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AGAIN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_ALT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_ALTERASE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_APOSTROPHE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_APP1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_APP2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_APPLICATION = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AUDIOMUTE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AUDIONEXT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AUDIOPLAY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AUDIOPREV = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_AUDIOSTOP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_B = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_BACKSLASH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_BACKSPACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_BRIGHTNESSDOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_BRIGHTNESSUP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_C = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CALCULATOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CANCEL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CAPSLOCK = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CLEAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CLEARAGAIN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_COMMA = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_COMPUTER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_COPY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CRSEL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CTRL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CURRENCYSUBUNIT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CURRENCYUNIT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_CUT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_D = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_DECIMALSEPARATOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_DELETE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_DISPLAYSWITCH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_DOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_E = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_EJECT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_END = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_EQUALS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_ESCAPE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_EXECUTE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_EXSEL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F10 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F11 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F12 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F13 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F14 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F15 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F16 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F17 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F18 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F19 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F20 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F21 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F22 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F23 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F24 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F3 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F4 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F5 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F6 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F7 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F8 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_F9 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_FIND = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_G = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_GRAVE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_GUI = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_H = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_HELP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_HOME = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_I = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INSERT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL3 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL4 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL5 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL6 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL7 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL8 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_INTERNATIONAL9 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_J = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_K = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KBDILLUMDOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KBDILLUMTOGGLE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KBDILLUMUP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_0 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_00 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_000 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_3 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_4 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_5 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_6 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_7 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_8 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_9 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_A = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_AMPERSAND = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_AT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_B = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_BACKSPACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_BINARY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_C = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_CLEAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_CLEARENTRY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_COLON = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_COMMA = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_D = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_DBLAMPERSAND = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_DBLVERTICALBAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_DECIMAL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_DIVIDE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_E = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_ENTER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_EQUALS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_EQUALSAS400 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_EXCLAM = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_F = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_GREATER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_HASH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_HEXADECIMAL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_LEFTBRACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_LEFTPAREN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_LESS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMADD = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMCLEAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMDIVIDE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMMULTIPLY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMRECALL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMSTORE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MEMSUBTRACT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MINUS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_MULTIPLY = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_OCTAL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_PERCENT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_PERIOD = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_PLUS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_PLUSMINUS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_POWER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_RIGHTBRACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_RIGHTPAREN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_SPACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_TAB = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_VERTICALBAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_KP_XOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_L = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LALT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG1 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG3 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG4 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG5 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG6 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG7 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG8 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LANG9 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LCTRL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LEFT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LEFTBRACKET = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LGUI = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_LSHIFT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_M = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MAIL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MEDIASELECT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MENU = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MINUS = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MODE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_MUTE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_N = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_NONUSBACKSLASH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_NONUSHASH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_NUMLOCKCLEAR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_O = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_OPER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_OUT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_P = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PAGEDOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PAGEUP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PASTE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PAUSE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PERIOD = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_POWER = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PRINTSCREEN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_PRIOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_Q = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_R = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RALT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RCTRL = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RETURN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RETURN2 = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RGUI = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RIGHT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RIGHTBRACKET = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_RSHIFT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_S = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SCROLLLOCK = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SELECT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SEMICOLON = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SEPARATOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SHIFT = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SLASH = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SLEEP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SPACE = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_STOP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_SYSREQ = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_T = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_TAB = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_THOUSANDSSEPARATOR = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_U = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_UNDO = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_UNKNOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_UP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_V = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_VOLUMEDOWN = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_VOLUMEUP = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_W = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_WWW = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_X = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_Y = {
+        description = "const int",
+        type = "value"
+      },
+      SCANCODE_Z = {
+        description = "const int",
+        type = "value"
+      },
       SCAN_DIRS = {
         description = "const unsigned",
         type = "value"
@@ -51752,10 +67867,6 @@ local api = {
         description = "const int",
         type = "value"
       },
-      SHADOW_MIN_PIXELS = {
-        description = "const int",
-        type = "value"
-      },
       VO_DISABLE_OCCLUSION = {
         description = "const unsigned",
         type = "value"
@@ -51778,7 +67889,7 @@ return {
   name = "Urho3D",
   description = "Urho3D game engine integration.",
   author = "Danny Boisvert (https://github.com/silverkorn)",
-  version = 0.1,
+  version = 0.2,
 
   onRegister = function(self)
      ide:AddInterpreter("urho3d", interpreter)
