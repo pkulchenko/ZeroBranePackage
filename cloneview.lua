@@ -3,8 +3,8 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.12,
-  dependencies = 0.91,
+  version = 0.13,
+  dependencies = 0.96,
 
   -- don't offer to save cloned tabs
   onEditorPreSave = function(self, editor, filepath)
@@ -29,7 +29,7 @@ return {
 
     local cloner = function(event)
       local e1 = ide:GetEditor(index)
-      local e2 = NewFile("clone: "..ide:GetDocument(e1):GetFileName())
+      local e2 = NewFile("clone: "..ide:GetDocument(e1):GetTabText())
       local docpointer = e1:GetDocPointer()
       e1:AddRefDocument(docpointer)
       clones[e2] = {editor = e1, pointer = docpointer}
