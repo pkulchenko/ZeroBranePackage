@@ -1,7 +1,8 @@
 -- Implements MCServer interpreter description and interface for ZBStudio.
 -- MCServer executable can have a postfix depending on the compilation mode (debug / release).
 
-local function MakeMCServerInterpreter(a_InterpreterPostfix, a_ExePostfix)
+local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfix)
+	assert(a_Self)
 	assert(type(a_InterpreterPostfix) == "string")
 	assert(type(a_ExePostfix) == "string")
 
@@ -44,22 +45,66 @@ local function MakeMCServerInterpreter(a_InterpreterPostfix, a_ExePostfix)
 			local SavedUnhideConsoleWindow = ide.config.unhidewindow.ConsoleWindowClass
 			ide.config.unhidewindow.ConsoleWindowClass = 1  -- show if hidden
 			
-			-- Create the @EnableMobDebug.lua file so that the MCS plugin starts the debugging session, when loaded:
+			-- Create the !EnableMobDebug.lua file so that the MCS plugin starts the debugging session, when loaded:
 			local EnablerPath = wx.wxFileName(wfilename)
-			EnablerPath:SetName("@EnableMobDebug")
+			EnablerPath:SetName("!EnableMobDebug")
 			EnablerPath:SetExt("lua")
 			local f = io.open(EnablerPath:GetFullPath(), "w")
 			if (f ~= nil) then
-				f:write([[require("mobdebug").start()]])
+				f:write(
+[[
+-- !EnableMobDebug.lua
+
+-- This file is created by the ZeroBrane Studio debugger, do NOT commit it to your repository!
+-- It is safe to delete this file once the debugger is stopped.
+
+-- When this file is loaded in the ZeroBrane Studio, the debugger will break when MCServer detects a problem in your plugin
+-- If you close this file, the debugger will no longer break on problems
+
+local g_mobdebug = require("mobdebug")
+g_mobdebug.start()
+
+function BreakIntoDebugger(a_Message)
+	g_mobdebug:pause()
+	-- If your plugin breaks here, it means that MCServer has run into a problem in your plugin
+	-- Inspect the stack and the server console for the error report
+	-- If you close this file while the debugger is stopped here, MCServer will be terminated
+	LOG("Broken into debugger: " .. a_Message)
+end
+]]
+				)
 				f:close()
 			end
-			
+
+			-- Open the "!EnableMobDebug.lua" file in the editor, if not already open (so that breakpoints work):
+			local enablerEditor
+			local fullEnablerPath = EnablerPath:GetFullPath()
+			if not(ide:FindDocument(fullEnablerPath)) then
+				enablerEditor = LoadFile(fullEnablerPath)
+			end
+
+			-- When the enabler gets closed, invalidate our enablerEditor variable:
+			a_Self.onEditorClose = function(self, a_Editor)
+				if (a_Editor == enablerEditor) then
+					enablerEditor = nil
+				end
+			end
+
 			-- Create the closure to call upon debugging finish:
 			local OnFinished = function()
+				-- Close the "!EnableMobDebug.lua" file editor:
+				if (enablerEditor) then
+					local doc = ide.openDocuments[enablerEditor:GetId()]
+					ClosePage(doc.id)
+				end
+
+				-- Remove the editor-close watcher:
+				a_Self.onEditorClose = nil
+
 				-- Restore the Unhide status:
 				ide.config.unhidewindow.ConsoleWindowClass = SavedUnhideConsoleWindow
 			
-				-- Remove the @EnableMobDebug.lua file:
+				-- Remove the !EnableMobDebug.lua file:
 				os.remove(EnablerPath:GetFullPath())
 			end
 
@@ -176,11 +221,10 @@ return {
 
 	AnalysisMenuID = G.ID("analyze.mcs_analyzeall"),
 	
-	InterpreterDebug   = MakeMCServerInterpreter(" - debug mode",   "_debug"),
-	InterpreterRelease = MakeMCServerInterpreter(" - release mode", ""),
-
 	onRegister = function(self)
 		-- Add the interpreters
+		self.InterpreterDebug   = MakeMCServerInterpreter(self, " - debug mode",   "_debug")
+		self.InterpreterRelease = MakeMCServerInterpreter(self, " - release mode", "")
 		ide:AddInterpreter("mcserver_debug",   self.InterpreterDebug)
 		ide:AddInterpreter("mcserver_release", self.InterpreterRelease)
 
