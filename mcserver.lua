@@ -39,7 +39,7 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			end
 
 			-- Add a "nooutbuf" cmdline param to the server, causing it to call setvbuf to disable output buffering:
-			local Cmd = ExeName:GetFullPath() .. " nooutbuf"
+			local Cmd = ExeName:GetFullPath() .. " --no-output-buffering"
 
 			-- Force ZBS not to hide MCS window, save and restore previous state:
 			local SavedUnhideConsoleWindow = ide.config.unhidewindow.ConsoleWindowClass
