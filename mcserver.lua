@@ -130,7 +130,7 @@ end
 local function analyzeProject()
 	local projectPath = ide:GetProject()
 	if not(projectPath) then
-		DisplayOutputNoMarker("No project path has been defined.")
+		DisplayOutputNoMarker("No project path has been defined.\n")
 		return
 	end
 	
@@ -207,6 +207,41 @@ end
 
 
 
+local function runInfoDump()
+	local projectPath = ide:GetProject()
+	if not(projectPath) then
+		DisplayOutputNoMarker("No project path has been defined.\n")
+		return
+	end
+	
+	-- Get the path to InfoDump.lua file, that is one folder up from the current project:
+	local dumpScriptPath = wx.wxFileName(projectPath)
+	local pluginName = dumpScriptPath:GetDirs()[#dumpScriptPath:GetDirs()]
+	dumpScriptPath:RemoveLastDir()
+	local dumpScript = wx.wxFileName(dumpScriptPath)
+	dumpScript:SetName("InfoDump")
+	dumpScript:SetExt("lua")
+	local fullPath = dumpScript:GetFullPath()
+	if not(wx.wxFileExists(fullPath)) then
+		DisplayOutputNoMarker("The InfoDump.lua script was not found (tried " .. fullPath .. ")\n")
+		return
+	end
+	
+	-- Execute the script:
+	local cmd = "lua " .. fullPath .. " " .. pluginName
+	CommandLineRun(
+		cmd,                           -- Command to run
+		dumpScriptPath:GetFullPath(),  -- Working directory for the debuggee
+		true,                          -- Redirect debuggee output to Output pane?
+		true                           -- Add a no-hide flag to WX
+	)
+	DisplayOutputNoMarker("The InfoDump.lua script was executed.\n")
+end
+
+
+
+
+
 local G = ...
 
 
@@ -216,10 +251,11 @@ return {
 	name = "MCServer integration",
 	description = "Integration with MCServer - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.3,
+	version = 0.4,
 	dependencies = 0.71,
 
 	AnalysisMenuID = G.ID("analyze.mcs_analyzeall"),
+	InfoDumpMenuID = G.ID("project.mcs_infodump"),
 	
 	onRegister = function(self)
 		-- Add the interpreters
@@ -229,10 +265,18 @@ return {
 		ide:AddInterpreter("mcserver_release", self.InterpreterRelease)
 
 		-- Add the analysis menu item:
-		local _, menu, analyzepos = ide:FindMenuItem(ID_ANALYZE)
-		if analyzepos then
-			menu:Insert(analyzepos + 1, self.AnalysisMenuID, TR("Analyze as MCServer") .. KSC(id), TR("Analyze the project source code as MCServer"))
+		local _, menu, pos = ide:FindMenuItem(ID_ANALYZE)
+		if pos then
+			menu:Insert(pos + 1, self.AnalysisMenuID, TR("Analyze as MCServer") .. KSC(id), TR("Analyze the project source code as MCServer"))
 			ide:GetMainFrame():Connect(self.AnalysisMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, analyzeProject)
+		end
+		
+		-- Add the InfoDump menu item:
+		_, menu, pos = ide:FindMenuItem(ID_INTERPRETER)
+		if (pos) then
+			self.Separator1 = menu:AppendSeparator()
+			menu:Append(self.InfoDumpMenuID, TR("MCServer InfoDump") .. KSC(id), TR("Run the InfoDump script on the current plugin"))
+			ide:GetMainFrame():Connect(self.InfoDumpMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, runInfoDump)
 		end
 	end,
 	
@@ -241,8 +285,10 @@ return {
 		ide:RemoveInterpreter("mcserver_debug")
 		ide:RemoveInterpreter("mcserver_release")
 		
-		-- Remove the analysis menu item:
+		-- Remove the menu items:
 		ide:RemoveMenuItem(self.AnalysisMenuID)
+		ide:RemoveMenuItem(self.InfoDumpMenuID)
+		self.Separator1:GetParent():Delete(self.Separator1)
 	end,
 }
 
