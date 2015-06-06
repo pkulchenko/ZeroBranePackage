@@ -8,13 +8,13 @@
 [Binaries]
 - http://sourceforge.net/projects/urho3d/files/Urho3D/
   Download the STATIC package for your target operating system.
-  The Urho3D executable will be located in "./share/Bin/"
+  The Urho3D executable will be located in "./bin/"
 
 [Setup]
 - Make Urho3D executable available in PATH or put it into one of the default folders: "C:\Program Files\Urho3D" or "D:\Program Files\Urho3D" on Windows or "/Applications" on Mac OS X;
 - Switch to urho3d interpreter by going to "Project | Lua Interpreter | Urho3D";
 - Set the project directory to Urho3D samples by going to "Project | Project Directory | Choose...";
-  - "(Urho3D Root Path)\share\Bin\Data\LuaScripts" on Windows or "(Urho3D Root Path)/share/Bin/Data/LuaScripts" on Mac OS X or Linux
+  - "(Urho3D Root Path)\share\Urho3D\Resources\Data\LuaScripts" on Windows or "(Urho3D Root Path)/share/Urho3D/Resources/Data/LuaScripts" on Mac OS X or Linux
 - Open any of the found scripts in the project tab;
 - Run the script
 
@@ -29,8 +29,8 @@
 - Get the desired version on "http://github.com/urho3d/Urho3D" and "Download Zip";
 - Extract and build it with the "-DURHO3D_LUA=1" or "-DURHO3D_LUAJIT=1" and "-DURHO3D_DOCS=1";
 - When done, insinuating that you're in the "Build" folder:
-	cd ../Source/Engine/LuaScript/pkgs/
-	../../../../Bin/tolua++ -L ToZerobraneStudioHook.lua -P -o ../../../../Docs/urho3d.lua ../../../../Bin/LuaPkgToDox.txt
+	cd ../Source/Urho3D/LuaScript/pkgs/
+	<path/to/build-tree>/bin/tool/tolua++ -L ToZerobraneStudioHook.lua -P -o ../../../../Docs/urho3d.lua <path/to/build-tree>/bin/tool/LuaPkgToDox.txt
   (Change slashes side for Windows)
 - The API file will be in the "Docs" folder named "urho3d.lua";
 - Add the API in ZeroBraneStudio,
@@ -101,7 +101,7 @@ local interpreter = {
   takeparameters = true,
 }
 
--- Urho3D API generated on 2014-11-26
+-- Urho3D API generated on 2015-06-06
 
 local api = {
 
@@ -188,6 +188,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -826,6 +838,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -880,15 +904,75 @@ local api = {
   },
   AnimatedSprite2D = {
     childs = {
-      SetLayer = {
-        args = "(int layer)",
-        description = "Set layer.",
+      SetSpeed = {
+        args = "(float speed)",
+        description = "Set speed.",
         returns = "()",
         type = "method"
       },
-      SetOrderInLayer = {
-        args = "(int orderInLayer)",
-        description = "Set order in layer.",
+      SetAnimation = {
+        args = "(AnimationSet2D* animationSet, const String name, LoopMode2D loopMode = LM_DEFAULT)",
+        description = "() SetAnimation (const String name, LoopMode2D loopMode = LM_DEFAULT)\nSet animation by animation set, name and loop mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAnimationSet = {
+        args = "(AnimationSet2D* animationSet)",
+        description = "Set animation set.",
+        returns = "()",
+        type = "method"
+      },
+      SetLoopMode = {
+        args = "(LoopMode2D loopMode)",
+        description = "Set loop mode.",
+        returns = "()",
+        type = "method"
+      },
+      GetSpeed = {
+        args = "()",
+        description = "Return speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAnimation = {
+        args = "()",
+        description = "Return animation name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetAnimationSet = {
+        args = "()",
+        description = "Return animation.",
+        returns = "(AnimationSet2D*)",
+        valuetype = "AnimationSet2D",
+        type = "method"
+      },
+      GetLoopMode = {
+        args = "()",
+        description = "Return loop mode.",
+        returns = "(LoopMode2D)",
+        type = "method"
+      },
+      speed = {
+        description = "float\nSpeed.",
+        type = "value"
+      },
+      animation = {
+        description = "String\nAnimation.",
+        type = "value"
+      },
+      animationSet = {
+        valuetype = "AnimationSet2D",
+        description = "AnimationSet2D*\nAnimation set.",
+        type = "value"
+      },
+      loopMode = {
+        description = "LoopMode2D\nLoop mode.",
+        type = "value"
+      },
+      SetSprite = {
+        args = "(Sprite2D* sprite)",
+        description = "Set sprite.",
         returns = "()",
         type = "method"
       },
@@ -922,40 +1006,35 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetSpeed = {
-        args = "(float speed)",
-        description = "Set speed.",
+      SetAlpha = {
+        args = "(float alpha)",
+        description = "Set alpha.",
         returns = "()",
         type = "method"
       },
-      SetAnimation = {
-        args = "(AnimationSet2D* animationSet, const String name, LoopMode2D loopMode = LM_DEFAULT)",
-        description = "() SetAnimation (const String name, LoopMode2D loopMode = LM_DEFAULT)\nSet animation by animation set, name and loop mode.",
+      SetUseHotSpot = {
+        args = "(bool useHotSpot)",
+        description = "Set use hot spot.",
         returns = "()",
         type = "method"
       },
-      SetAnimationSet = {
-        args = "(AnimationSet2D* animationSet)",
-        description = "Set animation set.",
+      SetHotSpot = {
+        args = "(const Vector2& hotspot)",
+        description = "Set hot spot.",
         returns = "()",
         type = "method"
       },
-      SetLoopMode = {
-        args = "(LoopMode2D loopMode)",
-        description = "Set loop mode.",
+      SetCustomMaterial = {
+        args = "(Material* customMaterial)",
+        description = "Set custom material.",
         returns = "()",
         type = "method"
       },
-      GetLayer = {
+      GetSprite = {
         args = "()",
-        description = "Return layer.",
-        returns = "(int)",
-        type = "method"
-      },
-      GetOrderInLayer = {
-        args = "()",
-        description = "Return order in layer.",
-        returns = "(int)",
+        description = "Return sprite.",
+        returns = "(Sprite2D*)",
+        valuetype = "Sprite2D",
         type = "method"
       },
       GetBlendMode = {
@@ -983,37 +1062,35 @@ local api = {
         valuetype = "Color",
         type = "method"
       },
-      GetSpeed = {
+      GetAlpha = {
         args = "()",
-        description = "Return speed.",
+        description = "Return alpha.",
         returns = "(float)",
         type = "method"
       },
-      GetAnimation = {
+      GetUseHotSpot = {
         args = "()",
-        description = "Return animation name.",
-        returns = "(const String)",
+        description = "Return use hot spot.",
+        returns = "(bool)",
         type = "method"
       },
-      GetAnimationSet = {
+      GetHotSpot = {
         args = "()",
-        description = "Return animation.",
-        returns = "(AnimationSet2D*)",
-        valuetype = "AnimationSet2D",
+        description = "Return hot spot.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
         type = "method"
       },
-      GetLoopMode = {
+      GetCustomMaterial = {
         args = "()",
-        description = "Return loop mode.",
-        returns = "(LoopMode2D)",
+        description = "Return custom material.",
+        returns = "(Material*)",
+        valuetype = "Material",
         type = "method"
       },
-      layer = {
-        description = "int\nLayer.",
-        type = "value"
-      },
-      orderInLayer = {
-        description = "int\nOrder in layer.",
+      sprite = {
+        valuetype = "Sprite2D",
+        description = "Sprite2D*\nSprite.",
         type = "value"
       },
       blendMode = {
@@ -1033,21 +1110,53 @@ local api = {
         description = "Color&\nColor.",
         type = "value"
       },
-      speed = {
-        description = "float\nSpeed.",
+      alpha = {
+        description = "float",
         type = "value"
       },
-      animation = {
-        description = "String\nAnimation.",
+      useHotSpot = {
+        description = "bool\nUse hot spot.",
         type = "value"
       },
-      animationSet = {
-        valuetype = "AnimationSet2D",
-        description = "AnimationSet2D*\nAnimation set.",
+      hotSpot = {
+        description = "Vector2\nHot spot.",
         type = "value"
       },
-      loopMode = {
-        description = "LoopMode2D\nLoop mode.",
+      customMaterial = {
+        valuetype = "Material",
+        description = "Material*\nCustom material.",
+        type = "value"
+      },
+      SetLayer = {
+        args = "(int layer)",
+        description = "Set layer.",
+        returns = "()",
+        type = "method"
+      },
+      SetOrderInLayer = {
+        args = "(int orderInLayer)",
+        description = "Set order in layer.",
+        returns = "()",
+        type = "method"
+      },
+      GetLayer = {
+        args = "()",
+        description = "Return layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetOrderInLayer = {
+        args = "()",
+        description = "Return order in layer.",
+        returns = "(int)",
+        type = "method"
+      },
+      layer = {
+        description = "int\nLayer.",
+        type = "value"
+      },
+      orderInLayer = {
+        description = "int\nOrder in layer.",
         type = "value"
       },
       SetDrawDistance = {
@@ -1414,6 +1523,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -1976,6 +2097,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -2294,7 +2427,7 @@ local api = {
         type = "method"
       },
       SetMasterGain = {
-        args = "(SoundType type, float gain)",
+        args = "(const String type, float gain)",
         description = "Set master gain on a specific sound type such as sound effects, music or voice.",
         returns = "()",
         type = "method"
@@ -2347,9 +2480,14 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      HasMasterGain = {
+        args = "(const String type)",
+        returns = "(bool)",
+        type = "method"
+      },
       GetMasterGain = {
-        args = "(SoundType type)",
-        description = "Return master gain for a specific sound source type.",
+        args = "(const String type)",
+        description = "Return master gain for a specific sound source type. Unknown sound types will return full gain (1).",
         returns = "(float)",
         type = "method"
       },
@@ -2377,12 +2515,6 @@ local api = {
         args = "(SoundSource* soundSource)",
         description = "Remove a sound source. Called by SoundSource.",
         returns = "()",
-        type = "method"
-      },
-      GetSoundSourceMasterGain = {
-        args = "(SoundType type)",
-        description = "Return sound type specific gain multiplied by master gain.",
-        returns = "(float)",
         type = "method"
       },
       MixOutput = {
@@ -3013,6 +3145,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -3285,8 +3429,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -4402,6 +4546,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -4808,8 +4964,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -5925,6 +6081,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -6522,6 +6690,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -6780,8 +6960,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -7900,6 +8080,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -8282,6 +8474,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -8661,6 +8865,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -9022,6 +9238,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -9397,6 +9625,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -9760,6 +10000,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -9875,7 +10127,7 @@ local api = {
         type = "method"
       },
       SetTerrain = {
-        args = "()",
+        args = "(unsigned lodLevel = 0)",
         description = "Set as a terrain. Only works if the same scene node contains a Terrain component.",
         returns = "()",
         type = "method"
@@ -10163,6 +10415,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -10493,6 +10757,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -10912,6 +11188,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -11053,6 +11341,12 @@ local api = {
         valuetype = "Controls",
         type = "method"
       },
+      GetTimeStamp = {
+        args = "()",
+        description = "Return the controls timestamp, sent from client to server along each control update.",
+        returns = "(char)",
+        type = "method"
+      },
       GetPosition = {
         args = "()",
         description = "Return the observer position sent by the client for interest management.",
@@ -11146,6 +11440,10 @@ local api = {
       controls = {
         valuetype = "Controls",
         description = "Controls&\nCurrent controls.",
+        type = "value"
+      },
+      timeStamp = {
+        description = "(Readonly) char\nControls timestamp. Incremented after each sent update.",
         type = "value"
       },
       position = {
@@ -11884,6 +12182,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -12115,6 +12425,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -12420,6 +12742,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -12701,6 +13035,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -12987,6 +13333,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -13306,6 +13664,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -13603,6 +13973,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -13972,6 +14354,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -14291,6 +14685,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -14642,6 +15048,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -14928,6 +15346,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -15209,6 +15639,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -15562,6 +16004,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -15693,6 +16147,413 @@ local api = {
     },
     type = "class"
   },
+  CrowdAgent = {
+    childs = {
+      SetNavigationFilterType = {
+        args = "(unsigned filterID)",
+        description = "Set the navigation filter type the agent will use.",
+        returns = "()",
+        type = "method"
+      },
+      SetMoveTarget = {
+        args = "(const Vector3& position)",
+        description = "Submit a new move request for this agent.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetMoveVelocity = {
+        args = "(const Vector3& velocity)",
+        description = "Submit a new move velocity request for this agent.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetUpdateNodePosition = {
+        args = "(bool unodepos)",
+        description = "Update the node position. When set to false, the node position should be updated by other means (e.g. using Physics) in response to the E_CROWD_AGENT_REPOSITION event.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxAccel = {
+        args = "(float val)",
+        description = "Set the agent's max acceleration.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxSpeed = {
+        args = "(float val)",
+        description = "Set the agent's max velocity.",
+        returns = "()",
+        type = "method"
+      },
+      SetNavigationQuality = {
+        args = "(NavigationQuality val)",
+        description = "Set the agent's navigation quality.",
+        returns = "()",
+        type = "method"
+      },
+      SetNavigationPushiness = {
+        args = "(NavigationPushiness val)",
+        description = "Set the agent's navigation pushiness.",
+        returns = "()",
+        type = "method"
+      },
+      SetRadius = {
+        args = "(float radius)",
+        description = "Set the agent's radius.",
+        returns = "()",
+        type = "method"
+      },
+      SetHeight = {
+        args = "(float height)",
+        description = "Set the agent's height.",
+        returns = "()",
+        type = "method"
+      },
+      GetNavigationFilterType = {
+        args = "()",
+        description = "Get the navigation filter type this agent is using.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDesiredVelocity = {
+        args = "()",
+        description = "Return the agent's desired velocity.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      GetActualVelocity = {
+        args = "()",
+        description = "Return the agent's actual velocity.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      GetTargetPosition = {
+        args = "()",
+        description = "Return the agent's target position.",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
+      GetAgentState = {
+        args = "()",
+        description = "Return the agent's  state.",
+        returns = "(CrowdAgentState)",
+        type = "method"
+      },
+      GetTargetState = {
+        args = "()",
+        description = "Return the agent's target state.",
+        returns = "(CrowdTargetState)",
+        type = "method"
+      },
+      GetUpdateNodePosition = {
+        args = "()",
+        description = "Return true when the node's position should be updated by the CrowdManager.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetMaxSpeed = {
+        args = "()",
+        description = "Get the agent's max velocity.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetMaxAccel = {
+        args = "()",
+        description = "Get the agent's max acceleration.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetNavigationQuality = {
+        args = "()",
+        description = "Get the agent's navigation quality.",
+        returns = "(NavigationQuality)",
+        type = "method"
+      },
+      GetNavigationPushiness = {
+        args = "()",
+        description = "Get the agent's navigation pushiness.",
+        returns = "(NavigationPushiness)",
+        type = "method"
+      },
+      GetRadius = {
+        args = "()",
+        description = "Get the agent's radius.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetHeight = {
+        args = "()",
+        description = "Get the agent's height.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetPosition = {
+        args = "()",
+        description = "Return the agent's position.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      DrawDebugGeometry = {
+        args = "(bool depthTest)",
+        description = "Draw debug geometry.",
+        returns = "()",
+        type = "method"
+      },
+      updateNodePosition = {
+        description = "bool\nFlag indicating the node's position should be updated by Detour crowd manager.",
+        type = "value"
+      },
+      navigationQuality = {
+        description = "NavigationQuality",
+        type = "value"
+      },
+      navigationPushiness = {
+        description = "NavigationPushiness",
+        type = "value"
+      },
+      maxSpeed = {
+        description = "float\nAgent's max Velocity.",
+        type = "value"
+      },
+      maxAccel = {
+        description = "float\nAgent's max acceleration.",
+        type = "value"
+      },
+      radius = {
+        description = "float\nAgent's radius, if 0 the navigation mesh's setting will be used.",
+        type = "value"
+      },
+      height = {
+        description = "float\nAgent's height, if 0 the navigation mesh's setting will be used.",
+        type = "value"
+      },
+      navigationFilterType = {
+        description = "unsigned",
+        type = "value"
+      },
+      desiredVelocity = {
+        description = "(Readonly) Vector3",
+        type = "value"
+      },
+      actualVelocity = {
+        description = "(Readonly) Vector3",
+        type = "value"
+      },
+      targetPosition = {
+        description = "(Readonly) Vector3\nActual target position, closest to that requested.",
+        type = "value"
+      },
+      position = {
+        description = "(Readonly) Vector3",
+        type = "value"
+      },
+      agentState = {
+        description = "(Readonly) CrowdAgentState",
+        type = "value"
+      },
+      targetState = {
+        description = "(Readonly) CrowdTargetState",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   Cursor = {
     childs = {
       new = {
@@ -15707,14 +16568,14 @@ local api = {
         type = "method"
       },
       DefineShape = {
-        args = "(CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot)",
-        description = "Define a shape.",
+        args = "(const String shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot)",
+        description = "() DefineShape (CursorShape shape, Image* image, const IntRect& imageRect, const IntVector2& hotSpot)\nDefine a shape.",
         returns = "()",
         type = "method"
       },
       SetShape = {
         args = "(CursorShape shape)",
-        description = "Set current shape.",
+        description = "() SetShape (const String shape)\nSet current shape.",
         returns = "()",
         type = "method"
       },
@@ -15727,7 +16588,7 @@ local api = {
       GetShape = {
         args = "()",
         description = "Get current shape.",
-        returns = "(CursorShape)",
+        returns = "(String)",
         type = "method"
       },
       GetUseSystemShapes = {
@@ -15737,7 +16598,7 @@ local api = {
         type = "method"
       },
       shape = {
-        description = "CursorShape\nCurrent shape index.",
+        description = "String\nCurrent shape definition.",
         type = "value"
       },
       useSystemShapes = {
@@ -15886,8 +16747,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -17003,6 +17864,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -17544,6 +18417,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -18068,6 +18953,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -18587,6 +19484,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -18904,6 +19813,264 @@ local api = {
       },
       eof = {
         description = "(Readonly) bool",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  DetourCrowdManager = {
+    childs = {
+      CreateCrowd = {
+        args = "()",
+        description = "Create detour crowd component for the specified navigation mesh.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetNavigationMesh = {
+        args = "(NavigationMesh* navMesh)",
+        description = "Assigns the navigation mesh for the crowd.",
+        returns = "()",
+        type = "method"
+      },
+      SetMaxAgents = {
+        args = "(unsigned agentCt)",
+        description = "Set the maximum number of agents.",
+        returns = "()",
+        type = "method"
+      },
+      SetAreaCost = {
+        args = "(unsigned filterID, unsigned areaID, float cost)",
+        description = "Set the cost of an area-type for the specified navigation filter type.",
+        returns = "()",
+        type = "method"
+      },
+      GetNavigationMesh = {
+        args = "()",
+        description = "Get the Navigation mesh assigned to the crowd.",
+        returns = "(NavigationMesh*)",
+        valuetype = "NavigationMesh",
+        type = "method"
+      },
+      GetMaxAgents = {
+        args = "()",
+        description = "Get the maximum number of agents.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetAreaCost = {
+        args = "(unsigned filterID, unsigned areaID)",
+        description = "Get the cost of an area-type for the specified navigation filter type.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAgentCount = {
+        args = "()",
+        description = "Get the current number of active agents.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      navigationMesh = {
+        valuetype = "NavigationMesh",
+        description = "NavigationMesh*\nNavigationMesh for which the crowd was created.",
+        type = "value"
+      },
+      maxAgents = {
+        description = "int\nMax agents for the crowd.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
         type = "value"
       },
     },
@@ -19278,6 +20445,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -19344,24 +20523,6 @@ local api = {
         returns = "()",
         type = "method"
       },
-      SetSprite = {
-        args = "(Sprite2D* sprite)",
-        description = "Set sprite.",
-        returns = "()",
-        type = "method"
-      },
-      SetBlendMode = {
-        args = "(BlendMode mode)",
-        description = "Set blend mode.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
-        returns = "()",
-        type = "method"
-      },
       GetLayer = {
         args = "()",
         description = "Return layer.",
@@ -19374,58 +20535,12 @@ local api = {
         returns = "(int)",
         type = "method"
       },
-      GetSprite = {
-        args = "()",
-        description = "Return sprite.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      GetTexture = {
-        args = "()",
-        description = "Return texture.",
-        returns = "(Texture2D*)",
-        valuetype = "Texture2D",
-        type = "method"
-      },
-      GetBlendMode = {
-        args = "()",
-        description = "Return blend mode.",
-        returns = "(BlendMode)",
-        type = "method"
-      },
-      GetMaterial = {
-        args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
-        type = "method"
-      },
       layer = {
         description = "int\nLayer.",
         type = "value"
       },
       orderInLayer = {
         description = "int\nOrder in layer.",
-        type = "value"
-      },
-      sprite = {
-        valuetype = "Sprite2D",
-        description = "Sprite2D*\nSprite.",
-        type = "value"
-      },
-      texture = {
-        valuetype = "Texture2D",
-        description = "(Readonly) Texture2D*",
-        type = "value"
-      },
-      blendMode = {
-        description = "BlendMode\nBlend mode.",
-        type = "value"
-      },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -19792,6 +20907,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -20296,8 +21423,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -21416,6 +22543,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -21466,6 +22605,538 @@ local api = {
         type = "value"
       },
     },
+    type = "class"
+  },
+  DynamicNavigationMesh = {
+      SetTileSize = {
+        args = "(int size)",
+        description = "Set tile size.",
+        returns = "()",
+        type = "method"
+      },
+      SetCellSize = {
+        args = "(float size)",
+        description = "Set cell size.",
+        returns = "()",
+        type = "method"
+      },
+      SetCellHeight = {
+        args = "(float height)",
+        description = "Set cell height.",
+        returns = "()",
+        type = "method"
+      },
+      SetAgentHeight = {
+        args = "(float height)",
+        description = "Set navigation agent height.",
+        returns = "()",
+        type = "method"
+      },
+      SetAgentRadius = {
+        args = "(float radius)",
+        description = "Set navigation agent radius.",
+        returns = "()",
+        type = "method"
+      },
+      SetAgentMaxClimb = {
+        args = "(float maxClimb)",
+        description = "Set navigation agent max vertical climb.",
+        returns = "()",
+        type = "method"
+      },
+      SetAgentMaxSlope = {
+        args = "(float maxSlope)",
+        description = "Set navigation agent max slope.",
+        returns = "()",
+        type = "method"
+      },
+      SetRegionMinSize = {
+        args = "(float size)",
+        description = "Set region minimum size.",
+        returns = "()",
+        type = "method"
+      },
+      SetRegionMergeSize = {
+        args = "(float size)",
+        description = "Set region merge size.",
+        returns = "()",
+        type = "method"
+      },
+      SetEdgeMaxLength = {
+        args = "(float length)",
+        description = "Set edge max length.",
+        returns = "()",
+        type = "method"
+      },
+      SetEdgeMaxError = {
+        args = "(float error)",
+        description = "Set edge max error.",
+        returns = "()",
+        type = "method"
+      },
+      SetDetailSampleDistance = {
+        args = "(float distance)",
+        description = "Set detail sampling distance.",
+        returns = "()",
+        type = "method"
+      },
+      SetDetailSampleMaxError = {
+        args = "(float error)",
+        description = "Set detail sampling maximum error.",
+        returns = "()",
+        type = "method"
+      },
+      SetPadding = {
+        args = "(const Vector3& padding)",
+        description = "Set padding of the navigation mesh bounding box. Having enough padding allows to add geometry on the extremities of the navigation mesh when doing partial rebuilds.",
+        returns = "()",
+        type = "method"
+      },
+      SetAreaCost = {
+        args = "(unsigned areaID, float cost)",
+        description = "Set the cost of an area.",
+        returns = "()",
+        type = "method"
+      },
+      Build = {
+        args = "()",
+        description = "(bool) Build (const BoundingBox& boundingBox)\nRebuild the navigation mesh. Return true if successful.",
+        returns = "(bool)",
+        type = "method"
+      },
+      FindNearestPoint = {
+        args = "(const Vector3& point)",
+        description = "(Vector3) FindNearestPoint (const Vector3& point, const Vector3& extents)\nFind the nearest point on the navigation mesh to a given point. Extens specifies how far out from the specified point to check along each axis.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      MoveAlongSurface = {
+        args = "(const Vector3& start, const Vector3& end)",
+        description = "(Vector3) MoveAlongSurface (const Vector3& start, const Vector3& end, const Vector3& extents, int maxVisited = 3)\nTry to move along the surface from one point to another.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      FindPath = {
+        args = "(const Vector3& start, const Vector3& end)",
+        description = "(const PODVector<Vector3>&) FindPath (const Vector3& start, const Vector3& end, const Vector3& extents)",
+        returns = "(const PODVector<Vector3>&)",
+        valuetype = "PODVector<Vector3>",
+        type = "method"
+      },
+      GetRandomPoint = {
+        args = "()",
+        description = "Return a random point on the navigation mesh.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      GetRandomPointInCircle = {
+        args = "(const Vector3& center, float radius)",
+        description = "(Vector3) GetRandomPointInCircle (const Vector3& center, float radius, const Vector3& extents)\nReturn a random point on the navigation mesh within a circle. The circle radius is only a guideline and in practice the returned point may be further away.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      GetDistanceToWall = {
+        args = "(const Vector3& point, float radius)",
+        description = "(float) GetDistanceToWall (const Vector3& point, float radius, const Vector3& extents)\nReturn distance to wall from a point. Maximum search radius must be specified.",
+        returns = "(float)",
+        type = "method"
+      },
+      Raycast = {
+        args = "(const Vector3& start, const Vector3& end)",
+        description = "(Vector3) Raycast (const Vector3& start, const Vector3& end, const Vector3& extents)\nPerform a walkability raycast on the navigation mesh between start and end and return the point where a wall was hit, or the end point if no walls.",
+        returns = "(Vector3)",
+        type = "method"
+      },
+      DrawDebugGeometry = {
+        args = "(bool depthTest)",
+        description = "Add debug geometry to the debug renderer.",
+        returns = "()",
+        type = "method"
+      },
+      GetTileSize = {
+        args = "()",
+        description = "Return tile size.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetCellSize = {
+        args = "()",
+        description = "Return cell size.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetCellHeight = {
+        args = "()",
+        description = "Return cell height.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAgentHeight = {
+        args = "()",
+        description = "Return navigation agent height.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAgentRadius = {
+        args = "()",
+        description = "Return navigation agent radius.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAgentMaxClimb = {
+        args = "()",
+        description = "Return navigation agent max vertical climb.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetAgentMaxSlope = {
+        args = "()",
+        description = "Return navigation agent max slope.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRegionMinSize = {
+        args = "()",
+        description = "Return region minimum size.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetRegionMergeSize = {
+        args = "()",
+        description = "Return region merge size.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetEdgeMaxLength = {
+        args = "()",
+        description = "Return edge max length.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetEdgeMaxError = {
+        args = "()",
+        description = "Return edge max error.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDetailSampleDistance = {
+        args = "()",
+        description = "Return detail sampling distance.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetDetailSampleMaxError = {
+        args = "()",
+        description = "Return detail sampling maximum error.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetPadding = {
+        args = "()",
+        description = "Return navigation mesh bounding box padding.",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
+      GetAreaCost = {
+        args = "(unsigned areaID)",
+        description = "Get the current cost of an area",
+        returns = "(float)",
+        type = "method"
+      },
+      IsInitialized = {
+        args = "()",
+        description = "Return whether has been initialized with valid navigation data.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetBoundingBox = {
+        args = "()",
+        description = "Return local space bounding box of the navigation mesh.",
+        returns = "(const BoundingBox&)",
+        valuetype = "BoundingBox",
+        type = "method"
+      },
+      GetWorldBoundingBox = {
+        args = "()",
+        description = "Return world space bounding box of the navigation mesh.",
+        returns = "(BoundingBox)",
+        type = "method"
+      },
+      GetNumTiles = {
+        args = "()",
+        returns = "(IntVector2)",
+        type = "method"
+      },
+      tileSize = {
+        description = "int\nTile size.",
+        type = "value"
+      },
+      cellSize = {
+        description = "float\nCell size.",
+        type = "value"
+      },
+      cellHeight = {
+        description = "float\nCell height.",
+        type = "value"
+      },
+      agentHeight = {
+        description = "float\nNavigation agent height.",
+        type = "value"
+      },
+      agentRadius = {
+        description = "float\nNavigation agent radius.",
+        type = "value"
+      },
+      agentMaxClimb = {
+        description = "float\nNavigation agent max vertical climb.",
+        type = "value"
+      },
+      agentMaxSlope = {
+        description = "float\nNavigation agent max slope.",
+        type = "value"
+      },
+      regionMinSize = {
+        description = "float\nRegion minimum size.",
+        type = "value"
+      },
+      regionMergeSize = {
+        description = "float\nRegion merge size.",
+        type = "value"
+      },
+      edgeMaxLength = {
+        description = "float\nEdge max length.",
+        type = "value"
+      },
+      edgeMaxError = {
+        description = "float\nEdge max error.",
+        type = "value"
+      },
+      detailSampleDistance = {
+        description = "float\nDetail sampling distance.",
+        type = "value"
+      },
+      detailSampleMaxError = {
+        description = "float\nDetail sampling maximum error.",
+        type = "value"
+      },
+      padding = {
+        valuetype = "Vector3",
+        description = "Vector3&\nBounding box padding.",
+        type = "value"
+      },
+      initialized = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      boundingBox = {
+        valuetype = "BoundingBox",
+        description = "(Readonly) BoundingBox&\nWhole navigation mesh bounding box.",
+        type = "value"
+      },
+      worldBoundingBox = {
+        description = "(Readonly) BoundingBox",
+        type = "value"
+      },
+      numTiles = {
+        description = "(Readonly) IntVector2",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
     type = "class"
   },
   Engine = {
@@ -22884,6 +24555,202 @@ local api = {
     },
     type = "class"
   },
+  Geometry = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(Geometry*)",
+        valuetype = "Geometry",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      SetNumVertexBuffers = {
+        args = "(unsigned num)",
+        description = "Set number of vertex buffer.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetVertexBuffer = {
+        args = "(unsigned index, VertexBuffer* buffer, unsigned elementMask = MASK_DEFAULT)",
+        description = "Set a vertex buffer by index.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetIndexBuffer = {
+        args = "(IndexBuffer* buffer)",
+        description = "Set the index buffer.",
+        returns = "()",
+        type = "method"
+      },
+      SetDrawRange = {
+        args = "(PrimitiveType type, unsigned indexStart, unsigned indexCount, bool getUsedVertexRange = true)",
+        description = "(bool) SetDrawRange (PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned vertexStart, unsigned vertexCount, bool checkIllegal = true)\nSet the draw range.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetLodDistance = {
+        args = "(float distance)",
+        description = "Set the LOD distance.",
+        returns = "()",
+        type = "method"
+      },
+      GetNumVertexBuffers = {
+        args = "()",
+        description = "Return number of vertex buffers.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertexBuffer = {
+        args = "(unsigned index)",
+        description = "Return vertex buffer by index.",
+        returns = "(VertexBuffer*)",
+        valuetype = "VertexBuffer",
+        type = "method"
+      },
+      GetVertexElementMask = {
+        args = "(unsigned index)",
+        description = "Return vertex element mask by index.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetIndexBuffer = {
+        args = "()",
+        description = "Return the index buffer.",
+        returns = "(IndexBuffer*)",
+        valuetype = "IndexBuffer",
+        type = "method"
+      },
+      GetPrimitiveType = {
+        args = "()",
+        description = "Return primitive type.",
+        returns = "(PrimitiveType)",
+        type = "method"
+      },
+      GetIndexStart = {
+        args = "()",
+        description = "Return start index.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetIndexCount = {
+        args = "()",
+        description = "Return number of indices.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertexStart = {
+        args = "()",
+        description = "Return first used vertex.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertexCount = {
+        args = "()",
+        description = "Return number of used vertices.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLodDistance = {
+        args = "()",
+        description = "Return LOD distance.",
+        returns = "(float)",
+        type = "method"
+      },
+      IsEmpty = {
+        args = "()",
+        description = "Return whether has empty draw range.",
+        returns = "(bool)",
+        type = "method"
+      },
+      numVertexBuffers = {
+        description = "unsigned",
+        type = "value"
+      },
+      indexBuffer = {
+        valuetype = "IndexBuffer",
+        description = "IndexBuffer*\nIndex buffer.",
+        type = "value"
+      },
+      primitiveType = {
+        description = "(Readonly) PrimitiveType\nPrimitive type.",
+        type = "value"
+      },
+      indexStart = {
+        description = "(Readonly) unsigned\nStart index.",
+        type = "value"
+      },
+      indexCount = {
+        description = "(Readonly) unsigned\nNumber of indices.",
+        type = "value"
+      },
+      vertexStart = {
+        description = "(Readonly) unsigned\nFirst used vertex.",
+        type = "value"
+      },
+      vertexCount = {
+        description = "(Readonly) unsigned\nNumber of used vertices.",
+        type = "value"
+      },
+      lodDistance = {
+        description = "float\nLOD distance.",
+        type = "value"
+      },
+      empty = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   Graphics = {
     childs = {
       SetWindowTitle = {
@@ -22979,6 +24846,11 @@ local api = {
         returns = "(const String)",
         type = "method"
       },
+      GetApiName = {
+        args = "()",
+        returns = "(const String)",
+        type = "method"
+      },
       GetWindowPosition = {
         args = "()",
         returns = "(IntVector2)",
@@ -23069,11 +24941,6 @@ local api = {
         returns = "(unsigned)",
         type = "method"
       },
-      GetSM3Support = {
-        args = "()",
-        returns = "(bool)",
-        type = "method"
-      },
       GetInstancingSupport = {
         args = "()",
         returns = "(bool)",
@@ -23094,7 +24961,7 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
-      GetStreamOffsetSupport = {
+      GetReadableDepthSupport = {
         args = "()",
         returns = "(bool)",
         type = "method"
@@ -23114,7 +24981,92 @@ local api = {
         returns = "(IntVector2)",
         type = "method"
       },
+      GetAlphaFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLuminanceFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLuminanceAlphaFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
       GetRGBFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGBAFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGBA16Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGBAFloat16Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGBAFloat32Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRG16Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGFloat16Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetRGFloat32Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetFloat16Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetFloat32Format = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetLinearDepthFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetDepthStencilFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetReadableDepthFormat = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetFormat = {
+        args = "(const String formatName)",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetMaxBones = {
         args = "()",
         returns = "(unsigned)",
         type = "method"
@@ -23125,6 +25077,10 @@ local api = {
       },
       windowTitle = {
         description = "String",
+        type = "value"
+      },
+      apiName = {
+        description = "(Readonly) String",
         type = "value"
       },
       windowPosition = {
@@ -23199,10 +25155,6 @@ local api = {
         description = "(Readonly) unsigned",
         type = "value"
       },
-      SM3Support = {
-        description = "(Readonly) bool",
-        type = "value"
-      },
       instancingSupport = {
         description = "(Readonly) bool",
         type = "value"
@@ -23219,7 +25171,7 @@ local api = {
         description = "(Readonly) bool",
         type = "value"
       },
-      streamOffsetSupport = {
+      readableDepthSupport = {
         description = "(Readonly) bool",
         type = "value"
       },
@@ -23764,12 +25716,6 @@ local api = {
         returns = "(unsigned)",
         type = "method"
       },
-      GetCompressedLevel = {
-        args = "(unsigned index)",
-        description = "Return a compressed mip level.",
-        returns = "(CompressedLevel)",
-        type = "method"
-      },
       GetSubimage = {
         args = "(const IntRect& rect)",
         description = "Return subimage from the image by the defined rect or null if failed. 3D images are not supported. You must free the subimage yourself.",
@@ -23845,6 +25791,128 @@ local api = {
       },
       memoryUse = {
         description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  IndexBuffer = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(IndexBuffer*)",
+        valuetype = "IndexBuffer",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      SetShadowed = {
+        args = "(bool enable)",
+        returns = "()",
+        type = "method"
+      },
+      SetSize = {
+        args = "(unsigned indexCount, bool largeIndices, bool dynamic = false)",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetData = {
+        args = "(VectorBuffer& data)",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetDataRange = {
+        args = "(VectorBuffer& data, unsigned start, unsigned count, bool discard = false)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetData = {
+        args = "()",
+        returns = "(VectorBuffer)",
+        type = "method"
+      },
+      IsShadowed = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsDynamic = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetIndexCount = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetIndexSize = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      shadowed = {
+        description = "bool",
+        type = "value"
+      },
+      dynamic = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      indexCount = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      indexSize = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
         type = "value"
       },
     },
@@ -24393,6 +26461,11 @@ local api = {
         args = "(JSONValueType valueType = JSON_ANY)",
         description = "Return the root value with specific value type, Return null value if not found.",
         returns = "(JSONValue)",
+        type = "method"
+      },
+      Save = {
+        args = "(const String fileName, const String indentation = "\t")",
+        returns = "(bool)",
         type = "method"
       },
       Load = {
@@ -25654,6 +27727,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -26013,8 +28098,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -27130,6 +29215,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -27651,8 +29748,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -28771,6 +30868,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -28979,7 +31088,12 @@ local api = {
       },
       UnsubscribeFromEvent = {
         args = "(const String eventName)",
-        description = "() UnsubscribeFromEvent (void* sender, const String eventName)",
+        description = "() UnsubscribeFromEvent (Object* sender, const String eventName)",
+        returns = "()",
+        type = "method"
+      },
+      UnsubscribeFromEvents = {
+        args = "(Object* sender)",
         returns = "()",
         type = "method"
       },
@@ -28988,8 +31102,8 @@ local api = {
         returns = "()",
         type = "method"
       },
-      UnsubscribeFromEvents = {
-        args = "(void* sender)",
+      UnsubscribeFromAllEventsExcept = {
+        args = "(const Vector<String>& exceptionNames)",
         returns = "()",
         type = "method"
       },
@@ -29149,6 +31263,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -29274,6 +31400,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetFillMode = {
+        args = "(FillMode mode)",
+        description = "Set polygon fill mode. Interacts with the camera's fill mode setting so that the \"least filled\" mode will be used.",
+        returns = "()",
+        type = "method"
+      },
       SetDepthBias = {
         args = "(const BiasParameters& parameters)",
         description = "Set depth bias.",
@@ -29331,8 +31463,8 @@ local api = {
         type = "method"
       },
       GetPass = {
-        args = "(unsigned index, StringHash passType)",
-        description = "(Pass*) GetPass (unsigned index, const String passType)\nReturn pass by technique index and pass type.",
+        args = "(unsigned index, const String passName)",
+        description = "Return pass by technique index and pass name.",
         returns = "(Pass*)",
         valuetype = "Pass",
         type = "method"
@@ -29375,17 +31507,17 @@ local api = {
         returns = "(CullMode)",
         type = "method"
       },
+      GetFillMode = {
+        args = "()",
+        description = "Return polygon fill mode.",
+        returns = "(FillMode)",
+        type = "method"
+      },
       GetDepthBias = {
         args = "()",
         description = "Return depth bias.",
         returns = "(const BiasParameters&)",
         valuetype = "BiasParameters",
-        type = "method"
-      },
-      GetAuxViewFrameNumber = {
-        args = "()",
-        description = "Return last auxiliary view rendered frame number.",
-        returns = "(unsigned)",
         type = "method"
       },
       GetOcclusion = {
@@ -29415,8 +31547,8 @@ local api = {
         description = "(Readonly) CullMode\nCulling mode for shadow rendering.",
         type = "value"
       },
-      auxViewFrameNumber = {
-        description = "(Readonly) unsigned\nLast auxiliary view rendered frame number.",
+      fillMode = {
+        description = "(Readonly) FillMode\nPolygon fill mode.",
         type = "value"
       },
       occlusion = {
@@ -30185,8 +32317,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -31305,6 +33437,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -31464,11 +33608,52 @@ local api = {
   },
   Model = {
     childs = {
+      new = {
+        args = "()",
+        returns = "(Model*)",
+        valuetype = "Model",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
       Clone = {
         args = "(const String cloneName = String::EMPTY)",
         description = "Clone the model. The geometry data is deep-copied and can be modified in the clone without affecting the original.",
         returns = "(Model*)",
         valuetype = "Model",
+        type = "method"
+      },
+      SetBoundingBox = {
+        args = "(const BoundingBox& box)",
+        description = "Set local-space bounding box.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumGeometries = {
+        args = "(unsigned num)",
+        description = "Set number of geometries.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumGeometryLodLevels = {
+        args = "(unsigned index, unsigned num)",
+        description = "Set number of LOD levels in a geometry.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetGeometry = {
+        args = "(unsigned index, unsigned lodLevel, Geometry* geometry)",
+        description = "Set geometry.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetGeometryCenter = {
+        args = "(unsigned index, const Vector3& center)",
+        description = "Set geometry center.",
+        returns = "(bool)",
         type = "method"
       },
       GetBoundingBox = {
@@ -31504,6 +33689,12 @@ local api = {
         valuetype = "Geometry",
         type = "method"
       },
+      GetGeometryCenter = {
+        args = "(unsigned index)",
+        returns = "(const Vector3&)",
+        valuetype = "Vector3",
+        type = "method"
+      },
       GetNumMorphs = {
         args = "()",
         description = "Return number of vertex morphs.",
@@ -31531,7 +33722,7 @@ local api = {
       },
       boundingBox = {
         valuetype = "BoundingBox",
-        description = "(Readonly) BoundingBox&\nBounding box.",
+        description = "BoundingBox&\nBounding box.",
         type = "value"
       },
       skeleton = {
@@ -31539,7 +33730,7 @@ local api = {
         type = "value"
       },
       numGeometries = {
-        description = "(Readonly) unsigned",
+        description = "unsigned",
         type = "value"
       },
       numMorphs = {
@@ -31586,6 +33777,247 @@ local api = {
       },
       memoryUse = {
         description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  NavArea = {
+    childs = {
+      GetAreaID = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      SetAreaID = {
+        args = "(unsigned tolua_var_3)",
+        description = "Set the area id for this volume.",
+        returns = "()",
+        type = "method"
+      },
+      GetBoundingBox = {
+        args = "()",
+        description = "Get the bounding box of this navigation area, in local space.",
+        returns = "(BoundingBox)",
+        type = "method"
+      },
+      SetBoundingBox = {
+        args = "(const BoundingBox& bnds)",
+        description = "Set the bounding box of this area, in local space.",
+        returns = "()",
+        type = "method"
+      },
+      GetWorldBoundingBox = {
+        args = "()",
+        description = "Get the bounds of this navigation area in world space.",
+        returns = "(BoundingBox)",
+        type = "method"
+      },
+      areaID = {
+        description = "unsigned\nArea id to assign to the marked area.",
+        type = "value"
+      },
+      boundingBox = {
+        description = "BoundingBox\nBounds of area to mark.",
+        type = "value"
+      },
+      worldBoundingBox = {
+        description = "(Readonly) BoundingBox",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
         type = "value"
       },
     },
@@ -31740,6 +34172,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -31903,6 +34347,12 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetAreaCost = {
+        args = "(unsigned areaID, float cost)",
+        description = "Set the cost of an area.",
+        returns = "()",
+        type = "method"
+      },
       Build = {
         args = "()",
         description = "(bool) Build (const BoundingBox& boundingBox)\nRebuild the navigation mesh. Return true if successful.",
@@ -31917,7 +34367,7 @@ local api = {
       },
       MoveAlongSurface = {
         args = "(const Vector3& start, const Vector3& end)",
-        description = "(Vector3) MoveAlongSurface (const Vector3& start, const Vector3& end, const Vector3& extents, int maxVisited = 3)\nTry to move along the surface from one point to another",
+        description = "(Vector3) MoveAlongSurface (const Vector3& start, const Vector3& end, const Vector3& extents, int maxVisited = 3)\nTry to move along the surface from one point to another.",
         returns = "(Vector3)",
         type = "method"
       },
@@ -32041,6 +34491,12 @@ local api = {
         description = "Return navigation mesh bounding box padding.",
         returns = "(const Vector3&)",
         valuetype = "Vector3",
+        type = "method"
+      },
+      GetAreaCost = {
+        args = "(unsigned areaID)",
+        description = "Get the current cost of an area",
+        returns = "(float)",
         type = "method"
       },
       IsInitialized = {
@@ -32275,6 +34731,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -32370,6 +34838,18 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetSimulatedLatency = {
+        args = "(int ms)",
+        description = "Set simulated latency in milliseconds. This adds a fixed delay before sending each packet.",
+        returns = "()",
+        type = "method"
+      },
+      SetSimulatedPacketLoss = {
+        args = "(float loss)",
+        description = "Set simulated packet loss probability between 0.0 - 1.0.",
+        returns = "()",
+        type = "method"
+      },
       RegisterRemoteEvent = {
         args = "(StringHash eventType)",
         description = "() RegisterRemoteEvent (const String eventType)\nRegister a remote event as allowed to be received. There is also a fixed blacklist of events that can not be allowed in any case, such as ConsoleCommand.",
@@ -32413,6 +34893,18 @@ local api = {
         returns = "(int)",
         type = "method"
       },
+      GetSimulatedLatency = {
+        args = "()",
+        description = "Return simulated latency in milliseconds.",
+        returns = "(int)",
+        type = "method"
+      },
+      GetSimulatedPacketLoss = {
+        args = "()",
+        description = "Return simulated packet loss probability.",
+        returns = "(float)",
+        type = "method"
+      },
       GetServerConnection = {
         args = "()",
         description = "Return the connection to the server. Null if not connected.",
@@ -32440,6 +34932,14 @@ local api = {
       },
       updateFps = {
         description = "int\nUpdate FPS.",
+        type = "value"
+      },
+      simulatedLatency = {
+        description = "int\nSimulated latency (send delay) in milliseconds.",
+        type = "value"
+      },
+      simulatedPacketLoss = {
+        description = "float\nSimulated packet loss probability between 0.0 - 1.0.",
         type = "value"
       },
       serverConnection = {
@@ -32664,6 +35164,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -32730,7 +35242,7 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(File* dest)",
+        args = "(File* dest, const String indentation = "\t")",
         returns = "(bool)",
         type = "method"
       },
@@ -33037,6 +35549,12 @@ local api = {
         type = "method"
       },
       CreateComponent = {
+        args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      GetOrCreateComponent = {
         args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
         returns = "(Component*)",
         valuetype = "Component",
@@ -33541,6 +36059,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -33727,6 +36257,244 @@ local api = {
       },
       memoryUse = {
         description = "(Readonly) unsigned\nMemory use in bytes.",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
+  Obstacle = {
+    childs = {
+      DrawDebugGeometry = {
+        args = "(bool depthTest)",
+        description = "Simplified rendering of debug information for script usage.",
+        returns = "()",
+        type = "method"
+      },
+      SetRadius = {
+        args = "(float radius)",
+        description = "Set the blocking radius of this obstacle.",
+        returns = "()",
+        type = "method"
+      },
+      SetHeight = {
+        args = "(float height)",
+        description = "Set the height of this obstacle.",
+        returns = "()",
+        type = "method"
+      },
+      GetRadius = {
+        args = "()",
+        description = "Get the blocking radius of this obstacle.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetHeight = {
+        args = "()",
+        description = "Get the height of this obstacle.",
+        returns = "(float)",
+        type = "method"
+      },
+      radius = {
+        description = "float\nRadius of this obstacle.",
+        type = "value"
+      },
+      height = {
+        description = "float\nHeight of this obstacle, extends 1/2 height below and 1/2 height above the owning node's position.",
+        type = "value"
+      },
+      SetEnabled = {
+        args = "(bool enable)",
+        description = "Set enabled/disabled state.",
+        returns = "()",
+        type = "method"
+      },
+      Remove = {
+        args = "()",
+        description = "Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.",
+        returns = "()",
+        type = "method"
+      },
+      GetID = {
+        args = "()",
+        description = "Return ID.",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetNode = {
+        args = "()",
+        description = "Return scene node.",
+        returns = "(Node*)",
+        valuetype = "Node",
+        type = "method"
+      },
+      GetScene = {
+        args = "()",
+        description = "Return the scene the node belongs to.",
+        returns = "(Scene*)",
+        valuetype = "Scene",
+        type = "method"
+      },
+      IsEnabled = {
+        args = "()",
+        description = "Return whether is enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsEnabledEffective = {
+        args = "()",
+        description = "Return whether is effectively enabled (node is also enabled.)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetComponent = {
+        args = "(StringHash type)",
+        description = "(Component*) GetComponent (const String type)\nReturn component in the same scene node by type. If there are several, returns the first.",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      SetAnimationEnabled = {
+        args = "(bool enable)",
+        description = "Set animation enabled.",
+        returns = "()",
+        type = "method"
+      },
+      SetObjectAnimation = {
+        args = "(ObjectAnimation* objectAnimation)",
+        description = "Set object animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimation = {
+        args = "(const String name, ValueAnimation* attributeAnimation, WrapMode wrapMode = WM_LOOP, float speed = 1.0f)",
+        description = "Set attribute animation.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationWrapMode = {
+        args = "(const String name, WrapMode wrapMode)",
+        description = "Set attribute animation wrap mode.",
+        returns = "()",
+        type = "method"
+      },
+      SetAttributeAnimationSpeed = {
+        args = "(const String name, float speed)",
+        description = "Set attribute animation speed.",
+        returns = "()",
+        type = "method"
+      },
+      GetAnimationEnabled = {
+        args = "()",
+        description = "Return animation enabled.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetObjectAnimation = {
+        args = "()",
+        description = "Return object animation.",
+        returns = "(ObjectAnimation*)",
+        valuetype = "ObjectAnimation",
+        type = "method"
+      },
+      GetAttributeAnimation = {
+        args = "(const String name)",
+        description = "Return attribute animation.",
+        returns = "(ValueAnimation*)",
+        valuetype = "ValueAnimation",
+        type = "method"
+      },
+      GetAttributeAnimationWrapMode = {
+        args = "(const String name)",
+        description = "Return attribute animation wrap mode.",
+        returns = "(WrapMode)",
+        type = "method"
+      },
+      GetAttributeAnimationSpeed = {
+        args = "(const String name)",
+        description = "Return attribute animation speed.",
+        returns = "(float)",
+        type = "method"
+      },
+      animationEnabled = {
+        description = "bool\nAnimation enabled.",
+        type = "value"
+      },
+      objectAnimation = {
+        valuetype = "ObjectAnimation",
+        description = "ObjectAnimation*\nAnimation.",
+        type = "value"
+      },
+      SetTemporary = {
+        args = "(bool enable)",
+        description = "Set temporary flag. Temporary objects will not be saved.",
+        returns = "()",
+        type = "method"
+      },
+      IsTemporary = {
+        args = "()",
+        description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
+      temporary = {
+        description = "bool\nTemporary flag.",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
         type = "value"
       },
     },
@@ -33929,6 +36697,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -34196,6 +36976,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -34415,6 +37207,17 @@ local api = {
   },
   ParticleEffect = {
     childs = {
+      new = {
+        args = "()",
+        returns = "(ParticleEffect*)",
+        valuetype = "ParticleEffect",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
       SetMaterial = {
         args = "(Material* material)",
         description = "Set material.",
@@ -34589,15 +37392,75 @@ local api = {
         returns = "()",
         type = "method"
       },
+      AddColorTime = {
+        args = "(const Color& color, const float time)",
+        description = "Add a color frame sorted in the correct position based on time.",
+        returns = "()",
+        type = "method"
+      },
+      AddColorFrame = {
+        args = "(const ColorFrame& colorFrame)",
+        description = "Add a color frame sorted in the correct position based on time.",
+        returns = "()",
+        type = "method"
+      },
+      RemoveColorFrame = {
+        args = "(unsigned index)",
+        description = "Remove color frame at index",
+        returns = "()",
+        type = "method"
+      },
       SetColorFrame = {
         args = "(unsigned index, const ColorFrame& colorFrame)",
-        description = "Set number of color animation frames.",
+        description = "Set color animation frame at index. If index is greater than number of color frames, new color frames are added.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumColorFrames = {
+        args = "(unsigned number)",
+        description = "Set number of color frames.",
+        returns = "()",
+        type = "method"
+      },
+      SortColorFrames = {
+        args = "()",
+        description = "Sort the list of color frames based on time.",
+        returns = "()",
+        type = "method"
+      },
+      AddTextureTime = {
+        args = "(const Rect& uv, const float time)",
+        description = "Add a texture frame sorted in the correct position based on time.",
+        returns = "()",
+        type = "method"
+      },
+      AddTextureFrame = {
+        args = "(const TextureFrame& textureFrame)",
+        description = "Add a texture frame sorted in the correct position based on time.",
+        returns = "()",
+        type = "method"
+      },
+      RemoveTextureFrame = {
+        args = "(unsigned index)",
+        description = "Remove texture frame at index",
         returns = "()",
         type = "method"
       },
       SetTextureFrame = {
         args = "(unsigned index, const TextureFrame& textureFrame)",
         description = "Set number of texture animation frames.",
+        returns = "()",
+        type = "method"
+      },
+      SetNumTextureFrames = {
+        args = "(unsigned number)",
+        description = "Set number of texture frames.",
+        returns = "()",
+        type = "method"
+      },
+      SortTextureFrames = {
+        args = "()",
+        description = "Sort the list of texture frames based on time.",
         returns = "()",
         type = "method"
       },
@@ -35615,6 +38478,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -35675,6 +38550,18 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetSprite = {
+        args = "(Sprite2D* sprite)",
+        description = "Set sprite.",
+        returns = "()",
+        type = "method"
+      },
+      SetBlendMode = {
+        args = "(BlendMode blendMode)",
+        description = "Set blend mode.",
+        returns = "()",
+        type = "method"
+      },
       GetEffect = {
         args = "()",
         description = "Return particle effect.",
@@ -35682,9 +38569,31 @@ local api = {
         valuetype = "ParticleEffect2D",
         type = "method"
       },
+      GetSprite = {
+        args = "()",
+        description = "Return sprite.",
+        returns = "(Sprite2D*)",
+        valuetype = "Sprite2D",
+        type = "method"
+      },
+      GetBlendMode = {
+        args = "()",
+        description = "Return blend mode.",
+        returns = "(BlendMode)",
+        type = "method"
+      },
       effect = {
         valuetype = "ParticleEffect2D",
         description = "ParticleEffect2D*\nParticle effect.",
+        type = "value"
+      },
+      sprite = {
+        valuetype = "Sprite2D",
+        description = "Sprite2D*\nSprite.",
+        type = "value"
+      },
+      blendMode = {
+        description = "BlendMode\nBlend mode.",
         type = "value"
       },
       SetLayer = {
@@ -35696,24 +38605,6 @@ local api = {
       SetOrderInLayer = {
         args = "(int orderInLayer)",
         description = "Set order in layer.",
-        returns = "()",
-        type = "method"
-      },
-      SetSprite = {
-        args = "(Sprite2D* sprite)",
-        description = "Set sprite.",
-        returns = "()",
-        type = "method"
-      },
-      SetBlendMode = {
-        args = "(BlendMode mode)",
-        description = "Set blend mode.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
         returns = "()",
         type = "method"
       },
@@ -35729,58 +38620,12 @@ local api = {
         returns = "(int)",
         type = "method"
       },
-      GetSprite = {
-        args = "()",
-        description = "Return sprite.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      GetTexture = {
-        args = "()",
-        description = "Return texture.",
-        returns = "(Texture2D*)",
-        valuetype = "Texture2D",
-        type = "method"
-      },
-      GetBlendMode = {
-        args = "()",
-        description = "Return blend mode.",
-        returns = "(BlendMode)",
-        type = "method"
-      },
-      GetMaterial = {
-        args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
-        type = "method"
-      },
       layer = {
         description = "int\nLayer.",
         type = "value"
       },
       orderInLayer = {
         description = "int\nOrder in layer.",
-        type = "value"
-      },
-      sprite = {
-        valuetype = "Sprite2D",
-        description = "Sprite2D*\nSprite.",
-        type = "value"
-      },
-      texture = {
-        valuetype = "Texture2D",
-        description = "(Readonly) Texture2D*",
-        type = "value"
-      },
-      blendMode = {
-        description = "BlendMode\nBlend mode.",
-        type = "value"
-      },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -36150,6 +38995,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -36204,12 +39061,6 @@ local api = {
   },
   Pass = {
     childs = {
-      IsSM3 = {
-        args = "()",
-        description = "Return whether requires %Shader %Model 3.",
-        returns = "(bool)",
-        type = "method"
-      },
       IsDesktop = {
         args = "()",
         description = "Return whether requires desktop level hardware.",
@@ -36227,10 +39078,6 @@ local api = {
         description = "Return pixel shader name.",
         returns = "(const String)",
         type = "method"
-      },
-      SM3 = {
-        description = "(Readonly) bool",
-        type = "value"
       },
       desktop = {
         description = "(Readonly) bool",
@@ -36334,7 +39181,7 @@ local api = {
         type = "method"
       },
       SetGravity = {
-        args = "(Vector3 gravity)",
+        args = "(const Vector3& gravity)",
         description = "Set gravity.",
         returns = "()",
         type = "method"
@@ -36630,6 +39477,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -37053,6 +39912,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -37739,12 +40610,177 @@ local api = {
         returns = "(unsigned)",
         type = "method"
       },
+      GetCommand = {
+        args = "(unsigned index)",
+        returns = "(RenderPathCommand*)",
+        valuetype = "RenderPathCommand",
+        type = "method"
+      },
       GetShaderParameter = {
         args = "(const String name)",
         description = "Return a shader parameter (first appearance in any command.)",
         returns = "(const Variant&)",
         valuetype = "Variant",
         type = "method"
+      },
+    },
+    type = "class"
+  },
+  RenderPathCommand = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(RenderPathCommand*)",
+        valuetype = "RenderPathCommand",
+        type = "method"
+      },
+      Load = {
+        args = "(const XMLElement& element)",
+        returns = "()",
+        type = "method"
+      },
+      SetTextureName = {
+        args = "(TextureUnit unit, const String name)",
+        returns = "()",
+        type = "method"
+      },
+      SetShaderParameter = {
+        args = "(const String name, const Variant& value)",
+        returns = "()",
+        type = "method"
+      },
+      RemoveShaderParameter = {
+        args = "(const String name)",
+        returns = "()",
+        type = "method"
+      },
+      SetNumOutputs = {
+        args = "(unsigned num)",
+        returns = "()",
+        type = "method"
+      },
+      SetOutput = {
+        args = "(unsigned index, const String name, CubeMapFace face)",
+        returns = "()",
+        type = "method"
+      },
+      SetOutputName = {
+        args = "(unsigned index, const String name)",
+        returns = "()",
+        type = "method"
+      },
+      SetOutputFace = {
+        args = "(unsigned index, CubeMapFace face)",
+        returns = "()",
+        type = "method"
+      },
+      SetDepthStencilName = {
+        args = "(const String name)",
+        returns = "()",
+        type = "method"
+      },
+      GetTextureName = {
+        args = "(TextureUnit unit)",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetShaderParameter = {
+        args = "(const String name)",
+        returns = "(const Variant&)",
+        valuetype = "Variant",
+        type = "method"
+      },
+      GetNumOutputs = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetOutputName = {
+        args = "(unsigned index)",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetOutputFace = {
+        args = "(unsigned index)",
+        returns = "(CubeMapFace)",
+        type = "method"
+      },
+      GetDepthStencilName = {
+        args = "()",
+        returns = "(const String)",
+        type = "method"
+      },
+      tag = {
+        description = "String",
+        type = "value"
+      },
+      type = {
+        description = "RenderCommandType",
+        type = "value"
+      },
+      sortMode = {
+        description = "RenderCommandSortMode",
+        type = "value"
+      },
+      pass = {
+        description = "String",
+        type = "value"
+      },
+      metadata = {
+        description = "String",
+        type = "value"
+      },
+      vertexShaderName = {
+        description = "String",
+        type = "value"
+      },
+      pixelShaderName = {
+        description = "String",
+        type = "value"
+      },
+      vertexShaderDefines = {
+        description = "String",
+        type = "value"
+      },
+      pixelShaderDefines = {
+        description = "String",
+        type = "value"
+      },
+      clearFlags = {
+        description = "unsigned",
+        type = "value"
+      },
+      clearColor = {
+        description = "Color",
+        type = "value"
+      },
+      clearDepth = {
+        description = "float",
+        type = "value"
+      },
+      clearStencil = {
+        description = "unsigned",
+        type = "value"
+      },
+      enabled = {
+        description = "bool",
+        type = "value"
+      },
+      useFogColor = {
+        description = "bool",
+        type = "value"
+      },
+      markToStencil = {
+        description = "bool",
+        type = "value"
+      },
+      useLitBase = {
+        description = "bool",
+        type = "value"
+      },
+      vertexLights = {
+        description = "bool",
+        type = "value"
       },
     },
     type = "class"
@@ -37884,6 +40920,62 @@ local api = {
     },
     type = "class"
   },
+  RenderTargetInfo = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(RenderTargetInfo*)",
+        valuetype = "RenderTargetInfo",
+        type = "method"
+      },
+      Load = {
+        args = "(const XMLElement& element)",
+        returns = "()",
+        type = "method"
+      },
+      name = {
+        description = "String",
+        type = "value"
+      },
+      tag = {
+        description = "String",
+        type = "value"
+      },
+      format = {
+        description = "unsigned",
+        type = "value"
+      },
+      size = {
+        description = "Vector2",
+        type = "value"
+      },
+      sizeMode = {
+        description = "RenderTargetSizeMode",
+        type = "value"
+      },
+      enabled = {
+        description = "bool",
+        type = "value"
+      },
+      cubemap = {
+        description = "bool",
+        type = "value"
+      },
+      filtered = {
+        description = "bool",
+        type = "value"
+      },
+      sRGB = {
+        description = "bool",
+        type = "value"
+      },
+      persistent = {
+        description = "bool",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   Renderer = {
     childs = {
       SetNumViewports = {
@@ -37930,13 +41022,13 @@ local api = {
       },
       SetTextureQuality = {
         args = "(int quality)",
-        description = "Set texture quality level.",
+        description = "Set texture quality level. See the QUALITY constants in GraphicsDefs.h.",
         returns = "()",
         type = "method"
       },
       SetMaterialQuality = {
         args = "(int quality)",
-        description = "Set material quality level.",
+        description = "Set material quality level. See the QUALITY constants in GraphicsDefs.h.",
         returns = "()",
         type = "method"
       },
@@ -37954,7 +41046,7 @@ local api = {
       },
       SetShadowQuality = {
         args = "(int quality)",
-        description = "Set shadow quality (amount of samples and bit depth.)",
+        description = "Set shadow quality mode. See the SHADOWQUALITY constants in GraphicsDefs.h.",
         returns = "()",
         type = "method"
       },
@@ -37979,12 +41071,6 @@ local api = {
       SetMinInstances = {
         args = "(int instances)",
         description = "Set minimum number of instances required in a batch group to render as instanced.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaxInstanceTriangles = {
-        args = "(int triangles)",
-        description = "Set maximum number of triangles per object for instancing.",
         returns = "()",
         type = "method"
       },
@@ -38125,12 +41211,6 @@ local api = {
       GetMinInstances = {
         args = "()",
         description = "Return minimum number of instances required in a batch group to render as instanced.",
-        returns = "(int)",
-        type = "method"
-      },
-      GetMaxInstanceTriangles = {
-        args = "()",
-        description = "Return maximum number of triangles per object for instancing.",
         returns = "(int)",
         type = "method"
       },
@@ -38307,10 +41387,6 @@ local api = {
         description = "int\nMinimum number of instances required in a batch group to render as instanced.",
         type = "value"
       },
-      maxInstanceTriangles = {
-        description = "int\nMaximum triangles per object for instancing.",
-        type = "value"
-      },
       maxSortedInstances = {
         description = "int\nMaximum sorted instances per batch group.",
         type = "value"
@@ -38479,6 +41555,13 @@ local api = {
         valuetype = "Resource",
         type = "method"
       },
+      GetExistingResource = {
+        args = "(const String type, const String name)",
+        description = "Template version of returning an existing resource by name.",
+        returns = "(Resource*)",
+        valuetype = "Resource",
+        type = "method"
+      },
       BackgroundLoadResource = {
         args = "(const String type, const String name, bool sendEventOnFailure = true)",
         returns = "(bool)",
@@ -38488,6 +41571,13 @@ local api = {
         args = "()",
         description = "Return number of pending background-loaded resources.",
         returns = "(unsigned)",
+        type = "method"
+      },
+      GetResourceDirs = {
+        args = "()",
+        description = "Return added resource load directories.",
+        returns = "(const Vector<String>&)",
+        valuetype = "Vector<String>",
         type = "method"
       },
       Exists = {
@@ -38582,6 +41672,11 @@ local api = {
         description = "(Readonly) unsigned",
         type = "value"
       },
+      resourceDirs = {
+        valuetype = "Vector<String>",
+        description = "(Readonly) Vector<String>&\nResource load directories.",
+        type = "value"
+      },
       finishBackgroundResourcesMs = {
         description = "int\nHow many milliseconds maximum per frame to spend on finishing background loaded resources.",
         type = "value"
@@ -38644,13 +41739,13 @@ local api = {
         type = "method"
       },
       SetPosition = {
-        args = "(Vector3 position)",
+        args = "(const Vector3& position)",
         description = "Set rigid body position in world space.",
         returns = "()",
         type = "method"
       },
       SetRotation = {
-        args = "(Quaternion rotation)",
+        args = "(const Quaternion& rotation)",
         description = "Set rigid body rotation in world space.",
         returns = "()",
         type = "method"
@@ -38662,13 +41757,13 @@ local api = {
         type = "method"
       },
       SetLinearVelocity = {
-        args = "(Vector3 velocity)",
+        args = "(const Vector3& velocity)",
         description = "Set linear velocity.",
         returns = "()",
         type = "method"
       },
       SetLinearFactor = {
-        args = "(Vector3 factor)",
+        args = "(const Vector3& factor)",
         description = "Set linear degrees of freedom. Use 1 to enable an axis or 0 to disable. Default is all axes enabled (1, 1, 1).",
         returns = "()",
         type = "method"
@@ -38686,13 +41781,13 @@ local api = {
         type = "method"
       },
       SetAngularVelocity = {
-        args = "(Vector3 angularVelocity)",
+        args = "(const Vector3& angularVelocity)",
         description = "Set angular velocity.",
         returns = "()",
         type = "method"
       },
       SetAngularFactor = {
-        args = "(Vector3 factor)",
+        args = "(const Vector3& factor)",
         description = "Set angular degrees of freedom. Use 1 to enable an axis or 0 to disable. Default is all axes enabled (1, 1, 1).",
         returns = "()",
         type = "method"
@@ -38716,7 +41811,7 @@ local api = {
         type = "method"
       },
       SetAnisotropicFriction = {
-        args = "(Vector3 friction)",
+        args = "(const Vector3& friction)",
         description = "Set anisotropic friction.",
         returns = "()",
         type = "method"
@@ -39279,6 +42374,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -39352,7 +42459,7 @@ local api = {
         type = "method"
       },
       SetMassCenter = {
-        args = "(Vector2 center)",
+        args = "(const Vector2& center)",
         description = "Set mass center.",
         returns = "()",
         type = "method"
@@ -39406,7 +42513,7 @@ local api = {
         type = "method"
       },
       SetLinearVelocity = {
-        args = "(Vector2 linearVelocity)",
+        args = "(const Vector2& linearVelocity)",
         description = "Set linear velocity.",
         returns = "()",
         type = "method"
@@ -39720,6 +42827,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -39804,8 +42923,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(File* dest)",
-        description = "(bool) SaveXML (const String fileName)",
+        args = "(File* dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")",
         returns = "(bool)",
         type = "method"
       },
@@ -40029,7 +43148,7 @@ local api = {
         type = "method"
       },
       SetVarNamesAttr = {
-        args = "(String value)",
+        args = "(const String value)",
         description = "Set node user variable reverse mappings.",
         returns = "()",
         type = "method"
@@ -40117,7 +43236,7 @@ local api = {
         type = "value"
       },
       SaveXML = {
-        args = "(File* dest)",
+        args = "(File* dest, const String indentation = "\t")",
         returns = "(bool)",
         type = "method"
       },
@@ -40424,6 +43543,12 @@ local api = {
         type = "method"
       },
       CreateComponent = {
+        args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
+        returns = "(Component*)",
+        valuetype = "Component",
+        type = "method"
+      },
+      GetOrCreateComponent = {
         args = "(const String type, CreateMode mode = REPLICATED, unsigned id = 0)",
         returns = "(Component*)",
         valuetype = "Component",
@@ -40928,6 +44053,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -41151,8 +44288,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -42268,6 +45405,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -42532,8 +45681,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -43652,6 +46801,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -43715,6 +46876,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -44473,6 +47646,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -44761,8 +47946,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -45881,6 +49066,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -45995,7 +49192,7 @@ local api = {
       },
       FixInterpolation = {
         args = "()",
-        description = "Fix interpolation by copying data from loop start to loop end (looped), or adding silence (oneshot.)",
+        description = "Fix interpolation by copying data from loop start to loop end (looped), or adding silence (oneshot.) Called internally, does not normally need to be called, unless the sound data is modified manually on the fly.",
         returns = "()",
         type = "method"
       },
@@ -46268,6 +49465,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -46334,7 +49543,7 @@ local api = {
         type = "method"
       },
       SetSoundType = {
-        args = "(SoundType type)",
+        args = "(const String type)",
         description = "Set sound type, determines the master gain group.",
         returns = "()",
         type = "method"
@@ -46379,7 +49588,7 @@ local api = {
       GetSoundType = {
         args = "()",
         description = "Return sound type, determines the master gain group.",
-        returns = "(SoundType)",
+        returns = "(String)",
         type = "method"
       },
       GetTimePosition = {
@@ -46430,7 +49639,7 @@ local api = {
         type = "value"
       },
       soundType = {
-        description = "SoundType\nSoundSource type, determines the master gain group.",
+        description = "String\nSoundSource type, determines the master gain group.",
         type = "value"
       },
       timePosition = {
@@ -46592,6 +49801,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -46760,7 +49981,7 @@ local api = {
         type = "method"
       },
       SetSoundType = {
-        args = "(SoundType type)",
+        args = "(const String type)",
         description = "Set sound type, determines the master gain group.",
         returns = "()",
         type = "method"
@@ -46805,7 +50026,7 @@ local api = {
       GetSoundType = {
         args = "()",
         description = "Return sound type, determines the master gain group.",
-        returns = "(SoundType)",
+        returns = "(String)",
         type = "method"
       },
       GetTimePosition = {
@@ -46856,7 +50077,7 @@ local api = {
         type = "value"
       },
       soundType = {
-        description = "SoundType\nSoundSource type, determines the master gain group.",
+        description = "String\nSoundSource type, determines the master gain group.",
         type = "value"
       },
       timePosition = {
@@ -47018,6 +50239,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -47399,6 +50632,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -47618,8 +50863,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -48735,6 +51980,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -49445,6 +52702,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -49986,6 +53255,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -50040,6 +53321,18 @@ local api = {
   },
   StaticSprite2D = {
     childs = {
+      SetSprite = {
+        args = "(Sprite2D* sprite)",
+        description = "Set sprite.",
+        returns = "()",
+        type = "method"
+      },
+      SetBlendMode = {
+        args = "(BlendMode mode)",
+        description = "Set blend mode.",
+        returns = "()",
+        type = "method"
+      },
       SetFlip = {
         args = "(bool flipX, bool flipY)",
         description = "Set flip.",
@@ -50064,6 +53357,43 @@ local api = {
         returns = "()",
         type = "method"
       },
+      SetAlpha = {
+        args = "(float alpha)",
+        description = "Set alpha.",
+        returns = "()",
+        type = "method"
+      },
+      SetUseHotSpot = {
+        args = "(bool useHotSpot)",
+        description = "Set use hot spot.",
+        returns = "()",
+        type = "method"
+      },
+      SetHotSpot = {
+        args = "(const Vector2& hotspot)",
+        description = "Set hot spot.",
+        returns = "()",
+        type = "method"
+      },
+      SetCustomMaterial = {
+        args = "(Material* customMaterial)",
+        description = "Set custom material.",
+        returns = "()",
+        type = "method"
+      },
+      GetSprite = {
+        args = "()",
+        description = "Return sprite.",
+        returns = "(Sprite2D*)",
+        valuetype = "Sprite2D",
+        type = "method"
+      },
+      GetBlendMode = {
+        args = "()",
+        description = "Return blend mode.",
+        returns = "(BlendMode)",
+        type = "method"
+      },
       GetFlipX = {
         args = "()",
         description = "Return flip X.",
@@ -50083,6 +53413,41 @@ local api = {
         valuetype = "Color",
         type = "method"
       },
+      GetAlpha = {
+        args = "()",
+        description = "Return alpha.",
+        returns = "(float)",
+        type = "method"
+      },
+      GetUseHotSpot = {
+        args = "()",
+        description = "Return use hot spot.",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetHotSpot = {
+        args = "()",
+        description = "Return hot spot.",
+        returns = "(const Vector2&)",
+        valuetype = "Vector2",
+        type = "method"
+      },
+      GetCustomMaterial = {
+        args = "()",
+        description = "Return custom material.",
+        returns = "(Material*)",
+        valuetype = "Material",
+        type = "method"
+      },
+      sprite = {
+        valuetype = "Sprite2D",
+        description = "Sprite2D*\nSprite.",
+        type = "value"
+      },
+      blendMode = {
+        description = "BlendMode\nBlend mode.",
+        type = "value"
+      },
       flipX = {
         description = "bool\nFlip X.",
         type = "value"
@@ -50096,6 +53461,23 @@ local api = {
         description = "Color&\nColor.",
         type = "value"
       },
+      alpha = {
+        description = "float",
+        type = "value"
+      },
+      useHotSpot = {
+        description = "bool\nUse hot spot.",
+        type = "value"
+      },
+      hotSpot = {
+        description = "Vector2\nHot spot.",
+        type = "value"
+      },
+      customMaterial = {
+        valuetype = "Material",
+        description = "Material*\nCustom material.",
+        type = "value"
+      },
       SetLayer = {
         args = "(int layer)",
         description = "Set layer.",
@@ -50105,24 +53487,6 @@ local api = {
       SetOrderInLayer = {
         args = "(int orderInLayer)",
         description = "Set order in layer.",
-        returns = "()",
-        type = "method"
-      },
-      SetSprite = {
-        args = "(Sprite2D* sprite)",
-        description = "Set sprite.",
-        returns = "()",
-        type = "method"
-      },
-      SetBlendMode = {
-        args = "(BlendMode mode)",
-        description = "Set blend mode.",
-        returns = "()",
-        type = "method"
-      },
-      SetMaterial = {
-        args = "(Material* material)",
-        description = "Set material.",
         returns = "()",
         type = "method"
       },
@@ -50138,58 +53502,12 @@ local api = {
         returns = "(int)",
         type = "method"
       },
-      GetSprite = {
-        args = "()",
-        description = "Return sprite.",
-        returns = "(Sprite2D*)",
-        valuetype = "Sprite2D",
-        type = "method"
-      },
-      GetTexture = {
-        args = "()",
-        description = "Return texture.",
-        returns = "(Texture2D*)",
-        valuetype = "Texture2D",
-        type = "method"
-      },
-      GetBlendMode = {
-        args = "()",
-        description = "Return blend mode.",
-        returns = "(BlendMode)",
-        type = "method"
-      },
-      GetMaterial = {
-        args = "()",
-        description = "Return material.",
-        returns = "(Material*)",
-        valuetype = "Material",
-        type = "method"
-      },
       layer = {
         description = "int\nLayer.",
         type = "value"
       },
       orderInLayer = {
         description = "int\nOrder in layer.",
-        type = "value"
-      },
-      sprite = {
-        valuetype = "Sprite2D",
-        description = "Sprite2D*\nSprite.",
-        type = "value"
-      },
-      texture = {
-        valuetype = "Texture2D",
-        description = "(Readonly) Texture2D*",
-        type = "value"
-      },
-      blendMode = {
-        description = "BlendMode\nBlend mode.",
-        type = "value"
-      },
-      material = {
-        valuetype = "Material",
-        description = "Material*\nMaterial. If null, use a default material. If non-null, use a clone of this for updating the diffuse texture.",
         type = "value"
       },
       SetDrawDistance = {
@@ -50559,6 +53877,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -50664,30 +53994,27 @@ local api = {
   Technique = {
     childs = {
       HasPass = {
-        args = "(const StringHash type)",
+        args = "(const String type)",
+        description = "Return whether has a pass by name. This overload should not be called in time-critical rendering loops; use a pre-acquired pass index instead.",
         returns = "(bool)",
         type = "method"
       },
       GetPass = {
-        args = "(const StringHash type)",
+        args = "(const String type)",
+        description = "Return a pass by name, or null if not found. This overload should not be called in time-critical rendering loops; use a pre-acquired pass index instead.",
         returns = "(Pass*)",
         valuetype = "Pass",
         type = "method"
       },
       GetSupportedPass = {
-        args = "(const StringHash type)",
+        args = "(const String type)",
         returns = "(Pass*)",
         valuetype = "Pass",
         type = "method"
       },
       IsSupported = {
         args = "()",
-        returns = "(bool)",
-        type = "method"
-      },
-      IsSM3 = {
-        args = "()",
-        description = "Return whether requires %Shader %Model 3.",
+        description = "Return whether technique is supported by the current hardware.",
         returns = "(bool)",
         type = "method"
       },
@@ -50704,8 +54031,8 @@ local api = {
       },
       GetPassTypes = {
         args = "()",
-        returns = "(const Vector<StringHash>&)",
-        valuetype = "Vector<StringHash>",
+        returns = "(const Vector<String>&)",
+        valuetype = "Vector<String>",
         type = "method"
       },
       GetPasses = {
@@ -50715,10 +54042,6 @@ local api = {
         type = "method"
       },
       supported = {
-        description = "(Readonly) bool",
-        type = "value"
-      },
-      SM3 = {
         description = "(Readonly) bool",
         type = "value"
       },
@@ -51241,6 +54564,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -51852,6 +55187,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -52185,8 +55532,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -53302,6 +56649,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -54046,6 +57405,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -54822,6 +58193,12 @@ local api = {
   },
   TileMap2D = {
     childs = {
+      DrawDebugGeometry = {
+        args = "(DebugRenderer* debug, bool depthTest)",
+        description = "Visualize the component as debug geometry.",
+        returns = "()",
+        type = "method"
+      },
       SetTmxFile = {
         args = "(TmxFile2D* tmxFile)",
         description = "Set tmx file.",
@@ -55014,6 +58391,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -55111,6 +58500,12 @@ local api = {
   },
   TileMapLayer2D = {
     childs = {
+      DrawDebugGeometry = {
+        args = "(DebugRenderer* debug, bool depthTest)",
+        description = "Add debug geometry to the debug renderer.",
+        returns = "()",
+        type = "method"
+      },
       SetDrawOrder = {
         args = "(int drawOrder)",
         description = "Set draw order",
@@ -55366,6 +58761,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -55731,8 +59138,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -56851,6 +60258,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -56962,24 +60381,6 @@ local api = {
       Clear = {
         args = "()",
         description = "Clear the UI (excluding the cursor.)",
-        returns = "()",
-        type = "method"
-      },
-      Update = {
-        args = "(float timeStep)",
-        description = "Update the UI logic. Called by HandlePostUpdate().",
-        returns = "()",
-        type = "method"
-      },
-      RenderUpdate = {
-        args = "()",
-        description = "Update the UI for rendering. Called by HandleRenderUpdate().",
-        returns = "()",
-        type = "method"
-      },
-      Render = {
-        args = "()",
-        description = "Render the UI.",
         returns = "()",
         type = "method"
       },
@@ -57353,8 +60754,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -58473,6 +61874,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -58764,7 +62177,7 @@ local api = {
       },
       GetUInt = {
         args = "()",
-        returns = "(int)",
+        returns = "(unsigned)",
         type = "method"
       },
       GetStringHash = {
@@ -59896,6 +63309,137 @@ local api = {
     },
     type = "class"
   },
+  VertexBuffer = {
+    childs = {
+      new = {
+        args = "()",
+        returns = "(VertexBuffer*)",
+        valuetype = "VertexBuffer",
+        type = "method"
+      },
+      delete = {
+        args = "()",
+        returns = "()",
+        type = "method"
+      },
+      SetShadowed = {
+        args = "(bool enable)",
+        returns = "()",
+        type = "method"
+      },
+      SetSize = {
+        args = "(unsigned vertexCount, unsigned elementMask, bool dynamic = false)",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetData = {
+        args = "(VectorBuffer& data)",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetDataRange = {
+        args = "(VectorBuffer& data, unsigned start, unsigned count, bool discard = false)",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetData = {
+        args = "()",
+        returns = "(VectorBuffer)",
+        type = "method"
+      },
+      IsShadowed = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      IsDynamic = {
+        args = "()",
+        returns = "(bool)",
+        type = "method"
+      },
+      GetVertexCount = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetVertexSize = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      GetElementMask = {
+        args = "()",
+        returns = "(unsigned)",
+        type = "method"
+      },
+      shadowed = {
+        description = "bool",
+        type = "value"
+      },
+      dynamic = {
+        description = "(Readonly) bool",
+        type = "value"
+      },
+      vertexCount = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      vertexSize = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      elementMask = {
+        description = "(Readonly) unsigned",
+        type = "value"
+      },
+      GetType = {
+        args = "()",
+        description = "Return type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetBaseType = {
+        args = "()",
+        description = "Return base class type hash.",
+        returns = "(StringHash)",
+        type = "method"
+      },
+      GetTypeName = {
+        args = "()",
+        description = "Return type name.",
+        returns = "(const String)",
+        type = "method"
+      },
+      GetCategory = {
+        args = "()",
+        description = "Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.",
+        returns = "(const String)",
+        type = "method"
+      },
+      SendEvent = {
+        args = "(const String eventName, VariantMap* eventData = 0)",
+        returns = "()",
+        type = "method"
+      },
+      type = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      baseType = {
+        description = "(Readonly) StringHash",
+        type = "value"
+      },
+      typeName = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+      category = {
+        description = "(Readonly) const String",
+        type = "value"
+      },
+    },
+    type = "class"
+  },
   View3D = {
     childs = {
       new = {
@@ -59910,8 +63454,8 @@ local api = {
         type = "method"
       },
       SetView = {
-        args = "(Scene* scene, Camera* camera)",
-        description = "Define the scene and camera to use in rendering. The View3D will take ownership of them with shared pointers.",
+        args = "(Scene* scene, Camera* camera, bool ownScene = true)",
+        description = "Define the scene and camera to use in rendering. When ownScene is true the View3D will take ownership of them with shared pointers.",
         returns = "()",
         type = "method"
       },
@@ -60298,8 +63842,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -61415,6 +64959,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -61914,8 +65470,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest)",
-        description = "(bool) SaveXML (const String fileName)\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = "\t")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -63031,6 +66587,18 @@ local api = {
       IsTemporary = {
         args = "()",
         description = "Return whether is temporary.",
+        returns = "(bool)",
+        type = "method"
+      },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
         returns = "(bool)",
         type = "method"
       },
@@ -63548,7 +67116,7 @@ local api = {
         type = "method"
       },
       ToString = {
-        args = "()",
+        args = "(const String indentation = "\t")",
         description = "Serialize the XML content to a string.",
         returns = "(String)",
         type = "method"
@@ -63557,6 +67125,11 @@ local api = {
         args = "(XMLFile* patchFile)",
         description = "() Patch (XMLElement patchElement)\nPatch the XMLFile with another XMLFile. Based on RFC 5261.",
         returns = "()",
+        type = "method"
+      },
+      Save = {
+        args = "(const String fileName, const String indentation = "\t")",
+        returns = "(bool)",
         type = "method"
       },
       Load = {
@@ -64208,6 +67781,18 @@ local api = {
         returns = "(bool)",
         type = "method"
       },
+      SetInterceptNetworkUpdate = {
+        args = "(const String attributeName, bool enable)",
+        description = "Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.",
+        returns = "()",
+        type = "method"
+      },
+      GetInterceptNetworkUpdate = {
+        args = "(const String attributeName)",
+        description = "Return whether an attribute's network updates are being intercepted.",
+        returns = "(bool)",
+        type = "method"
+      },
       temporary = {
         description = "bool\nTemporary flag.",
         type = "value"
@@ -64363,6 +67948,10 @@ local api = {
         description = "(Readonly) int for 'CompressedFormat'",
         type = "value"
       },
+      CF_RGBA = {
+        description = "(Readonly) int for 'CompressedFormat'",
+        type = "value"
+      },
       CF_DXT1 = {
         description = "(Readonly) int for 'CompressedFormat'",
         type = "value"
@@ -64439,6 +68028,50 @@ local api = {
         description = "(Readonly) int for 'CreateMode'",
         type = "value"
       },
+      CROWD_AGENT_INVALID = {
+        description = "(Readonly) int for 'CrowdAgentState'",
+        type = "value"
+      },
+      CROWD_AGENT_READY = {
+        description = "(Readonly) int for 'CrowdAgentState'",
+        type = "value"
+      },
+      CROWD_AGENT_TRAVERSINGLINK = {
+        description = "(Readonly) int for 'CrowdAgentState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_NONE = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_FAILED = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_VALID = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_REQUESTING = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_WAITINGFORPATH = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_WAITINGFORQUEUE = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_VELOCITY = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
+      CROWD_AGENT_TARGET_ARRIVED = {
+        description = "(Readonly) int for 'CrowdTargetState'",
+        type = "value"
+      },
       FACE_POSITIVE_X = {
         description = "(Readonly) int for 'CubeMapFace'",
         type = "value"
@@ -64487,6 +68120,14 @@ local api = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
       },
+      CS_IBEAM = {
+        description = "(Readonly) int for 'CursorShape'",
+        type = "value"
+      },
+      CS_CROSS = {
+        description = "(Readonly) int for 'CursorShape'",
+        type = "value"
+      },
       CS_RESIZEVERTICAL = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
@@ -64503,6 +68144,10 @@ local api = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
       },
+      CS_RESIZE_ALL = {
+        description = "(Readonly) int for 'CursorShape'",
+        type = "value"
+      },
       CS_ACCEPTDROP = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
@@ -64512,6 +68157,10 @@ local api = {
         type = "value"
       },
       CS_BUSY = {
+        description = "(Readonly) int for 'CursorShape'",
+        type = "value"
+      },
+      CS_BUSY_ARROW = {
         description = "(Readonly) int for 'CursorShape'",
         type = "value"
       },
@@ -64815,6 +68464,30 @@ local api = {
         description = "(Readonly) int for 'MouseMode'",
         type = "value"
       },
+      PUSHINESS_LOW = {
+        description = "(Readonly) int for 'NavigationPushiness'",
+        type = "value"
+      },
+      PUSHINESS_MEDIUM = {
+        description = "(Readonly) int for 'NavigationPushiness'",
+        type = "value"
+      },
+      PUSHINESS_HIGH = {
+        description = "(Readonly) int for 'NavigationPushiness'",
+        type = "value"
+      },
+      NAVIGATIONQUALITY_LOW = {
+        description = "(Readonly) int for 'NavigationQuality'",
+        type = "value"
+      },
+      NAVIGATIONQUALITY_MEDIUM = {
+        description = "(Readonly) int for 'NavigationQuality'",
+        type = "value"
+      },
+      NAVIGATIONQUALITY_HIGH = {
+        description = "(Readonly) int for 'NavigationQuality'",
+        type = "value"
+      },
       O_HORIZONTAL = {
         description = "(Readonly) int for 'Orientation'",
         type = "value"
@@ -64883,6 +68556,42 @@ local api = {
         description = "(Readonly) int for 'RayQueryLevel'",
         type = "value"
       },
+      SORT_FRONTTOBACK = {
+        description = "(Readonly) int for 'RenderCommandSortMode'",
+        type = "value"
+      },
+      SORT_BACKTOFRONT = {
+        description = "(Readonly) int for 'RenderCommandSortMode'",
+        type = "value"
+      },
+      CMD_NONE = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_CLEAR = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_SCENEPASS = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_QUAD = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_FORWARDLIGHTS = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_LIGHTVOLUMES = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
+      CMD_RENDERUI = {
+        description = "(Readonly) int for 'RenderCommandType'",
+        type = "value"
+      },
       SURFACE_MANUALUPDATE = {
         description = "(Readonly) int for 'RenderSurfaceUpdateMode'",
         type = "value"
@@ -64895,40 +68604,16 @@ local api = {
         description = "(Readonly) int for 'RenderSurfaceUpdateMode'",
         type = "value"
       },
-      SP_FRAME = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
+      SIZE_ABSOLUTE = {
+        description = "(Readonly) int for 'RenderTargetSizeMode'",
         type = "value"
       },
-      SP_CAMERA = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
+      SIZE_VIEWPORTDIVISOR = {
+        description = "(Readonly) int for 'RenderTargetSizeMode'",
         type = "value"
       },
-      SP_VIEWPORT = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      SP_ZONE = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      SP_LIGHT = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      SP_VERTEXLIGHTS = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      SP_MATERIAL = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      SP_OBJECTTRANSFORM = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
-        type = "value"
-      },
-      MAX_SHADER_PARAMETER_GROUPS = {
-        description = "(Readonly) int for 'ShaderParameterGroup'",
+      SIZE_VIEWPORTMULTIPLIER = {
+        description = "(Readonly) int for 'RenderTargetSizeMode'",
         type = "value"
       },
       VS = {
@@ -64973,30 +68658,6 @@ local api = {
       },
       SHAPE_TERRAIN = {
         description = "(Readonly) int for 'ShapeType'",
-        type = "value"
-      },
-      SOUND_EFFECT = {
-        description = "(Readonly) int for 'SoundType'",
-        type = "value"
-      },
-      SOUND_AMBIENT = {
-        description = "(Readonly) int for 'SoundType'",
-        type = "value"
-      },
-      SOUND_VOICE = {
-        description = "(Readonly) int for 'SoundType'",
-        type = "value"
-      },
-      SOUND_MUSIC = {
-        description = "(Readonly) int for 'SoundType'",
-        type = "value"
-      },
-      SOUND_MASTER = {
-        description = "(Readonly) int for 'SoundType'",
-        type = "value"
-      },
-      MAX_SOUND_TYPES = {
-        description = "(Readonly) int for 'SoundType'",
         type = "value"
       },
       OP_KEEP = {
@@ -65116,50 +68777,6 @@ local api = {
         type = "value"
       },
       TU_ENVIRONMENT = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      MAX_MATERIAL_TEXTURE_UNITS = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_LIGHTRAMP = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_LIGHTSHAPE = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_SHADOWMAP = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_FACESELECT = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_INDIRECTION = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_DEPTHBUFFER = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_LIGHTBUFFER = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_VOLUMEMAP = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      TU_ZONE = {
-        description = "(Readonly) int for 'TextureUnit'",
-        type = "value"
-      },
-      MAX_TEXTURE_UNITS = {
         description = "(Readonly) int for 'TextureUnit'",
         type = "value"
       },
@@ -65852,12 +69469,12 @@ local api = {
         type = "function"
       },
       SubscribeToEvent = {
-        args = "(const String eventName, void* functionOrFunctionName)",
+        args = "(void* sender, const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "function"
       },
       SubscribeToEvent = {
-        args = "(void* sender, const String eventName, void* functionOrFunctionName)",
+        args = "(const String eventName, void* functionOrFunctionName)",
         returns = "()",
         type = "function"
       },
@@ -65966,8 +69583,13 @@ local api = {
         returns = "()",
         type = "function"
       },
+      UnsubscribeFromAllEventsExcept = {
+        args = "(const Vector<String>& exceptionNames)",
+        returns = "()",
+        type = "function"
+      },
       UnsubscribeFromEvent = {
-        args = "(void* sender, const String eventName, void* functionOrFunctionName)",
+        args = "(Object* sender, const String eventName)",
         returns = "()",
         type = "function"
       },
@@ -65976,13 +69598,8 @@ local api = {
         returns = "()",
         type = "function"
       },
-      UnsubscribeFromEvent = {
-        args = "(const String eventName, void* functionOrFunctionName)",
-        returns = "()",
-        type = "function"
-      },
       UnsubscribeFromEvents = {
-        args = "(void* sender)",
+        args = "(Object* sender)",
         returns = "()",
         type = "function"
       },
@@ -66227,11 +69844,11 @@ local api = {
         description = "const unsigned",
         type = "value"
       },
-      DRAWABLE_LIGHT = {
+      DRAWABLE_GEOMETRY2D = {
         description = "const unsigned",
         type = "value"
       },
-      DRAWABLE_PROXYGEOMETRY = {
+      DRAWABLE_LIGHT = {
         description = "const unsigned",
         type = "value"
       },
@@ -66737,6 +70354,66 @@ local api = {
       },
       LOG_WARNING = {
         description = "const int",
+        type = "value"
+      },
+      MASK_BLENDINDICES = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_BLENDWEIGHTS = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_COLOR = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_CUBETEXCOORD1 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_CUBETEXCOORD2 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_DEFAULT = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_INSTANCEMATRIX1 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_INSTANCEMATRIX2 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_INSTANCEMATRIX3 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_NONE = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_NORMAL = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_POSITION = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_TANGENT = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_TEXCOORD1 = {
+        description = "const unsigned",
+        type = "value"
+      },
+      MASK_TEXCOORD2 = {
+        description = "const unsigned",
         type = "value"
       },
       MAX_VERTEX_LIGHTS = {
@@ -67867,6 +71544,26 @@ local api = {
         description = "const int",
         type = "value"
       },
+      SOUND_AMBIENT = {
+        description = "const String",
+        type = "value"
+      },
+      SOUND_EFFECT = {
+        description = "const String",
+        type = "value"
+      },
+      SOUND_MASTER = {
+        description = "const String",
+        type = "value"
+      },
+      SOUND_MUSIC = {
+        description = "const String",
+        type = "value"
+      },
+      SOUND_VOICE = {
+        description = "const String",
+        type = "value"
+      },
       VO_DISABLE_OCCLUSION = {
         description = "const unsigned",
         type = "value"
@@ -67889,7 +71586,7 @@ return {
   name = "Urho3D",
   description = "Urho3D game engine integration.",
   author = "Danny Boisvert (https://github.com/silverkorn)",
-  version = 0.2,
+  version = 0.3,
 
   onRegister = function(self)
      ide:AddInterpreter("urho3d", interpreter)
