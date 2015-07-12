@@ -6,9 +6,10 @@ local function clean(editor)
 end
 return {
   name = "Syntax check while typing",
-  description = "Reports on any syntax errors while typing (on Enter)",
+  description = "Reports syntax errors while typing (on Enter)",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
+  dependencies = 1.11,
 
   -- use the file name as the marker name to avoid conflicts
   onRegister = function(self) markername = self:GetFileName() end,
@@ -36,7 +37,7 @@ return {
 
       if line1 and marker then editor:MarkerAdd(line1-1, marker) end
       if line2 and marker then editor:MarkerAdd(line2-1, marker) end
-      ide:GetStatusBar():SetStatusText(err and "Syntax error: "..err or "")
+      ide:SetStatus(err and "Syntax error: "..err or "")
 
       lasterr = err
     end
