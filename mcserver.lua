@@ -30,6 +30,17 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 				ExeName:SetExt("exe")
 			end
 
+			-- Check if we're in a subfolder inside the plugin folder, try going up one level if executable not found:
+			if not(ExeName:FileExists()) then
+				DisplayOutputNoMarker("The MCServer executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Trying one folder up.\n")
+				ExeName:RemoveLastDir()
+				ExePath:RemoveLastDir()
+				if not(ExeName:FileExists()) then
+					DisplayOutputNoMarker("The MCServer executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Aborting the debugger.\n")
+					return
+				end
+			end
+
 			-- Start the debugger server:
 			if withdebug then
 				DebuggerAttachDefault({
