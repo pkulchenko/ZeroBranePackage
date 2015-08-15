@@ -6,6 +6,7 @@ return {
   description = "Clones Output window to keep it on the screen when the application loses focus (OSX).",
   author = "Paul Kulchenko",
   version = 0.2,
+  dependencies = 1.11,
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
@@ -20,8 +21,10 @@ return {
           frame = wx.wxFrame(ide:GetMainFrame(), wx.wxID_ANY, "Output Clone",
             wx.wxDefaultPosition, wx.wxDefaultSize,
             wx.wxDEFAULT_FRAME_STYLE + wx.wxFRAME_FLOAT_ON_PARENT)
-          frame:SetClientSize(output:GetSize():GetWidth(), output:GetSize():GetHeight())
-          frame:Move(output:GetScreenPosition())
+          if ide:IsWindowShown(output) then
+            frame:SetClientSize(output:GetSize():GetWidth(), output:GetSize():GetHeight())
+            frame:Move(output:GetScreenPosition())
+          end
           frame:Connect(wx.wxEVT_CLOSE_WINDOW,
             function(event)
               frame:Hide()
