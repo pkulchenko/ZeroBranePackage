@@ -1,18 +1,17 @@
 local G = ...
 local id = G.ID("outputclone.outputclone")
-local menuid
 local frame
 return {
   name = "Clone Output window",
   description = "Clones Output window to keep it on the screen when the application loses focus (OSX).",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
     local pos = self.GetConfig and self:GetConfig().insertat and
       self:GetConfig().insertat-1 or 4
-    menuid = menu:InsertCheckItem(pos, id, "Output Window Clone\tCtrl-Shift-C")
+    menu:InsertCheckItem(pos, id, "Output Window Clone\tCtrl-Shift-C")
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
       function (event)
         if not frame then
@@ -37,8 +36,10 @@ return {
           clone:SetDocPointer(docpointer)
 
           if self:GetConfig().autoscroll ~= false then
-            output:Connect(wxstc.wxEVT_STC_PAINTED, function()
-              clone:ScrollToLine(clone:GetLineCount()-1)
+            clone:Connect(wxstc.wxEVT_STC_MODIFIED, function(event)
+              if bit.band(event:GetModificationType(), wxstc.wxSTC_MOD_INSERTTEXT) ~= 0 then
+                clone:ScrollToLine(clone:GetLineCount()-1)
+              end
             end)
           end
 
@@ -53,10 +54,7 @@ return {
   end,
 
   onUnRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxID_ANY)
-    if menuid then menu:Destroy(menuid) end
-    if frame then frame:Destroy() end
+    ide:RemoveMenuItem(id)
   end,
 
   onAppClose = function(self, app)
