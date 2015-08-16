@@ -5,14 +5,15 @@ return {
   name = "Add `make` toolbar button",
   description = "Adds a menu item and toolbar button that run `make`.",
   author = "Paul Kulchenko",
-  version = 0.2,
-  dependencies = 0.71,
+  version = 0.3,
+  dependencies = 1.0,
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
     menu:Append(id, "Make")
-    ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
-      function () CommandLineRun('make', ide:GetProject(), true) end)
+    ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function()
+        ide:ExecuteCommand('make', ide:GetProject(), function(s) DisplayOutput(s) end)
+      end)
 
     local tb = ide:GetToolBar()
     tool = tb:AddTool(id, "Make"..KSC(id), wx.wxBitmap({
