@@ -5,7 +5,7 @@ return {
   name = "Clone Output window",
   description = "Clones Output window to keep it on the screen when the application loses focus (OSX).",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
   dependencies = 1.11,
 
   onRegister = function(self)
