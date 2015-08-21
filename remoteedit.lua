@@ -1,6 +1,6 @@
 local G = ...
 local id = G.ID("remoteedit.openremotefile")
-local lastfile, menuid, debugger = ""
+local lastfile, debugger = ""
 local editors = {}
 local function reportErr(err) return(err:gsub('.-:%d+:%s*','')) end
 
@@ -11,11 +11,12 @@ return {
   name = "Remote edit",
   description = "Allows to edit files remotely while debugging is in progress.",
   author = "Paul Kulchenko",
-  version = 0.11,
+  version = 0.12,
+  dependencies = 0.8,
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&File")))
-    menuid = menu:Insert(2, id, "Open Remotely...")
+    menu:Insert(2, id, "Open Remotely...")
     debugger = ide.debugger
 
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
@@ -29,20 +30,10 @@ return {
       end)
     ide:GetMainFrame():Connect(id, wx.wxEVT_UPDATE_UI,
       function (event) event:Enable(debugger.server and not debugger.running) end)
-
-    -- this is a workaround for an API call missing in v0.39
-    if tonumber(ide.VERSION) and tonumber(ide.VERSION) <= 0.39 then
-      local sf = SaveFile
-      SaveFile = function(...)
-        if PackageEventHandle("onEditorPreSave", ...) ~= false then sf(...) end
-      end
-    end
   end,
 
   onUnRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&File")))
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxEVT_COMMAND_MENU_SELECTED)
-    if menuid then menu:Destroy(menuid) end
+    ide:RemoveMenuItem(id)
   end,
 
   onEditorClose = function(self, editor)
