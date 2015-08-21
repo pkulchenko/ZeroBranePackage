@@ -101,7 +101,7 @@ local interpreter = {
   takeparameters = true,
 }
 
--- Urho3D API generated on 2015-06-06
+-- Urho3D API generated on 2015-08-20
 
 local api = {
 
@@ -3429,8 +3429,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -4964,8 +4964,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -6960,8 +6960,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -16747,8 +16747,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -21423,8 +21423,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -26464,7 +26464,7 @@ local api = {
         type = "method"
       },
       Save = {
-        args = "(const String fileName, const String indentation = "\t")",
+        args = "(const String fileName, const String indentation = \"\t\")",
         returns = "(bool)",
         type = "method"
       },
@@ -28098,8 +28098,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -29748,8 +29748,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -32317,8 +32317,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -35242,7 +35242,7 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(File* dest, const String indentation = "\t")",
+        args = "(File* dest, const String indentation = \"\t\")",
         returns = "(bool)",
         type = "method"
       },
@@ -42923,8 +42923,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(File* dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")",
+        args = "(File* dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")",
         returns = "(bool)",
         type = "method"
       },
@@ -43236,7 +43236,7 @@ local api = {
         type = "value"
       },
       SaveXML = {
-        args = "(File* dest, const String indentation = "\t")",
+        args = "(File* dest, const String indentation = \"\t\")",
         returns = "(bool)",
         type = "method"
       },
@@ -44288,8 +44288,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -45681,8 +45681,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -47946,8 +47946,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -50863,8 +50863,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -55532,8 +55532,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -59138,8 +59138,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -60754,8 +60754,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -63842,8 +63842,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -65470,8 +65470,8 @@ local api = {
         type = "method"
       },
       SaveXML = {
-        args = "(Serializer& dest, const String indentation = "\t")",
-        description = "(bool) SaveXML (const String fileName, const String indentation = "\t")\nSave to an XML file. Return true if successful.",
+        args = "(Serializer& dest, const String indentation = \"\t\")",
+        description = "(bool) SaveXML (const String fileName, const String indentation = \"\t\")\nSave to an XML file. Return true if successful.",
         returns = "(bool)",
         type = "method"
       },
@@ -67116,7 +67116,7 @@ local api = {
         type = "method"
       },
       ToString = {
-        args = "(const String indentation = "\t")",
+        args = "(const String indentation = \"\t\")",
         description = "Serialize the XML content to a string.",
         returns = "(String)",
         type = "method"
@@ -67128,7 +67128,7 @@ local api = {
         type = "method"
       },
       Save = {
-        args = "(const String fileName, const String indentation = "\t")",
+        args = "(const String fileName, const String indentation = \"\t\")",
         returns = "(bool)",
         type = "method"
       },
