@@ -1,19 +1,23 @@
--- Implements MCServer interpreter description and interface for ZBStudio.
--- MCServer executable can have a postfix depending on the compilation mode (debug / release).
+-- Implements Cuberite interpreter description and interface for ZBStudio.
+-- Cuberite executable can have a postfix depending on the compilation mode (debug / release).
 
-local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfix)
+local function MakeCuberiteInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfix)
 	assert(a_Self)
 	assert(type(a_InterpreterPostfix) == "string")
 	assert(type(a_ExePostfix) == "string")
 
 	return
 	{
-		name = "MCServer" .. a_InterpreterPostfix,
-		description = "MCServer - the custom C++ minecraft server",
-		api = {"baselib", "mcserver_api"},
+		name = "Cuberite" .. a_InterpreterPostfix,
+		description = "Cuberite - the custom C++ minecraft server",
+		api = {
+			"baselib",
+			"mcserver_api",  -- Keep the old MCServer name for compatibility reasons
+			"cuberite_api"
+		},
 
 		frun = function(self, wfilename, withdebug)
-			-- MCServer plugins are always in a "Plugins/<PluginName>" subfolder located at the executable level
+			-- Cuberite plugins are always in a "Plugins/<PluginName>" subfolder located at the executable level
 			-- Get to the executable by removing the last two dirs:
 			local ExePath = wx.wxFileName(wfilename)
 			ExePath:RemoveLastDir()
@@ -23,7 +27,7 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			local ExeName = wx.wxFileName(ExePath)
 
 			-- The executable name depends on the debug / non-debug build mode, it can have a postfix
-			ExeName:SetName("MCServer" .. a_ExePostfix)
+			ExeName:SetName("Cuberite" .. a_ExePostfix)
 
 			-- Executable has a .exe ext on Windows
 			if (ide.osname == 'Windows') then
@@ -32,11 +36,11 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 
 			-- Check if we're in a subfolder inside the plugin folder, try going up one level if executable not found:
 			if not(ExeName:FileExists()) then
-				DisplayOutputNoMarker("The MCServer executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Trying one folder up.\n")
+				DisplayOutputNoMarker("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Trying one folder up.\n")
 				ExeName:RemoveLastDir()
 				ExePath:RemoveLastDir()
 				if not(ExeName:FileExists()) then
-					DisplayOutputNoMarker("The MCServer executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Aborting the debugger.\n")
+					DisplayOutputNoMarker("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Aborting the debugger.\n")
 					return
 				end
 			end
@@ -52,11 +56,11 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			-- Add a "nooutbuf" cmdline param to the server, causing it to call setvbuf to disable output buffering:
 			local Cmd = ExeName:GetFullPath() .. " --no-output-buffering"
 
-			-- Force ZBS not to hide MCS window, save and restore previous state:
+			-- Force ZBS not to hide Cuberite window, save and restore previous state:
 			local SavedUnhideConsoleWindow = ide.config.unhidewindow.ConsoleWindowClass
 			ide.config.unhidewindow.ConsoleWindowClass = 1  -- show if hidden
 			
-			-- Create the !EnableMobDebug.lua file so that the MCS plugin starts the debugging session, when loaded:
+			-- Create the !EnableMobDebug.lua file so that the Cuberite plugin starts the debugging session, when loaded:
 			local EnablerPath = wx.wxFileName(wfilename)
 			EnablerPath:SetName("!EnableMobDebug")
 			EnablerPath:SetExt("lua")
@@ -69,17 +73,17 @@ local function MakeMCServerInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 -- This file is created by the ZeroBrane Studio debugger, do NOT commit it to your repository!
 -- It is safe to delete this file once the debugger is stopped.
 
--- When this file is loaded in the ZeroBrane Studio, the debugger will break when MCServer detects a problem in your plugin
--- If you close this file, the debugger will no longer break on problems
+-- When this file is loaded in the ZeroBrane Studio, the debugger will pause when Cuberite detects a problem in your plugin
+-- If you close this file, the debugger will no longer pause on problems
 
 local g_mobdebug = require("mobdebug")
 g_mobdebug.start()
 
 function BreakIntoDebugger(a_Message)
 	g_mobdebug:pause()
-	-- If your plugin breaks here, it means that MCServer has run into a problem in your plugin
+	-- If your plugin breaks here, it means that Cuberite has run into a problem in your plugin
 	-- Inspect the stack and the server console for the error report
-	-- If you close this file while the debugger is stopped here, MCServer will be terminated
+	-- If you close this file while the debugger is paused here, Cuberite will be terminated!
 	LOG("Broken into debugger: " .. a_Message)
 end
 ]]
@@ -123,7 +127,7 @@ end
 			local pid = CommandLineRun(
 				Cmd,                    -- Command to run
 				ExePath:GetFullPath(),  -- Working directory for the debuggee
-				false,                  -- Redirect debuggee output to Output pane? (NOTE: This force-hides the MCS window, not desirable!)
+				false,                  -- Redirect debuggee output to Output pane? (NOTE: This force-hides the Cuberite window, not desirable!)
 				true,                   -- Add a no-hide flag to WX
 				nil,                    -- StringCallback, whatever that is
 				nil,                    -- UID to identify this running program; nil to auto-assign
@@ -145,7 +149,7 @@ local function analyzeProject()
 		return
 	end
 	
-	-- Get a list of all the files in the order in which MCS loads them (Info.lua is always last):
+	-- Get a list of all the files in the order in which Cuberite loads them (Info.lua is always last):
 	local files = {}
 	for _, filePath in ipairs(FileSysGetRecursive(projectPath, false, "*.lua")) do
 		table.insert(files, filePath)
@@ -259,26 +263,26 @@ local G = ...
 
 
 return {
-	name = "MCServer integration",
-	description = "Integration with MCServer - the custom C++ minecraft server.",
+	name = "Cuberite integration",
+	description = "Integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.4,
+	version = 0.5,
 	dependencies = 0.71,
 
-	AnalysisMenuID = G.ID("analyze.mcs_analyzeall"),
-	InfoDumpMenuID = G.ID("project.mcs_infodump"),
+	AnalysisMenuID = G.ID("analyze.cuberite_analyzeall"),
+	InfoDumpMenuID = G.ID("project.cuberite_infodump"),
 	
 	onRegister = function(self)
 		-- Add the interpreters
-		self.InterpreterDebug   = MakeMCServerInterpreter(self, " - debug mode",   "_debug")
-		self.InterpreterRelease = MakeMCServerInterpreter(self, " - release mode", "")
-		ide:AddInterpreter("mcserver_debug",   self.InterpreterDebug)
-		ide:AddInterpreter("mcserver_release", self.InterpreterRelease)
+		self.InterpreterDebug   = MakeCuberiteInterpreter(self, " - debug mode",   "_debug")
+		self.InterpreterRelease = MakeCuberiteInterpreter(self, " - release mode", "")
+		ide:AddInterpreter("cuberite_debug",   self.InterpreterDebug)
+		ide:AddInterpreter("cuberite_release", self.InterpreterRelease)
 
 		-- Add the analysis menu item:
 		local _, menu, pos = ide:FindMenuItem(ID_ANALYZE)
 		if pos then
-			menu:Insert(pos + 1, self.AnalysisMenuID, TR("Analyze as MCServer") .. KSC(id), TR("Analyze the project source code as MCServer"))
+			menu:Insert(pos + 1, self.AnalysisMenuID, TR("Analyze as Cuberite") .. KSC(id), TR("Analyze the project source code as Cuberite"))
 			ide:GetMainFrame():Connect(self.AnalysisMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, analyzeProject)
 		end
 		
@@ -286,15 +290,15 @@ return {
 		_, menu, pos = ide:FindMenuItem(ID_INTERPRETER)
 		if (pos) then
 			self.Separator1 = menu:AppendSeparator()
-			menu:Append(self.InfoDumpMenuID, TR("MCServer InfoDump") .. KSC(id), TR("Run the InfoDump script on the current plugin"))
+			menu:Append(self.InfoDumpMenuID, TR("Cuberite InfoDump") .. KSC(id), TR("Run the InfoDump script on the current plugin"))
 			ide:GetMainFrame():Connect(self.InfoDumpMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, runInfoDump)
 		end
 	end,
 	
 	onUnRegister = function(self)
 		-- Remove the interpreters:
-		ide:RemoveInterpreter("mcserver_debug")
-		ide:RemoveInterpreter("mcserver_release")
+		ide:RemoveInterpreter("cuberite_debug")
+		ide:RemoveInterpreter("cuberite_release")
 		
 		-- Remove the menu items:
 		ide:RemoveMenuItem(self.AnalysisMenuID)
