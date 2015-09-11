@@ -110,7 +110,9 @@ end
 				-- Close the "!EnableMobDebug.lua" file editor:
 				if (enablerEditor) then
 					local doc = ide.openDocuments[enablerEditor:GetId()]
-					ClosePage(doc.id)
+					ClosePage(doc.index)
+					-- TODO: When the Close() API is implemented in ZBS, replace the above two lines with:
+					-- ide:GetDocument(enablerEditor):Close()
 				end
 
 				-- Remove the editor-close watcher:
