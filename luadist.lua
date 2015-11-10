@@ -11,6 +11,17 @@ local ok, err = pcall(require('luadist').%s.run, [[%s]], %s)
 if not ok and not err:find('done$') then print(err) end
 print('Completed in '..(os.time()-s)..' second(s).')]==]):gsub('\n', '; ')
 
+local echoscript = ([==[
+print('PATH: ', os.getenv('PATH'))
+print('LUA_PATH: ', os.getenv('LUA_PATH'))
+print('LUA_CPATH: ', os.getenv('LUA_CPATH'))
+print([[params: %s]])
+print([[variables: %s]])
+--[[%s]]
+print([[root: %s]])
+print([[libs: %s]])
+]==]):gsub('\n', '; ')
+
 local win, mac = ide.osname == 'Windows', ide.osname == 'Macintosh'
 local ext = win and 'dll' or 'so'
 local distarch = mac and 'Darwin' or win and 'Windows' or 'Linux'
@@ -109,8 +120,8 @@ local function run(plugin, command, ...)
 
   local cmd = ('"%s" -e "%s"'):format(
     exe,
-    script:format(serialize(params), serialize(variables),
-                  command, root, serialize(libs))
+    (command == 'echo' and echoscript or script):format(
+      serialize(params), serialize(variables), command, root, serialize(libs))
   )
 
   -- add "clibs" to PATH to allow required DLLs to load
@@ -139,7 +150,7 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.13,
+  version = 0.14,
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
     -- load something that requires liblua.dll so that it's in memory and
@@ -169,7 +180,7 @@ return {
     local commands = {}
     for _, command in ipairs({
       'help', 'install', 'remove', 'refresh', 'list', 'info', 'search', 
-      'fetch', 'make', 'upload', 'tree', 'selftest',
+      'fetch', 'make', 'upload', 'tree', 'selftest', 'echo',
     }) do commands[command] = function(...) return run(self, command, ...) end end
 
     ide:AddConsoleAlias("luadist", commands)
