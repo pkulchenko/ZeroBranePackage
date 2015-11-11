@@ -5,10 +5,12 @@ return {
   name = "Auto-insertion of delimiters",
   description = [[Adds auto-insertion of delimiters (), {}, [], '', and "".]],
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
 
   onEditorCharAdded = function(self, editor, event)
     local keycode = event:GetKey()
+    if keycode > 255 then return end -- special or unicode characters can be skipped here
+
     local char = string.char(keycode)
     local curpos = editor:GetCurrentPos()
 
