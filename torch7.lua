@@ -170,8 +170,20 @@ local torchInterpreter = {
     local cmd = ('"%s" "%s" %s'):format(
       uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false,nil,nil,
-      function() if rundebug then wx.wxRemoveFile(filepath) end end)
+    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false,
+      function(s) -- provide string callback to eliminate backspaces from Torch output
+        while s:find("\b") do
+          s = s
+            :gsub("[^\b\r\n]\b","") -- remove a backspace and a previous character
+            :gsub("^\b+","") -- remove all leading backspaces (if any)
+            :gsub("([\r\n])\b+","%1") -- remove a backspace and a previous character
+        end
+        return s
+      end, nil,
+      function()
+        if rundebug then wx.wxRemoveFile(filepath) end
+      end
+    )
 
     for env, val in ipairs({LUA_PATH = luapath, LUA_CPATH = luacpath, PATH = path}) do
       if val then
@@ -189,7 +201,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.4,
+  version = 0.45,
   dependencies = 1.10,
 
   onRegister = function(self)
