@@ -130,7 +130,7 @@ local torchInterpreter = {
         DisplayOutputLn("Can't open temporary file '"..filepath.."' for writing.")
         return
       end
-      f:write(rundebug)
+      f:write("io.stdout:setvbuf('no'); " .. rundebug)
       f:close()
     else
       -- if running on Windows and can't open the file, this may mean that
@@ -167,7 +167,7 @@ local torchInterpreter = {
     wx.wxSetEnv("PATH", torchroot..(#path > 0 and sep..path or ""))
 
     local params = ide.config.arg.any or ide.config.arg.lua or ''
-    local cmd = ('"%s" "%s" %s'):format(
+    local cmd = ([["%s" "%s" %s]]):format(
       uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
     local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false,
@@ -201,7 +201,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.45,
+  version = 0.46,
   dependencies = 1.10,
 
   onRegister = function(self)
