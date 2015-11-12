@@ -64,7 +64,7 @@ local qluaInterpreter = {
       -- the file path includes unicode characters that need special handling
       local fh = io.open(filepath, "r")
       if fh then fh:close() end
-      if ide.osname == 'Windows' and pcall(require, "winapi")
+      if win and pcall(require, "winapi")
       and wfilename:FileExists() and not fh then
         winapi.set_encoding(winapi.CP_UTF8)
         filepath = winapi.short_path(filepath)
@@ -75,8 +75,7 @@ local qluaInterpreter = {
     local code = ([[xpcall(function() io.stdout:setvbuf('no'); %s end,function(err) print(debug.traceback(err)) end)]]):format(script)
     local cmd = '"'..qlua..'" -e "'..code..'"'
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false,nil,nil,
-      function() ide.debugger.pid = nil end)
+    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
@@ -111,10 +110,11 @@ local torchInterpreter = {
       end
     end
 
-    -- make minor modifications to the cpath to take care of OSX
     -- make sure the root is using Torch exe location
-    local torchroot = GetPathWithSep(torch).. '../'
-    local luapath =      ''
+    -- for non-exe configurations, it's allowed to pass Torch path
+    local uselua = wx.wxDirExists(torch)
+    local torchroot = uselua and torch or GetPathWithSep(torch).. '../'
+    local luapath = ''
     luapath = luapath .. torchroot .. "share/lua/5.1/?.lua;"
     luapath = luapath .. torchroot .. "share/lua/5.1/?/init.lua;"
     local _, path = wx.wxGetEnv("LUA_PATH")
@@ -134,25 +134,37 @@ local torchInterpreter = {
     local script
     if rundebug then
       DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
-      script = rundebug
+      -- update arg to point to the proper file
+      rundebug = ('if arg then arg[0] = [[%s]] end '):format(filepath)..rundebug
+
+      local tmpfile = wx.wxFileName()
+      tmpfile:AssignTempFileName(".")
+      filepath = tmpfile:GetFullPath()
+      local f = io.open(filepath, "w")
+      if not f then
+        DisplayOutputLn("Can't open temporary file '"..filepath.."' for writing.")
+        return
+      end
+      f:write(rundebug)
+      f:close()
     else
       -- if running on Windows and can't open the file, this may mean that
       -- the file path includes unicode characters that need special handling
       local fh = io.open(filepath, "r")
       if fh then fh:close() end
-      script = ('dofile [[%s]]'):format(filepath)
+      if win and pcall(require, "winapi")
+      and wfilename:FileExists() and not fh then
+        winapi.set_encoding(winapi.CP_UTF8)
+        filepath = winapi.short_path(filepath)
+      end
     end
     
-    -- local code = ([[xpcall(function() io.stdout:setvbuf('no'); %s end,function(err) print(debug.traceback(err)) end)]]):format(script)
-    -- local cmd = '"'..torch..'" -e "'..code..'"'
     local params = ide.config.arg.any or ide.config.arg.lua or ''
-    local cmd = 'bash -c "cd $(dirname ' .. filepath .. ') && ' .. torch .. ' ' .. filepath .. ' ' .. params .. '"'
-    if ide.osname == "Windows" then
-      cmd = 'cmd /c "cd ' .. filepath .. '/../ && ' .. torch .. ' ' .. filepath .. ' ' .. params .. '"'
-    end
+    cmd = ('"%s" "%s" %s'):format(
+      uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
     return CommandLineRun(cmd,self:fworkdir(wfilename),true,false,nil,nil,
-      function() ide.debugger.pid = nil end)
+      function() if rundebug then wx.wxRemoveFile(filepath) end end)
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
@@ -163,7 +175,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
   dependencies = 1.10,
 
   onRegister = function(self)
