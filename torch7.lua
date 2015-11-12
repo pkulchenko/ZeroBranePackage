@@ -1,4 +1,13 @@
 local win = ide.osname == 'Windows'
+
+local debinit = [[
+local mdb = require('mobdebug')
+local line = mdb.line
+mdb.line = function(...)
+  local r = line(...)
+  return type(r) == 'string' and loadstring("return "..r)() or r
+end]]
+
 local qlua
 local qluaInterpreter = {
   name = "QLua-LuaJIT",
@@ -48,10 +57,7 @@ local qluaInterpreter = {
     local filepath = wfilename:GetFullPath()
     local script
     if rundebug then
-       -- make minor modifications to the cpath to take care of OSX 64-bit
-       -- as ZBS is shipped with 32-bit socket libs
-       local _,pwd = wx.wxGetEnv('PWD')
-      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true})
+      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
       script = rundebug
     else
       -- if running on Windows and can't open the file, this may mean that
@@ -127,10 +133,7 @@ local torchInterpreter = {
     local filepath = wfilename:GetFullPath()
     local script
     if rundebug then
-       -- make minor modifications to the cpath to take care of OSX 64-bit
-       -- as ZBS is shipped with 32-bit socket libs
-       local _,pwd = wx.wxGetEnv('PWD')
-      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true})
+      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
       script = rundebug
     else
       -- if running on Windows and can't open the file, this may mean that
@@ -160,7 +163,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
   dependencies = 1.10,
 
   onRegister = function(self)
