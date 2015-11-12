@@ -37,23 +37,22 @@ local qluaInterpreter = {
 
     -- make minor modifications to the cpath to take care of OSX
     -- make sure the root is using Torch exe location
-    local torchroot = GetPathWithSep(qlua).. '../'
-    local luapath =      ''
-    luapath = luapath .. torchroot .. "share/lua/5.1/?.lua;"
-    luapath = luapath .. torchroot .. "share/lua/5.1/?/init.lua;"
-    local _, path = wx.wxGetEnv("LUA_PATH")
-    if path then
-       wx.wxSetEnv("LUA_PATH", luapath..";"..path)
+    local torchroot = MergeFullPath(GetPathWithSep(qlua), "../")
+    local tluapath = ''
+    for _, val in pairs({"share/lua/5.1/?.lua", "share/lua/5.1/?/init.lua", "./?.lua", "./?/init.lua"}) do
+      tluapath = tluapath .. MergeFullPath(torchroot, val) .. ";"
     end
-    local luacpath = ''
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/?.so;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/?.dylib;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/loadall.so;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/loadall.dylib;"
-    local _, cpath = wx.wxGetEnv("LUA_CPATH")
-    if cpath then
-       wx.wxSetEnv("LUA_CPATH", luacpath..";"..cpath)
+    local _, luapath = wx.wxGetEnv("LUA_PATH")
+    wx.wxSetEnv("LUA_PATH", tluapath..(#luapath > 0 and luapath or ""))
+
+    local ext = win and 'dll' or ide.osname == 'Macintosh' and 'dylib' or 'so'
+    local tluacpath = ''
+    for _, val in pairs({"lib/lua/5.1/?."..ext, "lib/lua/5.1/loadall."..ext, "?."..ext}) do
+      tluacpath = tluacpath .. MergeFullPath(torchroot, val) .. ";"
     end
+    local _, luacpath = wx.wxGetEnv("LUA_CPATH")
+    wx.wxSetEnv("LUA_CPATH", tluacpath..(#luacpath > 0 and luacpath or ""))
+
     local filepath = wfilename:GetFullPath()
     local script
     if rundebug then
@@ -75,7 +74,14 @@ local qluaInterpreter = {
     local code = ([[xpcall(function() io.stdout:setvbuf('no'); %s end,function(err) print(debug.traceback(err)) end)]]):format(script)
     local cmd = '"'..qlua..'" -e "'..code..'"'
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
+    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
+
+    for env, val in ipairs({LUA_PATH = luapath, LUA_CPATH = luacpath}) do
+      if val then
+        if #val > 0 then wx.wxSetEnv(env, val) else wx.wxUnsetEnv(env) end
+      end
+    end
+    return pid
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
@@ -88,10 +94,10 @@ local torchInterpreter = {
   description = "Torch machine learning package",
   api = {"baselib", "torch"},
   frun = function(self,wfilename,rundebug)
+    local sep = win and ';' or ':'
     torch = torch or ide.config.path.torch -- check if the path is configured
-    -- Go search for torch
+    -- go search for torch
     if not torch then
-      local sep = win and ';' or ':'
       local default = ''
       local path = default
                  ..(os.getenv('PATH') or '')..sep
@@ -110,28 +116,7 @@ local torchInterpreter = {
       end
     end
 
-    -- make sure the root is using Torch exe location
-    -- for non-exe configurations, it's allowed to pass Torch path
-    local uselua = wx.wxDirExists(torch)
-    local torchroot = uselua and torch or GetPathWithSep(torch).. '../'
-    local luapath = ''
-    luapath = luapath .. torchroot .. "share/lua/5.1/?.lua;"
-    luapath = luapath .. torchroot .. "share/lua/5.1/?/init.lua;"
-    local _, path = wx.wxGetEnv("LUA_PATH")
-    if path then
-       wx.wxSetEnv("LUA_PATH", luapath..";"..path)
-    end
-    local luacpath = ''
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/?.so;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/?.dylib;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/loadall.so;"
-    luacpath = luacpath .. torchroot .. "lib/lua/5.1/loadall.dylib;"
-    local _, cpath = wx.wxGetEnv("LUA_CPATH")
-    if cpath then
-       wx.wxSetEnv("LUA_CPATH", luacpath..";"..cpath)
-    end
     local filepath = wfilename:GetFullPath()
-    local script
     if rundebug then
       DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
       -- update arg to point to the proper file
@@ -158,13 +143,42 @@ local torchInterpreter = {
         filepath = winapi.short_path(filepath)
       end
     end
-    
+
+    -- make sure the root is using Torch exe location
+    -- for non-exe configurations, it's allowed to pass Torch path
+    local uselua = wx.wxDirExists(torch)
+    local torchroot = uselua and torch or MergeFullPath(GetPathWithSep(torch), "../")
+    local tluapath = ''
+    for _, val in pairs({"share/lua/5.1/?.lua", "share/lua/5.1/?/init.lua", "./?.lua", "./?/init.lua"}) do
+      tluapath = tluapath .. MergeFullPath(torchroot, val) .. ";"
+    end
+    local _, luapath = wx.wxGetEnv("LUA_PATH")
+    wx.wxSetEnv("LUA_PATH", tluapath..(#luapath > 0 and luapath or ""))
+
+    local ext = win and 'dll' or ide.osname == 'Macintosh' and 'dylib' or 'so'
+    local tluacpath = ''
+    for _, val in pairs({"lib/lua/5.1/?."..ext, "lib/lua/5.1/loadall."..ext, "?."..ext}) do
+      tluacpath = tluacpath .. MergeFullPath(torchroot, val) .. ";"
+    end
+    local _, luacpath = wx.wxGetEnv("LUA_CPATH")
+    wx.wxSetEnv("LUA_CPATH", tluacpath..(#luacpath > 0 and luacpath or ""))
+
+    local _, path = wx.wxGetEnv("PATH")
+    wx.wxSetEnv("PATH", torchroot..(#path > 0 and sep..path or ""))
+
     local params = ide.config.arg.any or ide.config.arg.lua or ''
-    cmd = ('"%s" "%s" %s'):format(
+    local cmd = ('"%s" "%s" %s'):format(
       uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false,nil,nil,
+    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false,nil,nil,
       function() if rundebug then wx.wxRemoveFile(filepath) end end)
+
+    for env, val in ipairs({LUA_PATH = luapath, LUA_CPATH = luacpath, PATH = path}) do
+      if val then
+        if #val > 0 then wx.wxSetEnv(env, val) else wx.wxUnsetEnv(env) end
+      end
+    end
+    return pid
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
@@ -175,7 +189,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.3,
+  version = 0.4,
   dependencies = 1.10,
 
   onRegister = function(self)
