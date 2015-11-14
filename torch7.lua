@@ -9,6 +9,16 @@ mdb.line = function(...)
   return type(r) == 'string' and loadstring("return "..r)() or r
 end]]
 
+local function fixBS(s) -- string callback to eliminate backspaces from Torch output
+  while s:find("\b") do
+    s = s
+      :gsub("[^\b\r\n]\b","") -- remove a backspace and a previous character
+      :gsub("^\b+","") -- remove all leading backspaces (if any)
+      :gsub("([\r\n])\b+","%1") -- remove a backspace and a previous character
+  end
+  return s
+end
+
 local function setEnv(torchroot, usepackage)
   local tluapath = ''
   for _, val in pairs({"share/lua/5.1/?.lua", "share/lua/5.1/?/init.lua", "./?.lua", "./?/init.lua"}) do
@@ -101,7 +111,7 @@ local qluaInterpreter = {
     local code = ([[xpcall(function() io.stdout:setvbuf('no'); %s end,function(err) print(debug.traceback(err)) end)]]):format(script)
     local cmd = '"'..qlua..'" -e "'..code..'"'
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
+    local pid = CommandLineRun(cmd,self:fworkdir(wfilename),true,false,fixBS)
     unsetEnv(env)
     return pid
   end,
@@ -158,20 +168,8 @@ local torchInterpreter = {
     local cmd = ([["%s" "%s" %s]]):format(
       uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false,
-      function(s) -- provide string callback to eliminate backspaces from Torch output
-        while s:find("\b") do
-          s = s
-            :gsub("[^\b\r\n]\b","") -- remove a backspace and a previous character
-            :gsub("^\b+","") -- remove all leading backspaces (if any)
-            :gsub("([\r\n])\b+","%1") -- remove a backspace and a previous character
-        end
-        return s
-      end, nil,
-      function()
-        if rundebug then wx.wxRemoveFile(filepath) end
-      end
-    )
+    return CommandLineRun(cmd,self:fworkdir(wfilename),true,false,fixBS,nil,
+      function() if rundebug then wx.wxRemoveFile(filepath) end end)
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
@@ -182,7 +180,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.48,
+  version = 0.49,
   dependencies = 1.10,
 
   onRegister = function(self)
