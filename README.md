@@ -18,7 +18,7 @@ One of the fields in the plugin description is `dependencies` that may have as i
 (1) a table with various dependencies or (2) a minumum version number of ZeroBrane Studio required to run the plugin.
 
 If the version number for ZeroBrane Studio is **larger than the most recent released version** (for example, the current release version is 0.50, but the plugin has a dependency on 0.51),
-this means that it requires a development version currently being working on (which will become the next release version).
+this means that it requires a development version currently being worked on (which will become the next release version).
 
 ## Author
 
