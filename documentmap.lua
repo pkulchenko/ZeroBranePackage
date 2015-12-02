@@ -3,7 +3,7 @@
 local mappanel = "documentmappanel"
 local markers = {CURRENT = "docmap.current", BACKGROUND = "docmap.background"}
 local editormap, editorlinked, docpointer
-local id, menuid
+local id
 local win = ide.osname == 'Windows'
 local needupdate
 local colors = { -- default values if no style colors are set
@@ -85,8 +85,8 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.24,
-  dependencies = 0.71,
+  version = 0.25,
+  dependencies = 0.90,
 
   onRegister = function(self)
     local e = wxstc.wxStyledTextCtrl(ide:GetMainFrame(), wx.wxID_ANY,
@@ -184,7 +184,7 @@ return {
 
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
     id = ID("documentmap.documentmapview")
-    menuid = menu:InsertCheckItem(4, id, TR("Document Map Window")..KSC(id))
+    menu:InsertCheckItem(4, id, TR("Document Map Window")..KSC(id))
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function (event)
         local uimgr = ide:GetUIManager()
         uimgr:GetPane(mappanel):Show(not uimgr:GetPane(mappanel):IsShown())
@@ -199,10 +199,9 @@ return {
 
   onUnRegister = function(self)
     switchEditor()
-
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxID_ANY)
-    if menuid then menu:Destroy(menuid) end
+    ide:RemoveMenuItem(id)
+    -- `RemovePanel` is available in 1.21+, so check if it is present
+    if ide.RemovePanel then ide:RemovePanel(mappanel) end
   end,
 
   onEditorFocusSet = function(self, editor)
