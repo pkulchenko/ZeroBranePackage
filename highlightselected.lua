@@ -6,14 +6,14 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.12,
+  version = 0.13,
   dependencies = 1.11,
 
   onRegister = function() ide:AddIndicator(indicname) end,
   onUnRegister = function() ide:RemoveIndicator(indicname) end,
 
   onEditorUpdateUI = function(self, editor, event)
-    if event:GetUpdated() == wxstc.wxSTC_UPDATE_SELECTION then updateneeded = editor end
+    if bit.band(event:GetUpdated(), wxstc.wxSTC_UPDATE_SELECTION) > 0 then updateneeded = editor end
   end,
 
   onIdle = function(self)
