@@ -1361,6 +1361,7 @@ redis.commands.ldbabort = redis.command('A')
 redis.commands.ldbprint = redis.command('P')
 redis.commands.ldbeval = redis.command('E')
 redis.commands.ldbtrace = redis.command('T')
+redis.commands.ldbredis = redis.command('R')
 
 -- connect to redis instance
 local client = redis.connect({host = host, port = port, timeout = 0.5})
@@ -1452,14 +1453,28 @@ while true do
     if chunk then
       local func, res = loadstring(chunk)
       if not func then
-        chunk = "return "..chunk
-        func = loadstring(chunk)
+        local chunkr = "return "..chunk
+        func = loadstring(chunkr)
+        if func then chunk = chunkr end
       end
       if func then
         -- evaluation is done in a different environment, so capture local variables
         -- to use in the chunk evaluation to make their values available
         local preamble = getlocals(client:ldbprint())
         local res = client:ldbeval(preamble..chunk)
+        local err = geterror(res)
+        if err then
+          server:send("401 Error in Expression " .. tostring(#err) .. "\n")
+          server:send(err)
+        else
+          res = getretval(res)
+          server:send("200 OK " .. tostring(#res) .. "\n")
+          server:send(res)
+        end
+      elseif chunk:find("^[A-Z][A-Z]+%s") then
+        local cmd = {}
+        for v in chunk:gmatch("(%S+)") do table.insert(cmd, v) end
+        local res = client:ldbredis(unpack(cmd))
         local err = geterror(res)
         if err then
           server:send("401 Error in Expression " .. tostring(#err) .. "\n")
