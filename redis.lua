@@ -298,13 +298,13 @@ end
 
 function network.write(client, buffer)
     local _, err = client.network.socket:send(buffer)
-    if err then client.error(err) end
+    if err then return client.error(err) end
 end
 
 function network.read(client, len)
     if len == nil then len = '*l' end
     local line, err = client.network.socket:receive(len)
-    if not err then return line else client.error('connection error: ' .. err) end
+    if not err then return line else return client.error('connection error: ' .. err) end
 end
 
 -- ############################################################################
@@ -335,7 +335,7 @@ function response.read(client)
             if data == 'nil' then
                 return nil
             end
-            client.error('cannot parse ' .. data .. ' as a numeric response.')
+            return client.error('cannot parse ' .. data .. ' as a numeric response.')
         end
 
         return number
@@ -345,7 +345,7 @@ function response.read(client)
         local length = tonumber(data)
 
         if not length then
-            client.error('cannot parse ' .. length .. ' as data length')
+            return client.error('cannot parse ' .. length .. ' as data length')
         end
 
         if length == -1 then
@@ -420,11 +420,13 @@ local function custom(command, send, parse)
     command = string.upper(command)
     return function(client, ...)
         send(client, command, ...)
-        local reply = response.read(client)
+        local reply, err = response.read(client)
 
         if type(reply) == 'table' and reply.queued then
             reply.parser = parse
             return reply
+        elseif reply == nil then
+            return reply, err
         else
             if parse then
                 return parse(reply, command, ...)
@@ -520,7 +522,7 @@ client_prototype.pipeline = function(client, block)
     local success, retval = pcall(block, pipeline)
 
     client.network.write, client.network.read = socket_write, socket_read
-    if not success then client.error(retval, 0) end
+    if not success then return client.error(retval, 0) end
 
     client.network.write(client, table.concat(requests, ''))
 
@@ -639,7 +641,7 @@ do
 
         local transaction_client = setmetatable({}, {__index=client})
         transaction_client.exec  = function(...)
-            client.error('cannot use EXEC inside a transaction block')
+            return client.error('cannot use EXEC inside a transaction block')
         end
         transaction_client.multi = function(...)
             coroutine.yield()
@@ -660,7 +662,7 @@ do
             return reply
         end
         transaction_client.watch = function(...)
-            client.error('WATCH inside MULTI is not allowed')
+            return client.error('WATCH inside MULTI is not allowed')
         end
         setmetatable(transaction_client, { __index = function(t, k)
                 local cmd = client[k]
@@ -703,7 +705,7 @@ do
         local raw_replies = client:exec()
         if not raw_replies then
             if (retry or 0) <= 0 then
-                client.error("MULTI/EXEC transaction aborted by the server")
+                return client.error("MULTI/EXEC transaction aborted by the server")
             else
                 --we're not quite done yet
                 return transaction(client, options, coroutine_block, retry - 1)
@@ -725,7 +727,7 @@ do
         elseif arg1 then --and arg2, implicitly
             options, block = type(arg1)=="table" and arg1 or { arg1 }, arg2
         else
-            client.error("Invalid parameters for redis transaction.")
+            return client.error("Invalid parameters for redis transaction.")
         end
 
         if not options.watch then
@@ -785,7 +787,7 @@ do
                 end)
 
                 if not matched then
-                    client.error('Unable to match MONITOR payload: '..response)
+                    return client.error('Unable to match MONITOR payload: '..response)
                 end
 
                 coroutine.yield(message, abort)
@@ -1201,15 +1203,29 @@ redis.commands = {
 return redis -- redis-lua module end -------------------------------------------
 end)()
 
-local function isinstance(host, port)
+local function isinstance(host, port, password)
   local ok, res = pcall(redis.connect, {host = host, port = port, timeout = 0.5})
   if not ok then return nil, res:match('%[.+%]') end
-  res:quit()
-  return true
+
+  -- check if the instance is password protected
+  local client = res
+  local ok, res = pcall(client.ping, client)
+  if not ok and res:find("NOAUTH")
+  and (not password or not pcall(client.auth, client, password)) then
+    while true do
+      password = password or wx.wxGetTextFromUser("Enter Redis password", "Redis authentication")
+      if not password or password == "" then return end
+      if pcall(client.auth, client, password) then break end
+      password = nil
+    end
+  end
+
+  client:quit()
+  return true, password
 end
 
 local pkg
-local address
+local address, password
 local interpreter = {
   name = "Redis",
   description = "Redis interpreter",
@@ -1233,32 +1249,36 @@ local interpreter = {
     local defaddress = pkg:GetSettings().address or "localhost:6379"
     while true do
       defaddress = address or wx.wxGetTextFromUser(
-        "Enter Redis instance address (host:port)", "Configuration", defaddress)
-      if not defaddress or #defaddress == 0 then return end
+        "Enter Redis instance address (host:port)", "Redis configuration", defaddress)
+      if not defaddress or defaddress == "" then return end
       local host, port = defaddress:match("^%s*(.+):(%d+)%s*$")
       if not host or not port then
         DisplayOutputLn(("Can't get host name and port number from address '%s'."):format(defaddress))
       else
-        local ok, err = isinstance(host, port)
+        local ok, err = isinstance(host, port, password)
         if ok then
-          address = defaddress
+          address, password = defaddress, err
           pkg:SetSettings({address = address})
           break
-        else
+        elseif err then
           DisplayOutputLn(("Can't connect to address '%s': %s."):format(defaddress, err))
           address = nil
+        else -- cancelled authentication
+          return
         end
       end
     end
+
     if rundebug then DebuggerAttachDefault() end
     local redis = " --redis "..address
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
     local rundebug = " --debug " .. (rundebug and "yes" or "no")
+    local pswd = password and " --password " .. password or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
     local exe = ide:GetInterpreters().luadeb:GetExePath("")
-    local cmd = ('"%s" "%s"%s%s%s "%s"%s'):format(
-      exe, pkg:GetFilePath(), redis, controller, rundebug, filepath, params and " "..params or "")
+    local cmd = ('"%s" "%s"%s%s%s%s "%s"%s'):format(
+      exe, pkg:GetFilePath(), redis, controller, rundebug, pswd, filepath, params and " "..params or "")
 
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
     return CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
@@ -1274,7 +1294,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.10,
+  version = 0.12,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1293,7 +1313,7 @@ if pcall(debug.getlocal, 4, 1) then return package end
 io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
-local controller, instance, rundebug, params = "localhost:8172", "localhost:6379"
+local controller, instance, rundebug, password, params = "localhost:8172", "localhost:6379"
 while #arg > 0 do
   local a = table.remove(arg, 1)
   if a == "--redis" then
@@ -1302,29 +1322,45 @@ while #arg > 0 do
     controller = table.remove(arg, 1)
   elseif a == "--debug" then
     rundebug = table.remove(arg, 1)
+  elseif a == "--password" then
+    password = table.remove(arg, 1)
   else
     file, params, arg = a, arg, {}
   end
 end
 
-local function report(msg) print(msg); os.exit(1) end
+local function check(cond, msg, ...)
+  if cond or msg == nil then return cond, msg, ... end
+  print(msg)
+  os.exit(1)
+end
 
 -- read the script
 local fh, err = io.open(file, "rb")
-if not fh then report(("Can't open file '%s' for reading: %s"):format(file, err)) end
+check(fh, ("Can't open file '%s' for reading: %s"):format(file, err))
 local code = fh:read("*a")
 fh:close()
 
 local function getline(response) return type(response) == 'table' and response[1] and response[1]:match("* Stopped at (%d+)") end
-local function getretval(response)
+local function getval(response, keyword, format)
   if type(response) ~= 'table' then return end
   local res = {}
-  for _, v in ipairs(response) do table.insert(res, ("%q"):format(v:gsub("<retval> ",""))) end
-  return "return {"..table.concat(res, ",").."}"
+  for _, v in ipairs(response) do
+    if v:find("^"..keyword) then
+      table.insert(res, (format or "%q"):format(v:gsub(keyword.." ","")))
+    end
+  end
+  return res
+end
+local function getretval(response)
+  return "return {"..table.concat(getval(response, "<retval>"), ",").."}"
+end
+local function getreply(response)
+  return "return {"..table.concat(getval(response, "<reply>", "%s"), ",").."}"
 end
 local function geterror(response)
-  return type(response) == 'string' and response:find("^ERR ") and response:gsub("^ERR ","")
-      or type(response) == 'table' and response[1] and response[1]:find("^<error> ") and response[1]:gsub("^<error> ","")
+  local err = getval(type(response) == 'table' and response or {response}, "<error>")
+  return err and #err > 0 and err[1] or nil
 end
 local function isdone(response) return type(response) == 'table' and response[1] and response[1] == "<endsession>" end
 local function isfilesame(fullname, fname, basedir)
@@ -1351,7 +1387,7 @@ end
 
 -- get redis instance host:port
 local host, port = instance:match("^%s*(.+):(%d+)%s*$")
-if not host and port then report(("Unknown Redis instance address format '%s'; expected host:port."):format(instance)) end
+check(host and port, ("Unknown Redis instance address format '%s'; expected host:port."):format(instance))
 
 -- register Redis debugger commands
 redis.commands.ldbcontinue = redis.command('C')
@@ -1365,12 +1401,22 @@ redis.commands.ldbredis = redis.command('R')
 
 -- connect to redis instance
 local client = redis.connect({host = host, port = port, timeout = 0.5})
-client.error = function(error) print((error:gsub(".+ERR ",""))); os.exit(1) end
+client.error = function(error) return nil, (error:gsub(".+ERR ","")) end
+
+-- authenticate if password is provided
+local msg, err = client:ping()
+if not msg and err:find("NOAUTH") then
+  check(password, "Authentication is required, but no password is provided to authenticate.")
+  check(client:auth(password), "Can't autheticate with the provided password.")
+end
+
 -- start debugging
-client:raw_cmd("SCRIPT DEBUG "..rundebug)
--- load the script to debug
-local response = client:eval(code, #params, unpack(params))
-if geterror(response) then report(response) end
+msg, err = check(client:raw_cmd("SCRIPT DEBUG "..rundebug))
+
+-- load the script to debug; check for any reported errors
+msg, err = check(client:eval(code, #params, unpack(params)))
+if msg and isdone(msg) then msg, err = check(client:ping()) end
+
 -- if no debugging is requested, nothing else is needed to be done
 if not rundebug or rundebug == "no" then
   client:quit()
@@ -1379,15 +1425,15 @@ end
 
 -- connect to the debugger
 local server, err = socket.tcp()
-if not server then report(("Can't open socket: %s"):format(err)) end
+check(server, ("Can't open socket: %s"):format(err))
 
 host, port = controller:match("^%s*(.+):(%d+)%s*$")
-if not host and port then report(("Unknown debugger address format '%s'; expected host:port."):format(controller)) end
+check(host and port, ("Unknown debugger address format '%s'; expected host:port."):format(controller))
 
 if server.settimeout then server:settimeout(2) end
 local ok, err = server:connect(host, port)
 if server.settimeout then server:settimeout() end
-if not ok then report(("Can't connect to the debugger at '%s': %s"):format(controller, err)) end
+check(ok, ("Can't connect to the debugger at '%s': %s"):format(controller, err))
 
 -- main debugger loop
 local basedir
@@ -1417,41 +1463,43 @@ while true do
     size = tonumber(size)
 
     if size > 0 then server:receive(size) end
-    server:send("201 Started " .. file .. " " .. getline(response) .. "\n")
+    server:send("201 Started " .. file .. " " .. getline(msg) .. "\n")
   elseif command == "RUN" then
     server:send("200 OK\n")
-    local res = client:ldbcontinue()
-    local done = isdone(res)
+    local msg, err = client:ldbcontinue()
+    local done = isdone(msg)
     -- if the session is done, need to read the error value (if any)
-    if done then res = client:ping() end
-    if geterror(res) then
-      server:send("401 Error in Execution " .. tostring(#res) .. "\n")
-      server:send(res)
-    elseif done then
+    if done then msg, err = client:ping() end
+    if err then
+      server:send("401 Error in Execution " .. tostring(#err) .. "\n")
+      server:send(err)
+    elseif not done then
+      server:send("202 Paused " .. file .. " " .. getline(msg) .. "\n")
+    end
+    if done then
       client:quit()
       break
-    else
-      server:send("202 Paused " .. file .. " " .. getline(res) .. "\n")
     end
   elseif command == "STEP" or command == "OVER" or command == "OUT" then
     server:send("200 OK\n")
-    local res = client:ldbstep()
-    local done = isdone(res)
+    local msg, err = client:ldbstep()
+    local done = isdone(msg)
     -- if the session is done, need to read the error value (if any)
-    if done then res = client:ping() end
-    if geterror(res) then
-      server:send("401 Error in Execution " .. tostring(#res) .. "\n")
-      server:send(res)
-    elseif isdone(res) then
+    if done then msg, err = client:ping() end
+    if err then
+      server:send("401 Error in Execution " .. tostring(#err) .. "\n")
+      server:send(err)
+    elseif not done then
+      server:send("202 Paused " .. file .. " " .. getline(msg) .. "\n")
+    end
+    if done then
       client:quit()
       break
-    else
-      server:send("202 Paused " .. file .. " " .. getline(res) .. "\n")
     end
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
     if chunk then
-      local func, res = loadstring(chunk)
+      local func, err = loadstring(chunk)
       if not func then
         local chunkr = "return "..chunk
         func = loadstring(chunkr)
@@ -1461,45 +1509,44 @@ while true do
         -- evaluation is done in a different environment, so capture local variables
         -- to use in the chunk evaluation to make their values available
         local preamble = getlocals(client:ldbprint())
-        local res = client:ldbeval(preamble..chunk)
-        local err = geterror(res)
-        if err then
+        local msg, err = client:ldbeval(preamble..chunk)
+        -- if there is an error, try without preamble, as it has a better error message
+        if msg and geterror(msg) then msg, err = client:ldbeval(chunk) end
+        if msg and geterror(msg) then msg, err = nil, geterror(msg) end
+        if msg then
+          -- if the chunk starts from "return" or looks like an expression, then return the result
+          -- otherwise don't return any values to avoid showing `nil` after statements.
+          msg = (chunk:find("^return ") or loadstring("return "..chunk)) and getretval(msg) or "return {}"
+          server:send("200 OK " .. tostring(#msg) .. "\n")
+          server:send(msg)
+        else
           server:send("401 Error in Expression " .. tostring(#err) .. "\n")
           server:send(err)
-        else
-          res = getretval(res)
-          server:send("200 OK " .. tostring(#res) .. "\n")
-          server:send(res)
         end
       elseif chunk:find("^[A-Z][A-Z]+%s") then
         local cmd = {}
         for v in chunk:gmatch("(%S+)") do table.insert(cmd, v) end
-        local res = client:ldbredis(unpack(cmd))
-        local err = geterror(res)
-        if err then
+        local msg, err = client:ldbredis(unpack(cmd))
+        if msg and geterror(msg) then msg, err = nil, geterror(msg) end
+        if msg then
+          msg = getreply(msg)
+          server:send("200 OK " .. tostring(#msg) .. "\n")
+          server:send(msg)
+        else
           server:send("401 Error in Expression " .. tostring(#err) .. "\n")
           server:send(err)
-        else
-          res = getretval(res)
-          server:send("200 OK " .. tostring(#res) .. "\n")
-          server:send(res)
         end
       else
-        server:send("401 Error in Expression " .. tostring(#res) .. "\n")
-        server:send(res)
+        server:send("401 Error in Expression " .. tostring(#err) .. "\n")
+        server:send(err)
       end
     else
       server:send("400 Bad Request\n")
     end
   elseif command == "STACK" then
     -- get stack information and repackage it in the expected format
-    local ok, res = true, "return {}"
-    if ok then
-      server:send("200 OK " .. tostring(res) .. "\n")
-    else
-      server:send("401 Error in Execution " .. tostring(#res) .. "\n")
-      server:send(res)
-    end
+    local msg = "return {}"
+    server:send("200 OK " .. tostring(msg) .. "\n")
   elseif command == "DONE" then
     client:ldbbreakpoint(0) -- remove all breakpoints
     client:ldbcontinue() -- continue with the script
