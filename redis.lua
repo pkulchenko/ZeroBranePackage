@@ -1413,8 +1413,17 @@ end
 -- start debugging
 msg, err = check(client:raw_cmd("SCRIPT DEBUG "..rundebug))
 
+-- split passed parameters into KEYS and ARGV (separated by ',')
+local keys = #params
+for n, v in ipairs(params) do
+  if v == ',' then
+    keys = n - 1
+    table.remove(params, n)
+    break
+  end
+end
 -- load the script to debug; check for any reported errors
-msg, err = check(client:eval(code, #params, unpack(params)))
+msg, err = check(client:eval(code, keys, unpack(params)))
 if msg and isdone(msg) then msg, err = check(client:ping()) end
 
 -- if no debugging is requested, nothing else is needed to be done
