@@ -1270,10 +1270,10 @@ local interpreter = {
     end
 
     if rundebug then DebuggerAttachDefault() end
-    local redis = " --redis "..address
+    local redis = " --instance "..address
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
     local rundebug = " --debug " .. (rundebug and (pkg:GetConfig().debugmode or "yes") or "no")
-    local pswd = password and " --password " .. password or ""
+    local pswd = password and (' --password %q'):format(password) or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
     local exe = ide:GetInterpreters().luadeb:GetExePath("")
@@ -1316,7 +1316,7 @@ local unpack = unpack or table.unpack
 local controller, instance, rundebug, password, params = "localhost:8172", "localhost:6379"
 while #arg > 0 do
   local a = table.remove(arg, 1)
-  if a == "--redis" then
+  if a == "--instance" then
     instance = table.remove(arg, 1)
   elseif a == "--controller" then
     controller = table.remove(arg, 1)
@@ -1362,7 +1362,7 @@ local function geterror(response)
   local err = getval(type(response) == 'table' and response or {response}, "<error>")
   return err and #err > 0 and err[1] or nil
 end
-local function isdone(response) return type(response) == 'table' and response[1] and response[1] == "<endsession>" end
+local function isdone(response) return #getval(response, "<endsession>") > 0 end
 local function isfilesame(fullname, fname, basedir)
   local sep = "/"
   fullname = fullname:gsub("[\\/]", sep)
