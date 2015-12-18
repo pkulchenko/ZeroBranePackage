@@ -1472,7 +1472,7 @@ while true do
     size = tonumber(size)
 
     if size > 0 then server:receive(size) end
-    server:send("201 Started " .. file .. " " .. getline(msg) .. "\n")
+    server:send("201 Started " .. file .. " " .. (getline(msg) or 1) .. "\n")
   elseif command == "RUN" then
     server:send("200 OK\n")
     local msg, err = client:ldbcontinue()
@@ -1483,7 +1483,7 @@ while true do
       server:send("401 Error in Execution " .. tostring(#err) .. "\n")
       server:send(err)
     elseif not done then
-      server:send("202 Paused " .. file .. " " .. getline(msg) .. "\n")
+      server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
     end
     if done then
       client:quit()
@@ -1492,6 +1492,9 @@ while true do
   elseif command == "STEP" or command == "OVER" or command == "OUT" then
     server:send("200 OK\n")
     local msg, err = client:ldbstep()
+
+    -- check if this is the last step stopped at "out of range" position; do one more step
+    if msg and #getval(msg, "->%s+%d+%s+<out of range") > 0 then msg, err = client:ldbstep() end
     local done = isdone(msg)
     -- if the session is done, need to read the error value (if any)
     if done then msg, err = client:ping() end
@@ -1499,7 +1502,7 @@ while true do
       server:send("401 Error in Execution " .. tostring(#err) .. "\n")
       server:send(err)
     elseif not done then
-      server:send("202 Paused " .. file .. " " .. getline(msg) .. "\n")
+      server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
     end
     if done then
       client:quit()
