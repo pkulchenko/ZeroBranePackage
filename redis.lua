@@ -1272,7 +1272,7 @@ local interpreter = {
     if rundebug then DebuggerAttachDefault() end
     local redis = " --redis "..address
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
-    local rundebug = " --debug " .. (rundebug and "yes" or "no")
+    local rundebug = " --debug " .. (rundebug and (pkg:GetConfig().debugmode or "yes") or "no")
     local pswd = password and " --password " .. password or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
@@ -1561,3 +1561,7 @@ while true do
     server:send("400 Bad Request\n")
   end
 end
+
+--[[ configuration example:
+redis = {debugmode = "sync"} -- the default debug mode is "yes"
+--]]
