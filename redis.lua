@@ -1476,7 +1476,7 @@ local function isinstance(host, port, password)
 
   -- check if the instance is password protected
   local client = res
-  local ok, res = pcall(client.ping, client)
+  ok, res = pcall(client.ping, client)
   if not ok and res:find("NOAUTH")
   and (not password or not pcall(client.auth, client, password)) then
     while true do
@@ -1582,7 +1582,8 @@ if pcall(debug.getlocal, 4, 1) then return package end
 io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
-local controller, instance, rundebug, password, params = "localhost:8172", "localhost:6379"
+local controller, instance = "localhost:8172", "localhost:6379"
+local rundebug, password, params, file
 while #arg > 0 do
   local a = table.remove(arg, 1)
   if a == "--instance" then
@@ -1603,6 +1604,8 @@ local function check(cond, msg, ...)
   print(msg)
   os.exit(1)
 end
+
+check(file, "Required file name is not provided")
 
 -- read the script
 local fh, err = io.open(file, "rb")
@@ -1716,7 +1719,7 @@ check(ok, ("Can't connect to the debugger at '%s': %s"):format(controller, err))
 -- main debugger loop
 local basedir
 while true do
-  local line, err = server:receive()
+  local line = check(server:receive())
   local command = string.sub(line, string.find(line, "^[A-Z]+"))
   if command == "SETB" or command == "DELB" then
     local _, _, _, lfile, line = string.find(line, "^([A-Z]+)%s+(.-)%s+(%d+)%s*$")
@@ -1737,7 +1740,7 @@ while true do
       server:send("400 Bad Request\n")
     end
   elseif command == "LOAD" then
-    local _, _, size, name = string.find(line, "^[A-Z]+%s+(%d+)%s+(%S.-)%s*$")
+    local _, _, size = string.find(line, "^[A-Z]+%s+(%d+)%s+(%S.-)%s*$")
     size = tonumber(size)
 
     if size > 0 then server:receive(size) end
