@@ -1812,7 +1812,8 @@ while true do
           server:send("401 Error in Expression " .. tostring(#err) .. "\n")
           server:send(err)
         end
-      elseif chunk:find("^[A-Z][A-Z]+%s") then
+      elseif chunk:find("^[A-Z][A-Z]+%s") or chunk:find("^@") then
+        chunk = chunk:gsub("^@", "")
         local cmd = {}
         for v in chunk:gmatch("(%S+)") do table.insert(cmd, v) end
         local msg, err = client:ldbredis(unpack(cmd))
