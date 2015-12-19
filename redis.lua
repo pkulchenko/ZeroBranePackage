@@ -1634,7 +1634,10 @@ local function geterror(response)
   local err = getval(type(response) == 'table' and response or {response}, "<error>")
   return err and #err > 0 and err[1] or nil
 end
-local function isdone(response) return #getval(response, "<endsession>") > 0 end
+local function isdone(response)
+  local endsession = getval(response, "<endsession>")
+  return endsession and #endsession > 0
+end
 local function isfilesame(fullname, fname, basedir)
   local sep = "/"
   fullname = fullname:gsub("[\\/]", sep)
@@ -1696,10 +1699,12 @@ for n, v in ipairs(params) do
 end
 -- load the script to debug; check for any reported errors
 msg, err = check(client:eval(code, keys, unpack(params)))
+
 if msg and isdone(msg) then msg, err = check(client:ping()) end
 
 -- if no debugging is requested, nothing else is needed to be done
 if not rundebug or rundebug == "no" then
+  if msg then print(msg) end
   client:quit()
   os.exit(0)
 end
