@@ -1755,41 +1755,24 @@ while true do
 
     if size > 0 then server:receive(size) end
     server:send("201 Started " .. file .. " " .. (getline(msg) or 1) .. "\n")
-  elseif command == "RUN" then
+  elseif command == "RUN" or command == "STEP" or command == "OVER" or command == "OUT" then
     server:send("200 OK\n")
-    local msg, err = client:ldbcontinue()
-    local done = isdone(msg)
-    -- if the session is done, need to read the error value (if any)
-    if done then msg, err = client:ping() end
-    if err then
-      server:send("401 Error in Execution " .. tostring(#err) .. "\n")
-      server:send(err)
-    elseif not done then
-      server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
+    local msg, err
+    if command == "RUN" then
+      msg, err = check(client:ldbcontinue())
+    else
+      msg, err = check(client:ldbstep())
+      -- check if this is the last step stopped at "out of range" position; do one more step
+      local outofrange = msg and getval(msg, "->%s+%d+%s+<out of range")
+      if outofrange and #outofrange > 0 then msg, err = check(client:ldbstep()) end
     end
-    if done then
+    if isdone(msg) then
+      -- if the session is done, need to read the error value (if any)
+      check(client:ping()) -- this will report any errors
       client:quit()
       break
     end
-  elseif command == "STEP" or command == "OVER" or command == "OUT" then
-    server:send("200 OK\n")
-    local msg, err = client:ldbstep()
-
-    -- check if this is the last step stopped at "out of range" position; do one more step
-    if msg and #getval(msg, "->%s+%d+%s+<out of range") > 0 then msg, err = client:ldbstep() end
-    local done = isdone(msg)
-    -- if the session is done, need to read the error value (if any)
-    if done then msg, err = client:ping() end
-    if err then
-      server:send("401 Error in Execution " .. tostring(#err) .. "\n")
-      server:send(err)
-    elseif not done then
-      server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
-    end
-    if done then
-      client:quit()
-      break
-    end
+    server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
     if chunk then
