@@ -1563,7 +1563,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.13,
+  version = 0.15,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1768,7 +1768,8 @@ while true do
     end
     if isdone(msg) then
       -- if the session is done, need to read the error value (if any)
-      check(client:ping()) -- this will report any errors
+      msg = check(client:ldbstep()) -- this will report any errors
+      if msg then print(msg) end
       client:quit()
       break
     end
