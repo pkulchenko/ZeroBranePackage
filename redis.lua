@@ -1203,6 +1203,273 @@ redis.commands = {
 return redis -- redis-lua module end -------------------------------------------
 end)()
 
+local api = {
+  KEYS = {
+    type = "value",
+    description = "A table with the key names that were explicitly declared for the script to access."
+  },
+  ARGV = {
+    type = "value",
+    description = "A table with the arguments that were passed to the script."
+  },
+
+  redis = {
+    type = "lib",
+    description = "A library for inteacting with the Redis server in which the script is EVALed.",
+    childs = {
+
+      -- Values
+      REPL_ALL = {
+        type = "value",
+        description = "Target setting for calling redis.set_repl() that replicates effects both to AOF and slaves (the default).",
+      },
+      REPL_AOF  = {
+        type = "value",
+        description = "Target setting for calling redis.set_repl() that replicates effects only to AOF.",
+      },
+      REPL_SLAVE = {
+        type = "value",
+        description = "Target setting for calling redis.set_repl() that replicates effects only to slaves.",
+      },
+      REPL_NONE = {
+        type = "value",
+        description = "Target setting for calling redis.set_repl() that disables replication.",
+      },
+
+      LOG_DEBUG = {
+        type = "value",
+        description = "DEBUG loglevel setting for calling redis.log().",
+      },
+      LOG_VERBOSE = {
+        type = "value",
+        description = "VERBOSE loglevel setting for calling redis.log().",
+      },
+      LOG_NOTICE = {
+        type = "value",
+        description = "NOTICE loglevel setting for calling redis.log().",
+      },
+      LOG_WARNING = {
+        type = "value",
+        description = "WARNING loglevel setting for calling redis.log().",
+      },
+
+      -- functions
+      error_reply = {
+        type = "function",
+        description = "Returns a Redis error reply.\nThis helper function returns a single field table with the err field set to the specified string.",
+        args = "(error: string)",
+        returns = "(table)",
+      },
+
+      status_reply = {
+        type = "function",
+        description = "Returns a Redis status reply.\nThis helper function returns a single field table with the ok field set to the specified string.",
+        args = "(status: string)",
+        returns = "(table)",
+      },
+
+      call = {
+        type = "function",
+        description = "Calls a Redis command, raising errors if any.\nIf the call to the command returns an error, the error will be raised and returned to the caller. To trap the error consider using pcall instead.\nThe arguments should be a well-formed Redis command. The return value depends on the command called and the dataset.",
+        args = "(command: string, [arg: string|number, ...])",
+        returns = "(number|string|table|boolean)",
+      },
+
+      pcall = {
+        type = "function",
+        description = "Calls a Redis command, trapping errors if any.\nIf the call to the command returns an error, the error will be trapped and the function will return a table with the error. To raise the error to the caller consider using call instead.\nThe arguments should be a well-formed Redis command. The return value depends on the command called and the dataset.",
+        args = "(command: string, [arg: string|number, ...])",
+        returns = "(number|string|table|boolean)",
+      },
+
+      replicate_commands = {
+        type = "function",
+        description = "Enables effects replication mode for the script.\nReturns true if successful.\n",
+        args = "()",
+        returns = "(boolean)",
+      },
+
+      set_repl = {
+        type = "function",
+        description = "Sets the replication target when in effects replication mode.\n\nAccepts one of the following targets:\n* redis.REPL_ALL: Replicate to AOF and slaves (the default).\n* redis.REPL_AOF: Replicate only to AOF.\n* redis.REPL_SLAVE: Replicate only to slaves.\n* redis.REPL_NONE: Don't replicate at all.",
+        args = "(target: redis.REPL_(ALL|AOF|SLAVE|NONE))", -- TODO: replace with something else?
+        returns = "()",
+      },
+
+      sha1hex = {
+        type = "function",
+        description = "Performs the SHA1 of the input string.",
+        args = "(input: string)",
+        returns = "(string)",
+      },
+
+      breakpoint = {
+        type = "function",
+        description = "When in SCRIPT DEBUG mode, stops execution as if a breakpoint is encountered at the next line.",
+        args = "()",
+        returns = "()",
+      },
+
+      debug = {
+        type = "function",
+        description = "When in SCRIPT DEBUG mode, emits a log message to the debug console.",
+        args = "(message: string)",
+        returns = "()",
+      },
+
+      log = {
+        type = "function",
+        description = "Emits a log message to the Redis log file.\nAccepst one of the standard Redis loglevels and the message to emit.",
+        args = "(loglevel: redis.LOG_(DEBUG|VERBOSE|NOTICE|WARNING), message: string)",
+        returns = "()",
+      },
+
+    },
+  },
+
+  struct = {
+    type = "lib",
+    description = "A library for packing/unpacking structures within Lua.",
+    childs = {
+      pack = {
+        type = "function",
+        description = "Returns an encoded representation of the arguments according to the specified format.\n\nValid formats:\n> - big endian\n< - little endian\n![num] - alignment\nx - padding\nb/B - signed/unsigned byte\nh/H - signed/unsigned short\nl/L - signed/unsigned long\nT   - size_t\ni/In - signed/unsigned integer with size `n' (default is size of int)\ncn - sequence of `n' chars (from/to a string); when packing, n==0 means\n     the whole string; when unpacking, n==0 means use the previous\n     read number as the string length\ns - zero-terminated string\nf - float\nd - double\n' ' - ignored",
+        args = "(format: string, ...)",
+        returns = "(string)",
+      },
+      unpack = {
+        type = "function",
+        description = "Returns the values from an encoded representation according to the specified format.\n\nValid formats:\n> - big endian\n< - little endian\n![num] - alignment\nx - padding\nb/B - signed/unsigned byte\nh/H - signed/unsigned short\nl/L - signed/unsigned long\nT   - size_t\ni/In - signed/unsigned integer with size `n' (default is size of int)\ncn - sequence of `n' chars (from/to a string); when packing, n==0 means\n     the whole string; when unpacking, n==0 means use the previous\n     read number as the string length\ns - zero-terminated string\nf - float\nd - double\n' ' - ignored",
+        args = "(format: string, struct: string)",
+        returns = "(table)", -- TODO: the table also has an additional element???
+      },
+      size = {
+        type = "function",
+        description = "Returns the size of the encoded representation according to the specified format.\n\nValid formats:\n> - big endian\n< - little endian\n![num] - alignment\nx - padding\nb/B - signed/unsigned byte\nh/H - signed/unsigned short\nl/L - signed/unsigned long\nT   - size_t\ni/In - signed/unsigned integer with size `n' (default is size of int)\ncn - sequence of `n' chars (from/to a string); when packing, n==0 means\n     the whole string; when unpacking, n==0 means use the previous\n     read number as the string length\ns - zero-terminated string\nf - float\nd - double\n' ' - ignored",
+        args = "(format: string)",
+        returns = "(number)"
+      },
+    },
+  },
+
+  cjson = {
+    type = "lib",
+    description = "A library for encoding/decoding JSON.",
+    childs = {
+      encode = {
+        type = "function",
+        description = "Encodes a Lua table as a JSON document.",
+        args = "(input: table)",
+        returns = "(string)",
+      },
+      decode = {
+        type = "function",
+        description = "Converts a JSON document to a Lua table.",
+        args = "(JSON: string)",
+        returns = "(table)",
+      },
+    },
+  },
+
+  cmsgpack = {
+    type = "lib",
+    description = "A library for encoding/decoding MessagePack.",
+    childs = {
+      pack = {
+        type = "function",
+        description = "Encodes a Lua table as a MessagePack.",
+        args = "(input: table)",
+        returns = "(string)",
+      },
+      unpack = {
+        type = "function",
+        description = "Converts a MessagePack to a Lua table.",
+        args = "(msgpack: string)",
+        returns = "(table)",
+      },
+    },
+  },
+
+  bit = {
+    type = "lib",
+    description = "A library for bitwise operations on numbers.",
+    childs = {
+      tobit = {
+        type = "function",
+        description = "Normalizes a number to the numeric range for bit operations and returns it.",
+        args = "(x: number)",
+        returns = "(number)",
+      },
+      tohex = {
+        type = "function",
+        description = "Converts its first argument to a hex string. The number of hex digits is given by the absolute value of the optional second argument. Positive numbers between 1 and 8 generate lowercase hex digits. Negative numbers generate uppercase hex digits. Only the least-significant 4*|n| bits are used. The default is to generate 8 lowercase hex digits.",
+        args = "(x: number [, n: number])",
+        returns = "(string)",
+      },
+      bnot = {
+        type = "function",
+        description = "Returns the bitwise not of its argument.",
+        args = "(x: number)",
+        returns = "(number)",
+      },
+      band = {
+        type = "function",
+        description = "Returns the bitwise and of all of its arguments.",
+        args = "(x1: number [, x2: number, ...])",
+        returns = "(number)",
+      },
+      bor = {
+        type = "function",
+        description = "Returns the bitwise or of all of its arguments.",
+        args = "(x1: number [, x2: number, ...])",
+        returns = "(number)",
+      },
+      bxor = {
+        type = "function",
+        description = "Returns the bitwise xor of all of its arguments.",
+        args = "(x1: number [, x2: number, ...])",
+        returns = "(number)",
+      },
+      lshift = {
+        type = "function",
+        description = "Returns the bitwise logical left-shift of its first argument by the number of bits given by the second argument.\nTreats the first argument as an unsigned number and shifts in 0-bits.\nOnly the lower 5 bits of the shift count are used (reduces to the range [0..31]).",
+        args = "(x: number, n: number)",
+        returns = "(number)",
+      },
+      rshift = {
+        type = "function",
+        description = "Returns the bitwise logical right-shift of its first argument by the number of bits given by the second argument.\nTreats the first argument as an unsigned number and shifts in 0-bits.\nOnly the lower 5 bits of the shift count are used (reduces to the range [0..31]).",
+        args = "(x: number, n: number)",
+        returns = "(number)",
+      },
+      arshift = {
+        type = "function",
+        description = "Returns the bitwise arithmetic right-shift of its first argument by the number of bits given by the second argument.\nTreats the most-significant bit as a sign bit and replicates it.\nOnly the lower 5 bits of the shift count are used (reduces to the range [0..31]).",
+        args = "(x: number, n: number)",
+        returns = "(number)",
+      },
+      rol = {
+        type = "function",
+        description = "Returns the bitwise left rotation of its first argument by the number of bits given by the second argument.\nBits shifted out on one side are shifted back in on the other side.\nOnly the lower 5 bits of the rotate count are used (reduces to the range [0..31]).",
+        args = "(x: number, n: number)",
+        returns = "(number)",
+      },
+      ror = {
+        type = "function",
+        description = "Returns the bitwise right rotation of its first argument by the number of bits given by the second argument.\nBits shifted out on one side are shifted back in on the other side.\nOnly the lower 5 bits of the rotate count are used (reduces to the range [0..31]).",
+        args = "(x: number, n: number)",
+        returns = "(number)",
+      },
+      bswap = {
+        type = "function",
+        description = "Swaps the bytes of its argument and returns it.",
+        args = "(x: number)",
+        returns = "(number)",
+      },
+    },
+  },
+}
+
 local function isinstance(host, port, password)
   local ok, res = pcall(redis.connect, {host = host, port = port, timeout = 0.5})
   if not ok then return nil, res:match('%[.+%]') end
@@ -1229,7 +1496,7 @@ local address, password
 local interpreter = {
   name = "Redis",
   description = "Redis interpreter",
-  api = {"baselib"},
+  api = {"baselib", "redis"},
   frun = function(self,wfilename,rundebug)
     if not pkg then
       DisplayOutputLn("Can't get package configuration.")
@@ -1294,15 +1561,17 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.12,
+  version = 0.13,
   dependencies = 1.21,
 
   onRegister = function(self)
     pkg = self
     ide:AddInterpreter(name, interpreter)
+    ide:AddAPI("lua", name, api)
   end,
   onUnRegister = function(self)
     ide:RemoveInterpreter(name)
+    ide:RemoveAPI("lua", name)
   end,
 }
 
