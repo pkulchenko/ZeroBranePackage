@@ -304,13 +304,15 @@ end
 function network.read(client, len)
     if len == nil then len = '*l' end
     local line, err = client.network.socket:receive(len)
-    if not err then return line else return client.error('connection error: ' .. err) end
+    if not err then return line else return client.error(err) end
 end
 
 -- ############################################################################
 
 function response.read(client)
-    local payload = client.network.read(client)
+    local payload, err = client.network.read(client)
+    if not payload then return client.error('reading error: ' .. err) end
+
     local prefix, data = payload:sub(1, -#payload), payload:sub(2)
 
     -- status reply
