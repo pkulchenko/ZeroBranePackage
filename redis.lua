@@ -1670,14 +1670,10 @@ local host, port = instance:match("^%s*(.+):(%d+)%s*$")
 check(host and port, ("Unknown Redis instance address format '%s'; expected host:port."):format(instance))
 
 -- register Redis debugger commands
-redis.commands.ldbcontinue = redis.command('C')
-redis.commands.ldbstep = redis.command('S')
-redis.commands.ldbbreakpoint = redis.command('B')
-redis.commands.ldbabort = redis.command('A')
-redis.commands.ldbprint = redis.command('P')
-redis.commands.ldbeval = redis.command('E')
-redis.commands.ldbtrace = redis.command('T')
-redis.commands.ldbredis = redis.command('R')
+for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
+  abort = 'A', print = 'P', eval = 'E', trace = 'T', redis = 'R'}) do
+  redis.commands['ldb'..key] = redis.command(command)
+end
 
 -- connect to redis instance
 local client = redis.connect({host = host, port = port, timeout = 0.5})
