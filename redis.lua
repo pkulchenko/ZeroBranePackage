@@ -1613,7 +1613,6 @@ check(fh, ("Can't open file '%s' for reading: %s"):format(file, err))
 local code = fh:read("*a")
 fh:close()
 
-local function getline(response) return type(response) == 'table' and response[1] and response[1]:match("* Stopped at (%d+)") end
 local function getval(response, keyword, format)
   if type(response) ~= 'table' then return end
   local res = {}
@@ -1623,6 +1622,10 @@ local function getval(response, keyword, format)
     end
   end
   return res
+end
+local function getline(response)
+  local line = getval(response, "* Stopped at")
+  return line and line[1] and line[1]:match("(%d+)")
 end
 local function getretval(response)
   return "return {"..table.concat(getval(response, "<retval>"), ",").."}"
