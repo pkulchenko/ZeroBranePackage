@@ -1563,7 +1563,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.15,
+  version = 0.16,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1649,6 +1649,12 @@ local function isfilesame(fullname, fname, basedir)
   basedir = basedir:gsub("[\\/]", sep):gsub(sep.."+$", "")..sep
   return fullname == fname or fullname == basedir .. fname
 end
+local function removebasedir(fullname, basedir)
+  local sep = "/"
+  fullname = fullname:gsub("[\\/]", sep)
+  basedir = basedir:gsub("[\\/]", sep):gsub(sep.."+$", "")..sep
+  return (fullname:gsub(basedir, ""))
+end
 local function getlocals(response)
   if type(response) ~= 'table' then return end
   -- convert reported values to local definitions; skip internal variables
@@ -1723,7 +1729,7 @@ if server.settimeout then server:settimeout() end
 check(ok, ("Can't connect to the debugger at '%s': %s"):format(controller, err))
 
 -- main debugger loop
-local basedir
+local basedir = ""
 while true do
   local line = check(server:receive())
   local command = string.sub(line, string.find(line, "^[A-Z]+"))
@@ -1820,8 +1826,20 @@ while true do
     end
   elseif command == "STACK" then
     -- get stack information and repackage it in the expected format
-    local msg = "return {}"
-    server:send("200 OK " .. tostring(msg) .. "\n")
+    local msg, err = check(client:ldbtrace())
+    local fname = removebasedir(file, basedir)
+    local stack = {}
+    while #msg > 0 do
+      local frame = table.remove(msg, 1)
+      local line = table.remove(msg, 1)
+      local funcname = frame:match("^In (.-):") or frame:match("^From (.-):")
+      if funcname == "top level" then
+        funcname = #msg > 0 and "anonymous function" or "main chunk"
+      end
+      local _, _, curline = line:find("(%d+)", 4)
+      table.insert(stack, ("{{%q, %q, -1, %d, 'main chunk'}, {}, {}}"):format(funcname, fname, curline or 0))
+    end
+    server:send("200 OK " .. tostring("return {"..table.concat(stack, ',')) .. "}\n")
   elseif command == "DONE" then
     client:ldbbreakpoint(0) -- remove all breakpoints
     client:ldbcontinue() -- continue with the script
