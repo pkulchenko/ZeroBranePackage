@@ -1563,7 +1563,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.16,
+  version = 0.18,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1655,7 +1655,7 @@ local function removebasedir(fullname, basedir)
   basedir = basedir:gsub("[\\/]", sep):gsub(sep.."+$", "")..sep
   return (fullname:gsub(basedir, ""))
 end
-local function getlocals(response)
+local function getvars(response)
   if type(response) ~= 'table' then return end
   -- convert reported values to local definitions; skip internal variables
   -- <value> (for index) = 1
@@ -1664,11 +1664,23 @@ local function getlocals(response)
   local res = {}
   for _, v in ipairs(response) do
     if not v:find("<value> %(") then
-      local val = v:gsub("<value>", "local")
-      if loadstring(val) then table.insert(res, val) end
+      local val = v:gsub("<value> ", "")
+      if loadstring("local "..val) then table.insert(res, val) end
     end
   end
-  return table.concat(res, ";").."; "
+  return res
+end
+local function getvarsaslocals(response)
+  local vars = getvars(response)
+  return (#vars > 0 and "local " or "")..table.concat(vars, "; local ")..";"
+end
+local function getvarsastable(response)
+  local vars = getvars(response)
+  for k, v in pairs(vars) do
+    local name, val = v:match("^(%w+)%s+=%s+(.+)")
+    vars[k] = ("%s={%s,%s}"):format(name, val, val:find("^{") and "'table'" or "nil")
+  end
+  return "{"..table.concat(vars, "; ").."}"
 end
 
 -- get redis instance host:port
@@ -1788,8 +1800,8 @@ while true do
       if func then
         -- evaluation is done in a different environment, so capture local variables
         -- to use in the chunk evaluation to make their values available
-        local preamble = getlocals(client:ldbprint())
-        local msg, err = client:ldbeval(preamble..chunk)
+        local vars = getvarsaslocals(check(client:ldbprint()))
+        local msg, err = client:ldbeval(vars..chunk)
         -- if there is an error, try without preamble, as it has a better error message
         if msg and geterror(msg) then msg, err = client:ldbeval(chunk) end
         if msg and geterror(msg) then msg, err = nil, geterror(msg) end
@@ -1826,20 +1838,23 @@ while true do
     end
   elseif command == "STACK" then
     -- get stack information and repackage it in the expected format
-    local msg, err = check(client:ldbtrace())
+    local msg = check(client:ldbtrace())
     local fname = removebasedir(file, basedir)
     local stack = {}
+    local vars = getvarsastable(check(client:ldbprint()))
     while #msg > 0 do
       local frame = table.remove(msg, 1)
       local line = table.remove(msg, 1)
+      local top = frame:match("^In (.-):")
       local funcname = frame:match("^In (.-):") or frame:match("^From (.-):")
       if funcname == "top level" then
         funcname = #msg > 0 and "anonymous function" or "main chunk"
       end
       local _, _, curline = line:find("(%d+)", 4)
-      table.insert(stack, ("{{%q, %q, -1, %d, 'main chunk'}, {}, {}}"):format(funcname, fname, curline or 0))
+      table.insert(stack, ("{{%q, %q, -1, %d, 'main chunk'}, %s, {}}")
+          :format(funcname, fname, curline or 0, top and vars or "{}"))
     end
-    server:send("200 OK " .. tostring("return {"..table.concat(stack, ',')) .. "}\n")
+    server:send("200 OK " .. "return {"..table.concat(stack, ',').."}" .. "\n")
   elseif command == "DONE" then
     client:ldbbreakpoint(0) -- remove all breakpoints
     client:ldbcontinue() -- continue with the script
