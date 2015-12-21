@@ -1,4 +1,5 @@
 -- Copyright 2015 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Integration with Redis data store (http://redis.io) from Redis Labs (https://redislabs.com).
 
 local redis = (function() -- redis-lua module start ----------------------------
 local redis = {
