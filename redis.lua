@@ -1474,7 +1474,7 @@ local api = {
 
 local function isinstance(host, port, password)
   local ok, res = pcall(redis.connect, {host = host, port = port, timeout = 0.5})
-  if not ok then return nil, res:match('%[.+%]') end
+  if not ok then return nil, res:match("%[(.+)%]") end
 
   -- check if the instance is password protected
   local client = res
@@ -1532,7 +1532,7 @@ local interpreter = {
           pkg:SetSettings({address = address})
           break
         elseif err then
-          DisplayOutputLn(("Can't connect to address '%s': %s."):format(defaddress, err))
+          DisplayOutputLn(("Can't connect to Redis instance '%s': %s."):format(defaddress, err))
           address = nil
         else -- cancelled authentication
           return
@@ -1697,7 +1697,10 @@ for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
 end
 
 -- connect to redis instance
-local client = redis.connect({host = host, port = port, timeout = 0.5})
+local client, err = pcall(redis.connect, {host = host, port = port, timeout = 1})
+check(client, ("Can't connect to Redis instance '%s': %s.")
+  :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
+client = err
 client.error = function(error) return nil, (error:gsub(".+ERR ","")) end
 
 -- authenticate if password is provided
