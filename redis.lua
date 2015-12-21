@@ -1751,6 +1751,13 @@ local ok, err = server:connect(host, port)
 if server.settimeout then server:settimeout() end
 check(ok, ("Can't connect to the debugger at '%s': %s"):format(controller, err))
 
+local function reporterror(client)
+  -- if the session is done, need to read the error value (if any)
+  local msg = check(client:ldbstep()) -- this will report any errors
+  if msg then print(msg) end
+  client:quit()
+end
+
 -- main debugger loop
 local basedir = ""
 while true do
@@ -1792,13 +1799,15 @@ while true do
       if outofrange and #outofrange > 0 then msg, err = check(client:ldbstep()) end
     end
     if isdone(msg) then
-      -- if the session is done, need to read the error value (if any)
-      msg = check(client:ldbstep()) -- this will report any errors
-      if msg then print(msg) end
-      client:quit()
+      reporterror(client)
       break
     end
     server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
+  elseif command == "DONE" then
+    check(client:ldbbreakpoint(0)) -- remove all breakpoints
+    local msg = check(client:ldbcontinue()) -- continue with the script
+    if isdone(msg) then reporterror(client) end
+    break
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
     if chunk then
@@ -1866,10 +1875,6 @@ while true do
           :format(funcname, fname, curline or 0, top and vars or "{}"))
     end
     server:send("200 OK " .. "return {"..table.concat(stack, ',').."}" .. "\n")
-  elseif command == "DONE" then
-    client:ldbbreakpoint(0) -- remove all breakpoints
-    client:ldbcontinue() -- continue with the script
-    break
   elseif command == "EXIT" then
     client:ldbabort()
     server:send("200 OK\n")
