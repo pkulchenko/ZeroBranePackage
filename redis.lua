@@ -1641,7 +1641,10 @@ local function getretval(response)
   return "return {"..table.concat(getval(response, "<retval>"), ",").."}"
 end
 local function getreply(response)
-  return "return {"..table.concat(getval(response, "<reply>", "%s"), ",").."}"
+  local msg = table.concat(getval(response, "<reply>", "%s"), ",")
+  -- add proper quoting to those messages that may be truncated because of `maxlen` limit
+  if msg:find('^"') and not msg:find('"$') then msg = msg..'"' end
+  return "return {"..msg.."}"
 end
 local function geterror(response)
   local err = getval(type(response) == 'table' and response or {response}, "<error>")
