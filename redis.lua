@@ -1518,10 +1518,9 @@ local interpreter = {
     local defaddress = pkg:GetSettings().address or "redis://localhost:6379"
     while true do
       defaddress = address or wx.wxGetTextFromUser(
-        "Database URI (redis://[username:password@]hostname:port)", "Redis server", defaddress)
+        "Database URI (redis://[username:password@]hostname:port[/db])", "Redis server", defaddress)
       -- Redis currently ignores the username, should change with RCP1
       if not defaddress or defaddress == "" then return end
-      if not defaddress:find("^redis:") then defaddress = "redis://"..defaddress end
       local uri = require('socket.url').parse(defaddress)
       if uri.scheme ~= "redis" then return end -- need to think about support for sockets, future support for SSL/TLS
       if not uri.host or not uri.port then
@@ -1529,7 +1528,7 @@ local interpreter = {
       else
         local ok, err = isinstance(uri.host, uri.port, (password or uri.password))
         if ok then
-          address, password = uri.scheme .. "://" .. uri.host .. ":" .. uri.port, err
+          address, password = uri.scheme .. "://" .. uri.host .. ":" .. uri.port .. (uri.path or ""), err
           pkg:SetSettings({address = address})
           break
         elseif err then
@@ -1688,8 +1687,8 @@ end
 
 -- get redis instance host:port
 local uri = require("socket.url").parse(instance)
-local host, port = uri.host, uri.port
-check(host and port, ("Unknown Redis URI format '%s'; expected redis://[username:password@]hostname:port"):format(instance))
+local host, port, db = uri.host, uri.port, uri.path
+check(host and port, ("Unknown Redis URI format '%s'; expected redis://[username:password@]hostname:port[/db]"):format(instance))
 
 -- register Redis debugger commands
 for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
@@ -1706,6 +1705,11 @@ local msg, err = client:ping()
 if not msg and err:find("NOAUTH") then
   check(password, "Authentication is required, but no password is provided to authenticate.")
   check(client:auth(password), "Can't autheticate with the provided password.")
+end
+
+-- select database, if any
+if db then
+  msg, err = check(client:select(db:sub(2)))
 end
 
 -- start debugging
