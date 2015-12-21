@@ -1724,7 +1724,7 @@ local client, err = pcall(redis.connect, {host = host, port = port, timeout = 5.
 check(client, ("Can't connect to Redis instance '%s': %s.")
   :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
 client = err
-client.error = function(error) return nil, (error:gsub(".+ERR ","")) end
+client.error = function(error) return nil, (error:gsub(".*ERR ","")) end
 if verbose then
   local function formatmsg(msg)
     return (("%q"):format(msg)
