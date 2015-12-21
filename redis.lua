@@ -1627,7 +1627,7 @@ local function getval(response, keyword, format)
   if type(response) ~= 'table' then return end
   local res = {}
   for _, v in ipairs(response) do
-    if v:find("^"..keyword) then
+    if type(v) == "string" and v:find("^"..keyword) then
       table.insert(res, (format or "%q"):format(v:gsub(keyword.." ","")))
     end
   end
@@ -1693,10 +1693,12 @@ local function getvarsastable(response)
   end
   return "{"..table.concat(vars, "; ").."}"
 end
-local function reporterror(client)
-  -- if the session is done, need to read the error value (if any)
-  local msg = check(client:echo()) -- this will report any errors
-  check(false, msg)
+local function reportresult(client, msg)
+  local function report(msg)
+    if type(msg) ~= 'table' then return print(msg) end
+    for _, v in ipairs(msg) do report(v) end
+  end
+  report(msg or check(client:echo('nil'))) -- this will also report any errors
   client:quit()
 end
 
@@ -1712,7 +1714,7 @@ for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
 end
 
 -- connect to redis instance
-local client, err = pcall(redis.connect, {host = host, port = port, timeout = 1})
+local client, err = pcall(redis.connect, {host = host, port = port, timeout = 5.5})
 check(client, ("Can't connect to Redis instance '%s': %s.")
   :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
 client = err
@@ -1753,10 +1755,11 @@ end
 -- load the script to debug; check for any reported errors
 msg, err = check(client:eval(code, keys, unpack(params)))
 
-if msg and isdone(msg) then reporterror(client) end
-
 -- if no debugging is requested, nothing else is needed to be done
-if not rundebug or rundebug == "no" then os.exit(0) end
+if not rundebug or rundebug == "no" then
+  reportresult(client, msg)
+  os.exit(0)
+end
 
 -- connect to the debugger
 local server, err = socket.tcp()
@@ -1811,14 +1814,14 @@ while true do
       if outofrange and #outofrange > 0 then msg, err = check(client:ldbstep()) end
     end
     if isdone(msg) then
-      reporterror(client)
+      reportresult(client)
       break
     end
     server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
   elseif command == "DONE" then
     check(client:ldbbreakpoint(0)) -- remove all breakpoints
     local msg = check(client:ldbcontinue()) -- continue with the script
-    if isdone(msg) then reporterror(client) end
+    if isdone(msg) then reportresult(client) end
     break
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
