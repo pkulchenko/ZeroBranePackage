@@ -1623,12 +1623,12 @@ check(fh, ("Can't open file '%s' for reading: %s"):format(file, err))
 local code = fh:read("*a")
 fh:close()
 
-local function getval(response, keyword, format)
+local function getval(response, keyword, format, keep)
   if type(response) ~= 'table' then return end
   local res = {}
   for _, v in ipairs(response) do
     if type(v) == "string" and v:find("^"..keyword) then
-      table.insert(res, (format or "%q"):format(v:gsub(keyword.." ","")))
+      table.insert(res, (format or "%q"):format(keep and v or v:gsub(keyword.." ","")))
     end
   end
   return res
@@ -1638,10 +1638,10 @@ local function getline(response)
   return line and line[1] and line[1]:match("(%d+)")
 end
 local function getretval(response)
-  return "return {"..table.concat(getval(response, "<retval>"), ",").."}"
+  return "return {"..table.concat(getval(response, "<retval>") or {}, ",").."}"
 end
 local function getreply(response)
-  local msg = table.concat(getval(response, "<reply>", "%s"), ",")
+  local msg = table.concat(getval(response, "<reply>", "%s") or {}, ",")
   -- add proper quoting to those messages that may be truncated because of `maxlen` limit
   if msg:find('^"') and not msg:find('"$') then msg = msg..'"' end
   return "return {"..msg.."}"
@@ -1692,6 +1692,12 @@ local function getvarsastable(response)
     vars[k] = ("%s={%s,%s}"):format(name, val, val:find("^{") and "'table'" or "nil")
   end
   return "{"..table.concat(vars, "; ").."}"
+end
+local function reportdebug(response)
+  local deb = getval(response, "<debug>", "%s", true)
+  if deb and #deb > 0 then print(table.concat(deb, "\n")) end
+  local hint = getval(response, "<hint>", "%s", true)
+  if hint and #hint > 0 then print(table.concat(hint, "\n")) end
 end
 local function reportresult(client, msg)
   local function report(msg)
@@ -1816,12 +1822,18 @@ while true do
     if isdone(msg) then
       reportresult(client)
       break
+    else
+      reportdebug(msg)
     end
     server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
   elseif command == "DONE" then
     check(client:ldbbreakpoint(0)) -- remove all breakpoints
     local msg = check(client:ldbcontinue()) -- continue with the script
-    if isdone(msg) then reportresult(client) end
+    if isdone(msg) then
+      reportresult(client)
+    else
+      reportdebug(msg)
+    end
     break
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
@@ -1841,6 +1853,7 @@ while true do
         if msg and geterror(msg) then msg, err = client:ldbeval(chunk) end
         if msg and geterror(msg) then msg, err = nil, geterror(msg) end
         if msg then
+          reportdebug(msg)
           -- if the chunk starts from "return" or looks like an expression, then return the result
           -- otherwise don't return any values to avoid showing `nil` after statements.
           msg = (chunk:find("^return ") or loadstring("return "..chunk)) and getretval(msg) or "return {}"
@@ -1857,6 +1870,7 @@ while true do
         local msg, err = client:ldbredis(unpack(cmd))
         if msg and geterror(msg) then msg, err = nil, geterror(msg) end
         if msg then
+          reportdebug(msg)
           msg = getreply(msg)
           server:send("200 OK " .. tostring(#msg) .. "\n")
           server:send(msg)
