@@ -298,12 +298,14 @@ end
 
 function network.write(client, buffer)
     local _, err = client.network.socket:send(buffer)
+    if type(client.onwrite) == 'function' then client:onwrite(buffer, err) end
     if err then return client.error(err) end
 end
 
 function network.read(client, len)
     if len == nil then len = '*l' end
     local line, err = client.network.socket:receive(len)
+    if type(client.onread) == 'function' then client:onread(line, err) end
     if not err then return line else return client.error(err) end
 end
 
@@ -1545,11 +1547,13 @@ local interpreter = {
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
     local rundebug = " --debug " .. (rundebug and (pkg:GetConfig().debugmode or "yes") or "no")
     local pswd = password and (' --password %q'):format(password) or ""
+    local verbose = pkg:GetConfig().verbose and " --verbose" or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
     local exe = ide:GetInterpreters().luadeb:GetExePath("")
-    local cmd = ('"%s" "%s"%s%s%s%s "%s"%s'):format(
-      exe, pkg:GetFilePath(), redis, controller, rundebug, pswd, filepath, params and " "..params or "")
+    local cmd = ('"%s" "%s"%s "%s"%s'):format(exe, pkg:GetFilePath(),
+      table.concat({redis, controller, rundebug, pswd, verbose}, ""),
+      filepath, params and " "..params or "")
 
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
     return CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
@@ -1587,7 +1591,7 @@ io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
 local controller, instance = "localhost:8172", "redis://localhost:6379"
-local rundebug, password, params, file
+local verbose, rundebug, password, params, file = false
 while #arg > 0 do
   local a = table.remove(arg, 1)
   if a == "--instance" then
@@ -1598,6 +1602,8 @@ while #arg > 0 do
     rundebug = table.remove(arg, 1)
   elseif a == "--password" then
     password = table.remove(arg, 1)
+  elseif a == "--verbose" then
+    verbose = true
   else
     file, params, arg = a, arg, {}
   end
@@ -1702,6 +1708,14 @@ check(client, ("Can't connect to Redis instance '%s': %s.")
   :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
 client = err
 client.error = function(error) return nil, (error:gsub(".+ERR ","")) end
+if verbose then
+  local function formatmsg(msg)
+    return (("%q"):format(msg)
+      :gsub("\010","n"):gsub("\\0?13","\\r"):gsub("\026","\\026"):gsub('^"',""):gsub('"$',""))
+  end
+  client.onread  = function(client, line, err) print("<redis rcvd> "..(line and formatmsg(line) or "error: "..err)) end
+  client.onwrite = function(client, line, err) print("<redis sent> "..(line and formatmsg(line) or "error: "..err)) end
+end
 
 -- authenticate if password is provided
 local msg, err = client:ping()
@@ -1887,5 +1901,6 @@ while true do
 end
 
 --[[ configuration example:
-redis = {debugmode = "sync"} -- the default debug mode is "yes"
+redis = {debugmode = "sync"} -- set debug mode to "sync" (the default debug mode is "yes")
+redis = {verbose = true} -- set verbose output to show all commands sent to or receivd from Redis
 --]]
