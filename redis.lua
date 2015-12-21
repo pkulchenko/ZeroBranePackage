@@ -1569,7 +1569,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.19,
+  version = 0.20,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1609,9 +1609,9 @@ while #arg > 0 do
   end
 end
 
-local function check(cond, msg, ...)
+local function check(cond, msg, ...)  -- uses "file" name to inject into the error message
   if cond or msg == nil then return cond, msg, ... end
-  print(msg)
+  print(type(msg) == 'string' and msg:gsub(": user_script", "\n"..file) or msg)
   os.exit(1)
 end
 
@@ -1690,6 +1690,12 @@ local function getvarsastable(response)
   end
   return "{"..table.concat(vars, "; ").."}"
 end
+local function reporterror(client)
+  -- if the session is done, need to read the error value (if any)
+  local msg = check(client:echo()) -- this will report any errors
+  check(false, msg)
+  client:quit()
+end
 
 -- get redis instance host:port
 local uri = require("socket.url").parse(instance)
@@ -1744,14 +1750,10 @@ end
 -- load the script to debug; check for any reported errors
 msg, err = check(client:eval(code, keys, unpack(params)))
 
-if msg and isdone(msg) then msg, err = check(client:ping()) end
+if msg and isdone(msg) then reporterror(client) end
 
 -- if no debugging is requested, nothing else is needed to be done
-if not rundebug or rundebug == "no" then
-  if msg then print(msg) end
-  client:quit()
-  os.exit(0)
-end
+if not rundebug or rundebug == "no" then os.exit(0) end
 
 -- connect to the debugger
 local server, err = socket.tcp()
@@ -1764,13 +1766,6 @@ if server.settimeout then server:settimeout(2) end
 local ok, err = server:connect(host, port)
 if server.settimeout then server:settimeout() end
 check(ok, ("Can't connect to the debugger at '%s': %s"):format(controller, err))
-
-local function reporterror(client)
-  -- if the session is done, need to read the error value (if any)
-  local msg = check(client:ldbstep()) -- this will report any errors
-  if msg then print(msg) end
-  client:quit()
-end
 
 -- main debugger loop
 local basedir = ""
