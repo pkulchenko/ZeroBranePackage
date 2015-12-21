@@ -1208,11 +1208,11 @@ end)()
 local api = {
   KEYS = {
     type = "value",
-    description = "A table with the key names that were explicitly declared for the script to access."
+    description = "A table with the key names that were explicitly declared for the script to access.\n\nUse the `Command Line Parameters` to provide the script with parameters in `redis-cli --eval`-like format, i.e.: [key1 [key2 [...]]] , [arg1 [arg2 [...]]]"
   },
   ARGV = {
     type = "value",
-    description = "A table with the arguments that were passed to the script."
+    description = "A table with the arguments that were passed to the script.\n\nUse the `Command Line Parameters` to provide the script with parameters in `redis-cli --eval`-like format, i.e.: [key1 [key2 [...]]] , [arg1 [arg2 [...]]]"
   },
 
   redis = {
@@ -1515,18 +1515,21 @@ local interpreter = {
         filepath = winapi.short_path(filepath)
       end
     end
-    local defaddress = pkg:GetSettings().address or "localhost:6379"
+    local defaddress = pkg:GetSettings().address or "redis://localhost:6379"
     while true do
       defaddress = address or wx.wxGetTextFromUser(
-        "Enter Redis instance address (host:port)", "Redis configuration", defaddress)
+        "Database URI (redis://[username:password@]hostname:port)", "Redis server", defaddress)
+      -- Redis currently ignores the username, should change with RCP1
       if not defaddress or defaddress == "" then return end
-      local host, port = defaddress:match("^%s*(.+):(%d+)%s*$")
-      if not host or not port then
-        DisplayOutputLn(("Can't get host name and port number from address '%s'."):format(defaddress))
+      if not defaddress:find("^redis:") then defaddress = "redis://"..defaddress end
+      local uri = require('socket.url').parse(defaddress)
+      if uri.scheme ~= "redis" then return end -- need to think about support for sockets, future support for SSL/TLS
+      if not uri.host or not uri.port then
+        DisplayOutputLn(("Can't get host name or port number from URI '%s'."):format(defaddress))
       else
-        local ok, err = isinstance(host, port, password)
+        local ok, err = isinstance(uri.host, uri.port, (password or uri.password))
         if ok then
-          address, password = defaddress, err
+          address, password = uri.scheme .. "://" .. uri.host .. ":" .. uri.port, err
           pkg:SetSettings({address = address})
           break
         elseif err then
@@ -1563,7 +1566,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.18,
+  version = 0.19,
   dependencies = 1.21,
 
   onRegister = function(self)
@@ -1584,7 +1587,7 @@ if pcall(debug.getlocal, 4, 1) then return package end
 io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
-local controller, instance = "localhost:8172", "localhost:6379"
+local controller, instance = "localhost:8172", "redis://localhost:6379"
 local rundebug, password, params, file
 while #arg > 0 do
   local a = table.remove(arg, 1)
@@ -1684,8 +1687,9 @@ local function getvarsastable(response)
 end
 
 -- get redis instance host:port
-local host, port = instance:match("^%s*(.+):(%d+)%s*$")
-check(host and port, ("Unknown Redis instance address format '%s'; expected host:port."):format(instance))
+local uri = require("socket.url").parse(instance)
+local host, port = uri.host, uri.port
+check(host and port, ("Unknown Redis URI format '%s'; expected redis://[username:password@]hostname:port"):format(instance))
 
 -- register Redis debugger commands
 for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
