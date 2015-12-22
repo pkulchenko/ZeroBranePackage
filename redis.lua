@@ -1826,23 +1826,22 @@ while true do
       msg, err = check(client:ldbstep())
       -- check if this is the last step stopped at "out of range" position; do one more step
       local outofrange = msg and getval(msg, "->%s+%d+%s+<out of range")
-      if outofrange and #outofrange > 0 then msg, err = check(client:ldbstep()) end
+      if outofrange and #outofrange > 0 then
+        reportdebug(msg)
+        msg, err = check(client:ldbstep())
+      end
     end
+    reportdebug(msg)
     if isdone(msg) then
       reportresult(client)
       break
-    else
-      reportdebug(msg)
     end
     server:send("202 Paused " .. file .. " " .. (getline(msg) or 0) .. "\n")
   elseif command == "DONE" then
     check(client:ldbbreakpoint(0)) -- remove all breakpoints
     local msg = check(client:ldbcontinue()) -- continue with the script
-    if isdone(msg) then
-      reportresult(client)
-    else
-      reportdebug(msg)
-    end
+    reportdebug(msg)
+    if isdone(msg) then reportresult(client) end
     break
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
