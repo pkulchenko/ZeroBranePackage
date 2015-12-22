@@ -1645,7 +1645,7 @@ local function getreply(response)
   local msg = table.concat(getval(response, "<reply>", "%s") or {}, ",")
   -- add proper quoting to those messages that may be truncated because of `maxlen` limit
   if msg:find('^"') and not msg:find('"$') then msg = msg..'"' end
-  return "return {"..msg.."}"
+  return "return {"..(msg == "NULL" and "'nil'" or msg).."}"
 end
 local function geterror(response)
   local err = getval(type(response) == 'table' and response or {response}, "<error>")
@@ -1684,7 +1684,8 @@ local function getvars(response)
 end
 local function getvarsaslocals(response)
   local vars = getvars(response)
-  return (#vars > 0 and "local " or "")..table.concat(vars, "; local ")..";"
+  if not vars or #vars == 0 then return "" end
+  return "local "..table.concat(vars, "; local ")..";"
 end
 local function getvarsastable(response)
   local vars = getvars(response)
