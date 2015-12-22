@@ -1551,7 +1551,7 @@ local interpreter = {
     local verbose = pkg:GetConfig().verbose and " --verbose" or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
-    local exe = ide:GetInterpreters().luadeb:GetExePath("")
+    local exe = ide:GetInterpreters().luadeb:fexepath("") -- TODO: replace with GetExePath when 1.21+ is available
     local cmd = ('"%s" "%s"%s "%s"%s'):format(exe, pkg:GetFilePath(),
       table.concat({redis, controller, rundebug, pswd, verbose}, ""),
       filepath, params and " "..params or "")
@@ -1570,11 +1570,18 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.20,
-  dependencies = 1.21,
+  version = 0.21,
+  dependencies = 1.20,
 
   onRegister = function(self)
     pkg = self
+    if not pkg.GetFilePath then -- TODO: remove when 1.21+ is available
+      pkg.GetFilePath = function(self)
+        local packname = self:GetFileName()..".lua"
+        local packpath = ide:GetPackagePath(packname)
+        return wx.wxFileExists(packpath) and packpath or MergeFullPath(ide:GetRootPath(), MergeFullPath("packages", packname))
+      end
+    end
     ide:AddInterpreter(name, interpreter)
     ide:AddAPI("lua", name, api)
   end,
