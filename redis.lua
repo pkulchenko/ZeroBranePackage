@@ -1485,7 +1485,7 @@ local function isinstance(host, port, password)
   if not ok and res:find("NOAUTH")
   and (not password or not pcall(client.auth, client, password)) then
     while true do
-      password = password or wx.wxGetTextFromUser("Enter Redis password", "Redis authentication")
+      password = password or wx.wxGetPasswordFromUser("Enter Redis password", "Redis authentication")
       if not password or password == "" then return end
       if pcall(client.auth, client, password) then break end
       password = nil
@@ -1570,7 +1570,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.21,
+  version = 0.22,
   dependencies = 1.20,
 
   onRegister = function(self)
