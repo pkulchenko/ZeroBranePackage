@@ -208,7 +208,7 @@ local function parse_info(response)
         if k:match('db%d+') then
             current[k] = {}
             v:gsub(',', function(dbkv)
-                local dbk,dbv = kv:match('([^:]*)=([^:]*)')
+                local dbk,dbv = dbkv:match('([^:]*)=([^:]*)')
                 current[k][dbk] = dbv
             end)
         else
@@ -1729,18 +1729,18 @@ for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
 end
 
 -- connect to redis instance
-local client, err = pcall(redis.connect, {host = host, port = port, timeout = 5.5})
-check(client, ("Can't connect to Redis instance '%s': %s.")
+local ok, err = pcall(redis.connect, {host = host, port = port, timeout = 5.5})
+check(ok, ("Can't connect to Redis instance '%s': %s.")
   :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
-client = err
+local client = err
 client.error = function(error) return nil, (error:gsub(".*ERR ","")) end
 if verbose then
   local function formatmsg(msg)
     return (("%q"):format(msg)
       :gsub("\010","n"):gsub("\\0?13","\\r"):gsub("\026","\\026"):gsub('^"',""):gsub('"$',""))
   end
-  client.onread  = function(client, line, err) print("<redis rcvd> "..(line and formatmsg(line) or "error: "..err)) end
-  client.onwrite = function(client, line, err) print("<redis sent> "..(line and formatmsg(line) or "error: "..err)) end
+  client.onread  = function(self, line, err) print("<redis rcvd> "..(line and formatmsg(line) or "error: "..err)) end
+  client.onwrite = function(self, line, err) print("<redis sent> "..(line and formatmsg(line) or "error: "..err)) end
 end
 
 -- authenticate if password is provided
