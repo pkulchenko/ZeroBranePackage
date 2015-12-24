@@ -1544,16 +1544,18 @@ local interpreter = {
     end
 
     if rundebug then DebuggerAttachDefault() end
+    local pkgcfg = pkg:GetConfig()
     local redis = " --instance "..address
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
-    local rundebug = " --debug " .. (rundebug and (pkg:GetConfig().debugmode or "yes") or "no")
-    local pswd = password and (' --password %q'):format(password) or ""
-    local verbose = pkg:GetConfig().verbose and " --verbose" or ""
+    local rundebug = " --debug " .. (rundebug and (pkgcfg.debugmode or "yes") or "no")
+    local pswd = password and (" --password %q"):format(password) or ""
+    local verbose = pkgcfg.verbose and " --verbose" or ""
+    local maxlen = pkgcfg.maxlen and (" --maxlen %s"):format(pkgcfg.maxlen) or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
     local exe = ide:GetInterpreters().luadeb:fexepath("") -- TODO: replace with GetExePath when 1.21+ is available
     local cmd = ('"%s" "%s"%s "%s"%s'):format(exe, pkg:GetFilePath(),
-      table.concat({redis, controller, rundebug, pswd, verbose}, ""),
+      table.concat({redis, controller, rundebug, pswd, maxlen, verbose}, ""),
       filepath, params and " "..params or "")
 
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
@@ -1599,7 +1601,7 @@ io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
 local controller, instance = "localhost:8172", "redis://localhost:6379"
-local verbose, rundebug, password, params, file = false
+local verbose, maxlen, rundebug, password, params, file = false
 while #arg > 0 do
   local a = table.remove(arg, 1)
   if a == "--instance" then
@@ -1610,6 +1612,8 @@ while #arg > 0 do
     rundebug = table.remove(arg, 1)
   elseif a == "--password" then
     password = table.remove(arg, 1)
+  elseif a == "--maxlen" then
+    maxlen = table.remove(arg, 1)
   elseif a == "--verbose" then
     verbose = true
   else
@@ -1723,7 +1727,7 @@ local host, port, db = uri.host, uri.port, uri.path
 check(host and port, ("Unknown Redis URI format '%s'; expected redis://[username:password@]hostname:port[/db]"):format(instance))
 
 -- register Redis debugger commands
-for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B',
+for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B', maxlen = 'M',
   abort = 'A', print = 'P', eval = 'E', trace = 'T', redis = 'R'}) do
   redis.commands['ldb'..key] = redis.command(command)
 end
@@ -1775,6 +1779,9 @@ if not rundebug or rundebug == "no" then
   reportresult(client, msg)
   os.exit(0)
 end
+
+-- set maxlen if provided
+if maxlen then msg, err = check(client:ldbmaxlen(maxlen)) end
 
 -- connect to the debugger
 local server, err = socket.tcp()
@@ -1926,4 +1933,7 @@ end
 --[[ configuration example:
 redis = {debugmode = "sync"} -- set debug mode to "sync" (the default debug mode is "yes")
 redis = {verbose = true} -- set verbose output to show all commands sent to or receivd from Redis
+redis = {maxlen = 10000} -- set `maxlen` value during debugging
+-- several settings can be combined together:
+redis = {maxlen = 10000, verbose = true}
 --]]
