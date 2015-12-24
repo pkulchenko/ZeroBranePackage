@@ -1570,7 +1570,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.22,
+  version = 0.23,
   dependencies = 1.20,
 
   onRegister = function(self)
@@ -1619,7 +1619,7 @@ end
 
 local function check(cond, msg, ...)  -- uses "file" name to inject into the error message
   if cond or msg == nil then return cond, msg, ... end
-  print(type(msg) == 'string' and msg:gsub(": user_script", "\n"..file) or msg)
+  print(type(msg) == 'string' and msg:gsub("(.+): @?user_script:%s*", "%1\n"..file..":") or msg)
   os.exit(1)
 end
 
