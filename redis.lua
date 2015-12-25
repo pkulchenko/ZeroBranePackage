@@ -1760,7 +1760,7 @@ if db then
 end
 
 -- start debugging
-msg, err = check(client:raw_cmd("SCRIPT DEBUG "..rundebug))
+msg, err = check(client:script("DEBUG ", rundebug))
 
 -- split passed parameters into KEYS and ARGV (separated by ',')
 local keys = #params
