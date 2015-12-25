@@ -1,7 +1,7 @@
 -- Copyright 2015 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- Integration with Redis data store (http://redis.io) from Redis Labs (https://redislabs.com).
 
--- GitHub repository of the redis-lua Redis client: https://github.com/nrk/redis-lua
+-- Repository of the redis-lua Redis client: https://github.com/nrk/redis-lua
 local redis = (function() -- redis-lua module start ----------------------------
 local redis = {
     _VERSION     = 'redis-lua 2.0.5-dev',
@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.23,
+  version = 0.25,
   dependencies = 1.20,
 
   onRegister = function(self)
@@ -1935,6 +1935,6 @@ end
 redis = {debugmode = "sync"} -- set debug mode to "sync" (the default debug mode is "yes")
 redis = {verbose = true} -- set verbose output to show all commands sent to or receivd from Redis
 redis = {maxlen = 10000} -- set `maxlen` value during debugging
--- several settings can be combined together:
+-- several settings can be combined:
 redis = {maxlen = 10000, verbose = true}
 --]]
