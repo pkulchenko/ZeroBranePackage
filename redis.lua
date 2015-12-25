@@ -1,6 +1,7 @@
 -- Copyright 2015 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- Integration with Redis data store (http://redis.io) from Redis Labs (https://redislabs.com).
 
+-- GitHub repository of the redis-lua Redis client: https://github.com/nrk/redis-lua
 local redis = (function() -- redis-lua module start ----------------------------
 local redis = {
     _VERSION     = 'redis-lua 2.0.5-dev',
