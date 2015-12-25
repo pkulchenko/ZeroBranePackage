@@ -1521,7 +1521,7 @@ local interpreter = {
     local defaddress = pkg:GetSettings().address or "redis://localhost:6379"
     while true do
       defaddress = address or wx.wxGetTextFromUser(
-        "Database URI (redis://[username:password@]hostname:port[/db])", "Redis server", defaddress)
+        "Database URI ([redis://][username:password@]hostname:port[/db])", "Redis server", defaddress)
       -- Redis currently ignores the username, should change with RCP1
       if not defaddress or defaddress == "" then return end
       local uri = require('socket.url').parse(defaddress)
@@ -1724,7 +1724,7 @@ end
 -- get redis instance host:port
 local uri = require("socket.url").parse(instance)
 local host, port, db = uri.host, uri.port, uri.path
-check(host and port, ("Unknown Redis URI format '%s'; expected redis://[username:password@]hostname:port[/db]"):format(instance))
+check(host and port, ("Unknown Redis URI format '%s'; expected [redis://][username:password@]hostname:port[/db]"):format(instance))
 
 -- register Redis debugger commands
 for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B', maxlen = 'M',
