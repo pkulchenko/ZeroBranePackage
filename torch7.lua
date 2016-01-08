@@ -1,3 +1,6 @@
+-- Copyright 2015 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Path handling for Torch and QLua is based on Torch/QLua interpreters from ZBS-torch by Soumith Chintala
+
 local win = ide.osname == 'Windows'
 local sep = win and ';' or ':'
 
