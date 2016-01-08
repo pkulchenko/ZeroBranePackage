@@ -1,4 +1,4 @@
--- Copyright 2015 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Copyright 2015-16 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
 local updateneeded
 local indicname = "highlightselected.selected"
@@ -6,7 +6,7 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.13,
+  version = 0.14,
   dependencies = 1.11,
 
   onRegister = function() ide:AddIndicator(indicname) end,
@@ -25,11 +25,12 @@ return {
     local value = editor:GetTextRange(editor:GetSelectionStart(), editor:GetSelectionEnd())
     local indicator = ide:GetIndicator(indicname)
 
-    if #value == 0 or not value:find('%w') then
+    local function clearIndicator()
       editor:SetIndicatorCurrent(indicator)
       editor:IndicatorClearRange(0, length)
-      return
     end
+
+    if #value == 0 or not value:find('%w') then return clearIndicator() end
 
     local word = editor:GetTextRange( -- try to select a word under caret
       editor:WordStartPosition(curpos, true), editor:WordEndPosition(curpos, true))
@@ -37,7 +38,7 @@ return {
       word = editor:GetTextRange( -- try to select a non-word under caret
         editor:WordStartPosition(curpos, false), editor:WordEndPosition(curpos, false))
     end
-    if value ~= word then return end
+    if value ~= word then return clearIndicator() end
 
     local style = bit.band(editor:GetStyleAt(editor:GetSelectionStart()),31)
     local color = editor:StyleGetForeground(style)
