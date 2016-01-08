@@ -1,8 +1,8 @@
--- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Copyright 2014-16 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
 local mappanel = "documentmappanel"
 local markers = {CURRENT = "docmap.current", BACKGROUND = "docmap.background"}
-local editormap, editorlinked, docpointer
+local editormap, editorlinked, docpointer, dummypointer
 local id
 local win = ide.osname == 'Windows'
 local needupdate
@@ -42,7 +42,7 @@ local function switchEditor(editor)
     -- clear the editor in case the last editor tab was closed
     if editormap and not editor
     and ide:GetEditorNotebook():GetPageCount() == 1 then
-      editormap:SetText("")
+      editormap:SetDocPointer(dummypointer)
     end
   end
   if editor then
@@ -85,13 +85,14 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.25,
+  version = 0.26,
   dependencies = 0.90,
 
   onRegister = function(self)
     local e = wxstc.wxStyledTextCtrl(ide:GetMainFrame(), wx.wxID_ANY,
       wx.wxDefaultPosition, wx.wxSize(20, 20), wx.wxBORDER_NONE)
     editormap = e
+    dummypointer = e:CreateDocument()
 
     local w, h = 150, 150
     ide:AddPanel(e, mappanel, TR("Document Map"), function(pane)
@@ -199,6 +200,7 @@ return {
 
   onUnRegister = function(self)
     switchEditor()
+    editormap:ReleaseDocument(dummypointer)
     ide:RemoveMenuItem(id)
     -- `RemovePanel` is available in 1.21+, so check if it is present
     if ide.RemovePanel then ide:RemovePanel(mappanel) end
