@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.25,
+  version = 0.26,
   dependencies = 1.20,
 
   onRegister = function(self)
@@ -1602,7 +1602,7 @@ io.stdout:setvbuf('no')
 
 local unpack = unpack or table.unpack
 local controller, instance = "localhost:8172", "redis://localhost:6379"
-local verbose, maxlen, rundebug, password, params, file = false
+local verbose, maxlen, debugmode, password, params, file = false
 while #arg > 0 do
   local a = table.remove(arg, 1)
   if a == "--instance" then
@@ -1610,7 +1610,7 @@ while #arg > 0 do
   elseif a == "--controller" then
     controller = table.remove(arg, 1)
   elseif a == "--debug" then
-    rundebug = table.remove(arg, 1)
+    debugmode = table.remove(arg, 1)
   elseif a == "--password" then
     password = table.remove(arg, 1)
   elseif a == "--maxlen" then
@@ -1760,8 +1760,20 @@ if db then
   msg, err = check(client:select(db:sub(2)))
 end
 
+local isdebugging = debugmode ~= "no"
+
+msg, err = check(client:info("SERVER"))
+local version = msg and tonumber(((msg.server or {}).redis_version or ""):match("%d+.%d+"))
+local needversion = 3.2
+if isdebugging and version and version < needversion then
+  print(("Detected Redis server v%s, but need v%s+ for the debugging to work.")
+    :format(version, needversion))
+end
+
 -- start debugging
-msg, err = check(client:script("DEBUG", rundebug))
+if isdebugging then
+  msg, err = check(client:script("DEBUG", debugmode))
+end
 
 -- split passed parameters into KEYS and ARGV (separated by ',')
 local keys = #params
@@ -1776,7 +1788,7 @@ end
 msg, err = check(client:eval(code, keys, unpack(params)))
 
 -- if no debugging is requested, nothing else is needed to be done
-if not rundebug or rundebug == "no" then
+if not isdebugging then
   reportresult(client, msg)
   os.exit(0)
 end
