@@ -85,7 +85,7 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.26,
+  version = 0.27,
   dependencies = 0.90,
 
   onRegister = function(self)
@@ -216,6 +216,7 @@ return {
 
       local doc = ide:GetDocument(editor)
       if editormap and doc then editor.SetupKeywords(editormap, doc:GetFileExt()) end
+      needupdate = true
     end
   end,
 
