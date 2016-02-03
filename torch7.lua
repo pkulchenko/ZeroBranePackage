@@ -7,9 +7,9 @@ local sep = win and ';' or ':'
 local debinit = [[
 local mdb = require('mobdebug')
 local line = mdb.line
-mdb.line = function(...)
-  local r = line(...)
-  return type(r) == 'string' and loadstring("return "..r)() or r
+mdb.line = function(v)
+  local r = line(v)
+  return type(v) == 'userdata' and loadstring("return "..r)() or r
 end]]
 
 local function fixBS(s) -- string callback to eliminate backspaces from Torch output
@@ -73,8 +73,8 @@ local function findCmd(cmd, env)
   end
 
   if not torch then
-    DisplayOutput(("Can't find %s in any of the folders in PATH or TORCH_BIN: "):format(cmd)
-      ..table.concat(paths, ", ").."\n")
+    DisplayOutputLn(("Can't find %s in any of the folders in PATH or TORCH_BIN: "):format(cmd)
+      ..table.concat(paths, ", "))
     return
   end
   return res
@@ -183,7 +183,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.49,
+  version = 0.50,
   dependencies = 1.10,
 
   onRegister = function(self)
@@ -197,7 +197,8 @@ return {
 
   onInterpreterLoad = function(self, interpreter)
     if interpreter:GetFileName() ~= "torch" then return end
-    local torch = ide.config.path.torch or findCmd(win and 'th.bat ' or 'th', os.getenv('TORCH_BIN'))
+    local torch = ide.config.path.torch or findCmd(win and 'th.bat' or 'th', os.getenv('TORCH_BIN'))
+    if not torch then return end
     local uselua = wx.wxDirExists(torch)
     local torchroot = uselua and torch or MergeFullPath(GetPathWithSep(torch), "../")
     interpreter.env = setEnv(torchroot, true)
