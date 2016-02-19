@@ -1573,18 +1573,11 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.26,
-  dependencies = 1.20,
+  version = 0.27,
+  dependencies = 1.30,
 
   onRegister = function(self)
     pkg = self
-    if not pkg.GetFilePath then -- TODO: remove when 1.21+ is available
-      pkg.GetFilePath = function(self)
-        local packname = self:GetFileName()..".lua"
-        local packpath = ide:GetPackagePath(packname)
-        return wx.wxFileExists(packpath) and packpath or MergeFullPath(ide:GetRootPath(), MergeFullPath("packages", packname))
-      end
-    end
     ide:AddInterpreter(name, interpreter)
     ide:AddAPI("lua", name, api)
   end,
