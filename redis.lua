@@ -1704,7 +1704,6 @@ local function getvars(response)
           val = var .. " = {\"" .. msg .. "\"}"
         end
       end
-      print(val)
       if loadstring("local "..val) then table.insert(res, val) end
     end
   end
