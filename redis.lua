@@ -1681,14 +1681,30 @@ local function removebasedir(fullname, basedir)
 end
 local function getvars(response)
   if type(response) ~= 'table' then return end
-  -- convert reported values to local definitions; skip internal variables
+  -- convert reported values to local definitions; skip internal variables;
+  -- best effort handling of maxlen trimmed values; skip hints
   -- <value> (for index) = 1
   -- <value> (for limit) = 20
   -- <value> i = 1
+  -- <value> s = "foobar"
+  -- <value> t = {}
+  -- <value> trimmed_string = "abc ...
+  -- <value> trimmed_table = { "abc"; "ef ...
+  -- <hint> some text
   local res = {}
   for _, v in ipairs(response) do
-    if not v:find("<value> %(") then
+    if not v:find("<value> %(") and not v:find("<hint>") then
       local val = v:gsub("<value> ", "")
+      if val:sub(-3) == "..." then -- trimmed string or table
+        local msg = "[[contents trimmed, consider using `maxlen 0`]]"
+        local var, valtype = val:match("^([%p%w]+)%s+=%s+(.)")
+        if valtype == "\"" then
+          val = val .. " " .. msg .. "\""
+        elseif valtype == "{" then
+          val = var .. " = {\"" .. msg .. "\"}"
+        end
+      end
+      print(val)
       if loadstring("local "..val) then table.insert(res, val) end
     end
   end
@@ -1702,7 +1718,7 @@ end
 local function getvarsastable(response)
   local vars = getvars(response)
   for k, v in pairs(vars) do
-    local name, val = v:match("^(%w+)%s+=%s+(.+)")
+    local name, val = v:match("^([%p%w]+)%s+=%s+(.+)")
     vars[k] = ("%s={%s,%s}"):format(name, val, val:find("^{") and "'table'" or "nil")
   end
   return "{"..table.concat(vars, "; ").."}"
