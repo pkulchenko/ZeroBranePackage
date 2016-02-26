@@ -167,7 +167,7 @@ local torchInterpreter = {
 
     -- doesn't need set environment with setEnv as it's already done in onInterpreterLoad
 
-    local params = ide.config.arg.any or ide.config.arg.lua or ''
+    local params = ide.config.arg.any or ide.config.arg.torch7 or ''
     local cmd = ([["%s" "%s" %s]]):format(
       uselua and ide:GetInterpreters().luadeb:fexepath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
@@ -177,13 +177,14 @@ local torchInterpreter = {
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault() end,
   scratchextloop = true,
+  takeparameters = true,
 }
 
 return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.50,
+  version = 0.51,
   dependencies = 1.10,
 
   onRegister = function(self)
