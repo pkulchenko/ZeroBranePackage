@@ -6,7 +6,7 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.14,
+  version = 0.15,
   dependencies = 1.11,
 
   onRegister = function() ide:AddIndicator(indicname) end,
@@ -22,7 +22,8 @@ return {
     updateneeded = false
 
     local length, curpos = editor:GetLength(), editor:GetCurrentPos()
-    local value = editor:GetTextRange(editor:GetSelectionStart(), editor:GetSelectionEnd())
+    local ssel, esel = editor:GetSelection()
+    local value = editor:GetTextRange(ssel, esel)
     local indicator = ide:GetIndicator(indicname)
 
     local function clearIndicator()
@@ -46,6 +47,9 @@ return {
     editor:IndicatorSetForeground(indicator, color)
     editor:SetIndicatorCurrent(indicator)
     editor:IndicatorClearRange(0, length)
+
+    -- save the flags to restore after the search is done to not affect other searches
+    local flags = editor:GetSearchFlags()
     editor:SetSearchFlags(wxstc.wxSTC_FIND_WHOLEWORD + wxstc.wxSTC_FIND_MATCHCASE)
 
     local pos = 0
@@ -58,5 +62,7 @@ return {
       editor:IndicatorFillRange(pos, #value)
       pos = pos + #value
     end
+    editor:SetSelection(ssel, esel)
+    editor:SetSearchFlags(flags)
   end,
 }
