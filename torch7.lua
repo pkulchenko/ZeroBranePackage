@@ -22,9 +22,19 @@ local function fixBS(s) -- string callback to eliminate backspaces from Torch ou
   return s
 end
 
+local lpaths = {
+  "install/share/lua/5.1/?.lua", "install/share/lua/5.1/?/init.lua",
+  "share/lua/5.1/?.lua", "share/lua/5.1/?/init.lua",
+  "./?.lua", "./?/init.lua",
+}
+local cpaths = {
+  "install/lib/lua/5.1/?.", "install/lib/lua/5.1/loadall.", "install/lib/?.",
+  "lib/lua/5.1/?.", "lib/lua/5.1/loadall.", "lib/?.",
+  "?.",
+}
 local function setEnv(torchroot, usepackage)
   local tluapath = ''
-  for _, val in pairs({"share/lua/5.1/?.lua", "share/lua/5.1/?/init.lua", "./?.lua", "./?/init.lua"}) do
+  for _, val in pairs(lpaths) do
     tluapath = tluapath .. MergeFullPath(torchroot, val) .. ";"
   end
   local _, luapath = wx.wxGetEnv("LUA_PATH")
@@ -32,8 +42,8 @@ local function setEnv(torchroot, usepackage)
 
   local ext = win and 'dll' or 'so'
   local tluacpath = ''
-  for _, val in pairs({"lib/lua/5.1/?."..ext, "lib/lua/5.1/loadall."..ext, "?."..ext}) do
-    tluacpath = tluacpath .. MergeFullPath(torchroot, val) .. ";"
+  for _, val in pairs(cpaths) do
+    tluacpath = tluacpath .. MergeFullPath(torchroot, val..ext) .. ";"
   end
   local _, luacpath = wx.wxGetEnv("LUA_CPATH")
   wx.wxSetEnv("LUA_CPATH", tluacpath..(luacpath or ""))
@@ -184,7 +194,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.51,
+  version = 0.52,
   dependencies = 1.10,
 
   onRegister = function(self)
