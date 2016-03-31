@@ -6,7 +6,7 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.15,
+  version = 0.16,
   dependencies = 1.11,
 
   onRegister = function() ide:AddIndicator(indicname) end,
@@ -62,7 +62,6 @@ return {
       editor:IndicatorFillRange(pos, #value)
       pos = pos + #value
     end
-    editor:SetSelection(ssel, esel)
     editor:SetSearchFlags(flags)
   end,
 }
