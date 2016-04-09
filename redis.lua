@@ -1554,7 +1554,7 @@ local interpreter = {
     local maxlen = pkgcfg.maxlen and (" --maxlen %s"):format(pkgcfg.maxlen) or ""
     local cfg = ide:GetConfig()
     local params = cfg.arg.any or cfg.arg.redis
-    local exe = ide:GetInterpreters().luadeb:fexepath("") -- TODO: replace with GetExePath when 1.21+ is available
+    local exe = ide:GetInterpreters().luadeb:GetExePath("")
     local cmd = ('"%s" "%s"%s "%s"%s'):format(exe, pkg:GetFilePath(),
       table.concat({redis, controller, rundebug, pswd, maxlen, verbose}, ""),
       filepath, params and " "..params or "")
@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.27,
+  version = 0.28,
   dependencies = 1.30,
 
   onRegister = function(self)
