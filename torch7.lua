@@ -82,7 +82,7 @@ local function findCmd(cmd, env)
     table.insert(paths, p)
   end
 
-  if not torch then
+  if not res then
     DisplayOutputLn(("Can't find %s in any of the folders in PATH or TORCH_BIN: "):format(cmd)
       ..table.concat(paths, ", "))
     return
@@ -139,7 +139,7 @@ local torchInterpreter = {
   api = {"baselib", "torch"},
   frun = function(self,wfilename,rundebug)
     -- check if the path is configured
-    local torch = ide.config.path.torch or findCmd(win and 'th.bat ' or 'th', os.getenv('TORCH_BIN'))
+    local torch = ide.config.path.torch or findCmd(win and 'th.bat' or 'th', os.getenv('TORCH_BIN'))
     if not torch then return end
 
     local filepath = wfilename:GetFullPath()
@@ -170,14 +170,9 @@ local torchInterpreter = {
       end
     end
 
-    -- make sure the root is using Torch exe location
-    -- for non-exe configurations, it's allowed to pass Torch path
-    local uselua = wx.wxDirExists(torch)
-    local torchroot = uselua and torch or MergeFullPath(GetPathWithSep(torch), "../")
-
     -- doesn't need set environment with setEnv as it's already done in onInterpreterLoad
-
     local params = ide.config.arg.any or ide.config.arg.torch7 or ''
+    local uselua = wx.wxDirExists(torch)
     local cmd = ([["%s" "%s" %s]]):format(
       uselua and ide:GetInterpreters().luadeb:GetExePath("") or torch, filepath, params)
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
@@ -194,7 +189,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.53,
+  version = 0.54,
   dependencies = 1.30,
 
   onRegister = function(self)
