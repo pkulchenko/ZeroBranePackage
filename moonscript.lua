@@ -126,7 +126,8 @@ local spec = {
   },
 
   keywords = {
-    [[and break do else elseif end for function if in not or repeat return then until while super with local import export]],
+    [[and break do else elseif end for function if in not or repeat return then until while local ]]
+    ..[[super with import export class extends from using continue switch]],
 
     [[_G _VERSION _ENV false io.stderr io.stdin io.stdout nil math.huge math.pi self true]],
 
@@ -162,7 +163,7 @@ return {
   name = "Moonscript",
   description = "Integration with Moonscript language",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
   dependencies = 0.61,
 
   onRegister = function(self)
