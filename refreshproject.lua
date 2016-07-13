@@ -25,7 +25,7 @@ return {
   name = "Refresh project tree",
   description = "Refresh project tree when files change (Windows only).",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
   dependencies = {0.71, osname = "Windows"},
 
   onIdle = function(self) if next(watches) then winapi.sleep(1) end end,
@@ -36,12 +36,15 @@ return {
     for _, watcher in pairs(watches) do watcher:kill() end
     watches = {}
 
+    local enc = winapi.get_encoding(winapi.CP_UTF8)
+    winapi.set_encoding(winapi.CP_UTF8)
     local watcher, err = winapi.watch_for_file_changes(project, flags, true,
       function(...) return handler(plugin, ...) end)
+    winapi.set_encoding(enc)
+
     if not watcher then
       error(("Can't set watcher for project '%s': %s"):format(project, err))
     end
-
     watches[project] = watcher
   end,
 }
