@@ -10,9 +10,15 @@ return {
   name = "Auto-insertion of delimiters",
   description = [[Adds auto-insertion of delimiters (), {}, [], '', and "".]],
   author = "Paul Kulchenko (modified by Dominik Banaszak)",
-  version = 0.3,
-onEditorKeyDown = function(self, editor, event)
-    ide.packages["autodelimiter"] = nil -- prevent loading the autodelimiter package
+  version = 0.4,
+  dependencies = "1.30",
+
+  onEditorKeyDown = function(self, editor, event)
+    -- remove autodelimiter package to avoid conflicts
+    if ide:GetPackage("autodelimiter") then
+      ide:RemovePackage("autodelimiter")
+      ide:Print("Disabled autodelimiter package to avoid conflict.")
+    end
     local currentpos = editor:GetCurrentPos()
     local keycode = event:GetKeyCode()
     if keycode == 8 then -- backslash
