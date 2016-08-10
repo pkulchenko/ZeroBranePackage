@@ -38,8 +38,8 @@ local interpreter = {
         table.insert(paths, p)
       end
       if not exe.moonc then
-        DisplayOutput("Can't find moonc executable in any of the following folders: "
-          ..table.concat(paths, ", ").."\n")
+        ide:Print("Can't find moonc executable in any of the following folders: "
+          ..table.concat(paths, ", "))
         return
       end
     end
@@ -58,8 +58,8 @@ local interpreter = {
         table.insert(paths, p)
       end
       if not exe.love then
-        DisplayOutput("Can't find love executable in any of the following folders: "
-          ..table.concat(paths, ", ").."\n")
+        ide:Print("Can't find love executable in any of the following folders: "
+          ..table.concat(paths, ", "))
         return
       end
     end
@@ -78,7 +78,7 @@ local interpreter = {
       filepath = tmpfile:GetFullPath()
       local f = io.open(filepath, "w")
       if not f then
-        DisplayOutput("Can't open temporary file '"..filepath.."' for writing\n")
+        ide:Print("Can't open temporary file '"..filepath.."' for writing")
         return
       end
       f:write(init..rundebug)
@@ -101,20 +101,14 @@ local interpreter = {
     cmd.love = '"' .. exe.love .. '" .'
 
     -- CommandLineRun(cmd,wdir,tooutput,nohide,stringcallback,uid,endcallback)
-    DisplayOutput("Compiling MoonScript\n")
+    ide:Print("Compiling MoonScript")
     return CommandLineRun(cmd.moonc,self:fworkdir(wfilename), true, false, nil, nil,
       function()
-        DisplayOutput("Starting Love2D\n")
+        ide:Print("Starting Love2D")
         CommandLineRun(cmd.love, self:fworkdir(wfilename), true, false, nil, nil, function()
           if rundebug then wx.wxRemoveFile(filepath) end
         end)
       end)
-  end,
-  fprojdir = function(self,wfilename)
-    return wfilename:GetPath(wx.wxPATH_GET_VOLUME)
-  end,
-  fworkdir = function(self,wfilename)
-    return ide.config.path.projectdir or wfilename:GetPath(wx.wxPATH_GET_VOLUME)
   end,
   hasdebugger = true,
   fattachdebug = function(self) DebuggerAttachDefault({init = init}) end,
@@ -191,8 +185,8 @@ return {
   name = "Moonscript LÖVE",
   description = "Compile and run Moonscript with LÖVE",
   author = "Paul Kulchenko, Dominik \"Zatherz\" Banaszak",
-  version = 0.3,
-  dependencies = 0.61,
+  version = 0.31,
+  dependencies = "1.30",
 
   onRegister = function(self)
     ide:AddInterpreter(name, interpreter)
