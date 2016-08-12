@@ -82,8 +82,8 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.28,
-  dependencies = 0.90,
+  version = 0.30,
+  dependencies = "0.90",
 
   onRegister = function(self)
     local e = wxstc.wxStyledTextCtrl(ide:GetMainFrame(), wx.wxID_ANY,
@@ -179,7 +179,7 @@ return {
         event:SetCursor(wx.wxCursor(wx.wxCURSOR_ARROW))
       end)
 
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
+    local menu = ide:FindTopMenu("&View")
     id = ID("documentmap.documentmapview")
     menu:InsertCheckItem(4, id, TR("Document Map Window")..KSC(id))
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function (event)

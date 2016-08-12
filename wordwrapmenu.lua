@@ -3,10 +3,11 @@ return {
   name = "Wordwrap menu",
   description = "Adds word wrap option to the menu.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
+  dependencies = "1.0",
 
   onRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
+    local menu = ide:FindTopMenu("&Edit")
     local pos = self:GetConfig().insertat and
       self:GetConfig().insertat-1 or menu:GetMenuItemCount()
     menu:InsertCheckItem(pos, id, "WordWrap\tAlt-W")

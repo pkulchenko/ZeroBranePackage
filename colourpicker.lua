@@ -15,12 +15,11 @@ return {
   name = "Colour picker",
   description = "Select color to insert in the document",
   author = "Paul Kulchenko",
-  version = 0.2,
-  dependencies = 1.0,
+  version = 0.21,
+  dependencies = "1.0",
 
   onRegister = function()
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
-    menu:AppendSeparator()
+    local menu = ide:FindTopMenu("&View")
     menu:Append(id, "Colour Picker Window"..KSC(id))
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, insertcolour)
   end,

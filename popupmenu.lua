@@ -4,12 +4,12 @@ return {
   name = "Sample plugin with popup menu",
   description = "Sample plugin showing how to setup and use popup menu.",
   author = "Paul Kulchenko",
-  version = 0.2,
-  dependencies = 1.30,
+  version = 0.21,
+  dependencies = "1.30",
 
   onRegister = function(self)
     -- add menu item that will activate popup menu
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
+    local menu = ide:FindTopMenu("&Edit")
     menu:Append(id, "Show Popup\tCtrl-Alt-T")
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function()
         local editor = ide:GetEditor()

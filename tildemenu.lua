@@ -3,10 +3,11 @@ return {
   name = "Tilde",
   description = "Allows to enter tilde (~) on keyboards that may not have it.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
+  dependencies = "1.0",
 
   onRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
+    local menu = ide:FindTopMenu("&Edit")
     menu:Append(id, "Tilde\tAlt-'")
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function()
         local ed = ide:GetEditor()

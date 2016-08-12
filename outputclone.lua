@@ -1,15 +1,14 @@
-local G = ...
-local id = G.ID("outputclone.outputclone")
+local id = ID("outputclone.outputclone")
 local frame
 return {
   name = "Clone Output window",
   description = "Clones Output window to keep it on the screen when the application loses focus (OSX).",
   author = "Paul Kulchenko",
-  version = 0.4,
-  dependencies = 1.11,
+  version = 0.41,
+  dependencies = "1.11",
 
   onRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
+    local menu = ide:FindTopMenu("&View")
     local pos = self.GetConfig and self:GetConfig().insertat and
       self:GetConfig().insertat-1 or 4
     menu:InsertCheckItem(pos, id, "Output Window Clone\tCtrl-Shift-C")
