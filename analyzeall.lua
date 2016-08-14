@@ -1,7 +1,6 @@
 -- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
-local G = ...
-local id = G.ID("analyzeall.analyzeall")
+local id = ID("analyzeall.analyzeall")
 
 local function path2mask(s)
   return s
@@ -14,7 +13,7 @@ local function analyzeProject(self)
   local frame = ide:GetMainFrame()
   local menubar = ide:GetMenuBar()
   if menubar:IsChecked(ID_CLEAROUTPUT) then ClearOutput() end
-  DisplayOutputLn("Analyzing the project code.")
+  ide:Print("Analyzing the project code.")
   frame:Update()
 
   local errors, warnings = 0, 0
@@ -32,10 +31,10 @@ local function analyzeProject(self)
       if not ignore then
         local warn, err, line = AnalyzeFile(filePath)
         if err then
-          DisplayOutputNoMarker(err .. "\n")
+          ide:Print(err)
           errors = errors + 1
         elseif #warn > 0 then
-          DisplayOutputNoMarker(table.concat(warn, "\n") .. "\n")
+          for _, msg in ipairs(warn) do ide:Print(msg) end
           warnings = warnings + #warn
         end
         ide:Yield() -- refresh the output with new results
@@ -43,7 +42,7 @@ local function analyzeProject(self)
     end
   end
 
-  DisplayOutputLn(("%s error%s and %s warning%s."):format(
+  ide:Print(("%s error%s and %s warning%s."):format(
     errors > 0 and errors or 'no', errors == 1 and '' or 's',
     warnings > 0 and warnings or 'no', warnings == 1 and '' or 's'
   ))
@@ -53,8 +52,8 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.4,
-  dependencies = 0.71,
+  version = 0.41,
+  dependencies = "1.3",
 
   onRegister = function(package)
     local _, menu, analyzepos = ide:FindMenuItem(ID_ANALYZE)

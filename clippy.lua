@@ -1,5 +1,4 @@
-local G = ...
-local id = G.ID("clippy.clippy")
+local id = ID("clippy.clippy")
 local menuid
 local stack
 local kStackLimit = 10
@@ -125,8 +124,8 @@ return
 	name = "Clippy",
 	description = "Enables a stack-based clipboard which saves the last 10 entries",
 	author = "sclark39",
-	dependencies = 0.61,
-	version = 0.2,
+	dependencies = "1.3",
+	version = 0.21,
 	onRegister = OnRegister,
 	onUnRegister = OnUnRegister,
 	onEditorAction = OnEditorAction,
