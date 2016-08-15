@@ -3,8 +3,8 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.14,
-  dependencies = 0.96,
+  version = 0.15,
+  dependencies = "0.96",
 
   -- release document pointer for closed tabs
   -- remove from the list of clones (in either direction) this closed editor

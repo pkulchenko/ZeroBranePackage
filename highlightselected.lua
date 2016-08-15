@@ -7,7 +7,7 @@ return {
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
   version = 0.16,
-  dependencies = 1.11,
+  dependencies = "1.11",
 
   onRegister = function() ide:AddIndicator(indicname) end,
   onUnRegister = function() ide:RemoveIndicator(indicname) end,

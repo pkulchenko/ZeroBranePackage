@@ -150,7 +150,9 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.14,
+  version = 0.15,
+  dependencies = "1.0",
+
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
     -- load something that requires liblua.dll so that it's in memory and
