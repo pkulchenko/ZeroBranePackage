@@ -83,7 +83,7 @@ local function findCmd(cmd, env)
   end
 
   if not res then
-    DisplayOutputLn(("Can't find %s in any of the folders in PATH or TORCH_BIN: "):format(cmd)
+    ide:Print(("Can't find %s in any of the folders in PATH or TORCH_BIN: "):format(cmd)
       ..table.concat(paths, ", "))
     return
   end
@@ -153,7 +153,7 @@ local torchInterpreter = {
       filepath = tmpfile:GetFullPath()
       local f = io.open(filepath, "w")
       if not f then
-        DisplayOutputLn("Can't open temporary file '"..filepath.."' for writing.")
+        ide:Print("Can't open temporary file '"..filepath.."' for writing.")
         return
       end
       f:write("io.stdout:setvbuf('no'); " .. rundebug)
@@ -189,8 +189,8 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.54,
-  dependencies = 1.30,
+  version = 0.55,
+  dependencies = "1.30",
 
   onRegister = function(self)
     ide:AddInterpreter("torch", torchInterpreter)

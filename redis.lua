@@ -1505,7 +1505,7 @@ local interpreter = {
   api = {"baselib", "redis"},
   frun = function(self,wfilename,rundebug)
     if not pkg then
-      DisplayOutputLn("Can't get package configuration.")
+      ide:Print("Can't get package configuration.")
       return
     end
     local filepath = wfilename:GetFullPath()
@@ -1528,7 +1528,7 @@ local interpreter = {
       local uri = require('socket.url').parse(defaddress)
       if uri.scheme ~= "redis" then return end -- need to think about support for sockets, future support for SSL/TLS
       if not uri.host or not uri.port then
-        DisplayOutputLn(("Can't get host name or port number from URI '%s'."):format(defaddress))
+        ide:Print(("Can't get host name or port number from URI '%s'."):format(defaddress))
       else
         local ok, err = isinstance(uri.host, uri.port, (password or uri.password))
         if ok then
@@ -1536,7 +1536,7 @@ local interpreter = {
           pkg:SetSettings({address = address})
           break
         elseif err then
-          DisplayOutputLn(("Can't connect to Redis instance '%s': %s."):format(defaddress, err))
+          ide:Print(("Can't connect to Redis instance '%s': %s."):format(defaddress, err))
           address = nil
         else -- cancelled authentication
           return
@@ -1573,8 +1573,8 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.28,
-  dependencies = 1.30,
+  version = 0.29,
+  dependencies = "1.30",
 
   onRegister = function(self)
     pkg = self

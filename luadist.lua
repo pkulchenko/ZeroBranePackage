@@ -150,8 +150,8 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.15,
-  dependencies = "1.0",
+  version = 0.16,
+  dependencies = "1.30",
 
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
@@ -164,7 +164,7 @@ return {
       local ok = pcall(require, 'git.core')
       wx.wxSetEnv("PATH", path)
       if not ok then
-        DisplayOutputLn("Couldn't find LuaDist dependency ('git.core'); 'luadist' commands may not work.")
+        ide:Print("Couldn't find LuaDist dependency ('git.core'); 'luadist' commands may not work.")
       end
     end
 
