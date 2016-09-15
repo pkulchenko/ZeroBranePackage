@@ -6,8 +6,8 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.16,
-  dependencies = "1.11",
+  version = 0.17,
+  dependencies = "1.20",
 
   onRegister = function() ide:AddIndicator(indicname) end,
   onUnRegister = function() ide:RemoveIndicator(indicname) end,
@@ -52,7 +52,7 @@ return {
     local flags = editor:GetSearchFlags()
     editor:SetSearchFlags(wxstc.wxSTC_FIND_WHOLEWORD + wxstc.wxSTC_FIND_MATCHCASE)
 
-    local pos = 0
+    local pos, num = 0, 0
     while true do
       editor:SetTargetStart(pos)
       editor:SetTargetEnd(length)
@@ -61,7 +61,9 @@ return {
 
       editor:IndicatorFillRange(pos, #value)
       pos = pos + #value
+      num = num + 1
     end
+    ide:SetStatusFor(("Found %d instance(s)."):format(num), 5)
     editor:SetSearchFlags(flags)
   end,
 }
