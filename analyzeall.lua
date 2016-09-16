@@ -12,7 +12,7 @@ end
 local function analyzeProject(self)
   local frame = ide:GetMainFrame()
   local menubar = ide:GetMenuBar()
-  if menubar:IsChecked(ID_CLEAROUTPUT) then ClearOutput() end
+  ide:GetOutput():Erase()
   ide:Print("Analyzing the project code.")
   frame:Update()
 
@@ -52,7 +52,7 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.41,
+  version = 0.42,
   dependencies = "1.3",
 
   onRegister = function(package)
