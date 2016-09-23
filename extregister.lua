@@ -7,21 +7,21 @@ local function setvalue(key, name, val)
   local k, err = winapi.create_reg_key(key)
   k, err = winapi.open_reg_key(key, true)
   if not k then
-    DisplayOutputLn(("Failed to create key %s: %s"):format(key, err))
+    ide:Print(("Failed to create key %s: %s"):format(key, err))
     return
   end
   if not k:set_value(name, val, winapi.REG_SZ) then
-    DisplayOutputLn(("Failed to update key %s"):format(key))
+    ide:Print(("Failed to update key %s"):format(key))
     return
   end
-  DisplayOutputLn(("Registered '%s'"):format(key))
+  ide:Print(("Registered '%s'"):format(key))
   return true
 end
 
 local function register()
   local exts = ide:GetKnownExtensions()
   if #exts == 0 then
-    DisplayOutputLn("No known extensions to register.")
+    ide:Print("No known extensions to register.")
     return
   end
 
@@ -30,7 +30,7 @@ local function register()
     "Register extensions", extensions)
 
   if #extensions == 0 then return end
-  DisplayOutputLn(("Registering extensions '%s' for the current user.")
+  ide:Print(("Registering extensions '%s' for the current user.")
     :format(extensions))
 
   if not setvalue([[HKEY_CURRENT_USER\Software\Classes\ZeroBrane.Studio\shell\edit\command]],
@@ -51,8 +51,8 @@ return {
   name = "Extension register",
   description = "Registers known extensions to launch the IDE on Windows.",
   author = "Paul Kulchenko",
-  version = 0.1,
-  dependencies = {0.81, osname = "Windows"},
+  version = 0.2,
+  dependencies = {"1.30", osname = "Windows"},
 
   onRegister = function(self)
     ide:AddTool("Register Known Extensions", register)
