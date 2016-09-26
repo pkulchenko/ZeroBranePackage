@@ -1,6 +1,5 @@
-local G = ...
-local id = G.ID("remoteedit.openremotefile")
-local lastfile, debugger = ""
+local id = ID("remoteedit.openremotefile")
+local lastfile = ""
 local editors = {}
 local function reportErr(err) return(err:gsub('.-:%d+:%s*','')) end
 
@@ -11,13 +10,12 @@ return {
   name = "Remote edit",
   description = "Allows to edit files remotely while debugging is in progress.",
   author = "Paul Kulchenko",
-  version = 0.12,
-  dependencies = 0.8,
+  version = 0.13,
+  dependencies = "1.40",
 
   onRegister = function(self)
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&File")))
     menu:Insert(2, id, "Open Remotely...")
-    debugger = ide.debugger
 
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED,
       function()
@@ -29,7 +27,10 @@ return {
         end
       end)
     ide:GetMainFrame():Connect(id, wx.wxEVT_UPDATE_UI,
-      function (event) event:Enable(debugger.server and not debugger.running) end)
+      function (event)
+        local debugger = ide:GetDebugger()
+        event:Enable(debugger:IsConnected() and not debugger:IsRunning())
+      end)
   end,
 
   onUnRegister = function(self)
@@ -40,7 +41,7 @@ return {
     editors[editor] = nil
   end,
 
-  onEditorPreSave = function(self, editor, filepath)
+  onEditorPreSave = function(self, editor)
     local remote = editors[editor]
     if remote and ide:GetDocument(editor):IsModified() then
       self:saveFile(remote, editor)
@@ -49,21 +50,21 @@ return {
   end,
 
   loadFile = function(self, remote)
-    if not debugger then return end
-    if not debugger.server or debugger.running then return end
+    local debugger = ide:GetDebugger()
+    if not debugger:IsConnected() or debugger:IsRunning() then return end
     local code = ([[(function() local f, err = io.open(%s); if not f then error(err) end; local c = f:read('*a'); f:close(); return c end)()]])
       :format(mobdebug.line(remote))
     copas.addthread(function()
-      local res, _, err = debugger.evaluate(code)
+      local debugger = ide:GetDebugger()
+      local res, _, err = debugger:evaluate(code)
       if err then
-        DisplayOutputLn(("Failed to load file '%s': %s.")
-          :format(remote, reportErr(err)))
+        ide:Print(("Failed to load file '%s': %s."):format(remote, reportErr(err)))
         return
       end
 
       local ok, content = LoadSafe("return "..res)
       if ok then
-        DisplayOutputLn(("Loaded file '%s'."):format(remote))
+        ide:Print(("Loaded file '%s'."):format(remote))
         self.onIdleOnce = function()
           local editor = NewFile("remote: "..remote)
           editor:SetText(content)
@@ -71,26 +72,24 @@ return {
           editors[editor] = remote
         end
       else
-        DisplayOutputLn(("Failed to load file '%s': %s.")
-          :format(remote, content))
+        ide:Print(("Failed to load file '%s': %s."):format(remote, content))
       end
     end)
   end,
 
   saveFile = function(self, remote, editor)
-    if not debugger then return end
-    if not debugger.server or debugger.running then return end
+    local debugger = ide:GetDebugger()
+    if not debugger:IsConnected() or debugger:IsRunning() then return end
     local content = editor:GetText()
     local code = ([[local f, err = io.open(%s, 'w'); if not f then error(err) end; f:write(%s); f:close()]])
       :format(mobdebug.line(remote), mobdebug.line(content))
     copas.addthread(function()
-      local err = select(3, debugger.execute(code))
+      local err = select(3, debugger:execute(code))
       if not err then
         editor:SetSavePoint()
-        DisplayOutputLn(("Saved file '%s'."):format(remote))
+        ide:Print(("Saved file '%s'."):format(remote))
       else
-        DisplayOutputLn(("Failed to save file '%s': %s.")
-          :format(remote, reportErr(err)))
+        ide:Print(("Failed to save file '%s': %s."):format(remote, reportErr(err)))
       end
     end)
   end,
