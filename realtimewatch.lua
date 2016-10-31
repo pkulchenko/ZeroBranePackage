@@ -1,12 +1,12 @@
-local lastrow, redirect, filter = {}
+local redirect, filter = {}
 local stats = {}
 
 return {
   name = "Real-time watches",
   description = "Displays real-time values during debugging.",
   author = "Paul Kulchenko",
-  version = 0.2,
-  dependencies = 0.71,
+  version = 0.3,
+  dependencies = "1.40",
 
   onRegister = function()
     local config = ide:GetConfig()
@@ -41,5 +41,9 @@ return {
     local config = ide:GetConfig()
     config.debugger.redirect = redirect
     config.debugger.outputfilter = filter
+  end,
+
+  onDebuggerLoad = function(self)
+    stats = {}
   end,
 }
