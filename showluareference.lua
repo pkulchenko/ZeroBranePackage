@@ -1,12 +1,11 @@
-local G = ...
-local id = G.ID("showluareference.showluareferencemenu")
-local menuid
+local id = ID("showluareference.showluareferencemenu")
 local ident = "([a-zA-Z_][a-zA-Z_0-9%.%:]*)"
 return {
   name = "Show lua reference",
   description = "Adds 'show lua reference' option to the editor menu.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
+  dependencies = "1.30",
 
   onMenuEditor = function(self, menu, editor, event)
     local point = editor:ScreenToClient(event:GetPosition())
