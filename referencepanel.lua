@@ -1,7 +1,6 @@
 -- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
-local G = ...
-local id = G.ID("referencepanel.referenceview")
+local id = ID("referencepanel.referenceview")
 local refpanel = "referencepanel"
 local refeditor
 local spec = {iscomment = {}}
@@ -9,8 +8,8 @@ return {
   name = "Show Reference in a panel",
   description = "Adds a panel for showing documentation based on tooltips.",
   author = "Paul Kulchenko",
-  version = 0.11,
-  dependencies = 0.81,
+  version = 0.2,
+  dependencies = "1.30",
 
   onRegister = function(self)
     local e = ide:CreateBareEditor()
@@ -46,7 +45,7 @@ return {
     -- disable dragging to the panel
     e:Connect(wxstc.wxEVT_STC_DO_DROP, function(event) event:SetDragResult(wx.wxDragNone) end)
 
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&View")))
+    local menu = ide:FindTopMenu("&View")
     menu:InsertCheckItem(4, id, TR("Reference Window")..KSC(id))
     menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function (event)
         local uimgr = ide:GetUIManager()
