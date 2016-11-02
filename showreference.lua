@@ -1,12 +1,11 @@
-local G = ...
-local id = G.ID("showreference.showreferencemenu")
-local menuid
+local id = ID("showreference.showreferencemenu")
 local ident = "([a-zA-Z_][a-zA-Z_0-9%.%:]*)"
 return {
   name = "Show reference",
   description = "Adds 'show reference' option to the editor menu.",
   author = "Paul Kulchenko",
-  version = 0.21,
+  version = 0.3,
+  dependencies = "1.30",
 
   onMenuEditor = function(self, menu, editor, event)
     local point = editor:ScreenToClient(event:GetPosition())
@@ -43,13 +42,12 @@ showreference = {
 
 or
 
-local G = ...
 showreference = {
   target = 'http://docs.coronalabs.com/api/%s.html',
   transform = function(s)
-    local tip = G.GetTipInfo(G.ide:GetEditor(), s)
+    local tip = GetTipInfo(ide:GetEditor(), s)
     if tip then s = tip:match("%)%s*(%S+)") or s end
-    s = (G.type(G[s]) == "function" and "global." or "")..s
+    s = (type(G[s]) == "function" and "global." or "")..s
     s = s..(s:find("[%.%:]") and "" or ".index")
     s = s:find("^_") and "type."..s:sub(2) or "library."..s
     return(s:gsub("[%.%:]","/"))
