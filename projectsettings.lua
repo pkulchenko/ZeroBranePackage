@@ -1,15 +1,14 @@
-local G = ...
-local id = G.ID("projectsettings.settingsmenu")
-local menuid
+local id = ID("projectsettings.settingsmenu")
 local filename
 return {
   name = "Project settings",
   description = "Adds project settings loaded on project switch.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.2,
+  dependencies = "1.30",
 
   onRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
+    local menu = ide:FindTopMenu("&Edit")
     local prefs = menu:FindItem(ID_PREFERENCES):GetSubMenu()
     menuid = prefs:Append(id, "Settings: Project")
 
@@ -28,10 +27,7 @@ return {
   end,
 
   onUnRegister = function(self)
-    local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Edit")))
-    local prefs = menu:FindItem(ID_PREFERENCES):GetSubMenu()
-    ide:GetMainFrame():Disconnect(id, wx.wxID_ANY, wx.wxID_ANY)
-    if menuid then prefs:Destroy(menuid) end
+    ide:RemoveMenuItem(id)
   end,
 
   onProjectPreLoad = function(self, project) ide:AddConfig(project, filename) end,
