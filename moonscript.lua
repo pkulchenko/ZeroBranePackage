@@ -38,8 +38,8 @@ local interpreter = {
         table.insert(paths, p)
       end
       if not exe then
-        DisplayOutput("Can't find moonscript executable in any of the following folders: "
-          ..table.concat(paths, ", ").."\n")
+        ide:Print("Can't find moonscript executable in any of the following folders: "
+          ..table.concat(paths, ", "))
         return
       end
     end
@@ -58,7 +58,7 @@ local interpreter = {
       filepath = tmpfile:GetFullPath()
       local f = io.open(filepath, "w")
       if not f then
-        DisplayOutput("Can't open temporary file '"..filepath.."' for writing\n")
+        ide:Print("Can't open temporary file '"..filepath.."' for writing.")
         return
       end
       f:write(init..rundebug)
@@ -163,8 +163,8 @@ return {
   name = "Moonscript",
   description = "Integration with Moonscript language",
   author = "Paul Kulchenko",
-  version = 0.31,
-  dependencies = 0.61,
+  version = 0.32,
+  dependencies = "1.30",
 
   onRegister = function(self)
     ide:AddInterpreter(name, interpreter)
