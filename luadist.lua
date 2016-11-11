@@ -106,7 +106,7 @@ local function run(plugin, command, ...)
         :format(ver, distarch, disttype)
       local ok, err = FileWrite(fakedist, distinfo)
       if not ok then
-        DisplayShellErr(("Can't write dist.info file to '%s': %s")
+        ide:GetConsole():Error(("Can't write dist.info file to '%s': %s")
           :format(fakedist, err))
         return
       end
@@ -115,7 +115,7 @@ local function run(plugin, command, ...)
   end
 
   if command ~= 'help' then
-    DisplayShell(("Running '%s' for Lua %s in '%s'."):format(command, ver, root))
+    ide:GetConsole():Print(("Running '%s' for Lua %s in '%s'."):format(command, ver, root))
   end
 
   local cmd = ('"%s" -e "%s"'):format(
@@ -150,8 +150,8 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.16,
-  dependencies = "1.30",
+  version = 0.20,
+  dependencies = "1.40",
 
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;
