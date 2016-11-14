@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.29,
+  version = 0.30,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1742,7 +1742,7 @@ for key, command in pairs({continue = 'C', step = 'S', breakpoint = 'B', maxlen 
 end
 
 -- connect to redis instance
-local ok, err = pcall(redis.connect, {host = host, port = port, timeout = 5.5})
+local ok, err = pcall(redis.connect, {host = host, port = port, timeout = nil})
 check(ok, ("Can't connect to Redis instance '%s': %s.")
   :format(instance, type(err) == "string" and err:match("%[(.+)%]" or "Unknown error")))
 local client = err
