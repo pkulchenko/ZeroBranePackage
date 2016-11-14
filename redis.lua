@@ -1544,7 +1544,7 @@ local interpreter = {
       end
     end
 
-    if rundebug then DebuggerAttachDefault() end
+    if rundebug then ide:GetDebugger():SetOptions() end
     local pkgcfg = pkg:GetConfig()
     local redis = " --instance "..address
     local controller = " --controller "..ide:GetDebugger():GetHostName()..":"..ide:GetDebugger():GetPortNumber()
@@ -1563,7 +1563,7 @@ local interpreter = {
     return CommandLineRun(cmd,self:fworkdir(wfilename),true,false)
   end,
   hasdebugger = true,
-  fattachdebug = function(self) DebuggerAttachDefault() end,
+  fattachdebug = function(self) ide:GetDebugger():SetOptions() end,
   unhideanywindow = false,
   takeparameters = true,
 }
@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.30,
+  version = 0.31,
   dependencies = "1.30",
 
   onRegister = function(self)
