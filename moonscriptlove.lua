@@ -66,7 +66,7 @@ local interpreter = {
 
     local filepath = wfilename:GetFullPath()
     if rundebug then
-      DebuggerAttachDefault({
+      ide:GetDebugger():SetOptions({
           init = init,
           runstart = ide.config.debugger.runonstart == true,
       })
@@ -111,7 +111,7 @@ local interpreter = {
       end)
   end,
   hasdebugger = true,
-  fattachdebug = function(self) DebuggerAttachDefault({init = init}) end,
+  fattachdebug = function(self) ide:GetDebugger():SetOptions({init = init}) end,
   skipcompile = true,
   unhideanywindow = true,
   takeparameters = true,
@@ -185,8 +185,8 @@ return {
   name = "Moonscript LÖVE",
   description = "Compile and run Moonscript with LÖVE",
   author = "Paul Kulchenko, Dominik \"Zatherz\" Banaszak",
-  version = 0.31,
-  dependencies = "1.30",
+  version = 0.32,
+  dependencies = "1.40",
 
   onRegister = function(self)
     ide:AddInterpreter(name, interpreter)
