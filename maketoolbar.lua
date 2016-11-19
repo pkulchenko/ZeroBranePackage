@@ -11,7 +11,7 @@ return {
     local menu = ide:FindTopMenu("&Project")
     menu:Append(id, "Make")
     ide:GetMainFrame():Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function()
-        ide:ExecuteCommand('make', ide:GetProject(), function(s) DisplayOutput(s) end)
+        ide:ExecuteCommand('make', ide:GetProject(), function(s) ide:GetOutput():Write(s) end)
       end)
 
     local tb = ide:GetToolBar()
