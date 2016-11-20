@@ -6,16 +6,23 @@ local interpreter = {
   skipcompile = true,
 }
 
--- This is an automatically generated Lua API definition generated for release-20160508 of OpenRA.
+-- This is an automatically generated Lua API definition generated for release-20161019 of OpenRA.
 -- https://github.com/OpenRA/OpenRA/wiki/Utility was used with the --zbstudio-lua-api parameter.
 -- See https://github.com/OpenRA/OpenRA/wiki/Lua-API for human readable documentation.
+
 local api = {
   Actor = {
     type = "class",
     childs = {
       BuildTime = {
         type = "function",
-        description = [[Returns the build time (in ticks) of the requested unit type.]],
+        description = [[Returns the build time (in ticks) of the requested unit type.
+An optional second value can be used to exactly specify the producing queue type.]],
+        args = "(string type, string queue = nil)",
+        returns = "(int)",
+      },
+      Cost = {
+        type = "function",
         args = "(string type)",
         returns = "(int)",
       },
@@ -39,7 +46,7 @@ local api = {
       New = {
         type = "function",
         description = [[Creates a new beacon that stays for the specified time at the specified WPos. Does not remove player set beacons, nor gets removed by placing them.]],
-        args = "(Player owner, WPos position, int duration = 750, bool showRadarPings = True, string palettePrefix = player)",
+        args = "(Player owner, WPos position, int duration = 750, bool showRadarPings = True)",
         returns = "(Beacon)",
       },
     }
@@ -306,6 +313,10 @@ local api = {
         args = "(WPos location, WDist radius, LuaFunction filter = nil)",
         returns = "(Actor[])",
       },
+      ActorsInWorld = {
+        type = "value",
+        description = [[Returns a table of all the actors that are currently on the map/in the world.]],
+      },
       ActorsWithTag = {
         type = "function",
         description = [[Returns a table of all actors tagged with the given string.]],
@@ -348,6 +359,12 @@ matching the filter function called as function(CPos cell).]],
       IsSinglePlayer = {
         type = "value",
         description = [[Returns true if there is only one human player.]],
+      },
+      LobbyOption = {
+        type = "function",
+        description = [[Returns the value of a `ScriptLobbyDropdown` selected in the game lobby.]],
+        args = "(string id)",
+        returns = "(LuaValue)",
       },
       NamedActor = {
         type = "function",
@@ -729,6 +746,12 @@ matching the filter function called as function(CPos cell).]],
         args = "(int low, int high)",
         returns = "(int)",
       },
+      Shuffle = {
+        type = "function",
+        description = [[Returns the collection in a random order.]],
+        args = "(LuaValue[] collection)",
+        returns = "(LuaValue[])",
+      },
       Skip = {
         type = "function",
         description = [[Skips over the first numElements members of a table and return the rest.]],
@@ -740,6 +763,12 @@ matching the filter function called as function(CPos cell).]],
         description = [[Returns the first n values from a collection.]],
         args = "(int n, LuaValue[] source)",
         returns = "(LuaValue[])",
+      },
+      Where = {
+        type = "function",
+        description = [[Returns the original collection filtered with the func.]],
+        args = "(LuaValue[] collection, LuaFunction func)",
+        returns = "(LuaTable)",
       },
     }
   },
@@ -831,6 +860,12 @@ matching the filter function called as function(CPos cell).]],
     args = "(string tag)",
     returns = "(bool)",
   },
+  AmmoCount = {
+    type = "function",
+    description = [[Returns the count of the actor's specified ammopool.]],
+    args = "(string poolName = primary)",
+    returns = "(int)",
+  },
   Attack = {
     type = "function",
     description = [[Attack the target actor. The target actor needs to be visible.]],
@@ -855,11 +890,25 @@ matching the filter function called as function(CPos cell).]],
     args = "(String[] actorTypes, LuaFunction actionFunc = nil)",
     returns = "(bool)",
   },
+  BuildingsKilled = {
+    type = "value",
+    description = [[The total number of buildings killed by this player.]],
+  },
+  BuildingsLost = {
+    type = "value",
+    description = [[The total number of buildings lost by this player.]],
+  },
   CallFunc = {
     type = "function",
     description = [[Run an arbitrary Lua function.]],
     args = "(LuaFunction func)",
     returns = "(void)",
+  },
+  CanTarget = {
+    type = "function",
+    description = [[Checks if the targeted actor is a valid target for this actor.]],
+    args = "(Actor targetActor)",
+    returns = "(bool)",
   },
   Capture = {
     type = "function",
@@ -884,6 +933,10 @@ matching the filter function called as function(CPos cell).]],
   Color = {
     type = "value",
     description = [[The player's color.]],
+  },
+  DeathsCost = {
+    type = "value",
+    description = [[The combined value of all units lost by this player.]],
   },
   Demolish = {
     type = "function",
@@ -921,6 +974,9 @@ matching the filter function called as function(CPos cell).]],
     args = "(Actor transport)",
     returns = "(void)",
   },
+  Experience = {
+    type = "value",
+  },
   Facing = {
     type = "value",
     description = [[The direction that the actor is facing.]],
@@ -934,6 +990,12 @@ matching the filter function called as function(CPos cell).]],
     description = [[Search for nearby resources and begin harvesting.]],
     args = "()",
     returns = "(void)",
+  },
+  GetActors = {
+    type = "function",
+    description = [[Returns all living actors staying inside the world for this player.]],
+    args = "()",
+    returns = "(Actor[])",
   },
   GetActorsByType = {
     type = "function",
@@ -1097,6 +1159,16 @@ matching the filter function called as function(CPos cell).]],
     args = "()",
     returns = "(void)",
   },
+  KillsCost = {
+    type = "value",
+    description = [[The combined value of units killed by this player.]],
+  },
+  Land = {
+    type = "function",
+    description = [[Queues a landing activity on the specififed actor.]],
+    args = "(Actor landOn)",
+    returns = "(void)",
+  },
   LoadPassenger = {
     type = "function",
     description = [[Teleport an existing actor inside this transport.]],
@@ -1122,6 +1194,12 @@ matching the filter function called as function(CPos cell).]],
   MaxHealth = {
     type = "value",
     description = [[Maximum health of the actor.]],
+  },
+  MaximumAmmoCount = {
+    type = "function",
+    description = [[Returns the maximum count of ammo the actor can load.]],
+    args = "(string poolName = primary)",
+    returns = "(int)",
   },
   Move = {
     type = "function",
@@ -1154,6 +1232,10 @@ matching the filter function called as function(CPos cell).]],
     description = [[Command transport to paradrop passengers near the target cell.]],
     args = "(CPos cell)",
     returns = "(void)",
+  },
+  PassengerCount = {
+    type = "value",
+    description = [[Specifies the amount of passengers.]],
   },
   Patrol = {
     type = "function",
@@ -1197,6 +1279,13 @@ matching the filter function called as function(CPos cell).]],
     type = "value",
     description = [[Query or set a factory's rally point.]],
   },
+  Reload = {
+    type = "function",
+    description = [[Adds the specified amount of ammo to the specified ammopool.
+(Use a negative amount to remove ammo.)]],
+    args = "(string poolName = primary, int amount = 1)",
+    returns = "(void)",
+  },
   RemoveTag = {
     type = "function",
     description = [[Remove a tag from the actor. Returns true on success, false otherwise (tag was not present).]],
@@ -1210,6 +1299,12 @@ matching the filter function called as function(CPos cell).]],
   Resources = {
     type = "value",
     description = [[The amount of harvestable resources held by the player.]],
+  },
+  Resupply = {
+    type = "function",
+    description = [[Starts the resupplying activity when being on a host building.]],
+    args = "()",
+    returns = "(void)",
   },
   ReturnToBase = {
     type = "function",
@@ -1235,16 +1330,34 @@ matching the filter function called as function(CPos cell).]],
     args = "(CPos cell)",
     returns = "(void)",
   },
+  Sell = {
+    type = "function",
+    description = [[Start selling the actor.]],
+    args = "()",
+    returns = "(void)",
+  },
   SendAirstrike = {
     type = "function",
     description = [[Activate the actor's Airstrike Power.]],
     args = "(WPos target, bool randomize = True, int facing = 0)",
     returns = "(void)",
   },
+  SendAirstrikeFrom = {
+    type = "function",
+    description = [[Activate the actor's Airstrike Power.]],
+    args = "(CPos from, CPos to)",
+    returns = "(void)",
+  },
   SendParatroopers = {
     type = "function",
     description = [[Activate the actor's Paratroopers Power. Returns the dropped units.]],
     args = "(WPos target, bool randomize = True, int facing = 0)",
+    returns = "(Actor[])",
+  },
+  SendParatroopersFrom = {
+    type = "function",
+    description = [[Activate the actor's Paratroopers Power. Returns the dropped units.]],
+    args = "(CPos from, CPos to)",
     returns = "(Actor[])",
   },
   Spawn = {
@@ -1293,6 +1406,14 @@ matching the filter function called as function(CPos cell).]],
     type = "value",
     description = [[The type of the actor (e.g. "e1").]],
   },
+  UnitsKilled = {
+    type = "value",
+    description = [[The total number of units killed by this player.]],
+  },
+  UnitsLost = {
+    type = "value",
+    description = [[The total number of units lost by this player.]],
+  },
   UnloadPassenger = {
     type = "function",
     description = [[Remove the first actor from the transport.  This actor is not added to the world.]],
@@ -1317,7 +1438,7 @@ return {
   name = "OpenRA",
   description = "API description for auto-complete and tooltip support",
   author = "Matthias Mailänder",
-  version = 20160508,
+  version = 20161019,
 
   onRegister = function(self)
     ide:AddAPI("lua", "openra", api)
