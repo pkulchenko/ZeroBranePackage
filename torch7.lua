@@ -106,7 +106,7 @@ local qluaInterpreter = {
     local filepath = wfilename:GetFullPath()
     local script
     if rundebug then
-      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
+      ide:GetDebugger():SetOptions({runstart = ide.config.debugger.runonstart == true, init = debinit})
       script = rundebug
     else
       -- if running on Windows and can't open the file, this may mean that
@@ -129,7 +129,7 @@ local qluaInterpreter = {
     return pid
   end,
   hasdebugger = true,
-  fattachdebug = function(self) DebuggerAttachDefault() end,
+  fattachdebug = function(self) ide:GetDebugger():SetOptions() end,
   scratchextloop = true,
 }
 
@@ -144,7 +144,7 @@ local torchInterpreter = {
 
     local filepath = wfilename:GetFullPath()
     if rundebug then
-      DebuggerAttachDefault({runstart = ide.config.debugger.runonstart == true, init = debinit})
+      ide:GetDebugger():SetOptions({runstart = ide.config.debugger.runonstart == true, init = debinit})
       -- update arg to point to the proper file
       rundebug = ('if arg then arg[0] = [[%s]] end '):format(filepath)..rundebug
 
@@ -180,7 +180,7 @@ local torchInterpreter = {
       function() if rundebug then wx.wxRemoveFile(filepath) end end)
   end,
   hasdebugger = true,
-  fattachdebug = function(self) DebuggerAttachDefault() end,
+  fattachdebug = function(self) ide:GetDebugger():SetOptions() end,
   scratchextloop = true,
   takeparameters = true,
 }
@@ -189,8 +189,8 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.55,
-  dependencies = "1.30",
+  version = 0.56,
+  dependencies = "1.40",
 
   onRegister = function(self)
     ide:AddInterpreter("torch", torchInterpreter)
