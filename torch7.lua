@@ -129,7 +129,12 @@ local qluaInterpreter = {
     return pid
   end,
   hasdebugger = true,
-  fattachdebug = function(self) ide:GetDebugger():SetOptions() end,
+  fattachdebug = function(self)
+    ide:GetDebugger():SetOptions({
+        runstart = ide.config.debugger.runonstart == true,
+        init = debinit
+    })
+  end,
   scratchextloop = true,
 }
 
@@ -180,7 +185,12 @@ local torchInterpreter = {
       function() if rundebug then wx.wxRemoveFile(filepath) end end)
   end,
   hasdebugger = true,
-  fattachdebug = function(self) ide:GetDebugger():SetOptions() end,
+  fattachdebug = function(self)
+    ide:GetDebugger():SetOptions({
+        runstart = ide.config.debugger.runonstart == true,
+        init = debinit
+    })
+  end,
   scratchextloop = true,
   takeparameters = true,
 }
@@ -189,7 +199,7 @@ return {
   name = "Torch7",
   description = "Integration with torch7 environment",
   author = "Paul Kulchenko",
-  version = 0.56,
+  version = 0.57,
   dependencies = "1.40",
 
   onRegister = function(self)
