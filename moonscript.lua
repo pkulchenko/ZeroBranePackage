@@ -95,84 +95,19 @@ local interpreter = {
   takeparameters = true,
 }
 
-local spec = {
-  exts = {"moon"},
-  lexer = wxstc.wxSTC_LEX_COFFEESCRIPT,
-  apitype = "lua",
-  linecomment = "--",
-  sep = ".\\",
-
-  -- borrow this logic from the Lua spec
-  typeassigns = ide.specs.lua and ide.specs.lua.typeassigns,
-
-  lexerstyleconvert = {
-    text = {wxstc.wxSTC_COFFEESCRIPT_IDENTIFIER,},
-
-    lexerdef = {wxstc.wxSTC_COFFEESCRIPT_DEFAULT,},
-    comment = {wxstc.wxSTC_COFFEESCRIPT_COMMENT,
-      wxstc.wxSTC_COFFEESCRIPT_COMMENTLINE,
-      wxstc.wxSTC_COFFEESCRIPT_COMMENTDOC,},
-    stringtxt = {wxstc.wxSTC_COFFEESCRIPT_STRING,
-      wxstc.wxSTC_COFFEESCRIPT_CHARACTER,
-      wxstc.wxSTC_COFFEESCRIPT_LITERALSTRING,},
-    stringeol = {wxstc.wxSTC_COFFEESCRIPT_STRINGEOL,},
-    preprocessor= {wxstc.wxSTC_COFFEESCRIPT_PREPROCESSOR,},
-    operator = {wxstc.wxSTC_COFFEESCRIPT_OPERATOR,},
-    number = {wxstc.wxSTC_COFFEESCRIPT_NUMBER,},
-
-    keywords0 = {wxstc.wxSTC_COFFEESCRIPT_WORD,},
-    keywords1 = {wxstc.wxSTC_COFFEESCRIPT_WORD2,},
-    keywords2 = {wxstc.wxSTC_COFFEESCRIPT_GLOBALCLASS,},
-  },
-
-  keywords = {
-    [[and break do else elseif end for function if in not or repeat return then until while local ]]
-    ..[[super with import export class extends from using continue switch when]],
-
-    [[_G _VERSION _ENV false io.stderr io.stdin io.stdout nil math.huge math.pi self true]],
-
-    [[]],
-
-    [[assert collectgarbage dofile error getfenv getmetatable ipairs load loadfile loadstring
-      module next pairs pcall print rawequal rawget rawlen rawset require
-      select setfenv setmetatable tonumber tostring type unpack xpcall
-      bit32.arshift bit32.band bit32.bnot bit32.bor bit32.btest bit32.bxor bit32.extract
-      bit32.lrotate bit32.lshift bit32.replace bit32.rrotate bit32.rshift
-      coroutine.create coroutine.resume coroutine.running coroutine.status coroutine.wrap coroutine.yield
-      debug.debug debug.getfenv debug.gethook debug.getinfo debug.getlocal
-      debug.getmetatable debug.getregistry debug.getupvalue debug.getuservalue debug.setfenv
-      debug.sethook debug.setlocal debug.setmetatable debug.setupvalue debug.setuservalue
-      debug.traceback debug.upvalueid debug.upvaluejoin
-      io.close io.flush io.input io.lines io.open io.output io.popen io.read io.tmpfile io.type io.write
-      close flush lines read seek setvbuf write
-      math.abs math.acos math.asin math.atan math.atan2 math.ceil math.cos math.cosh math.deg math.exp
-      math.floor math.fmod math.frexp math.ldexp math.log math.log10 math.max math.min math.modf
-      math.pow math.rad math.random math.randomseed math.sin math.sinh math.sqrt math.tan math.tanh
-      os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname
-      package.loadlib package.searchpath package.seeall package.config
-      package.cpath package.loaded package.loaders package.path package.preload package.searchers
-      string.byte string.char string.dump string.find string.format string.gmatch string.gsub string.len
-      string.lower string.match string.rep string.reverse string.sub string.upper
-      byte find format gmatch gsub len lower match rep reverse sub upper
-      table.concat table.insert table.maxn table.pack table.remove table.sort table.unpack]]
-  },
-}
-
 local name = 'moonscript'
 return {
   name = "Moonscript",
   description = "Integration with Moonscript language",
   author = "Paul Kulchenko",
-  version = 0.33,
-  dependencies = "1.40",
+  version = 0.34,
+  dependencies = "1.60",
 
   onRegister = function(self)
     ide:AddInterpreter(name, interpreter)
-    ide:AddSpec(name, spec)
   end,
   onUnRegister = function(self)
     ide:RemoveInterpreter(name)
-    ide:RemoveSpec(name)
   end,
 }
 
