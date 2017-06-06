@@ -1,7 +1,6 @@
 -- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- TODO: on select, go to the relevant line
-local G = ...
-local id = G.ID("TODOpanel.referenceview")
+local id = ID("TODOpanel.referenceview")
 local TODOpanel = "TODOpanel"
 local refeditor
 local spec = {iscomment = {}}
@@ -47,12 +46,11 @@ local function mapTODOS(self,editor,event)
 
 end
 
-
 return {
   name = "Show TODO panel",
   description = "Adds a panel for showing a tasks list",
   author = "Mark Fainstein",
-  version = 1.0,
+  version = 1.1,
   dependencies = 0.81,
 
   onRegister = function(self)
@@ -111,16 +109,11 @@ return {
     ide:RemoveMenuItem(id)
   end,
 
-   onEditorFocusSet = function(self, editor, event)
-     mapTODOS(self,editor,event)
-   end,
+  onEditorFocusSet = function(self, editor, event)
+    mapTODOS(self,editor,event)
+  end,
 
-    onEditorCharAdded = function(self, editor, event)
+  onEditorCharAdded = function(self, editor, event)
     mapTODOS(self, editor, event)
-
-
-end,
-
-
-
-  }
+  end,
+}
