@@ -3,7 +3,7 @@ return {
   name = "Local Lua help",
   description = "Adds local help option to the menu.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -19,3 +19,7 @@ return {
     ide:RemoveMenuItem(id)
   end,
 }
+
+--[[ configuration example:
+localhelpmenu = {index = "file:///D:/my/Lua/manual/index.html"}
+--]]
