@@ -1,15 +1,18 @@
 -- Copyright 2015-16 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
-local updateneeded
+local updateneeded, cfg
 local indicname = "highlightselected.selected"
 return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.17,
+  version = 0.18,
   dependencies = "1.20",
 
-  onRegister = function() ide:AddIndicator(indicname) end,
+  onRegister = function(package)
+    ide:AddIndicator(indicname)
+    cfg = package:GetConfig()
+  end,
   onUnRegister = function() ide:RemoveIndicator(indicname) end,
 
   onEditorUpdateUI = function(self, editor, event)
@@ -42,8 +45,9 @@ return {
     if value ~= word then return clearIndicator() end
 
     local style = bit.band(editor:GetStyleAt(editor:GetSelectionStart()),31)
-    local color = editor:StyleGetForeground(style)
-    editor:IndicatorSetStyle(indicator, wxstc.wxSTC_INDIC_BOX)
+    local color = cfg and type(cfg.color) == "table" and #(cfg.color) == 3 and
+      wx.wxColour((table.unpack or unpack)(cfg.color)) or editor:StyleGetForeground(style)
+    editor:IndicatorSetStyle(indicator, cfg and cfg.indicator or wxstc.wxSTC_INDIC_ROUNDBOX)
     editor:IndicatorSetForeground(indicator, color)
     editor:SetIndicatorCurrent(indicator)
     editor:IndicatorClearRange(0, length)
@@ -67,3 +71,7 @@ return {
     editor:SetSearchFlags(flags)
   end,
 }
+
+--[[ configuration example:
+highlightselected = {indicator = wxstc.wxSTC_INDIC_ROUNDBOX, color = {255, 0, 0}}
+--]]
