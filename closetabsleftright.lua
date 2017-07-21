@@ -11,7 +11,7 @@ return {
 
     menu:AppendSeparator()
     menu:Append(idleft, "Close All on Left")
-    menu:Append(idright, "Clone All on Right")
+    menu:Append(idright, "Close All on Right")
     menu:Enable(idleft, index > 0)
     menu:Enable(idright, index < notebook:GetPageCount()-1)
     notebook:Connect(idleft, wx.wxEVT_COMMAND_MENU_SELECTED, function()
