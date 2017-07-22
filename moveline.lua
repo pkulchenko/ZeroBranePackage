@@ -35,6 +35,7 @@ return {
       editor:ReplaceTarget(line)
       if pos == current then editor:SetCurrentPos(editor:GetCurrentPos()-1) end
       if pos == anchor then editor:SetAnchor(editor:GetAnchor()-1) end
+      editor:EnsureCaretVisible()
       editor:EndUndoAction()
 
       return false -- don't apply "default" handling
