@@ -59,7 +59,7 @@ local function MakeCuberiteInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			-- Force ZBS not to hide Cuberite window, save and restore previous state:
 			local SavedUnhideConsoleWindow = ide.config.unhidewindow.ConsoleWindowClass
 			ide.config.unhidewindow.ConsoleWindowClass = 1  -- show if hidden
-			
+
 			-- Create the !EnableMobDebug.lua file so that the Cuberite plugin starts the debugging session, when loaded:
 			local EnablerPath = wx.wxFileName(wfilename)
 			EnablerPath:SetName("!EnableMobDebug")
@@ -120,7 +120,7 @@ end
 
 				-- Restore the Unhide status:
 				ide.config.unhidewindow.ConsoleWindowClass = SavedUnhideConsoleWindow
-			
+
 				-- Remove the !EnableMobDebug.lua file:
 				os.remove(EnablerPath:GetFullPath())
 			end
@@ -150,7 +150,7 @@ local function analyzeProject()
 		ide:GetOutput():Write("No project path has been defined.\n")
 		return
 	end
-	
+
 	-- Get a list of all the files in the order in which Cuberite loads them (Info.lua is always last):
 	local files = {}
 	for _, filePath in ipairs(FileSysGetRecursive(projectPath, false, "*.lua")) do
@@ -167,14 +167,14 @@ local function analyzeProject()
 			end
 		end
 	)
-	
+
 	-- List all files in the console:
 	ide:GetOutput():Write("Files for analysis:\n")
 	for _, file in ipairs(files) do
 		ide:GetOutput():Write(file .. "\n")
 	end
 	ide:GetOutput():Write("Analyzing...\n")
-	
+
 	-- Concatenate all the files, remember their line begin positions:
 	local lineBegin = {}  -- array of {File = "filename", LineBegin = <linenum>, LineEnd = <linenum>}
 	local whole = {}  -- array of individual files' contents
@@ -191,14 +191,14 @@ local function analyzeProject()
 		curLineBegin = curLineBegin + lastLineNum + 2
 		table.insert(whole, table.concat(curFile, "\n"))
 	end
-	
+
 	-- Analyze the concatenated files:
 	local warn, err, line, pos = AnalyzeString(table.concat(whole, "\n"))
 	if (err) then
 		ide:GetOutput():Write("Error: " .. err .. "\n")
 		return
 	end
-	
+
 	-- Function that translates concatenated-linenums back into source + linenum
 	local function findSourceByLine(a_LineNum)
 		for _, begin in ipairs(lineBegin) do
@@ -207,7 +207,7 @@ local function analyzeProject()
 			end
 		end
 	end
-	
+
 	-- Parse the analysis results back to original files:
 	for _, w in ipairs(warn) do
 		local wtext = w:gsub("^<string>:(%d*):(.*)",
@@ -230,7 +230,7 @@ local function runInfoDump()
 		ide:GetOutput():Write("No project path has been defined.\n")
 		return
 	end
-	
+
 	-- Get the path to InfoDump.lua file, that is one folder up from the current project:
 	local dumpScriptPath = wx.wxFileName(projectPath)
 	local pluginName = dumpScriptPath:GetDirs()[#dumpScriptPath:GetDirs()]
@@ -243,7 +243,7 @@ local function runInfoDump()
 		ide:GetOutput():Write("The InfoDump.lua script was not found (tried " .. fullPath .. ")\n")
 		return
 	end
-	
+
 	-- Execute the script:
 	local cmd = "lua " .. fullPath .. " " .. pluginName
 	CommandLineRun(
@@ -255,10 +255,6 @@ local function runInfoDump()
 	ide:GetOutput():Write("The InfoDump.lua script was executed.\n")
 end
 
-
-
-
-
 return {
 	name = "Cuberite integration",
 	description = "Integration with Cuberite - the custom C++ minecraft server.",
@@ -268,7 +264,7 @@ return {
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
 	InfoDumpMenuID = ID("project.cuberite_infodump"),
-	
+
 	onRegister = function(self)
 		-- Add the interpreters
 		self.InterpreterDebug   = MakeCuberiteInterpreter(self, " - debug mode",   "_debug")
@@ -282,7 +278,7 @@ return {
 			menu:Insert(pos + 1, self.AnalysisMenuID, TR("Analyze as Cuberite") .. KSC(id), TR("Analyze the project source code as Cuberite"))
 			ide:GetMainFrame():Connect(self.AnalysisMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, analyzeProject)
 		end
-		
+
 		-- Add the InfoDump menu item:
 		_, menu, pos = ide:FindMenuItem(ID_INTERPRETER)
 		if (pos) then
@@ -291,12 +287,12 @@ return {
 			ide:GetMainFrame():Connect(self.InfoDumpMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, runInfoDump)
 		end
 	end,
-	
+
 	onUnRegister = function(self)
 		-- Remove the interpreters:
 		ide:RemoveInterpreter("cuberite_debug")
 		ide:RemoveInterpreter("cuberite_release")
-		
+
 		-- Remove the menu items:
 		ide:RemoveMenuItem(self.AnalysisMenuID)
 		ide:RemoveMenuItem(self.InfoDumpMenuID)
