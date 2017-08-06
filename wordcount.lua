@@ -53,7 +53,7 @@ local function showWordCount(event)
         sv = sv + v -- syllables
       end
     end
-    -- skip sentences without workds; this excludes `1.` from `1. Some Text` and `.2` from `Section 1.2.`
+    -- skip sentences without words; this excludes `1.` from `1. Some Text` and `.2` from `Section 1.2.`
     if sw > osw then -- if this sentence has any words
       sn = sn + 1 -- sentences
       sa = sa + #sentence -- total chars in sentences
