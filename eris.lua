@@ -109,10 +109,8 @@ return {
 	version = 0.1,
 	onRegister = function()
 		ide:AddInterpreter( 'eris53', makeErisInterpreter(5.3, '5.3', 'eris'))
-		ide:AddInterpreter( 'eris53', makeErisInterpreter(5.3, '5.3', 'eris'))
 	end,
 	onUnRegister = function()
 		ide:RemoveInterpreter( 'eris53' )
 	end,
-	--TODO: ????
 }
