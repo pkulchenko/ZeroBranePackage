@@ -9,44 +9,44 @@ local TODOTable = {}
 
 local function mapTODOS(self,editor,event)
 
-	local tasksListStr = "Tasks List: \n\n"
-	local lineCounter = 2
-	local positions = {}
+  local tasksListStr = "Tasks List: \n\n"
+  local lineCounter = 2
+  local positions = {}
 
-	local function insertLine(line, pos)
-		tasksListStr = tasksListStr .. line
-		lineCounter = lineCounter + 1
-		positions[lineCounter] = pos
-	end
+  local function insertLine(line, pos)
+    tasksListStr = tasksListStr .. line
+    lineCounter = lineCounter + 1
+    positions[lineCounter] = pos
+  end
 
-    local text = editor:GetText()
-    local i = 0
-    local counter = 1
+  local text = editor:GetText()
+  local i = 0
+  local counter = 1
 
-    while true do
+  while true do
 
-        --find next todo index
-        i = string.find(text, "TODO:", i+1)
-        if i == nil then
-            refeditor:SetReadOnly(false)
-            refeditor:SetText(tasksListStr)
-            refeditor:SetReadOnly(true)
-            break
-        end
-        j = string.find(text, "\n",i+1)
-        local taskStr = string.sub(text, i+5,j)
-        insertLine(tostring(counter).."."..taskStr, i)
-        counter = counter+1
+    --find next todo index
+    i = string.find(text, "TODO:", i+1)
+    if i == nil then
+      refeditor:SetReadOnly(false)
+      refeditor:SetText(tasksListStr)
+      refeditor:SetReadOnly(true)
+      break
     end
+    j = string.find(text, "\n",i+1)
+    local taskStr = string.sub(text, i+5,j)
+    insertLine(tostring(counter).."."..taskStr, i)
+    counter = counter+1
+  end
 
-    --On click of a task, go to relevant position in the text
-    refeditor:Connect(wxstc.wxEVT_STC_DOUBLECLICK,
+  --On click of a task, go to relevant position in the text
+  refeditor:Connect(wxstc.wxEVT_STC_DOUBLECLICK,
     function(event)
-        local line = refeditor:GetCurrentLine() +1
-		local position = positions[line]
-		if not position then return end
-		editor:GotoPosEnforcePolicy(position - 1)
-		if not ide:GetEditorWithFocus(editor) then ide:GetDocument(editor):SetActive() end
+      local line = refeditor:GetCurrentLine() +1
+      local position = positions[line]
+      if not position then return end
+      editor:GotoPosEnforcePolicy(position - 1)
+      if not ide:GetEditorWithFocus(editor) then ide:GetDocument(editor):SetActive() end
     end)
 
 end
