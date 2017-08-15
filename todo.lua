@@ -4,8 +4,6 @@ local id = ID("TODOpanel.referenceview")
 local TODOpanel = "TODOpanel"
 local refeditor
 local spec = {iscomment = {}}
-local TODOTable = {}
---TODO: hello ()
 
 local function mapTODOS(self,editor,event)
 
@@ -33,7 +31,7 @@ local function mapTODOS(self,editor,event)
       refeditor:SetReadOnly(true)
       break
     end
-    j = string.find(text, "\n",i+1)
+    local j = string.find(text, "\n",i+1)
     local taskStr = string.sub(text, i+5,j)
     insertLine(tostring(counter).."."..taskStr, i)
     counter = counter+1
@@ -55,7 +53,7 @@ return {
   name = "Show TODO panel",
   description = "Adds a panel for showing a tasks list",
   author = "Mark Fainstein",
-  version = 1.2,
+  version = 1.21,
   dependencies = 0.81,
 
   onRegister = function(self)
