@@ -15,7 +15,7 @@ return {
   name = "Syntax check while typing",
   description = "Reports syntax errors while typing (on Enter)",
   author = "Paul Kulchenko",
-  version = 0.3,
+  version = 0.4,
   dependencies = 1.11,
 
   -- use the file name as the marker name to avoid conflicts
@@ -27,10 +27,11 @@ return {
 
   onEditorCharAdded = function(self, editor, event)
     if lasterr then clean(editor); lasterr = nil end
-    if string.char(event:GetKey()) ~= "\n" then return end
+    local keycode = event:GetKey()
+    if keycode > 255 or string.char(keycode) ~= "\n" then return end
 
     local text = editor:GetText():gsub("^#!.-\n", "\n")
-    local func, err = loadstring(text, ide:GetDocument(editor):GetFileName())
+    local _, err = loadstring(text, ide:GetDocument(editor):GetFileName())
 
     if err then
       local line1, err = err:match(":(%d+)%s*:(.+)")
