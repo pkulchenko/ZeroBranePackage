@@ -27,3 +27,7 @@ Paul Kulchenko (paul@kulchenko.com)
 ## License
 
 See [LICENSE](LICENSE).
+
+## Plugin descriptions
+
+May be found [here](https://github.com/pkulchenko/ZeroBranePackage/blob/master/DESCRIPTIONS.md)

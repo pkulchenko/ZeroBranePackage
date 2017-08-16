@@ -1,7 +1,6 @@
 -- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
-local ok, winapi = pcall(require, 'winapi')
-if not ok then return end
+local winapi
 
 local function setvalue(key, name, val)
   local k, err = winapi.create_reg_key(key)
@@ -55,6 +54,10 @@ return {
   dependencies = {"1.30", osname = "Windows"},
 
   onRegister = function(self)
+    local ok
+    ok, winapi = pcall(require, 'winapi')
+    if not ok then return false end
+
     ide:AddTool("Register Known Extensions", register)
   end,
 

@@ -1,9 +1,8 @@
 -- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
-local ok, winapi = pcall(require, 'winapi')
-if not ok then return end
+local winapi
 
-local flags = winapi.FILE_NOTIFY_CHANGE_DIR_NAME + winapi.FILE_NOTIFY_CHANGE_FILE_NAME
+local flags
 
 local needrefresh = {}
 local function refreshProjectTree()
@@ -27,6 +26,13 @@ return {
   author = "Paul Kulchenko",
   version = 0.2,
   dependencies = {0.71, osname = "Windows"},
+
+  onRegister = function(self)
+    local ok
+    ok, winapi = pcall(require, 'winapi')
+    if not ok then return false end
+	flags = winapi.FILE_NOTIFY_CHANGE_DIR_NAME + winapi.FILE_NOTIFY_CHANGE_FILE_NAME
+  end,
 
   onIdle = function(self) if next(watches) then winapi.sleep(1) end end,
 
