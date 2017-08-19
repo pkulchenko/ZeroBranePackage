@@ -73,8 +73,8 @@ local interpreter = {
         table.insert(paths, p)
       end
       if not urho3d then
-        DisplayOutput("Can't find urho3d executable in any of the following folders: "
-          ..table.concat(paths, ", ").."\n")
+        ide:Print("Can't find urho3d executable in any of the following folders: "
+          ..table.concat(paths, ", "))
         return
       end
     end
@@ -87335,7 +87335,8 @@ return {
   name = "Urho3D",
   description = "Urho3D game engine integration.",
   author = "Danny Boisvert (https://github.com/silverkorn)",
-  version = 0.4,
+  version = 0.41,
+  dependencies = 1.40,
 
   onRegister = function(self)
      ide:AddInterpreter("urho3d", interpreter)

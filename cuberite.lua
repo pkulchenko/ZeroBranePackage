@@ -36,11 +36,11 @@ local function MakeCuberiteInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 
 			-- Check if we're in a subfolder inside the plugin folder, try going up one level if executable not found:
 			if not(ExeName:FileExists()) then
-				DisplayOutputNoMarker("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Trying one folder up.\n")
+				ide:GetOutput():Write("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Trying one folder up.\n")
 				ExeName:RemoveLastDir()
 				ExePath:RemoveLastDir()
 				if not(ExeName:FileExists()) then
-					DisplayOutputNoMarker("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Aborting the debugger.\n")
+					ide:GetOutput():Write("The Cuberite executable cannot be found in \"" .. ExeName:GetFullPath() .. "\". Aborting the debugger.\n")
 					return
 				end
 			end
@@ -147,7 +147,7 @@ end
 local function analyzeProject()
 	local projectPath = ide:GetProject()
 	if not(projectPath) then
-		DisplayOutputNoMarker("No project path has been defined.\n")
+		ide:GetOutput():Write("No project path has been defined.\n")
 		return
 	end
 	
@@ -169,11 +169,11 @@ local function analyzeProject()
 	)
 	
 	-- List all files in the console:
-	DisplayOutputNoMarker("Files for analysis:\n")
+	ide:GetOutput():Write("Files for analysis:\n")
 	for _, file in ipairs(files) do
-		DisplayOutputNoMarker(file .. "\n")
+		ide:GetOutput():Write(file .. "\n")
 	end
-	DisplayOutputNoMarker("Analyzing...\n")
+	ide:GetOutput():Write("Analyzing...\n")
 	
 	-- Concatenate all the files, remember their line begin positions:
 	local lineBegin = {}  -- array of {File = "filename", LineBegin = <linenum>, LineEnd = <linenum>}
@@ -195,7 +195,7 @@ local function analyzeProject()
 	-- Analyze the concatenated files:
 	local warn, err, line, pos = AnalyzeString(table.concat(whole, "\n"))
 	if (err) then
-		DisplayOutputNoMarker("Error: " .. err .. "\n")
+		ide:GetOutput():Write("Error: " .. err .. "\n")
 		return
 	end
 	
@@ -213,11 +213,11 @@ local function analyzeProject()
 		local wtext = w:gsub("^<string>:(%d*):(.*)",
 			function (a_LineNum, a_Message)
 				local srcFile, srcLineNum = findSourceByLine(tonumber(a_LineNum))
-				DisplayOutputNoMarker(srcFile .. ":" .. srcLineNum .. ": " .. a_Message .. "\n")
+				ide:GetOutput():Write(srcFile .. ":" .. srcLineNum .. ": " .. a_Message .. "\n")
 			end
 		)
 	end
-	DisplayOutputNoMarker("Analysis completed.\n")
+	ide:GetOutput():Write("Analysis completed.\n")
 end
 
 
@@ -227,7 +227,7 @@ end
 local function runInfoDump()
 	local projectPath = ide:GetProject()
 	if not(projectPath) then
-		DisplayOutputNoMarker("No project path has been defined.\n")
+		ide:GetOutput():Write("No project path has been defined.\n")
 		return
 	end
 	
@@ -240,7 +240,7 @@ local function runInfoDump()
 	dumpScript:SetExt("lua")
 	local fullPath = dumpScript:GetFullPath()
 	if not(wx.wxFileExists(fullPath)) then
-		DisplayOutputNoMarker("The InfoDump.lua script was not found (tried " .. fullPath .. ")\n")
+		ide:GetOutput():Write("The InfoDump.lua script was not found (tried " .. fullPath .. ")\n")
 		return
 	end
 	
@@ -252,14 +252,9 @@ local function runInfoDump()
 		true,                          -- Redirect debuggee output to Output pane?
 		true                           -- Add a no-hide flag to WX
 	)
-	DisplayOutputNoMarker("The InfoDump.lua script was executed.\n")
+	ide:GetOutput():Write("The InfoDump.lua script was executed.\n")
 end
 
-
-
-
-
-local G = ...
 
 
 
@@ -268,11 +263,11 @@ return {
 	name = "Cuberite integration",
 	description = "Integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.5,
-	dependencies = 0.71,
+	version = 0.51,
+	dependencies = 1.40,
 
-	AnalysisMenuID = G.ID("analyze.cuberite_analyzeall"),
-	InfoDumpMenuID = G.ID("project.cuberite_infodump"),
+	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
+	InfoDumpMenuID = ID("project.cuberite_infodump"),
 	
 	onRegister = function(self)
 		-- Add the interpreters
