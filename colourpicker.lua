@@ -6,7 +6,7 @@ local function insertcolour(event)
   local colour = wx.wxColour(rgb and "rgb("..rgb..")" or wx.wxBLACK)
   local newcolour = wx.wxGetColourFromUser(ide:GetMainFrame(), colour)
   if newcolour:Ok() then -- user selected some colour
-    if editor:GetCharAt(editor:GetCurrentPos()-1) == 120 then
+    if editor:GetCharAt(editor:GetCurrentPos()-1) == string.byte('x') then
       editor:DeleteRange(editor:GetCurrentPos()-1, 1)
       local newtext2 = newcolour:GetAsString(wx.wxC2S_HTML_SYNTAX):match("%x+%x+%x+") or ""
       ide:GetEditor():AddText(newtext2)
@@ -21,7 +21,7 @@ return {
   name = "Colour picker",
   description = "Select color to insert in the document",
   author = "Paul Kulchenko",
-  version = 0.21,
+  version = 0.22,
   dependencies = "1.0",
 
   onRegister = function()
