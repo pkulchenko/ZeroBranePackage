@@ -6,8 +6,14 @@ local function insertcolour(event)
   local colour = wx.wxColour(rgb and "rgb("..rgb..")" or wx.wxBLACK)
   local newcolour = wx.wxGetColourFromUser(ide:GetMainFrame(), colour)
   if newcolour:Ok() then -- user selected some colour
-    local newtext = newcolour:GetAsString(wx.wxC2S_CSS_SYNTAX):match("%d+,%s*%d+,%s*%d+") or ""
-    ide:GetEditor():ReplaceSelection(newtext)
+    if editor:GetCharAt(editor:GetCurrentPos()-1) == 120 then
+      editor:DeleteRange(editor:GetCurrentPos()-1, 1)
+      local newtext2 = newcolour:GetAsString(wx.wxC2S_HTML_SYNTAX):match("%x+%x+%x+") or ""
+      ide:GetEditor():AddText(newtext2)
+    else
+      local newtext = newcolour:GetAsString(wx.wxC2S_CSS_SYNTAX):match("%d+,%s*%d+,%s*%d+") or ""
+      ide:GetEditor():ReplaceSelection(newtext)
+    end
   end
 end
 
