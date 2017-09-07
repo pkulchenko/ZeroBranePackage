@@ -1,6 +1,7 @@
 local function fileLoad(file)
   local f = FileRead(file)
   if not f then return end
+
   local fstream = wx.wxMemoryInputStream.new(f, #f)
   local log = wx.wxLogNull()
   local image = wx.wxImage()
@@ -19,37 +20,30 @@ local function fileShow(name)
   local image = fileLoad(name)
   if not image then return end
 
+  local panel = wx.wxPanel(ide:GetMainFrame(), wx.wxID_ANY,
+    wx.wxDefaultPosition, wx.wxDefaultSize, wx.wxFULL_REPAINT_ON_RESIZE)
+  panel:Connect(wx.wxEVT_PAINT, function()
+      local dc = wx.wxPaintDC(panel)
+      dc:DrawBitmap(wx.wxBitmap(image), 0, 0, true)
+      dc:delete()
+    end)
+
   local width, height = image:GetWidth(), image:GetHeight()
-  local screenSizeX, screenSizeY = wx.wxDisplaySize()
-  local frame = wx.wxFrame(
-    wx.NULL,
-    wx.wxID_ANY,
-    ('(%d x %d) %s'):format(width, height, name),
-    wx.wxDefaultPosition,
-    wx.wxSize(width, height),
-    wx.wxDEFAULT_FRAME_STYLE + wx.wxSTAY_ON_TOP
-    - wx.wxRESIZE_BORDER - wx.wxMAXIMIZE_BOX)
-  frame:SetClientSize(width, height)
-  frame:Centre()
-
-  local function OnPaint()
-    local dc = wx.wxPaintDC(frame)
-    dc:DrawBitmap(wx.wxBitmap(image), 0, 0, true)
-    dc:delete()
-  end
-
-  frame:Connect(wx.wxEVT_PAINT, OnPaint)
-  frame:Show(true)
-
-  return false
+  local mgr = ide:GetUIManager()
+  mgr:AddPane(panel, wxaui.wxAuiPaneInfo():
+    Name("openimagefile"):CaptionVisible(true):Caption(('(%d x %d) %s'):format(width, height, name)):
+    Float(true):MinSize(width,height):BestSize(width,height):FloatingSize(width,height):
+    PaneBorder(false):CloseButton(true):MaximizeButton(false):PinButton(false))
+  mgr:Update()
+  return true
 end
 
 return {
   name = "Open image file",
   description = "Opens image file from the file tree.",
   author = "Paul Kulchenko",
-  version = 0.1,
-  dependencies = 0.51,
+  version = 0.2,
+  dependencies = 1.0,
 
   onFiletreeActivate = function(self, tree, event, item)
     if not item then return end
