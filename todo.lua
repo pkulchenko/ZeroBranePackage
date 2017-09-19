@@ -8,34 +8,35 @@ local spec = {iscomment = {}}
 local function mapTODOS(self,editor,event)
 
   local tasksListStr = "Tasks List: \n\n"
-  local lineCounter = 2
-  local positions = {}
-
-  local function insertLine(line, pos)
-    tasksListStr = tasksListStr .. line
-    lineCounter = lineCounter + 1
-    positions[lineCounter] = pos
-  end
-
+  local taskList = {}
   local text = editor:GetText()
   local i = 0
-  local counter = 1
+  local positions = {}
 
-  while true do
+  for _, pattern in ipairs(self.patterns) do
+    while true do
 
-    --find next todo index
-    i = string.find(text, "TODO:", i+1)
-    if i == nil then
-      refeditor:SetReadOnly(false)
-      refeditor:SetText(tasksListStr)
-      refeditor:SetReadOnly(true)
-      break
+      --find next todo index
+      i = string.find(text, pattern, i+1)
+      if i == nil then
+        i = 0
+        break
+      end
+      local j = string.find(text, "\n",i+1)
+      local taskStr = string.sub(text, i ,j)
+      table.insert(taskList, {line = taskStr, pos = i})
     end
-    local j = string.find(text, "\n",i+1)
-    local taskStr = string.sub(text, i+5,j)
-    insertLine(tostring(counter).."."..taskStr, i)
-    counter = counter+1
   end
+
+  table.sort(taskList, function(a,b) return a.pos<b.pos end)
+  for i, task in ipairs(taskList) do
+    positions[i+2] = task.pos
+    tasksListStr = tasksListStr .. i ..". " .. task.line
+  end  
+
+  refeditor:SetReadOnly(false)
+  refeditor:SetText(tasksListStr)
+  refeditor:SetReadOnly(true)
 
   --On click of a task, go to relevant position in the text
   refeditor:Connect(wxstc.wxEVT_STC_DOUBLECLICK,
@@ -53,10 +54,15 @@ return {
   name = "Show TODO panel",
   description = "Adds a panel for showing a tasks list",
   author = "Mark Fainstein",
-  version = 1.21,
+  version = 1.22,
   dependencies = 0.81,
 
   onRegister = function(self)
+    self.patterns = self:GetConfig().patterns
+    if not self.patterns or not next(self.patterns) then
+      self.patterns = { "TODO[:;]", "FIXME[:;]" }
+    end
+    
     local e = ide:CreateBareEditor()
     refeditor = e
 
@@ -120,3 +126,9 @@ return {
     mapTODOS(self, editor, event)
   end,
 }
+
+--[[ configuration example:
+todo = {
+  patterns = { "TODO[%s:;]", "FIXME[%s:;]" },
+}
+--]]
