@@ -1,5 +1,7 @@
 -- Copyright 2017 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- Contributed by Chronos Phaenon Eosphoros (@cpeosphoros)
+-- Minor changes by Paul Reilly, inc borrowing Mark Fainstein's new  
+-- pattern matching from todo.lua
 --
 -- Some code taken from those plugins:
 -- todo.lua:
@@ -15,9 +17,9 @@
 -- Example: 
 --
 -- todoall = { 
---   patterns = { { name = "TODO",  pattern = "%-%-TODO[%s:;>]"  },
---                { name = "FIXME", pattern = "%-%-FIXME[%s:;>]" },
---                { name = "WTF",   pattern = "%-%-WTF[%s:;>]"   }
+--   patterns = { { name = "TODO",  pattern = "TODO[%s:;>]"  },
+--                { name = "FIXME", pattern = "FIXME[%s:;>]" },
+--                { name = "WTF",   pattern = "WTF[%s:;>]"   }
 --              }
 -- } 
 --
@@ -50,7 +52,8 @@ local function mapTODOS(fileName, text)
       end
       local j = string.find(text, "\n",i+1)
       local taskStr
-      taskStr = string.sub(text, i+3+#pattern.name, j)
+      -- 1 is for the extra char after the task name
+      taskStr = string.sub(text, i+1+#pattern.name, j)
       if first == false then
         first = true
         tasks[#tasks+1] = {pos = -1, str = pattern.name .. "s\n"}
@@ -182,8 +185,8 @@ return {
   onRegister = function(self)
     patterns = self:GetConfig().patterns 
     if not patterns or not next(patterns) then
-       patterns = { { name = "TODO",  pattern = "%-%-TODO[%s:;>]" },
-                    { name = "FIXME", pattern = "%-%-FIXME[%s:;>]" }
+       patterns = { { name = "TODO",  pattern = "TODO[%s:;>]"  },
+                    { name = "FIXME", pattern = "FIXME[%s:;>]" }
                   }
     end
 
@@ -254,3 +257,4 @@ return {
     mapProject(self, editor)
   end
 }
+
