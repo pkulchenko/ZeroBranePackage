@@ -86,7 +86,7 @@ local function mapTODOS(fileName, text, isTextRawFile)
       local taskStr
       -- 1 is for the extra char after the task name
       taskStr = string.sub(text, i+1+#pattern.name, j)
-      if j == #text then taskStr = taskStr .. "\n" end -- add newline if EOF
+      if j == #text and isTextRawFile then taskStr = taskStr .. "\n" end -- add newline if EOF
       if first == false then
         first = true
         tasks[#tasks+1] = {pos = -1, str = pattern.name .. "s\n"}
@@ -209,6 +209,7 @@ local function mapProject(self, editor)
     
       editor:GotoPosEnforcePolicy(position.pos - 1)
       if not ide:GetEditorWithFocus(editor) then ide:GetDocument(editor):SetActive() end
+      refeditor:SetEmptySelection(0)
     end)
 end
 
@@ -264,7 +265,7 @@ return {
     e:Connect(wxstc.wxEVT_STC_DO_DROP, function(event) event:SetDragResult(wx.wxDragNone) end)
 
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
-
+    
     menu:InsertCheckItem(4, id, TR("Tasks List")..KSC(id))
 
     menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function ()
@@ -327,15 +328,6 @@ return {
   onEditorSave = function(self, editor)
     if not fileTasks[fileNameFromPath(ide:GetDocument(editor):GetFilePath())] then
       mapProject(self, editor)
-    end
-  end,
-  
-  onEditorFocusSet = function(self, editor)
-    if projectLoaded then
-      -- this is nil when loading a file
-      if ide:GetDocument(editor):GetFilePath() then
-        mapProject(self, editor)
-      end
     end
   end,
 
