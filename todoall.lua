@@ -1,6 +1,6 @@
 -- Copyright 2017 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- Contributed by Chronos Phaenon Eosphoros (@cpeosphoros)
--- Minor changes by Paul Reilly, inc borrowing Mark Fainstein's new  
+-- Enhanced by Paul Reilly, inc borrowing Mark Fainstein's new  
 -- pattern matching from todo.lua
 --
 -- Some code taken from those plugins:
@@ -12,22 +12,34 @@
 --
 --
 -- In your system or user config/preferences file, you can set the tokens
--- used by this package...
+-- used by this package and the beginning of paths relative to the 
+-- project path to ignore...
 --
 -- Example: 
 --
 -- todoall = { 
---   patterns = { { name = "TODO",  pattern = "TODO[%s:;>]"  },
---                { name = "FIXME", pattern = "FIXME[%s:;>]" },
---                { name = "WTF",   pattern = "WTF[%s:;>]"   }
+--     ignore = { "Export" },
+--   patterns = { { name = "TODO",  pattern = "TODO[:;>]"  },
+--                { name = "FIXME", pattern = "FIXME[:;>]" },
+--                { name = "WTF",   pattern = "WTF[:;>]"   }
 --              }
 -- } 
+--
+-- This will ignore all files in eg PROJECTPATH/Export Android/
+--
+-- Note: spaces in the patterns create issues (inc %s)
+--
+-- Tests:
+--    TODO: this is a test TODO with more than one TODO to ignore
+--    FIXME: this is a test FIXME too
+--    this next one should also be a TODO> #2 TODO check
 --
 
 local id = ID("TODOAllpanel.referenceview")
 local TODOpanel = "TODOAllpanel"
 local refeditor
 local spec = {iscomment = {}}
+local projectLoaded = false
 
 local function path2mask(s)
   return s
@@ -39,17 +51,33 @@ end
 local fileTasks
 local patterns = {}
 
-local function mapTODOS(fileName, text)
+local function mapTODOS(fileName, text, isTextRawFile)
   local tasks = {}
   for _, pattern in ipairs(patterns) do
     local first = false
     local i = 0
+    local numLines = 0
     while true do
       --find next todo index
+      local pos = i
       i = string.find(text, pattern.pattern, i+1)
+      
       if i == nil then
         break
       end
+      
+      -- there's a difference in file lengths with lua file reading and
+      -- wx editor length, so if it's a file read adjust for line endings
+      local adj = 0
+      local nl = string.find(text, "\n", pos + 1)
+      if isTextRawFile then
+        while nl < i do
+          numLines = numLines + 1
+          nl = string.find(text, "\n", nl+1)
+        end
+        adj = numLines
+      end
+      
       local j = string.find(text, "\n",i+1)
       local taskStr
       -- 1 is for the extra char after the task name
@@ -57,9 +85,9 @@ local function mapTODOS(fileName, text)
       if first == false then
         first = true
         tasks[#tasks+1] = {pos = -1, str = pattern.name .. "s\n"}
-        tasks[#tasks+1] = {pos = i,  str = taskStr}
+        tasks[#tasks+1] = {pos = i + adj,  str = taskStr}
       else
-        tasks[#tasks+1] = {pos = i,  str = taskStr}
+        tasks[#tasks+1] = {pos = i + adj,  str = taskStr}
       end
     end
   end
@@ -95,16 +123,19 @@ local function mapProject(self, editor)
     mapTODOS(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
   else
     local masks = {}
-    for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]).."$" end
+    -- ignore paths that start with our path masks set in config
+    -- table todoall.ignore
+    for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]) end
     for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
       local fileName = fileNameFromPath(filePath)
       local ignore = false or editor
       for _, spec in ipairs(masks) do
-        ignore = ignore or fileName:find(spec)
+        -- ignore only if it's not just the beginning of a filename
+        ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
       end
-      -- TODO: testing here
       if not ignore then
-        mapTODOS(fileName, readfile(filePath))
+        local f = readfile(filePath)
+        mapTODOS(fileName, readfile(filePath), true)
       end
     end
   end
@@ -151,7 +182,7 @@ local function mapProject(self, editor)
   refeditor:SetText(tasksListStr)
   refeditor:SetReadOnly(true)
 
-  --On click of a task, go to relevant position in the text
+  --On double click of a task, go to relevant position in the text
   refeditor:Connect(wxstc.wxEVT_STC_DOUBLECLICK, function()
       local line = refeditor:GetCurrentLine()+1
       local position = positions[line]
@@ -170,6 +201,7 @@ local function mapProject(self, editor)
         editor = ide:LoadFile(filePath)
         if not editor then error("Couldn't load " .. filePath) end
       end
+    
       editor:GotoPosEnforcePolicy(position.pos - 1)
       if not ide:GetEditorWithFocus(editor) then ide:GetDocument(editor):SetActive() end
     end)
@@ -179,14 +211,14 @@ return {
   name = "Show project-wise TODO panel",
   description = "Adds a project-wise panel for showing a tasks list.",
   author = "Chronos Phaenon Eosphoros",
-  version = 0.2,
+  version = 0.25,
   dependencies = 1.60,
 
   onRegister = function(self)
     patterns = self:GetConfig().patterns 
     if not patterns or not next(patterns) then
-       patterns = { { name = "TODO",  pattern = "TODO[%s:;>]"  },
-                    { name = "FIXME", pattern = "FIXME[%s:;>]" }
+       patterns = { { name = "TODO",  pattern = "TODO[:;>]"  },
+                    { name = "FIXME", pattern = "FIXME[:;>]" }
                   }
     end
 
@@ -251,6 +283,48 @@ return {
     fileTasks = {}
     projectPath = project
     mapProject(self)
+  end,
+  
+  -- this fires after project is completely loaded
+  onIdleOnce = function(self, event)
+    projectLoaded = true
+    -- scan all open files here, in case there are non-project files
+    -- that remain open from last session that have tasks we want
+    local edNum = 0
+    local editor = ide:GetEditor(edNum)
+    while editor do
+      -- skip project files or current file that's already been scanned
+      if not fileTasks[fileNameFromPath(ide:GetDocument(editor):GetFilePath())] then
+        mapProject(self, editor)
+      end
+      edNum = edNum + 1
+      editor = ide:GetEditor(edNum)
+    end
+  end,
+  
+  onEditorClose = function(self, editor)
+    -- remove non project file tasks from list on close
+    -- non project files don't have path stripped so check...
+    local fullPath = ide:GetDocument(editor):GetFilePath()
+    if fileTasks[fullPath] then
+      fileTasks[fullPath] = nil
+      mapProject(self)
+    end
+  end,
+
+  onEditorLoad = function(self, editor) 
+    if projectLoaded then
+      mapProject(self, editor)
+    end
+  end,
+  
+  onEditorFocusSet = function(self, editor)
+    if projectLoaded then
+      -- this is nil when loading a file
+      if ide:GetDocument(editor):GetFilePath() then
+        mapProject(self, editor)
+      end
+    end
   end,
 
   onEditorCharAdded = function(self, editor) --, event)
