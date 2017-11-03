@@ -318,6 +318,13 @@ return {
     end
   end,
   
+  -- implemented for saving new file, so list updates on save
+  onEditorSave = function(self, editor)
+    if not fileTasks[fileNameFromPath(ide:GetDocument(editor):GetFilePath())] then
+      mapProject(self, editor)
+    end
+  end,
+  
   onEditorFocusSet = function(self, editor)
     if projectLoaded then
       -- this is nil when loading a file
@@ -328,7 +335,10 @@ return {
   end,
 
   onEditorCharAdded = function(self, editor) --, event)
-    mapProject(self, editor)
+    -- might be in new, unsaved file
+    if ide:GetDocument(editor):GetFilePath() then
+      mapProject(self, editor)
+    end
   end
 }
 
