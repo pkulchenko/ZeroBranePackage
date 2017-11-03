@@ -70,18 +70,23 @@ local function mapTODOS(fileName, text, isTextRawFile)
       -- wx editor length, so if it's a file read adjust for line endings
       local adj = 0
       local nl = string.find(text, "\n", pos + 1)
+      -- handle end of file when no more newlines
+      if nl == nil then nl = #text end
       if isTextRawFile then
         while nl < i do
           numLines = numLines + 1
           nl = string.find(text, "\n", nl+1)
+          if nl == nil then nl = #text end
         end
         adj = numLines
       end
       
       local j = string.find(text, "\n",i+1)
+      if j == nil then j = #text end --  handle EOF
       local taskStr
       -- 1 is for the extra char after the task name
       taskStr = string.sub(text, i+1+#pattern.name, j)
+      if j == #text then taskStr = taskStr .. "\n" end -- add newline if EOF
       if first == false then
         first = true
         tasks[#tasks+1] = {pos = -1, str = pattern.name .. "s\n"}
