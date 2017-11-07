@@ -3,13 +3,12 @@
 
 local lfs = require("lfs")
 
--- Usage: edit local path to reflect your working directory and run this script.
--- Commit and PR DESCRIPTIONS.md together with your regular modifications.
-
--- This string must be edited to specify the exact path, OS specific, for the
--- plugin development directory, ending with the acoordingly slash/backslash.
--- Don't commit changes to this string
-local path = "/home/user/git/ZeroBranePackage/"
+-- Usage: run this script from ZeroBrane Studio with the directory with the packages
+-- set as the project directory.
+-- The results are saved to DESCRIPTIONS.md and can be copied into README.md as a section.
+local path = "./"
+local includecomments = false
+local abridged = true
 
 -- These are dummy zbstudio "globals" needed for plugins to load. No api event
 -- will actually be called. Only zbstudio "globals" used in the main chunk of
@@ -23,6 +22,7 @@ local env = [[
 	temp.keymap = {}
 	function ide:GetConfig() return temp end
 	ide.specs = {}
+	ide.config = {}
 	local wxstc = {}
 ]]
 
@@ -137,44 +137,53 @@ local function insert(str)
 	table.insert(result,str)
 end
 
-insert("# Plugin Descriptions")
+insert("## Package List")
 insert("")
 
-local gitUrl = "https://github.com/pkulchenko/ZeroBranePackage/blob/master/"
+local gitUrl = ""
 
 for _, key in ipairs(keys) do
 	process(key)
-	insert("## ["..key.."]("..gitUrl..key..")")
-	insert("")
+	insert(("* [%s](%s): %s (v%s%s)"):format(
+      key, gitUrl..key, cache[key].description, cache[key].version, abridged and "" or ("[details](#%s)"):format(key)))
+end
 
-	insert("* **Name:** "..cache[key].name)
-	insert("* **Description:** "..cache[key].description)
-	insert("* **Author:** "..cache[key].author)
-	insert("* **Version:** "..cache[key].version)
-	local dependencies = cache[key].dependencies
-	if type(dependencies) == "string" or type(dependencies) == "number" then
-		insert("* **Dependencies:** "..dependencies)
-	else --We have a table
-		insert("* **Dependencies:**")
-		local depKeys = sortedKeys(dependencies)
-		for _, depKey in ipairs(depKeys) do
-			if type(depKey) == "number" then
-				insert("\t* "..dependencies[depKey])
-			else
-				insert("\t* "..depKey..": "..dependencies[depKey])
-			end
-		end
-	end
-	local comments = cache[key].comments
-	if #comments > 0 then
-		insert("* **Comments:**")
-		insert("```")
-		for _, v in ipairs(comments) do
-			insert(v)
-		end
-		insert("```")
-	end
-	insert("")
+if not abridged then
+  insert("")
+  insert("## Plugin Details")
+
+  for _, key in ipairs(keys) do
+    insert("")
+    insert("### "..key)
+    insert("* **Name:** "..cache[key].name)
+    insert("* **Description:** "..cache[key].description)
+    insert("* **Author:** "..cache[key].author)
+    insert("* **Version:** "..cache[key].version)
+    local dependencies = cache[key].dependencies
+    if type(dependencies) == "string" or type(dependencies) == "number" then
+      insert("* **Dependencies:** "..dependencies)
+    else --We have a table
+      insert("* **Dependencies:**")
+      local depKeys = sortedKeys(dependencies)
+      for _, depKey in ipairs(depKeys) do
+        if type(depKey) == "number" then
+          insert("\t* "..dependencies[depKey])
+        else
+          insert("\t* "..depKey..": "..dependencies[depKey])
+        end
+      end
+    end
+    local comments = cache[key].comments
+    if #comments > 0 and includecomments then
+      insert("* **Comments:**")
+      insert("")
+      insert("```")
+      for _, v in ipairs(comments) do
+        insert(v)
+      end
+      insert("```")
+    end
+  end
 end
 
 print()
