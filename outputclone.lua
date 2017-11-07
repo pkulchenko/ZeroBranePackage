@@ -4,8 +4,8 @@ return {
   name = "Clone Output window",
   description = "Clones Output window to keep it on the screen when the application loses focus (OSX).",
   author = "Paul Kulchenko",
-  version = 0.41,
-  dependencies = "1.11",
+  version = 0.42,
+  dependencies = "1.61",
 
   onRegister = function(self)
     local menu = ide:FindTopMenu("&View")
@@ -51,7 +51,7 @@ return {
           -- set styles to make it look similar to the output window
           clone:MarkerDefine(StylesGetMarker("message"))
           clone:MarkerDefine(StylesGetMarker("prompt"))
-          StylesApplyToEditor(ide:GetConfig().stylesoutshell,clone,ide.font.oNormal,ide.font.oItalic)
+          StylesApplyToEditor(ide:GetConfig().stylesoutshell,clone,output:GetFont())
         end
 
         frame:Show(event:IsChecked())

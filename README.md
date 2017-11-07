@@ -53,7 +53,7 @@ this means that it requires a development version currently being worked on (whi
 * [openimagefile.lua](openimagefile.lua): Opens image file from the file tree. (v0.2)
 * [openra.lua](openra.lua): Adds API description for auto-complete and tooltip support for OpenRA. (v20161019a)
 * [openwithdefault.lua](openwithdefault.lua): Opens file with Default Program when activated. (v0.2)
-* [outputclone.lua](outputclone.lua): Clones Output window to keep it on the screen when the application loses focus (OSX). (v0.41)
+* [outputclone.lua](outputclone.lua): Clones Output window to keep it on the screen when the application loses focus (OSX). (v0.42)
 * [outputtofile.lua](outputtofile.lua): Redirects debugging output to a file. (v0.1)
 * [overtype.lua](overtype.lua): Allows to switch overtyping on/off on systems that don't provide shortcut for that. (v0.31)
 * [projectsettings.lua](projectsettings.lua): Adds project settings loaded on project switch. (v0.2)
