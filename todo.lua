@@ -52,9 +52,9 @@ end
 
 return {
   name = "Show TODO panel",
-  description = "Adds a panel for showing a tasks list",
+  description = "Adds a panel for showing a tasks list.",
   author = "Mark Fainstein",
-  version = 1.22,
+  version = 1.23,
   dependencies = 0.81,
 
   onRegister = function(self)

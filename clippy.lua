@@ -122,10 +122,10 @@ end
 return
 {
 	name = "Clippy",
-	description = "Enables a stack-based clipboard which saves the last 10 entries",
+	description = "Enables a stack-based clipboard which saves the last 10 entries.",
 	author = "sclark39",
 	dependencies = "1.3",
-	version = 0.21,
+	version = 0.22,
 	onRegister = OnRegister,
 	onUnRegister = OnUnRegister,
 	onEditorAction = OnEditorAction,

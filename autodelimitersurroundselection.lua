@@ -1,5 +1,5 @@
 -- Modified version of autodelimiter.lua
--- This version supports sorround selection and autoremoving alone pairs
+-- This version supports surround selection and autoremoving alone pairs
 -- Please see pull request #33 (https://github.com/pkulchenko/ZeroBranePackage/pull/33) for more information
 -- If you load this module and standard autodelimiter, the standard autodelimiter will be turned off to prevent collisions
 local cpairs = {
@@ -8,9 +8,9 @@ local closing = [[)}]'"]]
 local selection = ""
 return {
   name = "Auto-insertion of delimiters",
-  description = [[Adds auto-insertion of delimiters (), {}, [], '', and "".]],
+  description = [[Extends auto-insertion of delimiters (), {}, [], '', and "" to add selection and removal of standalone pairs.]],
   author = "Paul Kulchenko (modified by Dominik Banaszak)",
-  version = 0.4,
+  version = 0.41,
   dependencies = "1.30",
 
   onEditorKeyDown = function(self, editor, event)

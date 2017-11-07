@@ -13,9 +13,9 @@ local function setmarker(editor, cfgmark)
 end
 return {
   name = "Syntax check while typing",
-  description = "Reports syntax errors while typing (on Enter)",
+  description = "Reports syntax errors while typing (on `Enter`).",
   author = "Paul Kulchenko",
-  version = 0.4,
+  version = 0.41,
   dependencies = 1.11,
 
   -- use the file name as the marker name to avoid conflicts

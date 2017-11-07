@@ -183,9 +183,9 @@ local spec = {
 local name = 'moonscriptlove'
 return {
   name = "Moonscript LÖVE",
-  description = "Compile and run Moonscript with LÖVE",
+  description = "Implements integration with Moonscript with LÖVE.",
   author = "Paul Kulchenko, Dominik \"Zatherz\" Banaszak",
-  version = 0.32,
+  version = 0.33,
   dependencies = "1.40",
 
   onRegister = function(self)

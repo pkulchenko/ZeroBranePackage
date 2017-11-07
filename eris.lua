@@ -104,9 +104,9 @@ end
 
 return {
   name = "Eris",
-  description = "Integration with the Lua + Eris interpreter (5.3)",
+  description = "Implements integration with the Lua + Eris interpreter (5.3).",
   author = "raingloom",
-  version = 0.1,
+  version = 0.11,
   onRegister = function()
     ide:AddInterpreter( 'eris53', makeErisInterpreter(5.3, '5.3', 'eris'))
   end,

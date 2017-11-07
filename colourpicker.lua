@@ -19,9 +19,9 @@ end
 
 return {
   name = "Colour picker",
-  description = "Select color to insert in the document",
+  description = "Selects color to insert in the document.",
   author = "Paul Kulchenko",
-  version = 0.22,
+  version = 0.23,
   dependencies = "1.0",
 
   onRegister = function()

@@ -1436,9 +1436,9 @@ matching the filter function called as function(CPos cell).]],
 
 return {
   name = "OpenRA",
-  description = "API description for auto-complete and tooltip support",
+  description = "Adds API description for auto-complete and tooltip support for OpenRA.",
   author = "Matthias Mailänder",
-  version = 20161019,
+  version = "20161019a",
 
   onRegister = function(self)
     ide:AddAPI("lua", "openra", api)

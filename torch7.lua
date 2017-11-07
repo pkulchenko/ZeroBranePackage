@@ -197,9 +197,9 @@ local torchInterpreter = {
 
 return {
   name = "Torch7",
-  description = "Integration with torch7 environment",
+  description = "Implements integration with torch7 environment.",
   author = "Paul Kulchenko",
-  version = 0.57,
+  version = 0.58,
   dependencies = "1.40",
 
   onRegister = function(self)

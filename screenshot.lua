@@ -78,9 +78,9 @@ end
 
 return {
   name = "Screenshot",
-  description = "Takes a delayed screenshot of the application window and saves it into a file",
+  description = "Takes a delayed screenshot of the application window and saves it into a file.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.11,
   dependencies = "1.61",
 
   onRegister = function()

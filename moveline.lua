@@ -1,8 +1,8 @@
 return {
   name = "Move line up/down",
-  description = "Move line or selection up or down (Ctrl-Shift-Up/Down).",
+  description = "Adds moving line or selection up or down using `Ctrl-Shift-Up/Down`.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.11,
 
   onEditorKeyDown = function(self, editor, event)
     local key = event:GetKeyCode()

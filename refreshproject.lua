@@ -22,9 +22,9 @@ end
 local watches = {}
 return {
   name = "Refresh project tree",
-  description = "Refresh project tree when files change (Windows only).",
+  description = "Refreshes project tree when files change (Windows only).",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
   dependencies = {0.71, osname = "Windows"},
 
   onRegister = function(self)

@@ -257,9 +257,9 @@ end
 
 return {
 	name = "Cuberite integration",
-	description = "Integration with Cuberite - the custom C++ minecraft server.",
+	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.51,
+	version = 0.52,
 	dependencies = 1.40,
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),

@@ -40,9 +40,9 @@ local spec = {
 
 return {
   name = "XML syntax highlighting",
-  description = "XML syntax highlighting",
+  description = "Adds XML syntax highlighting.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
 
   onRegister = function(self)
     local keywords = self:GetConfig().keywords or ''

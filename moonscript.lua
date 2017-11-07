@@ -98,9 +98,9 @@ local interpreter = {
 local name = 'moonscript'
 return {
   name = "Moonscript",
-  description = "Integration with Moonscript language",
+  description = "Implements integration with Moonscript language.",
   author = "Paul Kulchenko",
-  version = 0.34,
+  version = 0.35,
   dependencies = "1.60",
 
   onRegister = function(self)
