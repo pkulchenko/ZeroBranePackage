@@ -307,15 +307,6 @@ local function mapTasks(fileName, text, isTextRawFile)
   end
 end
 
---
-local function readfile(filePath)
-  local input = io.open(filePath)
-  local data = input:read("*a")
-  input:close()
-  return data
-end
-
-
 -- called from onProjectLoad and onIdleOnce
 local function scanAllOpenEditorsAndMap()
   if config.singleFileMode then return end
@@ -362,7 +353,7 @@ function mapProject(self, editor, newTree)
         ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
       end
       if not ignore then
-        mapTasks(fileName, readfile(filePath), true)
+        mapTasks(fileName, FileRead(filePath) or "", true)
       end
     end
   end        
