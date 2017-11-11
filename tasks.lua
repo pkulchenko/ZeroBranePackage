@@ -401,15 +401,7 @@ local package = {
       panel:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
     end
     
-    local layout = ide:GetSetting("/view", "uimgrlayout")
-    
-    local panel
-    if not layout or not layout:find(tasksPanel) then
-      panel = ide:AddPanelDocked(ide.frame.projnotebook, tree.ctrl, tasksPanel, 
-                                 TR("ProTasks"), conf)
-    else
-      panel = ide:AddPanel(tree.ctrl, tasksPanel, TR("ProTasks"), conf)
-    end
+    ide:AddPanelFlex(ide.frame.projnotebook, tree.ctrl, tasksPanel, TR("Tasks"), conf)
     
     -- right click menu  
     local ID_FILESWITHTASKS = NewID()
