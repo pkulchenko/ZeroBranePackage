@@ -513,12 +513,14 @@ local package = {
   onProjectLoad = function(self, project)
     local newProject = ( projectPath == nil or projectPath ~= project )
     projectPath = project
-    if not config.singleFileMode then
-      mapProject(self, nil, newProject)
-      scanAllOpenEditorsAndMap()
-    else
-      mapProject(self, currentEditor, newProject)
-    end
+    ide:DoWhenIdle(function()
+        if not config.singleFileMode then
+          mapProject(self, nil, newProject)
+          scanAllOpenEditorsAndMap()
+        else
+          mapProject(self, currentEditor, newProject)
+        end
+      end)
   end,
   
   -- this fires after project is completely loaded when ZBS is first opened
