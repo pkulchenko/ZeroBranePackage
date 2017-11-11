@@ -416,9 +416,11 @@ local package = {
     local ID_SINGLEFILEMODE = NewID()
     
     local rcMenu = ide:MakeMenu {
-        { ID_FILESWITHTASKS, TR("Toggle: &Show &only &files &with &tasks") },
-        { ID_SINGLEFILEMODE, TR("Toggle: &Single &file &mode") }
+        { ID_FILESWITHTASKS, TR("Show only files with tasks"), "", wx.wxITEM_CHECK },
+        { ID_SINGLEFILEMODE, TR("Single file mode"), "", wx.wxITEM_CHECK },
     }
+    rcMenu:Check(ID_FILESWITHTASKS, true)
+    rcMenu:Check(ID_SINGLEFILEMODE, true)
     
     tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
       function(event)
