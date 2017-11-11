@@ -560,7 +560,6 @@ local package = {
       mapProject(self, editor, config.singleFileMode)
       if fileItem then
         currentEditor = editor
-<<<<<<< HEAD
         tree.ensureFileNodeVisible(fileItem)
         if not dontSelectOnFocusSet then tree.ctrl:SelectItem(fileItem) end
       else
