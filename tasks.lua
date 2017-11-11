@@ -398,19 +398,14 @@ local package = {
     
     -- default is true, so don't want nil being false
     local sOFWT = self:GetConfig().showOnlyFilesWithTasks
-    if sOFWT == nil or sOFWT == true then
-      config.showOnlyFilesWithTasks = true
-    else
-      config.showOnlyFilesWithTasks = false
-    end
-    
+    config.showOnlyFilesWithTasks = sOFWT == nil or sOFWT == true
     config.singleFileMode = self:GetConfig().singleFileMode or false
     
     local w, h = 200, 600
     tree.ctrl = ide:CreateTreeCtrl(ide.frame.projnotebook, wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
                             wx.wxTR_TWIST_BUTTONS + wx.wxTR_HIDE_ROOT + 
-                            wx.wxTR_ROW_LINES)
+                            wx.wxTR_ROW_LINES + wx.wxNO_BORDER)
     
     tree.reset()
     
@@ -433,11 +428,7 @@ local package = {
     
     tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
       function(event)
-        -- see filetree.lua for detailed reasons for GC stop here 
-        -- (tl;dr - might crash Linux)
-        collectgarbage("stop")
         tree.ctrl:PopupMenu(rcMenu)
-        collectgarbage("restart")
       end
     )
     
