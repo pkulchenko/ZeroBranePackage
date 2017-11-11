@@ -349,7 +349,7 @@ end
 -- main function, called from events
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
-  ide.frame.projnotebook:Freeze() 
+  tree.ctrl:Freeze()
   
   if newTree then 
     tree.reset()
@@ -375,7 +375,7 @@ function mapProject(self, editor, newTree)
     end
   end        
   -- allow UI updates 
-  ide.frame.projnotebook:Thaw()
+  tree.ctrl:Thaw()
 end
 
 -- our plugin/package object/table
