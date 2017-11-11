@@ -362,7 +362,7 @@ function mapProject(self, editor, newTree)
     -- in user.lua, todoall.ignore
     local masks = {}
     for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
-    for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
+    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
       local fileName = fileNameFromPath(filePath)
       local ignore = false or editor
       for _, spec in ipairs(masks) do
@@ -383,8 +383,8 @@ local package = {
   name = "Tasks panel",
   description = "Project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.90,
-  dependencies = 1.60,
+  version = 0.91,
+  dependencies = 1.61,
 
   onRegister = function(self)
     patterns = self:GetConfig().patterns 
