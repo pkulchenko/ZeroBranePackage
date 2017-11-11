@@ -71,6 +71,7 @@ local patterns = {}                   -- our task patterns from user.lua (or def
 local DEBUG = false                   -- set to true to get output from any _DBG calls
 local _DBG -- (...)                   -- function for console output, definition at EOF
 local currentEditor                   -- set in onEditorFocusSet, used in onProjectLoad
+local dontSelectOnFocusSet = false
 
 local mapProject, fileNameFromPath    -- forward decs
 
@@ -215,6 +216,22 @@ tree.reset = function()
 end
 
 --
+tree.ensureFileNodeVisible = function(fileNode)
+  -- ensure file node and last gradnchild/child is visible so that
+  -- it's all in view
+  tree.ctrl:EnsureVisible(fileNode)
+  local lastChild = tree.ctrl:GetLastChild(fileNode)
+  if lastChild then
+    local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
+    if lastGrandChild then 
+      tree.ctrl:EnsureVisible(lastGrandChild)
+    else
+      tree.ctrl:EnsureVisible(lastChild)
+    end
+  end
+end
+
+--
 function fileNameFromPath(filePath)
   return filePath:gsub(projectPath, "")
 end
@@ -330,7 +347,7 @@ local function scanAllOpenEditorsAndMap()
       if treeItem == nil then
         mapProject(self, editor)
       else
-        tree.ctrl:EnsureVisible(treeItem)
+        tree.ensureFileNodeVisible(treeItem)
       end
     end
     edNum = edNum + 1
@@ -441,8 +458,8 @@ local package = {
     
     tree.ctrl:Connect(ID_FILESWITHTASKS, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
-        if config.singleFileMode then return end
         config.showOnlyFilesWithTasks = not config.showOnlyFilesWithTasks
+        if config.singleFileMode then return end
         mapProject(self, nil, true)
         scanAllOpenEditorsAndMap()
       end
@@ -464,6 +481,8 @@ local package = {
     -- on double-click or Enter
     tree.ctrl:Connect( wx.wxEVT_COMMAND_TREE_ITEM_ACTIVATED,
       function(event)
+        -- stop onFocusSet changing selection to file node
+        dontSelectOnFocusSet = true
         local item = event:GetItem()
         if not item then return end
         local data = tree.getDataTable(item)
@@ -486,8 +505,9 @@ local package = {
         -- pos not stored with file nodes, just task nodes
         if data.pos then editor:GotoPosEnforcePolicy(data.pos - 1) end
         if not ide:GetEditorWithFocus(editor) then
-         ide:GetDocument(editor):SetActive() 
+         ide:GetDocument(editor):SetActive()
         end
+        dontSelectOnFocusSet = false
       end
     ) 
 
@@ -564,9 +584,13 @@ local package = {
       mapProject(self, editor, config.singleFileMode)
       if fileItem then
         currentEditor = editor
-        tree.ctrl:EnsureVisible(fileItem)
+        tree.ensureFileNodeVisible(fileItem)
+        if not dontSelectOnFocusSet then tree.ctrl:SelectItem(fileItem) end
+      else
+        tree.ctrl:UnselectAll()
       end
     end
+    dontSelectOnFocusSet = false
   end,
 
   --
