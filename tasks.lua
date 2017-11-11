@@ -402,7 +402,7 @@ local package = {
     config.singleFileMode = self:GetConfig().singleFileMode or false
     
     local w, h = 200, 600
-    tree.ctrl = ide:CreateTreeCtrl(ide.frame.projnotebook, wx.wxID_ANY,
+    tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
                             wx.wxTR_TWIST_BUTTONS + wx.wxTR_HIDE_ROOT + 
                             wx.wxTR_ROW_LINES + wx.wxNO_BORDER)
@@ -413,7 +413,7 @@ local package = {
       panel:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
     end
     
-    ide:AddPanelFlex(ide.frame.projnotebook, tree.ctrl, tasksPanel, TR("Tasks"), conf)
+    ide:AddPanelFlex(ide:GetProjectNotebook(), tree.ctrl, tasksPanel, TR("Tasks"), conf)
     
     -- right click menu  
     local ID_FILESWITHTASKS = NewID()
