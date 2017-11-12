@@ -248,6 +248,7 @@ end
 local function mapTasks(fileName, text, isTextRawFile)
   local fileNode = tree.getOrCreateFileNode(true, fileName)
   for _, pattern in ipairs(patterns) do
+    -- only process patterns that aren't filtered
     local pattNode = nil
     local pattStart, pattEnd, pos, numLines = 0, 0, 0, 0
     while true do
@@ -255,7 +256,7 @@ local function mapTasks(fileName, text, isTextRawFile)
       pattStart, pattEnd = string.find(text, pattern.pattern, pattStart+1)
       
       -- pattern not found
-      if pattStart == nil then
+      if pattStart == nil or not pattern.visible then
         if pos == 0 then
           -- this pattern is not found, but maybe all nodes have been deleted, so 
           -- check if the pattern exists, so that pattNode can be used by 
@@ -396,6 +397,11 @@ local package = {
                   }
     end
     
+    -- init visibility for filtering diplay of task type
+    for _, v in pairs(patterns) do
+      v.visible = true
+    end
+    
     config.ignoreTable = self:GetConfig().ignore or {}
     
     -- default is true, so don't want nil being false
@@ -454,6 +460,29 @@ local package = {
         end
       end
     )
+    
+    rcMenu:AppendSeparator();
+    local tasksSubMenu = ide:MakeMenu()
+    rcMenu:AppendSubMenu(tasksSubMenu, TR("Filter Tasks..."))
+    
+    -- create menu entries for filtering
+    for _,pattern in pairs(patterns) do
+      local menuItemID = NewID()
+      tasksSubMenu:Append(menuItemID, TR(pattern.name), "", wx.wxITEM_CHECK)
+      tasksSubMenu:Check(menuItemID, pattern.visible)
+      
+      tree.ctrl:Connect(menuItemID, wx.wxEVT_COMMAND_MENU_SELECTED,
+        function(event)
+          pattern.visible = not pattern.visible
+          if config.singleFileMode then
+            mapProject(self, ide:GetEditor(editor), true)
+          else
+            mapProject(self, nil, true)
+            scanAllOpenEditorsAndMap()
+          end
+        end
+      )
+    end
     -- end of right click menu
     
     -- on double-click or Enter
