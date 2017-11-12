@@ -21,7 +21,7 @@
 --      and the beginning of paths relative to the project path to ignore...
 --
 --    e.g.
---        todoall = {
+--        tasks = {
 --            singleFileMode = true,
 --            showOnlyFilesWithTasks = false,
 --            ignore = { "Export" },
