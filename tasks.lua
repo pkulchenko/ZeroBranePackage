@@ -324,15 +324,6 @@ local function mapTasks(fileName, text, isTextRawFile)
   end
 end
 
---
-local function readfile(filePath)
-  local input = io.open(filePath)
-  local data = input:read("*a")
-  input:close()
-  return data
-end
-
-
 -- called from onProjectLoad and onIdleOnce
 local function scanAllOpenEditorsAndMap()
   if config.singleFileMode then return end
@@ -358,7 +349,7 @@ end
 -- main function, called from events
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
-  ide.frame.projnotebook:Freeze() 
+  ide:GetProjectNotebook():Freeze()
   
   if newTree then 
     tree.reset()
@@ -371,7 +362,7 @@ function mapProject(self, editor, newTree)
     -- in user.lua, todoall.ignore
     local masks = {}
     for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
-    for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
+    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
       local fileName = fileNameFromPath(filePath)
       local ignore = false or editor
       for _, spec in ipairs(masks) do
@@ -379,12 +370,12 @@ function mapProject(self, editor, newTree)
         ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
       end
       if not ignore then
-        mapTasks(fileName, readfile(filePath), true)
+        mapTasks(fileName, FileRead(filePath) or "", true)
       end
     end
   end        
   -- allow UI updates 
-  ide.frame.projnotebook:Thaw()
+  ide:GetProjectNotebook():Thaw()
 end
 
 -- our plugin/package object/table
@@ -392,8 +383,8 @@ local package = {
   name = "Tasks panel",
   description = "Project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.90,
-  dependencies = 1.60,
+  version = 0.91,
+  dependencies = 1.61,
 
   onRegister = function(self)
     patterns = self:GetConfig().patterns 
@@ -407,19 +398,14 @@ local package = {
     
     -- default is true, so don't want nil being false
     local sOFWT = self:GetConfig().showOnlyFilesWithTasks
-    if sOFWT == nil or sOFWT == true then
-      config.showOnlyFilesWithTasks = true
-    else
-      config.showOnlyFilesWithTasks = false
-    end
-    
+    config.showOnlyFilesWithTasks = sOFWT == nil or sOFWT == true
     config.singleFileMode = self:GetConfig().singleFileMode or false
     
     local w, h = 200, 600
-    tree.ctrl = ide:CreateTreeCtrl(ide.frame.projnotebook, wx.wxID_ANY,
+    tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
                             wx.wxTR_TWIST_BUTTONS + wx.wxTR_HIDE_ROOT + 
-                            wx.wxTR_ROW_LINES)
+                            wx.wxTR_ROW_LINES + wx.wxNO_BORDER)
     
     tree.reset()
     
@@ -427,32 +413,22 @@ local package = {
       panel:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
     end
     
-    local layout = ide:GetSetting("/view", "uimgrlayout")
-    
-    local panel
-    if not layout or not layout:find(tasksPanel) then
-      panel = ide:AddPanelDocked(ide.frame.projnotebook, tree.ctrl, tasksPanel, 
-                                 TR("ProTasks"), conf)
-    else
-      panel = ide:AddPanel(tree.ctrl, tasksPanel, TR("ProTasks"), conf)
-    end
+    ide:AddPanelFlex(ide:GetProjectNotebook(), tree.ctrl, tasksPanel, TR("Tasks"), conf)
     
     -- right click menu  
     local ID_FILESWITHTASKS = NewID()
     local ID_SINGLEFILEMODE = NewID()
     
     local rcMenu = ide:MakeMenu {
-        { ID_FILESWITHTASKS, TR("Toggle: &Show &only &files &with &tasks") },
-        { ID_SINGLEFILEMODE, TR("Toggle: &Single &file &mode") }
+        { ID_FILESWITHTASKS, TR("Show only files with tasks"), "", wx.wxITEM_CHECK },
+        { ID_SINGLEFILEMODE, TR("Single file mode"), "", wx.wxITEM_CHECK },
     }
+    rcMenu:Check(ID_FILESWITHTASKS, config.showOnlyFilesWithTasks)
+    rcMenu:Check(ID_SINGLEFILEMODE, config.singleFileMode)
     
     tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
       function(event)
-        -- see filetree.lua for detailed reasons for GC stop here 
-        -- (tl;dr - might crash Linux)
-        collectgarbage("stop")
         tree.ctrl:PopupMenu(rcMenu)
-        collectgarbage("restart")
       end
     )
     
@@ -537,12 +513,14 @@ local package = {
   onProjectLoad = function(self, project)
     local newProject = ( projectPath == nil or projectPath ~= project )
     projectPath = project
-    if not config.singleFileMode then
-      mapProject(self, nil, newProject)
-      scanAllOpenEditorsAndMap()
-    else
-      mapProject(self, currentEditor, newProject)
-    end
+    ide:DoWhenIdle(function()
+        if not config.singleFileMode then
+          mapProject(self, nil, newProject)
+          scanAllOpenEditorsAndMap()
+        else
+          mapProject(self, currentEditor, newProject)
+        end
+      end)
   end,
   
   -- this fires after project is completely loaded when ZBS is first opened
