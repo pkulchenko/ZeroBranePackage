@@ -351,29 +351,31 @@ function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
   ide:GetProjectNotebook():Freeze()
   
-  if newTree then 
-    tree.reset()
-  end
-  
-  if editor then
-    mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
-  else
-    -- map whole project, excluding paths begining with entries in ignore list/table
-    -- in user.lua, todoall.ignore
-    local masks = {}
-    for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
-    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
-      local fileName = fileNameFromPath(filePath)
-      local ignore = false or editor
-      for _, spec in ipairs(masks) do
-        -- don't ignore if it's just the beginning of a filename
-        ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
-      end
-      if not ignore then
-        mapTasks(fileName, FileRead(filePath) or "", true)
+  -- we have frozen the whole notebook, so protect code in between freeze/thaw calls 
+  -- in case an error in this event keeps it frozen
+  pcall( function() 
+    if newTree then tree.reset() end
+    
+    if editor then
+      mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
+    else
+      -- map whole project, excluding paths begining with entries in ignore list/table
+      -- in user.lua, tasks.ignore
+      local masks = {}
+      for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
+      for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
+        local fileName = fileNameFromPath(filePath)
+        local ignore = false or editor
+        for _, spec in ipairs(masks) do
+          -- don't ignore if it's just the beginning of a filename
+          ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
+        end
+        if not ignore then
+          mapTasks(fileName, FileRead(filePath) or "", true)
+        end
       end
     end
-  end        
+  end)
   -- allow UI updates 
   ide:GetProjectNotebook():Thaw()
 end
