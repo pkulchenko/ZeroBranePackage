@@ -21,7 +21,7 @@
 --      and the beginning of paths relative to the project path to ignore...
 --
 --    e.g.
---        todoall = {
+--        tasks = {
 --            singleFileMode = true,
 --            showOnlyFilesWithTasks = false,
 --            ignore = { "Export" },
@@ -248,6 +248,7 @@ end
 local function mapTasks(fileName, text, isTextRawFile)
   local fileNode = tree.getOrCreateFileNode(true, fileName)
   for _, pattern in ipairs(patterns) do
+    -- only process patterns that aren't filtered
     local pattNode = nil
     local pattStart, pattEnd, pos, numLines = 0, 0, 0, 0
     while true do
@@ -255,7 +256,7 @@ local function mapTasks(fileName, text, isTextRawFile)
       pattStart, pattEnd = string.find(text, pattern.pattern, pattStart+1)
       
       -- pattern not found
-      if pattStart == nil then
+      if pattStart == nil or not pattern.visible then
         if pos == 0 then
           -- this pattern is not found, but maybe all nodes have been deleted, so 
           -- check if the pattern exists, so that pattNode can be used by 
@@ -351,29 +352,31 @@ function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
   ide:GetProjectNotebook():Freeze()
   
-  if newTree then 
-    tree.reset()
-  end
-  
-  if editor then
-    mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
-  else
-    -- map whole project, excluding paths begining with entries in ignore list/table
-    -- in user.lua, todoall.ignore
-    local masks = {}
-    for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
-    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
-      local fileName = fileNameFromPath(filePath)
-      local ignore = false or editor
-      for _, spec in ipairs(masks) do
-        -- don't ignore if it's just the beginning of a filename
-        ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
-      end
-      if not ignore then
-        mapTasks(fileName, FileRead(filePath) or "", true)
+  -- we have frozen the whole notebook, so protect code in between freeze/thaw calls 
+  -- in case an error in this event keeps it frozen
+  pcall( function() 
+    if newTree then tree.reset() end
+    
+    if editor then
+      mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
+    else
+      -- map whole project, excluding paths begining with entries in ignore list/table
+      -- in user.lua, tasks.ignore
+      local masks = {}
+      for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
+      for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
+        local fileName = fileNameFromPath(filePath)
+        local ignore = false or editor
+        for _, spec in ipairs(masks) do
+          -- don't ignore if it's just the beginning of a filename
+          ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
+        end
+        if not ignore then
+          mapTasks(fileName, FileRead(filePath) or "", true)
+        end
       end
     end
-  end        
+  end)
   -- allow UI updates 
   ide:GetProjectNotebook():Thaw()
 end
@@ -392,6 +395,11 @@ local package = {
        patterns = { { name = "TODOs",  pattern = "TODO[:;>]"  },
                     { name = "FIXMEs", pattern = "FIXME[:;>]" }
                   }
+    end
+    
+    -- init visibility for filtering diplay of task type
+    for _, v in pairs(patterns) do
+      v.visible = true
     end
     
     config.ignoreTable = self:GetConfig().ignore or {}
@@ -452,6 +460,29 @@ local package = {
         end
       end
     )
+    
+    rcMenu:AppendSeparator();
+    local tasksSubMenu = ide:MakeMenu()
+    rcMenu:AppendSubMenu(tasksSubMenu, TR("Filter Tasks..."))
+    
+    -- create menu entries for filtering
+    for _,pattern in pairs(patterns) do
+      local menuItemID = NewID()
+      tasksSubMenu:Append(menuItemID, TR(pattern.name), "", wx.wxITEM_CHECK)
+      tasksSubMenu:Check(menuItemID, pattern.visible)
+      
+      tree.ctrl:Connect(menuItemID, wx.wxEVT_COMMAND_MENU_SELECTED,
+        function(event)
+          pattern.visible = not pattern.visible
+          if config.singleFileMode then
+            mapProject(self, ide:GetEditor(editor), true)
+          else
+            mapProject(self, nil, true)
+            scanAllOpenEditorsAndMap()
+          end
+        end
+      )
+    end
     -- end of right click menu
     
     -- on double-click or Enter
