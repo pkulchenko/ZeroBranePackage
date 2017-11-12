@@ -349,7 +349,7 @@ end
 -- main function, called from events
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
-  tree.ctrl:Freeze()
+  ide:GetProjectNotebook():Freeze()
   
   if newTree then 
     tree.reset()
@@ -375,7 +375,7 @@ function mapProject(self, editor, newTree)
     end
   end        
   -- allow UI updates 
-  tree.ctrl:Thaw()
+  ide:GetProjectNotebook():Thaw()
 end
 
 -- our plugin/package object/table
@@ -423,8 +423,8 @@ local package = {
         { ID_FILESWITHTASKS, TR("Show only files with tasks"), "", wx.wxITEM_CHECK },
         { ID_SINGLEFILEMODE, TR("Single file mode"), "", wx.wxITEM_CHECK },
     }
-    rcMenu:Check(ID_FILESWITHTASKS, true)
-    rcMenu:Check(ID_SINGLEFILEMODE, true)
+    rcMenu:Check(ID_FILESWITHTASKS, config.showOnlyFilesWithTasks)
+    rcMenu:Check(ID_SINGLEFILEMODE, config.singleFileMode)
     
     tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
       function(event)
