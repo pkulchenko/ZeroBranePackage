@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.32,
+  version = 0.33,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1874,6 +1874,7 @@ while true do
   elseif command == "EXEC" then
     local _, _, chunk = string.find(line, "^[A-Z]+%s+(.+)$")
     if chunk then
+      chunk = chunk:gsub("%-%-%s*%b{}","") -- remove eval options if present
       local func, err = loadstring(chunk)
       if not func then
         local chunkr = "return "..chunk
