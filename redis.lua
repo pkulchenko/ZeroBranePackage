@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.31,
+  version = 0.32,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1936,7 +1936,7 @@ while true do
         funcname = #msg > 0 and "anonymous function" or "main chunk"
       end
       local _, _, curline = line:find("(%d+)", 4)
-      table.insert(stack, ("{{%q, %q, -1, %d, 'main chunk'}, %s, {}}")
+      table.insert(stack, ("{{%q, %q, -1, %d, 'main chunk', '', ''}, %s, {}}")
           :format(funcname, fname, curline or 0, top and vars or "{}"))
     end
     server:send("200 OK " .. "return {"..table.concat(stack, ',').."}" .. "\n")
