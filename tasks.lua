@@ -28,7 +28,8 @@
 --          patterns = { { name = "TODOs",  pattern = "TODO[:;>]"  },
 --                       { name = "FIXMEs", pattern = "FIXME[:;>]" },
 --                       { name = "WTFs",   pattern = "WTF[:;>]"   }
---                     }
+--                     },
+--         showNames = false
 --        }
 -- 
 --       ... if you don't have this in either of your user.lua files, the default settings are
@@ -49,6 +50,9 @@
 --             Note... spaces in the patterns create issues (inc %s). 'name' is what is shown on the
 --             list. Can be completely different from pattern.
 --
+--       showNames: default - false
+--             
+--
 -- Tests:
 --        TODO: this is a test TODO with more than one TODO to ignore
 --        FIXME: this is a test FIXME too
@@ -68,7 +72,7 @@ local projectPath                     -- set in onProjectLoad
 local config = {}
 local tree = {}                       -- helper functions for wxTreeCtrl
 local patterns = {}                   -- our task patterns from user.lua (or default)
-local DEBUG = false                   -- set to true to get output from any _DBG calls
+local DEBUG = true                    -- set to true to get output from any _DBG calls
 local _DBG -- (...)                   -- function for console output, definition at EOF
 local currentEditor                   -- set in onEditorFocusSet, used in onProjectLoad
 local dontSelectOnFocusSet = false
@@ -93,6 +97,23 @@ tree.getChildByItemText = function(parentItem, childName)
   while child:IsOk() do
     text = tree.ctrl:GetItemText(child)
     if text == childName then return child end
+    child = tree.ctrl:GetNextSibling(child)
+  end
+  return nil
+end
+
+--
+tree.getChildByDataTableItem = function(parentItem, tableItemName, value)
+  local child, data = tree.ctrl:GetFirstChild(parentItem), nil
+  while child:IsOk() do
+    data = tree.getDataTable(child)
+    if data then
+      if data[tableItemName] then 
+        if data[tableItemName] == value then 
+          return child
+        end
+      end
+    end
     child = tree.ctrl:GetNextSibling(child)
   end
   return nil
@@ -156,7 +177,7 @@ end
 -- go through children and delete any that don't have isChecked set to true
 -- this is because new/different and matched children were set to true
 -- leaving only unmatched - deleted or moved ones - as false
-tree.deleteUncheckedChildren = function(parentItem)
+tree.deleteUncheckedChildren = function(parentItem, reset)
   local child, data = tree.ctrl:GetFirstChild(parentItem), nil
   while child:IsOk() do
     data = tree.getDataTable(child)
@@ -170,10 +191,14 @@ tree.deleteUncheckedChildren = function(parentItem)
           child = tree.ctrl:GetNextSibling(child)
         end
       else
-        data.isChecked = false -- reset for next round of checking
+        if reset then
+          data.isChecked = false -- reset for next round of checking
+        end
         tree.setDataTable(child, data)
         child = tree.ctrl:GetNextSibling(child)
       end
+    else
+      child = tree.ctrl:GetNextSibling(child)
     end
   end
 end
@@ -248,31 +273,38 @@ end
 local function mapTasks(fileName, text, isTextRawFile)
   local fileNode = tree.getOrCreateFileNode(true, fileName)
   for _, pattern in ipairs(patterns) do
-    -- only process patterns that aren't filtered
     local pattNode = nil
     local pattStart, pattEnd, pos, numLines = 0, 0, 0, 0
     while true do
       pos = pattStart
       pattStart, pattEnd = string.find(text, pattern.pattern, pattStart+1)
       
-      -- pattern not found
+      -- pattern not found, or it's filtered so don't want to show it
       if pattStart == nil or not pattern.visible then
         if pos == 0 then
           -- this pattern is not found, but maybe all nodes have been deleted, so 
           -- check if the pattern exists, so that pattNode can be used by 
           -- tree.deleteUncheckedChildren to delete after we break from loop
-          if fileNode and pattNode == nil then
+          if pattNode == nil then
+            if config.showNames then
             -- false = just try to get it, do not create if not found
-            pattNode = tree.getOrCreatePatternNode(false, fileNode, pattern.name)
+              pattNode = tree.getOrCreatePatternNode(false, fileNode, pattern.name)
+            else
+              pattNode = fileNode
+            end
           end
         end
         break
       end
       
       -- we have found a pattern, get node for pattern or
-      -- create it if it does not exist
+      -- create it if it does not exist... 
       if pattNode == nil then
-        pattNode = tree.getOrCreatePatternNode(true, fileNode, pattern.name)
+        if config.showNames then
+          pattNode = tree.getOrCreatePatternNode(true, fileNode, pattern.name)
+        else -- ... unless it's flat view...
+          pattNode = fileNode -- ... where tasks are direct childen of fileNode
+        end
       end
       
       -- there's a difference in file lengths with lua file reading and
@@ -290,7 +322,7 @@ local function mapTasks(fileName, text, isTextRawFile)
         end
         adj = numLines
       end
-      
+
       local lineEnd = string.find(text, "\n", pattStart+1)
       if lineEnd == nil then lineEnd = #text else lineEnd = lineEnd - 1 end --  handle EOF
       -- 1 is for the extra char after the task name
@@ -303,12 +335,14 @@ local function mapTasks(fileName, text, isTextRawFile)
         local task = tree.ctrl:AppendItem(pattNode, taskStr, 2)
         tree.setDataTable(task, { file = fileName, pos = pos, isChecked = true })
       end
-    end -- while                                  
-    
+    end -- while
+
     -- here we remove any children that weren't checked by hasTask
     if pattNode then
-      tree.deleteUncheckedChildren(pattNode)
-      if tree.ctrl:GetChildrenCount(pattNode, false) == 0 then 
+      tree.deleteUncheckedChildren(pattNode, config.showNames)
+      -- if flat view, only pattNode is fileNode so only delete later
+      -- if completely empty
+      if tree.ctrl:GetChildrenCount(pattNode, false) == 0 and config.showNames then
         tree.ctrl:Delete(pattNode)
       end
     end
@@ -316,10 +350,12 @@ local function mapTasks(fileName, text, isTextRawFile)
   
   -- remove file node if no children, unless we want to keep it
   if fileNode then
-    if config.showOnlyFilesWithTasks and tree.ctrl:GetChildrenCount(fileNode, false) == 0 
-       and not config.singleFileMode then
+    if not config.showTasks then tree.deleteUncheckedChildren(fileNode, true) end
+    if tree.ctrl:GetChildrenCount(fileNode, false) == 0  and config.showOnlyFilesWithTasks and
+         not config.singleFileMode then
       tree.ctrl:Delete(fileNode)
     else
+      --TODO: sort by pos if flat mode, probably at source rather than here
       tree.ctrl:ExpandAllChildren(fileNode)
     end
   end
@@ -351,7 +387,6 @@ end
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
   ide:GetProjectNotebook():Freeze()
-  
   -- we have frozen the whole notebook, so protect code in between freeze/thaw calls 
   -- in case an error in this event keeps it frozen
   pcall( function() 
@@ -403,6 +438,7 @@ local package = {
     end
     
     config.ignoreTable = self:GetConfig().ignore or {}
+    config.showNames = self:GetConfig().showNames or false-- flatten tree
     
     -- default is true, so don't want nil being false
     local sOFWT = self:GetConfig().showOnlyFilesWithTasks
@@ -426,17 +462,29 @@ local package = {
     -- right click menu  
     local ID_FILESWITHTASKS = NewID()
     local ID_SINGLEFILEMODE = NewID()
+    local ID_FLATMODE = NewID()
     
     local rcMenu = ide:MakeMenu {
-        { ID_FILESWITHTASKS, TR("Show only files with tasks"), "", wx.wxITEM_CHECK },
-        { ID_SINGLEFILEMODE, TR("Single file mode"), "", wx.wxITEM_CHECK },
+        { ID_FILESWITHTASKS, TR("Show Only Files With Tasks"), "", wx.wxITEM_CHECK },
+        { ID_SINGLEFILEMODE, TR("Single File Mode"), "", wx.wxITEM_CHECK },
+        { ID_FLATMODE, TR("View With Task Names"), "", wx.wxITEM_CHECK },
     }
     rcMenu:Check(ID_FILESWITHTASKS, config.showOnlyFilesWithTasks)
     rcMenu:Check(ID_SINGLEFILEMODE, config.singleFileMode)
+    rcMenu:Check(ID_FLATMODE, config.showNames)
     
     tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
       function(event)
         tree.ctrl:PopupMenu(rcMenu)
+      end
+    )
+    
+    tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
+      function(event)
+        --if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
+        config.showNames = not config.showNames
+        mapProject(self, nil, true)
+        scanAllOpenEditorsAndMap()
       end
     )
     
@@ -448,7 +496,7 @@ local package = {
         scanAllOpenEditorsAndMap()
       end
     )
-  
+
     tree.ctrl:Connect(ID_SINGLEFILEMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.singleFileMode = not config.singleFileMode
@@ -587,6 +635,7 @@ local package = {
   
   --
   onEditorFocusSet = function(self, editor)
+    if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
     -- event called when loading file, but filename is nil then
     if ide:GetDocument(editor):GetFilePath() then 
       local fileItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
