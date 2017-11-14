@@ -270,6 +270,20 @@ local function path2mask(s)
 end
 
 --
+local function countNewLinesBetweenPositions(text, startPos, endPos)
+  local lineCount = 0
+  local nextNewLine = string.find(text, "\n", startPos + 1)
+  -- handle end of file when no more newlines
+  if nextNewLine == nil then nextNewLine = #text end
+  while nextNewLine < endPos do
+    lineCount = lineCount + 1
+    nextNewLine = string.find(text, "\n", nextNewLine + 1)
+    if nextNewLine == nil then nextNewLine = #text end
+  end
+  return lineCount
+end
+
+--
 local function mapTasks(fileName, text, isTextRawFile)
   local fileNode = tree.getOrCreateFileNode(true, fileName)
   for _, pattern in ipairs(patterns) do
@@ -306,23 +320,15 @@ local function mapTasks(fileName, text, isTextRawFile)
           pattNode = fileNode -- ... where tasks are direct childen of fileNode
         end
       end
-      
+
       -- there's a difference in file lengths with lua file reading and
       -- wx editor length, so if it's a file read adjust for line endings
       -- so that we have a correct position to locate
-      local adj = 0
-      local nextNewLine = string.find(text, "\n", pos + 1)
-      -- handle end of file when no more newlines
-      if nextNewLine == nil then nextNewLine = #text end
       if isTextRawFile then
-        while nextNewLine < pattStart do
-          numLines = numLines + 1
-          nextNewLine = string.find(text, "\n", nextNewLine + 1)
-          if nextNewLine == nil then nextNewLine = #text end
-        end
-        adj = numLines
+        numLines = numLines + countNewLinesBetweenPositions(text, pos, pattStart)
       end
-
+      local adj = numLines
+      
       local lineEnd = string.find(text, "\n", pattStart+1)
       if lineEnd == nil then lineEnd = #text else lineEnd = lineEnd - 1 end --  handle EOF
       -- 1 is for the extra char after the task name
@@ -351,8 +357,10 @@ local function mapTasks(fileName, text, isTextRawFile)
   -- remove file node if no children, unless we want to keep it
   if fileNode then
     if not config.showTasks then tree.deleteUncheckedChildren(fileNode, true) end
-    if tree.ctrl:GetChildrenCount(fileNode, false) == 0  and config.showOnlyFilesWithTasks and
-         not config.singleFileMode then
+    
+    -- TODO: with show only files with tasks the current file should be shown anyway
+    --       to stop there being just an empty panel
+    if tree.ctrl:GetChildrenCount(fileNode, false) == 0 and config.showOnlyFilesWithTasks then
       tree.ctrl:Delete(fileNode)
     else
       --TODO: sort by pos if flat mode, probably at source rather than here
@@ -479,33 +487,34 @@ local package = {
       end
     )
     
+    local function remapProject(self)
+      if config.singleFileMode then
+        mapProject(self, ide:GetEditor(), true)
+      else
+        mapProject(self, nil, true)
+        scanAllOpenEditorsAndMap()
+      end
+    end
+    
     tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         --if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
         config.showNames = not config.showNames
-        mapProject(self, nil, true)
-        scanAllOpenEditorsAndMap()
+        remapProject(self)
       end
     )
     
     tree.ctrl:Connect(ID_FILESWITHTASKS, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showOnlyFilesWithTasks = not config.showOnlyFilesWithTasks
-        if config.singleFileMode then return end
-        mapProject(self, nil, true)
-        scanAllOpenEditorsAndMap()
+        remapProject(self)
       end
     )
 
     tree.ctrl:Connect(ID_SINGLEFILEMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.singleFileMode = not config.singleFileMode
-        if config.singleFileMode then
-          mapProject(self, ide:GetEditor(editor), true)
-        else
-          mapProject(self, nil, true)
-          scanAllOpenEditorsAndMap()
-        end
+        remapProject(self)
       end
     )
     
