@@ -51,15 +51,8 @@
 --             list. Can be completely different from pattern.
 --
 --       showNames: default - false
---             
---
--- Tests:
---        TODO: this is a test TODO with more than one TODO to ignore
---        FIXME: this is a test FIXME too
---        this next one should also be a TODO> another TODO check
 --
 ----------------------------------------------------------------------------------------------------
-
 
 local id = ID("taskspanel.referenceview")
 local tasksPanel = "taskspanel"
@@ -693,5 +686,3 @@ function _DBG(...)
 end
 
 return package
-
--- TODO: end of file test
