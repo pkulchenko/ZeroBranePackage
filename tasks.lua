@@ -10,14 +10,14 @@
 --
 -- PROJECT TASKS (tasks.lua):
 --      Show list of tasks from every Lua file in the project path  and in all subdirectories
---      that haven't been excluded (see ignore below). 
+--      that haven't been excluded (see ignore below).
 --
 --      It also shows tasks from every open file, but will remove those from the list when the
 --      file is closed if it is not in the project directory. TODOs from project file are from
 --      from project files are always listed, even when  the file has not been opened at all.
 --
 -- Configuration:
---      In your system or user config/preferences file, you can set the tokens used by this package 
+--      In your system or user config/preferences file, you can set the tokens used by this package
 --      and the beginning of paths relative to the project path to ignore...
 --
 --    e.g.
@@ -31,15 +31,15 @@
 --                     },
 --         showNames = false
 --        }
--- 
+--
 --       ... if you don't have this in either of your user.lua files, the default settings are
 --       used...
--- 
+--
 --       singleFileMode: default - false
 --             Show only one file at a time, like todo.all. Toggle via right click menu.
---             
+--
 --       showOnlyFilesWithTasks: default - true
---             With this set to false, all project files are always listed. Toggle via right click 
+--             With this set to false, all project files are always listed. Toggle via right click
 --             menu.
 --
 --       ignore: default - ignore nothing
@@ -66,7 +66,7 @@ local tasksPanel = "taskspanel"
 local zeroBraneLoaded = false         -- set in onIdleOnce
 local needRefresh = false             -- set in onEditorUIUpdate event
 local timer = {}                      -- tree.ctrl is updated on editor
-timer.lastTick = os:clock()           -- events, but we can use this for 
+timer.lastTick = os:clock()           -- events, but we can use this for
 timer.interval = 0.33                 -- minimum time between updates
 local projectPath                     -- set in onProjectLoad
 local config = {}
@@ -91,7 +91,7 @@ tree.getFileNode = function(fn)
   return tree.getChildByItemText(tree.ctrl:GetRootItem(), fn)
 end
 
--- 
+--
 tree.getChildByItemText = function(parentItem, childName)
   local child, text = tree.ctrl:GetFirstChild(parentItem), nil
   while child:IsOk() do
@@ -108,8 +108,8 @@ tree.getChildByDataTableItem = function(parentItem, tableItemName, value)
   while child:IsOk() do
     data = tree.getDataTable(child)
     if data then
-      if data[tableItemName] then 
-        if data[tableItemName] == value then 
+      if data[tableItemName] then
+        if data[tableItemName] == value then
           return child
         end
       end
@@ -125,7 +125,7 @@ tree.getTaskByPosition = function(parentItem, pos)
   while child:IsOk() do
     data = tree.getDataTable(child)
     if data then
-      if data.pos == pos then 
+      if data.pos == pos then
         return child
       end
     end
@@ -154,7 +154,7 @@ end
 tree.hasTask = function(pattNode, taskStr, taskPos, checkIfFound)
   local str, pos = false, false
   local item = tree.getChildByItemText(pattNode, taskStr)
-  if item == nil then 
+  if item == nil then
     item = tree.getTaskByPosition(pattNode, taskPos)
     if item == nil then return false end
     pos = true -- only pos matches so text has changed
@@ -206,8 +206,8 @@ end
 --
 tree.getOrCreateFileNode = function(createIfNotFound, fileName)
   local fileNode = tree.getFileNode(fileName)
-  if fileNode == nil then 
-    if createIfNotFound then 
+  if fileNode == nil then
+    if createIfNotFound then
       fileNode = tree.addFileNode(fileName)
       tree.setDataTable(fileNode, { file = fileName })
       tree.ctrl:SetItemBold(fileNode, true)
@@ -220,7 +220,7 @@ end
 
 --
 tree.getOrCreatePatternNode = function(createIfNotFound, fileNode, name)
-  local pattNode = tree.getChildByItemText(fileNode, name) 
+  local pattNode = tree.getChildByItemText(fileNode, name)
   if pattNode == nil then
     if createIfNotFound then
       pattNode = tree.ctrl:AppendItem(fileNode, name, 2)
@@ -235,7 +235,7 @@ end
 
 --
 tree.reset = function()
-  tree.ctrl:DeleteAllItems() 
+  tree.ctrl:DeleteAllItems()
   local root = tree.ctrl:AddRoot("Project Tasks", 0)
   tree.ctrl:ExpandAllChildren(root)
 end
@@ -292,12 +292,12 @@ local function mapTasks(fileName, text, isTextRawFile)
     while true do
       pos = pattStart
       pattStart, pattEnd = string.find(text, pattern.pattern, pattStart+1)
-      
+
       -- pattern not found, or it's filtered so don't want to show it
       if pattStart == nil or not pattern.visible then
         if pos == 0 then
-          -- this pattern is not found, but maybe all nodes have been deleted, so 
-          -- check if the pattern exists, so that pattNode can be used by 
+          -- this pattern is not found, but maybe all nodes have been deleted, so
+          -- check if the pattern exists, so that pattNode can be used by
           -- tree.deleteUncheckedChildren to delete after we break from loop
           if pattNode == nil then
             if config.showNames then
@@ -310,9 +310,9 @@ local function mapTasks(fileName, text, isTextRawFile)
         end
         break
       end
-      
+
       -- we have found a pattern, get node for pattern or
-      -- create it if it does not exist... 
+      -- create it if it does not exist...
       if pattNode == nil then
         if config.showNames then
           pattNode = tree.getOrCreatePatternNode(true, fileNode, pattern.name)
@@ -328,14 +328,14 @@ local function mapTasks(fileName, text, isTextRawFile)
         numLines = numLines + countNewLinesBetweenPositions(text, pos, pattStart)
       end
       local adj = numLines
-      
+
       local lineEnd = string.find(text, "\n", pattStart+1)
       if lineEnd == nil then lineEnd = #text else lineEnd = lineEnd - 1 end --  handle EOF
       -- 1 is for the extra char after the task name
       local taskStr = string.sub(text, pattEnd + 1, lineEnd)
       pos = pattStart + adj
-      
-      -- hasTask checks if entry exists and marks as checked so we can 
+
+      -- hasTask checks if entry exists and marks as checked so we can
       -- remove unmarked/checked orphans
       if not tree.hasTask(pattNode, taskStr, pos, true) then
         local task = tree.ctrl:AppendItem(pattNode, taskStr, 2)
@@ -353,11 +353,11 @@ local function mapTasks(fileName, text, isTextRawFile)
       end
     end
   end
-  
+
   -- remove file node if no children, unless we want to keep it
   if fileNode then
     if not config.showTasks then tree.deleteUncheckedChildren(fileNode, true) end
-    
+
     -- TODO: with show only files with tasks the current file should be shown anyway
     --       to stop there being just an empty panel
     if tree.ctrl:GetChildrenCount(fileNode, false) == 0 and config.showOnlyFilesWithTasks then
@@ -395,11 +395,11 @@ end
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
   ide:GetProjectNotebook():Freeze()
-  -- we have frozen the whole notebook, so protect code in between freeze/thaw calls 
+  -- we have frozen the whole notebook, so protect code in between freeze/thaw calls
   -- in case an error in this event keeps it frozen
-  pcall( function() 
+  pcall( function()
     if newTree then tree.reset() end
-    
+
     if editor then
       mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
     else
@@ -420,7 +420,7 @@ function mapProject(self, editor, newTree)
       end
     end
   end)
-  -- allow UI updates 
+  -- allow UI updates
   ide:GetProjectNotebook():Thaw()
 end
 
@@ -433,26 +433,26 @@ local package = {
   dependencies = 1.61,
 
   onRegister = function(self)
-    patterns = self:GetConfig().patterns 
+    patterns = self:GetConfig().patterns
     if not patterns or not next(patterns) then
        patterns = { { name = "TODOs",  pattern = "TODO[:;>]"  },
                     { name = "FIXMEs", pattern = "FIXME[:;>]" }
                   }
     end
-    
+
     -- init visibility for filtering diplay of task type
     for _, v in pairs(patterns) do
       v.visible = true
     end
-    
+
     config.ignoreTable = self:GetConfig().ignore or {}
     config.showNames = self:GetConfig().showNames or false-- flatten tree
-    
+
     -- default is true, so don't want nil being false
     local sOFWT = self:GetConfig().showOnlyFilesWithTasks
     config.showOnlyFilesWithTasks = sOFWT == nil or sOFWT == true
     config.singleFileMode = self:GetConfig().singleFileMode or false
-    
+
     local w, h = 200, 600
     tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
@@ -460,18 +460,18 @@ local package = {
                             wx.wxTR_ROW_LINES + wx.wxNO_BORDER)
     
     tree.reset()
-    
+
     local conf = function(panel)
       panel:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
     end
-    
+
     ide:AddPanelFlex(ide:GetProjectNotebook(), tree.ctrl, tasksPanel, TR("Tasks"), conf)
-    
-    -- right click menu  
+
+    -- right click menu
     local ID_FILESWITHTASKS = NewID()
     local ID_SINGLEFILEMODE = NewID()
     local ID_FLATMODE = NewID()
-    
+
     local rcMenu = ide:MakeMenu {
         { ID_FILESWITHTASKS, TR("Show Only Files With Tasks"), "", wx.wxITEM_CHECK },
         { ID_SINGLEFILEMODE, TR("Single File Mode"), "", wx.wxITEM_CHECK },
@@ -480,13 +480,13 @@ local package = {
     rcMenu:Check(ID_FILESWITHTASKS, config.showOnlyFilesWithTasks)
     rcMenu:Check(ID_SINGLEFILEMODE, config.singleFileMode)
     rcMenu:Check(ID_FLATMODE, config.showNames)
-    
-    tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN, 
+
+    tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN,
       function(event)
         tree.ctrl:PopupMenu(rcMenu)
       end
     )
-    
+
     local function remapProject(self)
       if config.singleFileMode then
         mapProject(self, ide:GetEditor(), true)
@@ -495,7 +495,7 @@ local package = {
         scanAllOpenEditorsAndMap()
       end
     end
-    
+
     tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         --if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
@@ -503,7 +503,7 @@ local package = {
         remapProject(self)
       end
     )
-    
+
     tree.ctrl:Connect(ID_FILESWITHTASKS, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showOnlyFilesWithTasks = not config.showOnlyFilesWithTasks
@@ -517,17 +517,17 @@ local package = {
         remapProject(self)
       end
     )
-    
+
     rcMenu:AppendSeparator();
     local tasksSubMenu = ide:MakeMenu()
     rcMenu:AppendSubMenu(tasksSubMenu, TR("Filter Tasks..."))
-    
+
     -- create menu entries for filtering
     for _,pattern in pairs(patterns) do
       local menuItemID = NewID()
       tasksSubMenu:Append(menuItemID, TR(pattern.name), "", wx.wxITEM_CHECK)
       tasksSubMenu:Check(menuItemID, pattern.visible)
-      
+
       tree.ctrl:Connect(menuItemID, wx.wxEVT_COMMAND_MENU_SELECTED,
         function(event)
           pattern.visible = not pattern.visible
@@ -552,7 +552,7 @@ local package = {
         local data = tree.getDataTable(item)
         if not data then return end
         local filePath = projectPath .. data.file
-        
+
         local docs = ide:GetDocuments()
         local editor
         for _, doc in ipairs(docs) do
@@ -565,7 +565,7 @@ local package = {
           editor = ide:LoadFile(filePath)
           if not editor then error("Couldn't load " .. filePath) end
         end
-        
+
         -- pos not stored with file nodes, just task nodes
         if data.pos then editor:GotoPosEnforcePolicy(data.pos - 1) end
         if not ide:GetEditorWithFocus(editor) then
@@ -573,7 +573,7 @@ local package = {
         end
         dontSelectOnFocusSet = false
       end
-    ) 
+    )
 
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
     menu:InsertCheckItem(4, id, TR("Project Tasks")..KSC(id))
@@ -595,7 +595,7 @@ local package = {
   onUnRegister = function(self)
     ide:RemoveMenuItem(id)
   end,
-  
+
   -- called in between onEditorFocusSet calls when app first opens. Called after
   -- on subsequent project loads.
   onProjectLoad = function(self, project)
@@ -610,12 +610,12 @@ local package = {
         end
       end)
   end,
-  
+
   -- this fires after project is completely loaded when ZBS is first opened
   onIdleOnce = function(self, event)
     zeroBraneLoaded = true
   end,
-  
+
   --
   onEditorClose = function(self, editor)
     -- remove non project file tasks from list on close
@@ -627,26 +627,26 @@ local package = {
       mapProject(self)
     end
   end,
-  
+
   --
   onEditorLoad = function(self, editor)
     if zeroBraneLoaded then
       mapProject(self, editor)
     end
   end,
-  
+
   -- implemented for saving new file or save as, so list updates
   onEditorSave = function(self, editor)
     if tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath())) == nil then
       mapProject(self, editor)
     end
   end,
-  
+
   --
   onEditorFocusSet = function(self, editor)
     if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
     -- event called when loading file, but filename is nil then
-    if ide:GetDocument(editor):GetFilePath() then 
+    if ide:GetDocument(editor):GetFilePath() then
       local fileItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
       mapProject(self, editor, config.singleFileMode)
       if fileItem then
@@ -667,7 +667,7 @@ local package = {
       needRefresh = editor
     end
   end,
-  
+
   --
   onIdle = function(self, event)
     -- limit update time to minimum of timer.interval in case of rapid events
@@ -679,7 +679,7 @@ local package = {
     local editor = needRefresh
     if not editor then return end
     needRefresh = nil
-  
+
     if ide:GetDocument(editor):GetFilePath() then
       mapProject(self, editor)
     end
@@ -687,7 +687,7 @@ local package = {
 }
 
 function _DBG(...)
-  if DEBUG then 
+  if DEBUG then
     local msg = "" for _,v in ipairs{...} do msg = msg .. tostring(v) .. "\t" end ide:Print(msg)
   end
 end
