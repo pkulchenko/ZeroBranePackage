@@ -1,5 +1,5 @@
 -- Copyright 2017 Paul Kulchenko, ZeroBrane LLC; All rights reserved
--- 
+--
 -- Contributed by Paul Reilly (@paul-reilly)
 --
 -- Based on:
@@ -182,7 +182,7 @@ tree.deleteUncheckedChildren = function(parentItem, reset)
           tree.ctrl:Delete(tree.ctrl:GetPrevSibling(child))
         else
           tree.ctrl:Delete(child)
-          child = tree.ctrl:GetNextSibling(child)
+          break
         end
       else
         if reset then
@@ -249,6 +249,28 @@ tree.ensureFileNodeVisible = function(fileNode)
       end
     end
     tree.ctrl:EnsureVisible(lastChild)
+  end
+  tree.ctrl:ScrollTo(fileNode)
+end
+
+-- insert task, either at end of tree or if unsorted is false, in order
+-- of position from data table
+tree.insertTask = function(parent, itemText, unsorted, pos)
+  if unsorted then
+    return tree.ctrl:AppendItem(parent, itemText, 1)
+  else
+    local child = tree.ctrl:GetFirstChild(parent)
+    if not child:IsOk() then
+      return tree.ctrl:AppendItem(parent, itemText, 1)
+    end
+    while child:IsOk() do
+      local t = tree.getDataTable(child)
+      if pos < t.pos then
+        return tree.ctrl:InsertItem(parent, tree.ctrl:GetPrevSibling(child), itemText, 1)
+      end
+      child = tree.ctrl:GetNextSibling(child)
+    end
+    return tree.ctrl:AppendItem(parent, itemText, 1)
   end
 end
 
@@ -334,21 +356,21 @@ local function mapTasks(fileName, text, isTextRawFile)
       -- hasTask checks if entry exists and marks as checked so we can
       -- remove unmarked/checked orphans
       if not tree.hasTask(pattNode, taskStr, pos, true) then
-        local task = tree.ctrl:AppendItem(pattNode, taskStr, 1)
+        local task = tree.insertTask(pattNode, taskStr, config.showNames, pos)
         tree.setDataTable(task, { file = fileName, pos = pos, isChecked = true })
       end
     end -- while
 
     -- here we remove any children that weren't checked by hasTask
-    if pattNode then
-      tree.deleteUncheckedChildren(pattNode, config.showNames)
+    if pattNode and config.showNames then
+      tree.deleteUncheckedChildren(pattNode, true)
       -- if flat view, only pattNode is fileNode so only delete later
       -- if completely empty
-      if tree.ctrl:GetChildrenCount(pattNode, false) == 0 and config.showNames then
+      if tree.ctrl:GetChildrenCount(pattNode, false) == 0 then
         tree.ctrl:Delete(pattNode)
       end
     end
-  end
+  end -- for
 
   -- remove file node if no children, unless we want to keep it
   if fileNode then
@@ -359,7 +381,6 @@ local function mapTasks(fileName, text, isTextRawFile)
     if tree.ctrl:GetChildrenCount(fileNode, false) == 0 and config.showOnlyFilesWithTasks then
       tree.ctrl:Delete(fileNode)
     else
-      --TODO: sort by pos if flat mode, probably at source rather than here
       tree.ctrl:ExpandAllChildren(fileNode)
     end
   end
@@ -559,7 +580,6 @@ local package = {
           event:Skip()
           return
         end
-
         tree.ctrl:SelectItem(item_id)
         local item = item_id
         if not item then return end
