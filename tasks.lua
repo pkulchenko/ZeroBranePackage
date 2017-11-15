@@ -68,7 +68,8 @@ local patterns = {}                   -- our task patterns from user.lua (or def
 local DEBUG = true                    -- set to true to get output from any _DBG calls
 local _DBG -- (...)                   -- function for console output, definition at EOF
 local currentEditor                   -- set in onEditorFocusSet, used in onProjectLoad
-local dontSelectOnFocusSet = false
+local imglist = ide:CreateImageList("OUTLINE", "FILE-NORMAL", "VALUE-LCALL",
+    "VALUE-GCALL", "VALUE-ACALL", "VALUE-SCALL", "VALUE-MCALL")
 
 local mapProject, fileNameFromPath    -- forward decs
 
@@ -76,7 +77,7 @@ local mapProject, fileNameFromPath    -- forward decs
 -- first level from root contain file nodes for this plugin
 tree.addFileNode = function(fn)
   local root = tree.ctrl:GetRootItem()
-  return tree.ctrl:AppendItem(root, fn, 1)
+  return tree.ctrl:AppendItem(root, fn, 0)
 end
 
 --
@@ -203,7 +204,7 @@ tree.getOrCreateFileNode = function(createIfNotFound, fileName)
     if createIfNotFound then
       fileNode = tree.addFileNode(fileName)
       tree.setDataTable(fileNode, { file = fileName })
-      tree.ctrl:SetItemBold(fileNode, true)
+      --tree.ctrl:SetItemBold(fileNode, true)
     else
       return nil
     end
@@ -216,9 +217,9 @@ tree.getOrCreatePatternNode = function(createIfNotFound, fileNode, name)
   local pattNode = tree.getChildByItemText(fileNode, name)
   if pattNode == nil then
     if createIfNotFound then
-      pattNode = tree.ctrl:AppendItem(fileNode, name, 2)
-      tree.ctrl:SetItemTextColour(pattNode, 
-                            wx.wxColour(table.unpack(ide.config.styles.keywords1.fg)))
+      pattNode = tree.ctrl:AppendItem(fileNode, name, 3)
+      tree.ctrl:SetItemTextColour(pattNode,
+                           wx.wxColour(table.unpack(ide.config.styles.keywords5.fg)))
     else
       return nil
     end
@@ -237,15 +238,17 @@ end
 tree.ensureFileNodeVisible = function(fileNode)
   -- ensure file node and last gradnchild/child is visible so that
   -- it's all in view
-  tree.ctrl:EnsureVisible(fileNode)
+  tree.ctrl:ScrollTo(fileNode)
   local lastChild = tree.ctrl:GetLastChild(fileNode)
   if lastChild then
-    local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
-    if lastGrandChild then 
-      tree.ctrl:EnsureVisible(lastGrandChild)
-    else
-      tree.ctrl:EnsureVisible(lastChild)
+    if config.showNames then
+      local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
+      if lastGrandChild then
+        tree.ctrl:EnsureVisible(lastGrandChild)
+        return
+      end
     end
+    tree.ctrl:EnsureVisible(lastChild)
   end
 end
 
@@ -331,7 +334,7 @@ local function mapTasks(fileName, text, isTextRawFile)
       -- hasTask checks if entry exists and marks as checked so we can
       -- remove unmarked/checked orphans
       if not tree.hasTask(pattNode, taskStr, pos, true) then
-        local task = tree.ctrl:AppendItem(pattNode, taskStr, 2)
+        local task = tree.ctrl:AppendItem(pattNode, taskStr, 1)
         tree.setDataTable(task, { file = fileName, pos = pos, isChecked = true })
       end
     end -- while
@@ -395,6 +398,9 @@ function mapProject(self, editor, newTree)
 
     if editor then
       mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
+      if editor == ide:GetEditor() then
+        -- bold/unbold
+      end
     else
       -- map whole project, excluding paths begining with entries in ignore list/table
       -- in user.lua, tasks.ignore
@@ -422,7 +428,7 @@ local package = {
   name = "Tasks panel",
   description = "Project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.91,
+  version = 0.93,
   dependencies = 1.61,
 
   onRegister = function(self)
@@ -447,11 +453,19 @@ local package = {
     config.singleFileMode = self:GetConfig().singleFileMode or false
 
     local w, h = 200, 600
+    -- configure whether to show +/- buttons
+    local hasButtons = self:GetConfig().noButtons or wx.wxTR_HAS_BUTTONS
+    local linesAtRoot = self:GetConfig().noButtons or wx.wxTR_LINES_AT_ROOT
+
     tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
-                            wx.wxTR_TWIST_BUTTONS + wx.wxTR_HIDE_ROOT + 
-                            wx.wxTR_ROW_LINES + wx.wxNO_BORDER)
-    
+                            wx.wxTR_HIDE_ROOT +  hasButtons +
+                            wx.wxTR_ROW_LINES + linesAtRoot)
+
+    if self:GetConfig().noIcons ~= true then
+      tree.ctrl:SetImageList(imglist)
+    end
+
     tree.reset()
 
     local conf = function(panel)
@@ -534,13 +548,20 @@ local package = {
       )
     end
     -- end of right click menu
-    
-    -- on double-click or Enter
-    tree.ctrl:Connect( wx.wxEVT_COMMAND_TREE_ITEM_ACTIVATED,
+
+    tree.ctrl:Connect(wx.wxEVT_LEFT_DOWN,
       function(event)
-        -- stop onFocusSet changing selection to file node
-        dontSelectOnFocusSet = true
-        local item = event:GetItem()
+        local mask = (wx.wxTREE_HITTEST_ONITEMINDENT + wx.wxTREE_HITTEST_ONITEMLABEL
+          + wx.wxTREE_HITTEST_ONITEMICON + wx.wxTREE_HITTEST_ONITEMRIGHT)
+        local item_id, flags = tree.ctrl:HitTest(event:GetPosition())
+
+        if not (item_id and item_id:IsOk() and bit.band(flags, mask) > 0) then
+          event:Skip()
+          return
+        end
+
+        tree.ctrl:SelectItem(item_id)
+        local item = item_id
         if not item then return end
         local data = tree.getDataTable(item)
         if not data then return end
@@ -564,7 +585,6 @@ local package = {
         if not ide:GetEditorWithFocus(editor) then
          ide:GetDocument(editor):SetActive()
         end
-        dontSelectOnFocusSet = false
       end
     )
 
@@ -645,12 +665,21 @@ local package = {
       if fileItem then
         currentEditor = editor
         tree.ensureFileNodeVisible(fileItem)
-        if not dontSelectOnFocusSet then tree.ctrl:SelectItem(fileItem) end
+        --if not dontSelectOnFocusSet then tree.ctrl:SelectItem(fileItem) end
+        tree.ctrl:SetItemBold(fileItem, true)
+        if highlightedFileItem ~= nil then
+          if highlightedFileItem ~= fileItem then
+            tree.ctrl:SetItemBold(highlightedFileItem, false)
+            highlightedFileItem = fileItem
+            --tree.ctrl:UnselectAll()
+          end
+        else
+          highlightedFileItem = fileItem
+        end
       else
-        tree.ctrl:UnselectAll()
+        --tree.ctrl:UnselectAll()
       end
     end
-    dontSelectOnFocusSet = false
   end,
 
   --
