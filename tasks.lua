@@ -239,6 +239,17 @@ tree.getOrCreatePatternNode = function(createIfNotFound, fileNode, name)
 end
 
 --
+tree.itemIsOrIsDescendantOf = function(item, ancestor)
+  if item == nil or ancestor == nil then return nil end
+  local parent = tree.ctrl:GetItemParent(item)
+  while parent:IsOk() do
+    if parent:GetValue() == ancestor:GetValue() then return true end
+    parent = tree.ctrl:GetItemParent(parent)
+  end
+  return false
+end
+
+--
 tree.reset = function()
   tree.ctrl:DeleteAllItems()
   local root = tree.ctrl:AddRoot("Project Tasks", 0)
@@ -712,20 +723,30 @@ local package = {
       mapProject(self, editor, config.singleFileMode)
       if fileItem then
         currentEditor = editor
-        tree.ensureFileNodeVisible(fileItem)
-        --if not dontSelectOnFocusSet then tree.ctrl:SelectItem(fileItem) end
         tree.ctrl:SetItemBold(fileItem, true)
+        tree.ensureFileNodeVisible(fileItem)
         if highlightedFileItem ~= nil then
-          if highlightedFileItem ~= fileItem then
+          if highlightedFileItem:GetValue() ~= fileItem:GetValue() then
+            -- active file has changed so reset highlight
             tree.ctrl:SetItemBold(highlightedFileItem, false)
+            local sel = tree.ctrl:GetSelection()
+            if not tree.itemIsOrIsDescendantOf(tree.ctrl:GetSelection(), fileItem) then
+              ide:GetProjectNotebook():Freeze()
+              pcall( function() tree.ctrl:UnselectAll() end)
+              ide:GetProjectNotebook():Thaw()
+            end
             highlightedFileItem = fileItem
-            --tree.ctrl:UnselectAll()
           end
         else
           highlightedFileItem = fileItem
         end
       else
-        --tree.ctrl:UnselectAll()
+        if highlightedFileItem ~= nil then
+          tree.ctrl:SetItemBold(highlightedFileItem, false)
+          ide:GetProjectNotebook():Freeze()
+          pcall( function() tree.ctrl:UnselectAll() end)
+          ide:GetProjectNotebook():Thaw()
+        end
       end
     end
   end,
