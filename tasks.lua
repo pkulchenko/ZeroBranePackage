@@ -21,36 +21,49 @@
 --      and the beginning of paths relative to the project path to ignore...
 --
 --    e.g.
---        tasks = {
---            singleFileMode = true,
---            showOnlyFilesWithTasks = false,
---            ignore = { "Export" },
---          patterns = { { name = "TODOs",  pattern = "TODO[:;>]"  },
---                       { name = "FIXMEs", pattern = "FIXME[:;>]" },
---                       { name = "WTFs",   pattern = "WTF[:;>]"   }
---                     },
---         showNames = false
---        }
+--     tasks = {
+--               singleFileMode = true,
+--       showOnlyFilesWithTasks = false,
+--                       ignore = { "Export" },
+--                     patterns = { { name = "TODOs",    pattern = "TODO[:;>]"  },
+--                                  { name = "FIXMEs",   pattern = "FIXME[:;>]" },
+--                                  { name = "My tasks", pattern = "@paulr[:;>]"   }
+--                                },
+--                    showNames = true,
+--         dontAlwaysScrollView = false,
+--                    noButtons = 0,
+--                      noIcons = true
+--     }
 --
---       ... if you don't have this in either of your user.lua files, the default settings are
---       used...
+--       ... if you don't have this in either of your user.lua files, or if any of the
+--       options are omitted, then default settings are used ...
 --
---       singleFileMode: default - false
---             Show only one file at a time, like todo.all. Toggle via right click menu.
+--         singleFileMode: default - false
+--               Show only one file at a time, like todo.all. Toggle via right click menu.
 --
---       showOnlyFilesWithTasks: default - true
---             With this set to false, all project files are always listed. Toggle via right click
---             menu.
+--         showOnlyFilesWithTasks: default - true
+--               With this set to false, all project files are always listed. Toggle via
+--               right click menu.
 --
---       ignore: default - ignore nothing
---             "Export" will ignore all files in eg PROJECTPATH/Export Android/
---             ...but won't ignore eg PROJECTPATH/Export Manager.lua
+--         ignore: default - ignore nothing
+--               "Export" will ignore all files in eg PROJECTPATH/Export Android/
+--               ...but won't ignore eg PROJECTPATH/Export Manager.lua
 --
---       patterns: default - TODOs and FIXMEs with [:;>] pattern
---             Note... spaces in the patterns create issues (inc %s). 'name' is what is shown on the
---             list. Can be completely different from pattern.
+--         patterns: default - TODOs and FIXMEs with [:;>] pattern
+--               Note... spaces in the patterns create issues (inc %s). 'name' is what is
+--               shown on the list. Can be completely different from pattern.
 --
---       showNames: default - false
+--         showNames: default - false
+--               Set to true, this shows tasks/pattern types in their own branches. Toggle
+--               via right click menu.
+--
+--  dontAlwaysScrollView: default - true
+--               Set to false to not scroll activated file to top of list, instead just
+--               ensuring it's visible and highlighting it
+--
+--          noButtons: default - nil .. omit to show buttons, set to 0 to not show them
+--            noIcons: default - false .. with true
+--
 --
 ----------------------------------------------------------------------------------------------------
 
@@ -236,7 +249,7 @@ end
 
 --
 tree.ensureFileNodeVisible = function(fileNode)
-  -- ensure file node and last gradnchild/child is visible so that
+  -- ensure file node and last grandchild/child is visible so that
   -- it's all in view
   tree.ctrl:ScrollTo(fileNode)
   local lastChild = tree.ctrl:GetLastChild(fileNode)
