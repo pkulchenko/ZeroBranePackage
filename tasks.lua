@@ -78,11 +78,10 @@ local projectPath                     -- set in onProjectLoad
 local config = {}
 local tree = {}                       -- helper functions for wxTreeCtrl
 local patterns = {}                   -- our task patterns from user.lua (or default)
-local DEBUG = true                    -- set to true to get output from any _DBG calls
+local DEBUG = false                   -- set to true to get output from any _DBG calls
 local _DBG -- (...)                   -- function for console output, definition at EOF
 local currentEditor                   -- set in onEditorFocusSet, used in onProjectLoad
-local imglist = ide:CreateImageList("OUTLINE", "FILE-NORMAL", "VALUE-LCALL",
-    "VALUE-GCALL", "VALUE-ACALL", "VALUE-SCALL", "VALUE-MCALL")
+local imgList                         -- icons for tree, set if required in onRegister
 
 local mapProject, fileNameFromPath    -- forward decs
 
@@ -217,7 +216,6 @@ tree.getOrCreateFileNode = function(createIfNotFound, fileName)
     if createIfNotFound then
       fileNode = tree.addFileNode(fileName)
       tree.setDataTable(fileNode, { file = fileName })
-      --tree.ctrl:SetItemBold(fileNode, true)
     else
       return nil
     end
@@ -432,9 +430,6 @@ function mapProject(self, editor, newTree)
 
     if editor then
       mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
-      if editor == ide:GetEditor() then
-        -- bold/unbold
-      end
     else
       -- map whole project, excluding paths begining with entries in ignore list/table
       -- in user.lua, tasks.ignore
@@ -493,7 +488,7 @@ local package = {
 
     tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
-                            wx.wxTR_HIDE_ROOT +  hasButtons +
+                            wx.wxTR_HIDE_ROOT + hasButtons +
                             wx.wxTR_ROW_LINES + linesAtRoot)
 
     if self:GetConfig().noIcons ~= true then
@@ -539,7 +534,6 @@ local package = {
 
     tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
-        --if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
         config.showNames = not config.showNames
         remapProject(self)
       end
