@@ -491,7 +491,8 @@ local package = {
 
     config.ignoreTable = self:GetConfig().ignore or {}
     config.showNames = self:GetConfig().showNames or false-- flatten tree
-
+    -- option to use Ensurevisible instead of Scroll, to stop jumping to top
+    config.dontAlwaysScrollView = self:GetConfig().dontAlwaysScrollView or false
     -- default is true, so don't want nil being false
     local sOFWT = self:GetConfig().showOnlyFilesWithTasks
     config.showOnlyFilesWithTasks = sOFWT == nil or sOFWT == true
