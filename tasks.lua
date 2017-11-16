@@ -509,6 +509,8 @@ local package = {
                             wx.wxTR_ROW_LINES + linesAtRoot)
 
     if self:GetConfig().noIcons ~= true then
+      imglist = ide:CreateImageList("OUTLINE", "FILE-NORMAL", "VALUE-LCALL",
+                                      "VALUE-GCALL", "VALUE-ACALL", "VALUE-SCALL", "VALUE-MCALL")
       tree.ctrl:SetImageList(imglist)
     end
 
