@@ -246,22 +246,35 @@ tree.reset = function()
 end
 
 --
+tree.scrollTo = function(fileNode)
+  ide:GetProjectNotebook():Freeze()
+  if not config.dontAlwaysScrollView then
+    tree.ctrl:ScrollTo(fileNode)
+  else
+    tree.ctrl:EnsureVisible(fileNode)
+  end
+  tree.ctrl:SetScrollPos(wx.wxHORIZONTAL, 0, true)
+  ide:GetProjectNotebook():Thaw()
+end
+
+--
 tree.ensureFileNodeVisible = function(fileNode)
   -- ensure file node and last grandchild/child is visible so that
   -- it's all in view
-  tree.ctrl:ScrollTo(fileNode)
   local lastChild = tree.ctrl:GetLastChild(fileNode)
   if lastChild then
     if config.showNames then
       local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
       if lastGrandChild then
-        tree.ctrl:EnsureVisible(lastGrandChild)
-        return
+        tree.scrollTo(lastGrandChild)
       end
+    else
+      tree.scrollTo(lastChild)
     end
-    tree.ctrl:EnsureVisible(lastChild)
   end
-  tree.ctrl:ScrollTo(fileNode)
+  -- do this last in case the window is small and scrolling to the last grand/child
+  -- pushes the filename out of the top
+  tree.scrollTo(fileNode)
 end
 
 -- insert task, either at end of tree or if unsorted is false, in order
