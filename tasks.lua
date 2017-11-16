@@ -398,15 +398,18 @@ local function mapTasks(fileName, text, isTextRawFile)
 
   -- remove file node if no children, unless we want to keep it
   if fileNode then
+    -- remove unchecked here in flat view
     if not config.showTasks then tree.deleteUncheckedChildren(fileNode, true) end
 
-    -- TODO: with show only files with tasks the current file should be shown anyway
-    --       to stop there being just an empty panel
-    if tree.ctrl:GetChildrenCount(fileNode, false) == 0 and config.showOnlyFilesWithTasks then
-      tree.ctrl:Delete(fileNode)
+    if not tree.ctrl:ItemHasChildren(fileNode) then
+      if config.showOnlyFilesWithTasks and not config.singleFileMode then
+        tree.ctrl:Delete(fileNode)
+        return
+      end
     else
-      tree.ctrl:ExpandAllChildren(fileNode)
+      if config.singleFileMode then tree.ctrl:SetItemBold(fileNode, true) end
     end
+    tree.ctrl:ExpandAllChildren(fileNode)
   end
 end
 
