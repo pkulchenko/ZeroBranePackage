@@ -604,7 +604,9 @@ local package = {
           event:Skip()
           return
         end
-        tree.ctrl:SelectItem(item_id)
+        ide:GetProjectNotebook():Freeze()
+        pcall( function() tree.ctrl:SelectItem(item_id) end)
+        ide:GetProjectNotebook():Thaw()
         local item = item_id
         if not item then return end
         local data = tree.getDataTable(item)
