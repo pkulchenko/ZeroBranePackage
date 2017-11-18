@@ -62,7 +62,7 @@
 --               ensuring it's visible and highlighting it
 --
 --          noButtons: default - nil .. omit to show buttons, set to 0 to not show them
---            noIcons: default - false .. with true
+--            noIcons: default - false .. set true to remove icons
 --
 --
 ----------------------------------------------------------------------------------------------------
@@ -86,6 +86,16 @@ local imgList                         -- icons for tree, set if required in onRe
 local mapProject, fileNameFromPath    -- forward decs
 
 
+
+-- parent structure different on Mac so this is cross platform method of
+-- getting parent panel
+local function getNoteBook()
+  local nbc = "wxAuiNotebook"
+  return tree.ctrl:GetClassInfo():GetClassName() == nbc and win:DynamicCast(nbc)
+        or tree.ctrl:GetParent():GetClassInfo():GetClassName() == nbc and
+        tree.ctrl:GetParent():DynamicCast(nbc) or nil
+end
+
 -- first level from root contain file nodes for this plugin
 tree.addFileNode = function(fn)
   local root = tree.ctrl:GetRootItem()
@@ -95,6 +105,22 @@ end
 --
 tree.getFileNode = function(fn)
   return tree.getChildByItemText(tree.ctrl:GetRootItem(), fn)
+end
+
+--
+tree.isFileNode = function(node)
+  return tree.ctrl:GetItemParent(node):GetValue() == tree.ctrl:GetRootItem():GetValue()
+end
+
+--
+tree.getFileNodeOfNode = function(node)
+  if tree.isFileNode(node) then return node end
+  local parent = tree.ctrl:GetItemParent(node)
+  while parent:IsOk() do
+    if tree.isFileNode(parent) then return parent end
+    parent = tree.ctrl:GetItemParent(parent)
+  end
+  return false
 end
 
 --
@@ -182,7 +208,7 @@ end
 
 -- go through children and delete any that don't have isChecked set to true
 -- this is because new/different and matched children were set to true
--- leaving only unmatched - deleted or moved ones - as false
+-- leaving only unmatched - deleted ones - as false
 tree.deleteUncheckedChildren = function(parentItem, reset)
   local child, data = tree.ctrl:GetFirstChild(parentItem), nil
   while child:IsOk() do
@@ -257,35 +283,43 @@ tree.reset = function()
 end
 
 --
-tree.scrollTo = function(fileNode)
-  ide:GetProjectNotebook():Freeze()
+tree.scrollTo = function(node)
+  if tree.ctrl:IsVisible(node) then return end
+  getNoteBook():Freeze()
   if not config.dontAlwaysScrollView then
-    tree.ctrl:ScrollTo(fileNode)
+    tree.ctrl:ScrollTo(node)
   else
-    tree.ctrl:EnsureVisible(fileNode)
+    tree.ctrl:EnsureVisible(node)
   end
   tree.ctrl:SetScrollPos(wx.wxHORIZONTAL, 0, true)
-  ide:GetProjectNotebook():Thaw()
+  getNoteBook():Thaw()
 end
 
 --
 tree.ensureFileNodeVisible = function(fileNode)
   -- ensure file node and last grandchild/child is visible so that
   -- it's all in view
-  local lastChild = tree.ctrl:GetLastChild(fileNode)
-  if lastChild then
-    if config.showNames then
-      local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
-      if lastGrandChild then
-        tree.scrollTo(lastGrandChild)
+  if not config.dontAlwaysScrollView then
+    scrollTo(fileNode)
+    return
+  else
+    local lastChild = tree.ctrl:GetLastChild(fileNode)
+    if lastChild then
+      if config.showNames then
+        local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
+        if lastGrandChild then
+          tree.scrollTo(lastGrandChild)
+        else
+          tree.scrollTo(lastChild)
+        end
+      else
+        tree.scrollTo(lastChild)
       end
-    else
-      tree.scrollTo(lastChild)
     end
+    -- do this last in case the window is small and scrolling to the last grand/child
+    -- pushes the filename out of the top
+    tree.scrollTo(fileNode)
   end
-  -- do this last in case the window is small and scrolling to the last grand/child
-  -- pushes the filename out of the top
-  tree.scrollTo(fileNode)
 end
 
 -- insert task, either at end of tree or if unsorted is false, in order
@@ -418,9 +452,46 @@ local function mapTasks(fileName, text, isTextRawFile)
         return
       end
     else
-      if config.singleFileMode then tree.ctrl:SetItemBold(fileNode, true) end
+      if config.singleFileMode then tree.setHighlightedFileItem(fileNode) end
     end
     tree.ctrl:ExpandAllChildren(fileNode)
+  end
+end
+
+--
+tree.setHighlightedFileItem = function(item)
+  if not tree.isFileNode(item) then return false end
+  if highlightedFileItem then
+    tree.ctrl:SetItemBold(highlightedFileItem, false)
+    if highlightedFileItem:GetValue() ~= item:GetValue() then
+      -- active file has changed so reset highlight
+      local sel = tree.ctrl:GetSelection()
+      if not tree.itemIsOrIsDescendantOf(tree.ctrl:GetSelection(), item) then
+        --getNoteBook():Freeze()
+        pcall( function() tree.ctrl:UnselectAll() end)
+        --getNoteBook():Thaw()
+      end
+    end
+  end
+  tree.ctrl:SetItemBold(item, true)
+  highlightedFileItem = item
+end
+
+--
+local function updateTree(self, editor)
+  mapProject(self, editor, config.singleFileMode)
+  local fileItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
+  if fileItem then
+    currentEditor = editor
+    tree.setHighlightedFileItem(fileItem)
+    ide:DoWhenIdle(function() tree.ensureFileNodeVisible(fileItem) end)
+  else
+    if highlightedFileItem ~= nil then
+      tree.ctrl:SetItemBold(highlightedFileItem, false)
+      --getNoteBook():Freeze()
+      pcall( function() tree.ctrl:UnselectAll() end)
+      --getNoteBook():Thaw()
+    end
   end
 end
 
@@ -449,7 +520,7 @@ end
 -- main function, called from events
 function mapProject(self, editor, newTree)
   -- prevent UI updates in control to stop flickering
-  ide:GetProjectNotebook():Freeze()
+  getNoteBook():Freeze()
   -- we have frozen the whole notebook, so protect code in between freeze/thaw calls
   -- in case an error in this event keeps it frozen
   pcall( function()
@@ -476,7 +547,7 @@ function mapProject(self, editor, newTree)
     end
   end)
   -- allow UI updates
-  ide:GetProjectNotebook():Thaw()
+  getNoteBook():Thaw()
 end
 
 -- our plugin/package object/table
@@ -484,7 +555,7 @@ local package = {
   name = "Tasks panel",
   description = "Project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.93,
+  version = 0.94,
   dependencies = 1.61,
 
   onRegister = function(self)
@@ -510,13 +581,18 @@ local package = {
     config.singleFileMode = self:GetConfig().singleFileMode or false
 
     local w, h = 200, 600
+
     -- configure whether to show +/- buttons
-    local hasButtons = self:GetConfig().noButtons or wx.wxTR_HAS_BUTTONS
-    local linesAtRoot = self:GetConfig().noButtons or wx.wxTR_LINES_AT_ROOT
+    local hasButtons, linesAtRoot
+    if self:GetConfig().noButtons then
+      hasButtons, linesAtRoot = 0, 0
+    else
+      hasButtons, linesAtRoot =  wx.wxTR_HAS_BUTTONS, wx.wxTR_LINES_AT_ROOT
+    end
 
     tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
                             wx.wxDefaultPosition, wx.wxSize(w, h),
-                            wx.wxTR_HIDE_ROOT + hasButtons +
+                            wx.wxTR_HIDE_ROOT + hasButtons + wx.wxNO_BORDER +
                             wx.wxTR_ROW_LINES + linesAtRoot)
 
     if self:GetConfig().noIcons ~= true then
@@ -617,9 +693,10 @@ local package = {
           event:Skip()
           return
         end
-        ide:GetProjectNotebook():Freeze()
-        pcall( function() tree.ctrl:SelectItem(item_id) end)
-        ide:GetProjectNotebook():Thaw()
+        --getNoteBook():Freeze() -- this makes SelectItem cause tree to scroll/jump around
+        tree.ctrl:SelectItem(item_id)
+        tree.setHighlightedFileItem(tree.getFileNodeOfNode(item_id))
+        --getNoteBook():Thaw()
         local item = item_id
         if not item then return end
         local data = tree.getDataTable(item)
@@ -719,35 +796,7 @@ local package = {
     if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
     -- event called when loading file, but filename is nil then
     if ide:GetDocument(editor):GetFilePath() then
-      local fileItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
-      mapProject(self, editor, config.singleFileMode)
-      if fileItem then
-        currentEditor = editor
-        tree.ctrl:SetItemBold(fileItem, true)
-        tree.ensureFileNodeVisible(fileItem)
-        if highlightedFileItem ~= nil then
-          if highlightedFileItem:GetValue() ~= fileItem:GetValue() then
-            -- active file has changed so reset highlight
-            tree.ctrl:SetItemBold(highlightedFileItem, false)
-            local sel = tree.ctrl:GetSelection()
-            if not tree.itemIsOrIsDescendantOf(tree.ctrl:GetSelection(), fileItem) then
-              ide:GetProjectNotebook():Freeze()
-              pcall( function() tree.ctrl:UnselectAll() end)
-              ide:GetProjectNotebook():Thaw()
-            end
-            highlightedFileItem = fileItem
-          end
-        else
-          highlightedFileItem = fileItem
-        end
-      else
-        if highlightedFileItem ~= nil then
-          tree.ctrl:SetItemBold(highlightedFileItem, false)
-          ide:GetProjectNotebook():Freeze()
-          pcall( function() tree.ctrl:UnselectAll() end)
-          ide:GetProjectNotebook():Thaw()
-        end
-      end
+      updateTree(self, editor)
     end
   end,
 
