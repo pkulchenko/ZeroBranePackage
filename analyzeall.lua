@@ -29,7 +29,7 @@ local function analyzeProject(self)
         ignore = ignore or checkPath:find(spec)
       end
       if not ignore then
-        local warn, err, line = AnalyzeFile(filePath)
+        local warn, err, line = ide:AnalyzeFile(filePath)
         if err then
           ide:Print(err)
           errors = errors + 1
@@ -52,11 +52,11 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.42,
-  dependencies = "1.3",
+  version = 0.43,
+  dependencies = "1.7",
 
   onRegister = function(package)
-    local _, menu, analyzepos = ide:FindMenuItem(ID_ANALYZE)
+    local _, menu, analyzepos = ide:FindMenuItem(ID.ANALYZE)
     if menu then
       menu:Insert(analyzepos+1, id, TR("Analyze All")..KSC(id), TR("Analyze the project source code"))
       menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function() return analyzeProject(package) end)

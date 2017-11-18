@@ -193,7 +193,7 @@ local function analyzeProject()
 	end
 
 	-- Analyze the concatenated files:
-	local warn, err, line, pos = AnalyzeString(table.concat(whole, "\n"))
+	local warn, err, line, pos = ide:AnalyzeString(table.concat(whole, "\n"))
 	if (err) then
 		ide:GetOutput():Write("Error: " .. err .. "\n")
 		return
@@ -259,8 +259,8 @@ return {
 	name = "Cuberite integration",
 	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.52,
-	dependencies = 1.40,
+	version = 0.53,
+	dependencies = "1.70",
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
 	InfoDumpMenuID = ID("project.cuberite_infodump"),
@@ -273,14 +273,14 @@ return {
 		ide:AddInterpreter("cuberite_release", self.InterpreterRelease)
 
 		-- Add the analysis menu item:
-		local _, menu, pos = ide:FindMenuItem(ID_ANALYZE)
+		local _, menu, pos = ide:FindMenuItem(ID.ANALYZE)
 		if pos then
 			menu:Insert(pos + 1, self.AnalysisMenuID, TR("Analyze as Cuberite") .. KSC(id), TR("Analyze the project source code as Cuberite"))
 			ide:GetMainFrame():Connect(self.AnalysisMenuID, wx.wxEVT_COMMAND_MENU_SELECTED, analyzeProject)
 		end
 
 		-- Add the InfoDump menu item:
-		_, menu, pos = ide:FindMenuItem(ID_INTERPRETER)
+		_, menu, pos = ide:FindMenuItem(ID.INTERPRETER)
 		if (pos) then
 			self.Separator1 = menu:AppendSeparator()
 			menu:Append(self.InfoDumpMenuID, TR("Cuberite InfoDump") .. KSC(id), TR("Run the InfoDump script on the current plugin"))
