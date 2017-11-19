@@ -4,12 +4,12 @@ return {
   name = "Project settings",
   description = "Adds project settings loaded on project switch.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
   dependencies = "1.30",
 
   onRegister = function(self)
     local menu = ide:FindTopMenu("&Edit")
-    local prefs = menu:FindItem(ID_PREFERENCES):GetSubMenu()
+    local prefs = menu:FindItem(ID.PREFERENCES):GetSubMenu()
     menuid = prefs:Append(id, "Settings: Project")
 
     local config = self:GetConfig()

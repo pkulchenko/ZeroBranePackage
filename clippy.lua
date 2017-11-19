@@ -69,7 +69,7 @@ function PasteClip(i)
 			stack[kStackLimit] = nil
 		end
 		
-		ide.frame:AddPendingEvent(wx.wxCommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, ID_PASTE))
+		ide.frame:AddPendingEvent(wx.wxCommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, ID.PASTE))
 		return true
 	end
 	return false
@@ -99,7 +99,7 @@ end
 
 local function OnEditorAction( self, editor, event )
 	local eid = event:GetId()
-	if eid == ID_COPY or eid == ID_CUT then
+	if eid == ID.COPY or eid == ID.CUT then
 		-- call the original handler first to process Copy/Cut event
 		self.onEditorAction = nil
 		ide.frame:ProcessEvent(wx.wxCommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, eid))
@@ -125,7 +125,7 @@ return
 	description = "Enables a stack-based clipboard which saves the last 10 entries.",
 	author = "sclark39",
 	dependencies = "1.3",
-	version = 0.22,
+	version = 0.23,
 	onRegister = OnRegister,
 	onUnRegister = OnUnRegister,
 	onEditorAction = OnEditorAction,
