@@ -61,7 +61,7 @@
 --               Set to false to not scroll activated file to top of list, instead just
 --               ensuring it's visible and highlighting it
 --
---          noButtons: default - nil .. omit to show buttons, set to 0 to not show them
+--          noButtons: default - false .. set to true to not show  +/- tree buttons
 --            noIcons: default - false .. set true to remove icons
 --
 --
@@ -488,9 +488,7 @@ local function updateTree(self, editor)
   else
     if highlightedFileItem ~= nil then
       tree.ctrl:SetItemBold(highlightedFileItem, false)
-      --getNoteBook():Freeze()
-      pcall( function() tree.ctrl:UnselectAll() end)
-      --getNoteBook():Thaw()
+      tree.ctrl:UnselectAll()
     end
   end
 end
