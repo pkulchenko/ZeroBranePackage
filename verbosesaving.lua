@@ -2,7 +2,7 @@ return {
   name = "Verbose Saving",
   description = "Saves a copy of each file on save in a separate directory with date and time appended to the file name.",
   author = "Rami Sabbagh",
-  version = 1.0,
+  version = 1.1,
 
   splitFilePath = function(path)
     local p,n,e = path:match("(.-)([^\\/]-%.?([^%.\\/]*))$")
