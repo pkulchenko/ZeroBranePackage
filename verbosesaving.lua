@@ -11,9 +11,9 @@ return {
   end,
 
   onRegister = function(self)
-    self.loc = ide:GetConfig().verbose_folder
+    self.loc = ide:GetConfig().verbosefolder
     if not self.loc then
-      error("Must set 'verbose_folder' configuration settings in order for verbose file saving to work!")
+      error("Must set 'verbosefolder' configuration settings in order for verbose file saving to work!")
     end
   end,
 
