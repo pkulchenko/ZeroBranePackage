@@ -551,7 +551,7 @@ end
 -- our plugin/package object/table
 local package = {
   name = "Tasks panel",
-  description = "Project wide tasks panel.",
+  description = "Provides project wide tasks panel.",
   author = "Paul Reilly",
   version = 0.94,
   dependencies = 1.61,

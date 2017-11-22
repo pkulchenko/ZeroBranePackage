@@ -87333,7 +87333,7 @@ local api = {
 
 return {
   name = "Urho3D",
-  description = "Urho3D game engine integration.",
+  description = "Implements integration with Urho3D game engine.",
   author = "Danny Boisvert (https://github.com/silverkorn)",
   version = 0.41,
   dependencies = 1.40,
