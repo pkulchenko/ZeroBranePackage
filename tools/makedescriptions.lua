@@ -144,8 +144,8 @@ local gitUrl = ""
 
 for _, key in ipairs(keys) do
 	process(key)
-	insert(("* [%s](%s): %s (v%s%s)"):format(
-      key, gitUrl..key, cache[key].description, cache[key].version, abridged and "" or ("[details](#%s)"):format(key)))
+	insert(("* [%s](%s): %s%s"):format(
+      key, gitUrl..key, cache[key].description, abridged and "" or (" ([details](#%s))"):format(key)))
 end
 
 if not abridged then
