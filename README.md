@@ -41,6 +41,7 @@ this means that it requires a development version currently being worked on (whi
 * [extregister.lua](extregister.lua): Registers known extensions to launch the IDE on Windows.
 * [filetreeoneclick.lua](filetreeoneclick.lua): Changes filetree to activate items on one-click (as in Sublime Text).
 * [highlightselected.lua](highlightselected.lua): Highlights all instances of a selected word.
+* [launchtime.lua](launchtime.lua): Measures IDE startup performance up to the first IDLE event.
 * [localhelpmenu.lua](localhelpmenu.lua): Adds local help option to the menu.
 * [luadist.lua](luadist.lua): Provides LuaDist integration to install modules from LuaDist.
 * [maketoolbar.lua](maketoolbar.lua): Adds a menu item and toolbar button that run `make`.
