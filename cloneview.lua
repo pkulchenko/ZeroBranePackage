@@ -3,8 +3,8 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.15,
-  dependencies = "0.96",
+  version = 0.16,
+  dependencies = "1.60",
 
   -- release document pointer for closed tabs
   -- remove from the list of clones (in either direction) this closed editor
@@ -26,7 +26,7 @@ return {
 
     local doc1, doc2 = ide:GetDocument(editor), ide:GetDocument(clones[editor].editor)
     doc2:SetModified(false)
-    doc2.modTime = doc1:GetModTime() -- TODO: replace with SetModTime when 1.40 is released
+    doc2:SetModTime(doc1:GetModTime())
   end,
 
   onMenuEditorTab = function(self, menu, notebook, event, index)
@@ -46,7 +46,7 @@ return {
       notebook:SetSelection(index)
       local doc1, doc2 = ide:GetDocument(e1), ide:GetDocument(e2)
       doc2:SetModified(doc1:IsModified())
-      doc2.filePath = doc1:GetFilePath() -- TODO: replace with GetFilePath when 1.40 is released
+      doc2:SetFilePath(doc1:GetFilePath())
     end
 
     local cloned = clones[ide:GetEditor(index)]
