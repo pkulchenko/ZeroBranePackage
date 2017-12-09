@@ -4,10 +4,10 @@ local function logit(msg) table.insert(log, ("%.3f %s"):format(os.clock(), msg))
 
 logit('started')
 return {
-  name = "Measures startup performance",
+  name = "Measure IDE launch performance",
   description = "Measures IDE startup performance up to the first IDLE event.",
   author = "Paul Kulchenko",
-  version = 0.1,
+  version = 0.11,
 
   onRegister = function(self)
     logit('OnRegister')
