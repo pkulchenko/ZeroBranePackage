@@ -3,7 +3,7 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.16,
+  version = 0.17,
   dependencies = "1.60",
 
   -- release document pointer for closed tabs
@@ -26,7 +26,11 @@ return {
 
     local doc1, doc2 = ide:GetDocument(editor), ide:GetDocument(clones[editor].editor)
     doc2:SetModified(false)
-    doc2:SetModTime(doc1:GetModTime())
+    if doc1.GetFileModifiedTime then
+      doc2:SetFileModifiedTime(doc1:GetFileModifiedTime())
+    else
+      doc2:SetModTime(doc1:GetModTime())
+    end
   end,
 
   onMenuEditorTab = function(self, menu, notebook, event, index)
