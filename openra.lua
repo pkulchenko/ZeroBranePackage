@@ -6,7 +6,7 @@ local interpreter = {
   skipcompile = true,
 }
 
--- This is an automatically generated Lua API definition generated for release-20161019 of OpenRA.
+-- This is an automatically generated Lua API definition generated for release-20171014 of OpenRA.
 -- https://github.com/OpenRA/OpenRA/wiki/Utility was used with the --zbstudio-lua-api parameter.
 -- See https://github.com/OpenRA/OpenRA/wiki/Lua-API for human readable documentation.
 
@@ -388,6 +388,12 @@ matching the filter function called as function(CPos cell).]],
         args = "()",
         returns = "(CPos)",
       },
+      TerrainType = {
+        type = "function",
+        description = [[Returns the type of the terrain at the target cell.]],
+        args = "(CPos cell)",
+        returns = "(string)",
+      },
       TopLeft = {
         type = "value",
         description = [[Returns the location of the top-left corner of the map (assuming zero terrain height).]],
@@ -487,13 +493,13 @@ matching the filter function called as function(CPos cell).]],
     childs = {
       Reinforce = {
         type = "function",
-        description = [[Send reinforcements consisting of multiple units. Supports ground-based, naval and air units. The first member of the entryPath array will be the units' spawnpoint, while the last one will be their destination. If actionFunc is given, it will be executed once a unit has reached its destination. actionFunc will be called as actionFunc(Actor actor)]],
+        description = [[Send reinforcements consisting of multiple units. Supports ground-based, naval and air units. The first member of the entryPath array will be the units' spawnpoint, while the last one will be their destination. If actionFunc is given, it will be executed once a unit has reached its destination. actionFunc will be called as actionFunc(Actor actor). Returns a table containing the deployed units.]],
         args = "(Player owner, String[] actorTypes, CPos[] entryPath, int interval = 25, LuaFunction actionFunc = nil)",
         returns = "(Actor[])",
       },
       ReinforceWithTransport = {
         type = "function",
-        description = [[Send reinforcements in a transport. A transport can be a ground unit (APC etc.), ships and aircraft. The first member of the entryPath array will be the spawnpoint for the transport, while the last one will be its destination. The last member of the exitPath array is be the place where the transport will be removed from the game. When the transport has reached the destination, it will unload its cargo unless a custom actionFunc has been supplied. Afterwards, the transport will follow the exitPath and leave the map, unless a custom exitFunc has been supplied. actionFunc will be called as actionFunc(Actor transport, Actor[] cargo). exitFunc will be called as exitFunc(Actor transport).]],
+        description = [[Send reinforcements in a transport. A transport can be a ground unit (APC etc.), ships and aircraft. The first member of the entryPath array will be the spawnpoint for the transport, while the last one will be its destination. The last member of the exitPath array is be the place where the transport will be removed from the game. When the transport has reached the destination, it will unload its cargo unless a custom actionFunc has been supplied. Afterwards, the transport will follow the exitPath and leave the map, unless a custom exitFunc has been supplied. actionFunc will be called as actionFunc(Actor transport, Actor[] cargo). exitFunc will be called as exitFunc(Actor transport). Returns a table in which the first value is the transport, and the second a table containing the deployed units.]],
         args = "(Player owner, string actorType, String[] cargoTypes, CPos[] entryPath, CPos[] exitPath = nil, LuaFunction actionFunc = nil, LuaFunction exitFunc = nil)",
         returns = "(LuaTable)",
       },
@@ -564,7 +570,7 @@ matching the filter function called as function(CPos cell).]],
       },
       OnDiscovered = {
         type = "function",
-        description = [[Call a function when this actor is discovered by an enemy or a player with a Neutral stance. The callback function will be called as func(Actor discovered, Player discoverer).]],
+        description = [[Call a function when this actor is discovered by an enemy or a player with a Neutral stance. The callback function will be called as func(Actor discovered, Player discoverer). +The player actor needs the 'EnemyWatcher' trait.]],
         args = "(Actor a, LuaFunction func)",
         returns = "(void)",
       },
@@ -648,7 +654,7 @@ matching the filter function called as function(CPos cell).]],
       },
       OnPlayerDiscovered = {
         type = "function",
-        description = [[Call a function when this player is discovered by an enemy or neutral player. The callback function will be called as func(Player discovered, Player discoverer, Actor discoveredActor).]],
+        description = [[Call a function when this player is discovered by an enemy or neutral player. The callback function will be called as func(Player discovered, Player discoverer, Actor discoveredActor).The player actor needs the 'EnemyWatcher' trait.]],
         args = "(Player discovered, LuaFunction func)",
         returns = "(void)",
       },
@@ -804,23 +810,6 @@ matching the filter function called as function(CPos cell).]],
       },
     }
   },
-  WRange = {
-    type = "class",
-    childs = {
-      FromCells = {
-        type = "function",
-        description = [[Create a new WRange by cell distance. DEPRECATED! Will be removed.]],
-        args = "(int numCells)",
-        returns = "(WDist)",
-      },
-      New = {
-        type = "function",
-        description = [[Create a new WRange. DEPRECATED! Will be removed.]],
-        args = "(int r)",
-        returns = "(WDist)",
-      },
-    }
-  },
   WVec = {
     type = "class",
     childs = {
@@ -836,9 +825,15 @@ matching the filter function called as function(CPos cell).]],
       },
     }
   },
+  AcceptsCondition = {
+    type = "function",
+    description = [[Check whether this actor accepts a specific external condition.]],
+    args = "(string condition)",
+    returns = "(bool)",
+  },
   AcceptsUpgrade = {
     type = "function",
-    description = [[Check whether this actor accepts a specific upgrade.]],
+    description = [[Check whether this actor accepts a specific upgrade. DEPRECATED! Will be removed.]],
     args = "(string upgrade)",
     returns = "(bool)",
   },
@@ -991,6 +986,13 @@ matching the filter function called as function(CPos cell).]],
     args = "()",
     returns = "(void)",
   },
+  Flash = {
+    type = "function",
+    description = [[Render a target flash on the actor. If set, 'asPlayer'
+defines which player palette to use. Duration is in ticks.]],
+    args = "(int duration = 4, Player asPlayer = nil)",
+    returns = "(void)",
+  },
   GetActors = {
     type = "function",
     description = [[Returns all living actors staying inside the world for this player.]],
@@ -1021,15 +1023,23 @@ matching the filter function called as function(CPos cell).]],
     args = "(int id)",
     returns = "(string)",
   },
+  GrantCondition = {
+    type = "function",
+    description = [[Grant an external condition on this actor and return the revocation token.
+Conditions must be defined on an ExternalConditions trait on the actor.
+If duration > 0 the condition will be automatically revoked after the defined number of ticks]],
+    args = "(string condition, int duration = 0)",
+    returns = "(int)",
+  },
   GrantTimedUpgrade = {
     type = "function",
-    description = [[Grant a limited-time upgrade to this actor.]],
+    description = [[Grant a limited-time upgrade to this actor. DEPRECATED! Will be removed.]],
     args = "(string upgrade, int duration)",
     returns = "(void)",
   },
   GrantUpgrade = {
     type = "function",
-    description = [[Grant an upgrade to this actor.]],
+    description = [[Grant an upgrade to this actor. DEPRECATED! Will be removed.]],
     args = "(string upgrade)",
     returns = "(void)",
   },
@@ -1271,10 +1281,6 @@ matching the filter function called as function(CPos cell).]],
     args = "(string actorType, string factionVariant = nil)",
     returns = "(void)",
   },
-  Race = {
-    type = "value",
-    description = [[The player's race. (DEPRECATED! Use the `Faction` property.)]],
-  },
   RallyPoint = {
     type = "value",
     description = [[Query or set a factory's rally point.]],
@@ -1308,13 +1314,19 @@ matching the filter function called as function(CPos cell).]],
   },
   ReturnToBase = {
     type = "function",
-    description = [[Return to the base, which is either the airfield given, or an auto-selected one otherwise.]],
-    args = "(Actor airfield = nil)",
+    description = [[Return to the base, which is either the destination given, or an auto-selected one otherwise.]],
+    args = "(Actor destination = nil)",
+    returns = "(void)",
+  },
+  RevokeCondition = {
+    type = "function",
+    description = [[Revoke a condition using the token returned by GrantCondition.]],
+    args = "(int token)",
     returns = "(void)",
   },
   RevokeUpgrade = {
     type = "function",
-    description = [[Revoke an upgrade that was previously granted using GrantUpgrade.]],
+    description = [[Revoke an upgrade that was previously granted using GrantUpgrade. DEPRECATED! Will be removed.]],
     args = "(string upgrade)",
     returns = "(void)",
   },
@@ -1438,7 +1450,7 @@ return {
   name = "OpenRA",
   description = "Adds API description for auto-complete and tooltip support for OpenRA.",
   author = "Matthias Mailänder",
-  version = "20161019a",
+  version = "20171014",
 
   onRegister = function(self)
     ide:AddAPI("lua", "openra", api)
