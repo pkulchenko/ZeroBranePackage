@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.34,
+  version = 0.35,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1650,7 +1650,13 @@ local function getreply(response)
   local msg = table.concat(getval(response, "<reply>", "%s") or {}, ",")
   -- add proper quoting to those messages that may be truncated because of `maxlen` limit
   if msg:find('^"') and not msg:find('"$') then msg = msg..'"' end
-  return ("return {%s}"):format(msg == "NULL" and "'nil'" or ("%q"):format(msg))
+  return ("return {%s}"):format(
+    -- show returned NULL as `nil`
+    msg == "NULL" and "'nil'" or
+    -- show array (`[...]`) results from commands like `@hgetall something` as is
+    msg:find("^%[.+%]$") and ("%q"):format(msg) or
+    msg
+  )
 end
 local function geterror(response)
   local err = getval(type(response) == 'table' and response or {response}, "<error>")
