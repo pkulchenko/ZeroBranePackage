@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.35,
+  version = 0.36,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1708,10 +1708,17 @@ local function getvars(response)
   end
   return res
 end
-local function getvarsaslocals(response)
+local function getvarsaslocals(response, max)
   local vars = getvars(response)
   if not vars or #vars == 0 then return "" end
-  return "local "..table.concat(vars, "; local ")..";"
+
+  local s = ""
+  for _, v in ipairs(vars) do
+    local news = s.."local "..v..";"
+    if max and #news > max then break end
+    s = news
+  end
+  return s
 end
 local function getvarsastable(response)
   local vars = getvars(response)
@@ -1890,7 +1897,7 @@ while true do
       if func then
         -- evaluation is done in a different environment, so capture local variables
         -- to use in the chunk evaluation to make their values available
-        local vars = getvarsaslocals(check(client:ldbprint()))
+        local vars = getvarsaslocals(check(client:ldbprint()), 1024-#chunk)
         local msg, err = client:ldbeval(vars..chunk)
         -- if there is an error, try without preamble, as it has a better error message
         if msg and geterror(msg) then msg, err = client:ldbeval(chunk) end
