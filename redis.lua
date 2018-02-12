@@ -1805,6 +1805,16 @@ for n, v in ipairs(params) do
     break
   end
 end
+
+-- if @file is requested, insert file contents
+for n, v in ipairs(params) do
+  if string.sub(v,1,6) == "@file:" then
+    local f = assert(io.open(string.sub(v,7), "rb"))
+    params[n] = f:read("*all")
+    f:close()
+  end
+end
+
 -- load the script to debug; check for any reported errors
 msg, err = check(client:eval(code, keys, unpack(params)))
 
