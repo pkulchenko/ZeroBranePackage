@@ -93,7 +93,7 @@ local function run(plugin, command, ...)
       end
       if not realdist then -- maybe a different Lua version installed?
         local distdir = MergeFullPath(root, params.distinfos_dir)
-        local candidates = FileSysGetRecursive(distdir, true, 'dist.info')
+        local candidates = ide:GetFileList(distdir, true, 'dist.info')
         for _, file in ipairs(candidates) do
           local luaver = file:match('[/\\]lua%-([%d%.]+)[/\\]dist.info$')
           if luaver then realver = luaver; break end
@@ -150,8 +150,8 @@ return {
   name = "LuaDist integration",
   description = "Provides LuaDist integration to install modules from LuaDist.",
   author = "Paul Kulchenko",
-  version = 0.20,
-  dependencies = "1.40",
+  version = 0.21,
+  dependencies = "1.70",
 
   onRegister = function(self)
     -- force loading liblua.dll on windows so that it's available if needed;

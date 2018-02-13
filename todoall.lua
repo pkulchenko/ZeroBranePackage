@@ -67,7 +67,7 @@ local function mapProject(self, editor)
   else
     local masks = {}
     for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]).."$" end
-    for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
+    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
       local fileName = fileNameFromPath(filePath)
       local ignore = false or editor
       for _, spec in ipairs(masks) do
@@ -137,7 +137,7 @@ return {
   name = "Show project-wise TODO panel",
   description = "Adds a project-wise panel for showing a tasks list.",
   author = "Chronos Phaenon Eosphoros",
-  version = 0.1,
+  version = 0.11,
   dependencies = 1.60,
 
   onRegister = function(self)

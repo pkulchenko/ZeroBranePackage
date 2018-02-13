@@ -153,7 +153,7 @@ local function analyzeProject()
 
 	-- Get a list of all the files in the order in which Cuberite loads them (Info.lua is always last):
 	local files = {}
-	for _, filePath in ipairs(FileSysGetRecursive(projectPath, false, "*.lua")) do
+	for _, filePath in ipairs(ide:GetFileList(projectPath, false, "*.lua")) do
 		table.insert(files, filePath)
 	end
 	table.sort(files,
@@ -259,7 +259,7 @@ return {
 	name = "Cuberite integration",
 	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.53,
+	version = 0.54,
 	dependencies = "1.70",
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),

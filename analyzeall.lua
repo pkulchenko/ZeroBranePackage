@@ -11,7 +11,6 @@ end
 
 local function analyzeProject(self)
   local frame = ide:GetMainFrame()
-  local menubar = ide:GetMenuBar()
   ide:GetOutput():Erase()
   ide:Print("Analyzing the project code.")
   frame:Update()
@@ -22,14 +21,14 @@ local function analyzeProject(self)
     local specs = self:GetConfig().ignore or {}
     local masks = {}
     for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]).."$" end
-    for _, filePath in ipairs(FileSysGetRecursive(projectPath, true, "*.lua")) do
+    for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
       local checkPath = filePath:gsub(projectPath, "")
       local ignore = false
       for _, spec in ipairs(masks) do
         ignore = ignore or checkPath:find(spec)
       end
       if not ignore then
-        local warn, err, line = ide:AnalyzeFile(filePath)
+        local warn, err = ide:AnalyzeFile(filePath)
         if err then
           ide:Print(err)
           errors = errors + 1
@@ -52,7 +51,7 @@ return {
   name = "Analyze all files",
   description = "Analyzes all files in a project.",
   author = "Paul Kulchenko",
-  version = 0.43,
+  version = 0.44,
   dependencies = "1.7",
 
   onRegister = function(package)
