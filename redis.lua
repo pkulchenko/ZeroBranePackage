@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.36,
+  version = 0.37,
   dependencies = "1.30",
 
   onRegister = function(self)
