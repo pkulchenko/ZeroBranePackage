@@ -44,7 +44,7 @@ local function readfile(filePath)
   return data
 end
 
-function sortedKeys(tbl)
+local function sortedKeys(tbl)
   local sorted = {}
   for k, _ in pairs (tbl) do
     table.insert(sorted, k)
@@ -137,8 +137,8 @@ return {
   name = "Show project-wise TODO panel",
   description = "Adds a project-wise panel for showing a tasks list.",
   author = "Chronos Phaenon Eosphoros",
-  version = 0.11,
-  dependencies = 1.60,
+  version = 0.12,
+  dependencies = "1.60",
 
   onRegister = function(self)
     local e = ide:CreateBareEditor()
