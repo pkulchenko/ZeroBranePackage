@@ -2,22 +2,29 @@
 
 local updateneeded, cfg
 local indicname = "highlightselected.selected"
+local function onUpdate(event, editor)
+  if bit.band(event:GetUpdated(), wxstc.wxSTC_UPDATE_SELECTION) > 0 then updateneeded = editor end
+end
 return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.18,
+  version = 0.19,
   dependencies = "1.20",
 
   onRegister = function(package)
     ide:AddIndicator(indicname)
     cfg = package:GetConfig()
+    ide:GetOutput():Connect(wxstc.wxEVT_STC_UPDATEUI, function(event)
+        onUpdate(event, ide:GetOutput())
+      end)
   end,
-  onUnRegister = function() ide:RemoveIndicator(indicname) end,
+  onUnRegister = function()
+    ide:RemoveIndicator(indicname)
+    ide:GetOutput():Disconnect(wxstc.wxEVT_STC_UPDATEUI)
+  end,
 
-  onEditorUpdateUI = function(self, editor, event)
-    if bit.band(event:GetUpdated(), wxstc.wxSTC_UPDATE_SELECTION) > 0 then updateneeded = editor end
-  end,
+  onEditorUpdateUI = function(self, editor, event) onUpdate(event, editor) end,
 
   onIdle = function(self)
     if not updateneeded then return end
