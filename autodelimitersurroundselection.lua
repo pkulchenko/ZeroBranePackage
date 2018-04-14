@@ -48,8 +48,11 @@ return {
       if editor:GetCharAt(curpos - 2) ~= hyphen and editor:GetCharAt(curpos - 3) ~= hyphen then
       -- if the entered matches opening delimiter, then insert the pair
         editor:InsertText(-1, selection .. cpairs[char])
-				editor:SetAnchor(spos<epos and spos or spos+2)
-				editor:SetCurrentPos(spos<epos and epos+2 or epos)
+				if selection~='' then
+				-- maintain selection.
+					editor:SetAnchor(spos<epos and spos or spos+2)
+					editor:SetCurrentPos(spos<epos and epos+2 or epos)
+				end
       end
     end
   end,
