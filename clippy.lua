@@ -46,8 +46,10 @@ local function OpenClipList( editor )
 	local list, firstline, rem = {}
 	for i,clip in ipairs(stack) do
 		firstline, rem = string.match(clip,'([^\r\n]+)(.*)')
-		if rem ~= "" then firstline = firstline .. "..." end
-		list[#list+1] = i.."\t "..firstline
+		if firstline~=nil then
+			if rem ~= "" then firstline = firstline .. "..." end
+			list[#list+1] = i.."\t "..firstline
+		end
 	end
 	editor:UserListShow(2,table.concat(list,'\n')) 
 	editor:AutoCompSelect( list[2] or "" )
