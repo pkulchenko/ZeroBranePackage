@@ -5,7 +5,7 @@
 local cpairs = {
   ['('] = ')', ['['] = ']', ['{'] = '}', ['"'] = '"', ["'"] = "'"}
 local closing = [[)}]'"]]
-local selection = ""
+local selection,spos,epos = ""
 return {
   name = "Auto-insertion of delimiters",
   description = [[Extends auto-insertion of delimiters (), {}, [], '', and "" to add selection and removal of standalone pairs.]],
@@ -27,6 +27,7 @@ return {
       end
     end
     selection = editor:GetSelectedText()
+		spos,epos = editor:GetSelectionStart(), editor:GetSelectionEnd()
   end,
   onEditorCharAdded = function(self, editor, event)
     local keycode = event:GetKey()
@@ -46,7 +47,9 @@ return {
     elseif cpairs[char] then
       if editor:GetCharAt(curpos - 2) ~= hyphen and editor:GetCharAt(curpos - 3) ~= hyphen then
       -- if the entered matches opening delimiter, then insert the pair
-        editor:InsertText(-1, selection .. cpairs[char])
+				editor:InsertText(-1, selection .. cpairs[char])
+				editor:SetSelectionStart(spos)
+				editor:SetSelectionEnd(epos+2)
       end
     end
   end,
