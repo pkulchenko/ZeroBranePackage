@@ -1,4 +1,4 @@
--- Copyright 2014-16 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Copyright 2014-18 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 
 local mappanel = "documentmappanel"
 local markers = {CURRENT = "docmap.current", BACKGROUND = "docmap.background"}
@@ -82,8 +82,8 @@ return {
   name = "Document Map",
   description = "Adds document map.",
   author = "Paul Kulchenko",
-  version = 0.30,
-  dependencies = "0.90",
+  version = 0.31,
+  dependencies = "1.30",
 
   onRegister = function(self)
     local e = wxstc.wxStyledTextCtrl(ide:GetMainFrame(), wx.wxID_ANY,
@@ -197,8 +197,7 @@ return {
   onUnRegister = function(self)
     switchEditor()
     ide:RemoveMenuItem(id)
-    -- `RemovePanel` is available in 1.21+, so check if it is present
-    if ide.RemovePanel then ide:RemovePanel(mappanel) end
+    ide:RemovePanel(mappanel)
   end,
 
   onEditorFocusSet = function(self, editor)
