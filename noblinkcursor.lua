@@ -1,9 +1,11 @@
+local function setCaretPeriod(self, editor) editor:SetCaretPeriod(0) end
+
 return {
   name = "No-blink cursor",
   description = "Disables cursor blinking.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.21,
 
-  onEditorLoad = function(self, editor) editor:SetCaretPeriod(0) end,
-  onEditorNew = function(self, editor) editor:SetCaretPeriod(0) end,
+  onEditorLoad = setCaretPeriod,
+  onEditorNew = setCaretPeriod,
 }
