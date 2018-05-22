@@ -1,4 +1,4 @@
--- Copyright 2014 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Copyright 2017-18 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 -- Contributed by Chronos Phaenon Eosphoros (@cpeosphoros)
 
 local lfs = require("lfs")
