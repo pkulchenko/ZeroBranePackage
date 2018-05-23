@@ -1,4 +1,4 @@
--- Copyright 2017 Paul Kulchenko, ZeroBrane LLC; All rights reserved
+-- Copyright 2017-18 Paul Kulchenko, ZeroBrane LLC; All rights reserved
 --
 -- Contributed by Paul Reilly (@paul-reilly)
 --
@@ -81,19 +81,17 @@ local patterns = {}                   -- our task patterns from user.lua (or def
 local DEBUG = false                   -- set to true to get output from any _DBG calls
 local _DBG -- (...)                   -- function for console output, definition at EOF
 local currentEditor                   -- set in onEditorFocusSet, used in onProjectLoad
-local imgList                         -- icons for tree, set if required in onRegister
+local imglist                         -- icons for tree, set if required in onRegister
 
 local mapProject, fileNameFromPath    -- forward decs
 
-
-
 -- parent structure different on Mac so this is cross platform method of
 -- getting parent panel
+
 local function getNoteBook()
   local nbc = "wxAuiNotebook"
-  return tree.ctrl:GetClassInfo():GetClassName() == nbc and win:DynamicCast(nbc)
-        or tree.ctrl:GetParent():GetClassInfo():GetClassName() == nbc and
-        tree.ctrl:GetParent():DynamicCast(nbc) or nil
+  return tree.ctrl:GetParent():GetClassInfo():GetClassName() == nbc and
+    tree.ctrl:GetParent():DynamicCast(nbc) or nil
 end
 
 -- first level from root contain file nodes for this plugin
@@ -283,16 +281,17 @@ tree.reset = function()
 end
 
 --
-tree.scrollTo = function(node)
+tree.scrollTo = function(self, node)
   if tree.ctrl:IsVisible(node) then return end
-  getNoteBook():Freeze()
+  local nb = getNoteBook()
+  if nb then nb:Freeze() end
   if not config.dontAlwaysScrollView then
     tree.ctrl:ScrollTo(node)
   else
     tree.ctrl:EnsureVisible(node)
   end
   tree.ctrl:SetScrollPos(wx.wxHORIZONTAL, 0, true)
-  getNoteBook():Thaw()
+  if nb then nb:Thaw() end
 end
 
 --
@@ -300,7 +299,7 @@ tree.ensureFileNodeVisible = function(fileNode)
   -- ensure file node and last grandchild/child is visible so that
   -- it's all in view
   if not config.dontAlwaysScrollView then
-    scrollTo(fileNode)
+    tree:scrollTo(fileNode)
     return
   else
     local lastChild = tree.ctrl:GetLastChild(fileNode)
@@ -308,17 +307,17 @@ tree.ensureFileNodeVisible = function(fileNode)
       if config.showNames then
         local lastGrandChild = tree.ctrl:GetLastChild(lastChild)
         if lastGrandChild then
-          tree.scrollTo(lastGrandChild)
+          tree:scrollTo(lastGrandChild)
         else
-          tree.scrollTo(lastChild)
+          tree:scrollTo(lastChild)
         end
       else
-        tree.scrollTo(lastChild)
+        tree:scrollTo(lastChild)
       end
     end
     -- do this last in case the window is small and scrolling to the last grand/child
     -- pushes the filename out of the top
-    tree.scrollTo(fileNode)
+    tree:scrollTo(fileNode)
   end
 end
 
@@ -459,17 +458,15 @@ local function mapTasks(fileName, text, isTextRawFile)
 end
 
 --
+local highlightedFileItem
 tree.setHighlightedFileItem = function(item)
   if not tree.isFileNode(item) then return false end
   if highlightedFileItem then
     tree.ctrl:SetItemBold(highlightedFileItem, false)
     if highlightedFileItem:GetValue() ~= item:GetValue() then
       -- active file has changed so reset highlight
-      local sel = tree.ctrl:GetSelection()
       if not tree.itemIsOrIsDescendantOf(tree.ctrl:GetSelection(), item) then
-        --getNoteBook():Freeze()
         pcall( function() tree.ctrl:UnselectAll() end)
-        --getNoteBook():Thaw()
       end
     end
   end
@@ -478,8 +475,8 @@ tree.setHighlightedFileItem = function(item)
 end
 
 --
-local function updateTree(self, editor)
-  mapProject(self, editor, config.singleFileMode)
+local function updateTree(editor)
+  mapProject(editor, config.singleFileMode)
   local fileItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
   if fileItem then
     currentEditor = editor
@@ -502,10 +499,11 @@ local function scanAllOpenEditorsAndMap()
   local editor = ide:GetEditor(edNum)
   while editor do
     -- skip project files or current file that's already been scanned
-    if ide:GetDocument(editor):GetFilePath() ~= nil then
-      local treeItem = tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath()))
+    local path = ide:GetDocument(editor):GetFilePath()
+    if path ~= nil then
+      local treeItem = tree.getFileNode(fileNameFromPath(path))
       if treeItem == nil then
-        mapProject(self, editor)
+        mapProject(editor)
       else
         tree.ensureFileNodeVisible(treeItem)
       end
@@ -516,9 +514,10 @@ local function scanAllOpenEditorsAndMap()
 end
 
 -- main function, called from events
-function mapProject(self, editor, newTree)
+function mapProject(editor, newTree)
   -- prevent UI updates in control to stop flickering
-  getNoteBook():Freeze()
+  local nb = getNoteBook()
+  if nb then nb:Freeze() end
   -- we have frozen the whole notebook, so protect code in between freeze/thaw calls
   -- in case an error in this event keeps it frozen
   pcall( function()
@@ -545,7 +544,7 @@ function mapProject(self, editor, newTree)
     end
   end)
   -- allow UI updates
-  getNoteBook():Thaw()
+  if nb then nb:Thaw() end
 end
 
 -- our plugin/package object/table
@@ -553,7 +552,7 @@ local package = {
   name = "Tasks panel",
   description = "Provides project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.94,
+  version = 0.95,
   dependencies = 1.61,
 
   onRegister = function(self)
@@ -627,11 +626,11 @@ local package = {
       end
     )
 
-    local function remapProject(self)
+    local function remapProject()
       if config.singleFileMode then
-        mapProject(self, ide:GetEditor(), true)
+        mapProject(ide:GetEditor(), true)
       else
-        mapProject(self, nil, true)
+        mapProject(nil, true)
         scanAllOpenEditorsAndMap()
       end
     end
@@ -639,25 +638,25 @@ local package = {
     tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showNames = not config.showNames
-        remapProject(self)
+        remapProject()
       end
     )
 
     tree.ctrl:Connect(ID_FILESWITHTASKS, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showOnlyFilesWithTasks = not config.showOnlyFilesWithTasks
-        remapProject(self)
+        remapProject()
       end
     )
 
     tree.ctrl:Connect(ID_SINGLEFILEMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.singleFileMode = not config.singleFileMode
-        remapProject(self)
+        remapProject()
       end
     )
 
-    rcMenu:AppendSeparator();
+    rcMenu:AppendSeparator()
     local tasksSubMenu = ide:MakeMenu()
     rcMenu:AppendSubMenu(tasksSubMenu, TR("Filter Tasks..."))
 
@@ -671,9 +670,9 @@ local package = {
         function(event)
           pattern.visible = not pattern.visible
           if config.singleFileMode then
-            mapProject(self, ide:GetEditor(editor), true)
+            mapProject(ide:GetEditor(), true)
           else
-            mapProject(self, nil, true)
+            mapProject(nil, true)
             scanAllOpenEditorsAndMap()
           end
         end
@@ -746,14 +745,14 @@ local package = {
   -- called in between onEditorFocusSet calls when app first opens. Called after
   -- on subsequent project loads.
   onProjectLoad = function(self, project)
-    local newProject = ( projectPath == nil or projectPath ~= project )
+    local newProject = projectPath == nil or projectPath ~= project
     projectPath = project
     ide:DoWhenIdle(function()
         if not config.singleFileMode then
-          mapProject(self, nil, newProject)
+          mapProject(nil, newProject)
           scanAllOpenEditorsAndMap()
         else
-          mapProject(self, currentEditor, newProject)
+          mapProject(currentEditor, newProject)
         end
       end)
   end,
@@ -771,21 +770,21 @@ local package = {
     local treeItem = tree.getFileNode(fullPath)
     if treeItem then
       tree.ctrl:Delete(treeItem)
-      mapProject(self)
+      mapProject()
     end
   end,
 
   --
   onEditorLoad = function(self, editor)
     if zeroBraneLoaded then
-      mapProject(self, editor)
+      mapProject(editor)
     end
   end,
 
   -- implemented for saving new file or save as, so list updates
   onEditorSave = function(self, editor)
     if tree.getFileNode(fileNameFromPath(ide:GetDocument(editor):GetFilePath())) == nil then
-      mapProject(self, editor)
+      mapProject(editor)
     end
   end,
 
@@ -794,7 +793,7 @@ local package = {
     if DEBUG then require('mobdebug').on() end -- start debugger for coroutine
     -- event called when loading file, but filename is nil then
     if ide:GetDocument(editor):GetFilePath() then
-      updateTree(self, editor)
+      updateTree(editor)
     end
   end,
 
@@ -819,7 +818,7 @@ local package = {
     needRefresh = nil
 
     if ide:GetDocument(editor):GetFilePath() then
-      mapProject(self, editor)
+      mapProject(editor)
     end
   end
 }
