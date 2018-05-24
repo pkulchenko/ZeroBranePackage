@@ -134,10 +134,10 @@ local function mapProject(self, editor)
 end
 
 return {
-  name = "Show project-wise TODO panel",
-  description = "Adds a project-wise panel for showing a tasks list.",
+  name = "Show project-wide TODO panel",
+  description = "Adds a project-wide panel for showing a tasks list.",
   author = "Chronos Phaenon Eosphoros",
-  version = 0.12,
+  version = 0.13,
   dependencies = "1.60",
 
   onRegister = function(self)

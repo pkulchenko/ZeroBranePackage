@@ -75,7 +75,7 @@ this means that it requires a development version currently being worked on (whi
 * [tasks.lua](tasks.lua): Provides project wide tasks panel.
 * [tildemenu.lua](tildemenu.lua): Allows to enter tilde (~) on keyboards that may not have it.
 * [todo.lua](todo.lua): Adds a panel for showing a tasks list.
-* [todoall.lua](todoall.lua): Adds a project-wise panel for showing a tasks list.
+* [todoall.lua](todoall.lua): Adds a project-wide panel for showing a tasks list.
 * [torch7.lua](torch7.lua): Implements integration with torch7 environment.
 * [uniquetabname.lua](uniquetabname.lua): Updates editor tab names to always stay unique.
 * [urho3d.lua](urho3d.lua): Implements integration with Urho3D game engine.
