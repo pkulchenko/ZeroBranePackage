@@ -3,8 +3,8 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.17,
-  dependencies = "1.60",
+  version = 0.18,
+  dependencies = "1.70",
 
   -- release document pointer for closed tabs
   -- remove from the list of clones (in either direction) this closed editor
@@ -51,6 +51,7 @@ return {
       local doc1, doc2 = ide:GetDocument(e1), ide:GetDocument(e2)
       doc2:SetModified(doc1:IsModified())
       doc2:SetFilePath(doc1:GetFilePath())
+      doc2:SetTabText() -- reset tab text to reflect "modified" status
     end
 
     local cloned = clones[ide:GetEditor(index)]
