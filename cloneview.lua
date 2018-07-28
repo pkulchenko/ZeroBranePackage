@@ -3,7 +3,7 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.19,
+  version = "0.20",
   dependencies = "1.70",
 
   -- release document pointer for closed tabs
@@ -67,5 +67,15 @@ return {
     menu:Enable(idvert, not cloned)
     notebook:Connect(idvert, wx.wxEVT_COMMAND_MENU_SELECTED, cloner)
     notebook:Connect(idhorz, wx.wxEVT_COMMAND_MENU_SELECTED, cloner)
+  end,
+
+  onEditorFocusSet = function(self, editor)
+    if not clones[editor] then return end
+    -- since the cloned editor tab doesn't get MODIFIED events,
+    -- refresh if the number of tokens is different in cloned windows
+    if editor.IndicateSymbols
+    and editor:GetTokenList() ~= clones[editor].editor:GetTokenList() then
+      editor:IndicateSymbols()
+    end
   end,
 }
