@@ -3,7 +3,7 @@ return {
   name = "Clone view",
   description = "Clones the current editor tab.",
   author = "Paul Kulchenko",
-  version = 0.18,
+  version = 0.19,
   dependencies = "1.70",
 
   -- release document pointer for closed tabs
@@ -13,6 +13,9 @@ return {
 
     if clones[editor].pointer then
       clones[editor].editor:ReleaseDocument(clones[editor].pointer)
+    elseif editor.UseDynamicWords then
+      -- closing the "source" editor of the close; restore dynamic words
+      clones[editor].editor:UseDynamicWords(editor:UseDynamicWords())
     end
     -- remove the editor this one clones from the list of clones
     clones[clones[editor].editor] = nil
@@ -52,6 +55,7 @@ return {
       doc2:SetModified(doc1:IsModified())
       doc2:SetFilePath(doc1:GetFilePath())
       doc2:SetTabText() -- reset tab text to reflect "modified" status
+      if e2.UseDynamicWords then e2:UseDynamicWords(false) end
     end
 
     local cloned = clones[ide:GetEditor(index)]
