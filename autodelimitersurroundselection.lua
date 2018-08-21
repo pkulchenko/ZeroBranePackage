@@ -10,7 +10,7 @@ return {
   name = "Auto-insertion of delimiters",
   description = [[Extends auto-insertion of delimiters (), {}, [], '', and "" to add selection and removal of standalone pairs.]],
   author = "Paul Kulchenko (modified by Dominik Banaszak)",
-  version = 0.41,
+  version = 0.42,
   dependencies = "1.30",
 
   onEditorKeyDown = function(self, editor, event)
@@ -48,11 +48,11 @@ return {
       if editor:GetCharAt(curpos - 2) ~= hyphen and editor:GetCharAt(curpos - 3) ~= hyphen then
       -- if the entered matches opening delimiter, then insert the pair
         editor:InsertText(-1, selection .. cpairs[char])
-				if selection~='' then
-				-- maintain selection.
-					editor:SetAnchor(spos<epos and spos or spos+2)
-					editor:SetCurrentPos(spos<epos and epos+2 or epos)
-				end
+          if selection~='' then
+          -- maintain selection.
+            editor:SetAnchor(spos<epos and spos or spos+2)
+            editor:SetCurrentPos(spos<epos and epos+2 or epos)
+          end
       end
     end
   end,
