@@ -109,10 +109,7 @@ end
 			local OnFinished = function()
 				-- Close the "!EnableMobDebug.lua" file editor:
 				if (enablerEditor) then
-					local doc = ide.openDocuments[enablerEditor:GetId()]
-					ClosePage(doc.index)
-					-- TODO: When the Close() API is implemented in ZBS, replace the above two lines with:
-					-- ide:GetDocument(enablerEditor):Close()
+					ide:GetDocument(enablerEditor):Close()
 				end
 
 				-- Remove the editor-close watcher:
@@ -259,7 +256,7 @@ return {
 	name = "Cuberite integration",
 	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.54,
+	version = 0.55,
 	dependencies = "1.70",
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
