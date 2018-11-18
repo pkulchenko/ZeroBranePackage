@@ -40,6 +40,7 @@ this means that it requires a development version currently being worked on (whi
 * [escapetoquit.lua](escapetoquit.lua): Exits application on Escape.
 * [extregister.lua](extregister.lua): Registers known extensions to launch the IDE on Windows.
 * [filetreeoneclick.lua](filetreeoneclick.lua): Changes filetree to activate items on one-click (as in Sublime Text).
+* [hidemenu.lua](hidemenu.lua): Hides and shows the menu bar when pressing alt.
 * [hidemousewhentyping.lua](hidemousewhentyping.lua): Hides mouse cursor when typing.
 * [highlightselected.lua](highlightselected.lua): Highlights all instances of a selected word.
 * [launchtime.lua](launchtime.lua): Measures IDE startup performance up to the first IDLE event.
