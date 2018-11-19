@@ -1,22 +1,21 @@
 local oldmenu
-local menuIsShown = false
+local nobar = wx.wxMenuBar(0)
 
 local function hideMenu()
-  menuIsShown = false
-  oldmenu = ide.frame.menuBar
-  ide.frame:SetMenuBar(wx.wxMenuBar(0))
+  oldmenu = oldmenu or ide:GetMenuBar()
+  ide:GetMainFrame():SetMenuBar(nobar)
 end
 
 local function showMenu()
-  menuIsShown = true
-  ide.frame:SetMenuBar(oldmenu)
+  ide:GetMainFrame():SetMenuBar(oldmenu)
 end
 
 return {
   name = "Hide menu",
   description = "Hides the menubar.",
   author = "David Krawiec",
-  version = 0.1,
+  version = 0.2,
+  dependencies = "1.60",
 
   onAppLoad = function(package)
     hideMenu()
@@ -24,10 +23,9 @@ return {
   
   onEditorKeyDown = function(self, editor, event)
     local key = event:GetKeyCode()
-    local mod = event:GetModifiers()
-    if (key == wx.WXK_ALT and menuIsShown == false) then
+    if (key == wx.WXK_ALT and ide:GetMainFrame():GetMenuBar() == nobar) then
         showMenu()
-    elseif (key == wx.WXK_ALT and menuIsShown == true) then
+    elseif (key == wx.WXK_ALT and ide:GetMainFrame():GetMenuBar() ~= nobar) then
         hideMenu()
     end
   end,
