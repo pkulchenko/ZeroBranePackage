@@ -85,13 +85,25 @@ local imglist                         -- icons for tree, set if required in onRe
 
 local mapProject, fileNameFromPath    -- forward decs
 
+
 -- parent structure different on Mac so this is cross platform method of
 -- getting parent panel
-
 local function getNoteBook()
   local nbc = "wxAuiNotebook"
   return tree.ctrl:GetParent():GetClassInfo():GetClassName() == nbc and
     tree.ctrl:GetParent():DynamicCast(nbc) or nil
+end
+
+--
+local function openEditorIterator()
+  local docs = ide:GetDocuments()
+  local doc_idx = nil
+  local doc
+
+  return function()
+    doc_idx, doc = next(docs, doc_idx)
+    return (doc_idx and doc:GetEditor() or nil)
+  end
 end
 
 -- first level from root contain file nodes for this plugin
@@ -495,9 +507,8 @@ local function scanAllOpenEditorsAndMap()
   if config.singleFileMode then return end
   -- scan all open files here, in case there are non-project path files
   -- that remain open from last session that have tasks we want
-  local edNum = 0
-  local editor = ide:GetEditor(edNum)
-  while editor do
+
+  for editor in openEditorIterator() do
     -- skip project files or current file that's already been scanned
     local path = ide:GetDocument(editor):GetFilePath()
     if path ~= nil then
