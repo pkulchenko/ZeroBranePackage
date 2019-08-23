@@ -42,12 +42,12 @@ return {
   name = "Open image file",
   description = "Opens image file from the file tree.",
   author = "Paul Kulchenko",
-  version = 0.2,
+  version = 0.3,
   dependencies = 1.0,
 
   onFiletreeActivate = function(self, tree, event, item)
     if not item then return end
-    return fileShow(tree:GetItemFullName(item))
+    if fileShow(tree:GetItemFullName(item)) then return false end
   end,
 
   onMenuFiletree = function(self, menu, tree, event)
