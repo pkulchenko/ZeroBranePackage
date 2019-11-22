@@ -9,7 +9,7 @@ return {
   name = "Highlight selected",
   description = "Highlights all instances of a selected word.",
   author = "Paul Kulchenko",
-  version = 0.19,
+  version = 0.20,
   dependencies = "1.20",
 
   onRegister = function(package)
@@ -17,6 +17,7 @@ return {
     cfg = package:GetConfig()
     ide:GetOutput():Connect(wxstc.wxEVT_STC_UPDATEUI, function(event)
         onUpdate(event, ide:GetOutput())
+        event:Skip()
       end)
   end,
   onUnRegister = function()
