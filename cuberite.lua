@@ -141,6 +141,7 @@ end
 
 
 
+
 local function analyzeProject()
 	local projectPath = ide:GetProject()
 	if not(projectPath) then
@@ -252,22 +253,24 @@ local function runInfoDump()
 	ide:GetOutput():Write("The InfoDump.lua script was executed.\n")
 end
 
+
+
+
+
 return {
 	name = "Cuberite integration",
 	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.55,
+	version = 0.56,
 	dependencies = "1.70",
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
 	InfoDumpMenuID = ID("project.cuberite_infodump"),
 
 	onRegister = function(self)
-		-- Add the interpreters
-		self.InterpreterDebug   = MakeCuberiteInterpreter(self, " - debug mode",   "_debug")
-		self.InterpreterRelease = MakeCuberiteInterpreter(self, " - release mode", "")
-		ide:AddInterpreter("cuberite_debug",   self.InterpreterDebug)
-		ide:AddInterpreter("cuberite_release", self.InterpreterRelease)
+		-- Add the interpreter:
+		self.Interpreter = MakeCuberiteInterpreter(self, "", "")
+		ide:AddInterpreter("cuberite", self.Interpreter)
 
 		-- Add the analysis menu item:
 		local _, menu, pos = ide:FindMenuItem(ID.ANALYZE)
@@ -287,8 +290,7 @@ return {
 
 	onUnRegister = function(self)
 		-- Remove the interpreters:
-		ide:RemoveInterpreter("cuberite_debug")
-		ide:RemoveInterpreter("cuberite_release")
+		ide:RemoveInterpreter("cuberite")
 
 		-- Remove the menu items:
 		ide:RemoveMenuItem(self.AnalysisMenuID)
