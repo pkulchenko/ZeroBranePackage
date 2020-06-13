@@ -6,7 +6,7 @@ local interpreter = {
   skipcompile = true,
 }
 
--- This is an automatically generated Lua API definition generated for release-20171014 of OpenRA.
+-- This is an automatically generated Lua API definition generated for release-20200503 of OpenRA.
 -- https://github.com/OpenRA/OpenRA/wiki/Utility was used with the --zbstudio-lua-api parameter.
 -- See https://github.com/OpenRA/OpenRA/wiki/Lua-API for human readable documentation.
 
@@ -45,9 +45,9 @@ An optional second value can be used to exactly specify the producing queue type
     childs = {
       New = {
         type = "function",
-        description = [[Creates a new beacon that stays for the specified time at the specified WPos. Does not remove player set beacons, nor gets removed by placing them.]],
+        description = [[Creates a new beacon that stays for the specified time at the specified WPos. Does not remove player set beacons, nor gets removed by placing them. Requires the 'PlaceBeacon' trait on the player actor.]],
         args = "(Player owner, WPos position, int duration = 750, bool showRadarPings = True)",
-        returns = "(Beacon)",
+        returns = "(void)",
       },
     }
   },
@@ -57,6 +57,137 @@ An optional second value can be used to exactly specify the producing queue type
       Position = {
         type = "value",
         description = [[The center of the visible viewport.]],
+      },
+    }
+  },
+  HSLColor = {
+    type = "class",
+    childs = {
+      Aqua = {
+        type = "value",
+      },
+      Black = {
+        type = "value",
+      },
+      Blue = {
+        type = "value",
+      },
+      Brown = {
+        type = "value",
+      },
+      Cyan = {
+        type = "value",
+      },
+      DarkBlue = {
+        type = "value",
+      },
+      DarkCyan = {
+        type = "value",
+      },
+      DarkGray = {
+        type = "value",
+      },
+      DarkGreen = {
+        type = "value",
+      },
+      DarkOrange = {
+        type = "value",
+      },
+      DarkRed = {
+        type = "value",
+      },
+      FromHex = {
+        type = "function",
+        description = [[Create a new color with the specified red/green/blue/[alpha] hex string (rrggbb[aa]).]],
+        args = "(string value)",
+        returns = "(Color)",
+      },
+      FromRGB = {
+        type = "function",
+        description = [[Create a new color with the specified red/green/blue/[alpha] values.]],
+        args = "(int red, int green, int blue, int alpha = 255)",
+        returns = "(Color)",
+      },
+      Fuchsia = {
+        type = "value",
+      },
+      Gold = {
+        type = "value",
+      },
+      Gray = {
+        type = "value",
+      },
+      Green = {
+        type = "value",
+      },
+      LawnGreen = {
+        type = "value",
+      },
+      LightBlue = {
+        type = "value",
+      },
+      LightCyan = {
+        type = "value",
+      },
+      LightGray = {
+        type = "value",
+      },
+      LightGreen = {
+        type = "value",
+      },
+      LightYellow = {
+        type = "value",
+      },
+      Lime = {
+        type = "value",
+      },
+      LimeGreen = {
+        type = "value",
+      },
+      Magenta = {
+        type = "value",
+      },
+      Maroon = {
+        type = "value",
+      },
+      Navy = {
+        type = "value",
+      },
+      New = {
+        type = "function",
+        description = [[Create a new color with the specified hue/saturation/luminosity.]],
+        args = "(int hue, int saturation, int luminosity)",
+        returns = "(Color)",
+      },
+      Olive = {
+        type = "value",
+      },
+      Orange = {
+        type = "value",
+      },
+      OrangeRed = {
+        type = "value",
+      },
+      Purple = {
+        type = "value",
+      },
+      Red = {
+        type = "value",
+      },
+      Salmon = {
+        type = "value",
+      },
+      SkyBlue = {
+        type = "value",
+      },
+      Teal = {
+        type = "value",
+      },
+      White = {
+        type = "value",
+      },
+      Yellow = {
+        type = "value",
       },
     }
   },
@@ -113,6 +244,14 @@ An optional second value can be used to exactly specify the producing queue type
         args = "(int seconds)",
         returns = "(int)",
       },
+      TimeLimit = {
+        type = "value",
+        description = [[Return or set the time limit (in ticks). When setting, the time limit will count from now. Setting the time limit to 0 will disable it.]],
+      },
+      TimeLimitNotification = {
+        type = "value",
+        description = [[The notification string used for custom time limit warnings. See the TimeLimitManager trait documentation for details.]],
+      },
     }
   },
   Facing = {
@@ -140,137 +279,6 @@ An optional second value can be used to exactly specify the producing queue type
         type = "value",
       },
       West = {
-        type = "value",
-      },
-    }
-  },
-  HSLColor = {
-    type = "class",
-    childs = {
-      Aqua = {
-        type = "value",
-      },
-      Black = {
-        type = "value",
-      },
-      Blue = {
-        type = "value",
-      },
-      Brown = {
-        type = "value",
-      },
-      Cyan = {
-        type = "value",
-      },
-      DarkBlue = {
-        type = "value",
-      },
-      DarkCyan = {
-        type = "value",
-      },
-      DarkGray = {
-        type = "value",
-      },
-      DarkGreen = {
-        type = "value",
-      },
-      DarkOrange = {
-        type = "value",
-      },
-      DarkRed = {
-        type = "value",
-      },
-      FromHex = {
-        type = "function",
-        description = [[Create a new HSL color with the specified red/green/blue/[alpha] hex string (rrggbb[aa]).]],
-        args = "(string value)",
-        returns = "(HSLColor)",
-      },
-      FromRGB = {
-        type = "function",
-        description = [[Create a new HSL color with the specified red/green/blue/[alpha] values.]],
-        args = "(int red, int green, int blue, int alpha = 255)",
-        returns = "(HSLColor)",
-      },
-      Fuchsia = {
-        type = "value",
-      },
-      Gold = {
-        type = "value",
-      },
-      Gray = {
-        type = "value",
-      },
-      Green = {
-        type = "value",
-      },
-      LawnGreen = {
-        type = "value",
-      },
-      LightBlue = {
-        type = "value",
-      },
-      LightCyan = {
-        type = "value",
-      },
-      LightGray = {
-        type = "value",
-      },
-      LightGreen = {
-        type = "value",
-      },
-      LightYellow = {
-        type = "value",
-      },
-      Lime = {
-        type = "value",
-      },
-      LimeGreen = {
-        type = "value",
-      },
-      Magenta = {
-        type = "value",
-      },
-      Maroon = {
-        type = "value",
-      },
-      Navy = {
-        type = "value",
-      },
-      New = {
-        type = "function",
-        description = [[Create a new HSL color with the specified hue/saturation/luminosity.]],
-        args = "(int hue, int saturation, int luminosity)",
-        returns = "(HSLColor)",
-      },
-      Olive = {
-        type = "value",
-      },
-      Orange = {
-        type = "value",
-      },
-      OrangeRed = {
-        type = "value",
-      },
-      Purple = {
-        type = "value",
-      },
-      Red = {
-        type = "value",
-      },
-      Salmon = {
-        type = "value",
-      },
-      SkyBlue = {
-        type = "value",
-      },
-      Teal = {
-        type = "value",
-      },
-      White = {
-        type = "value",
-      },
-      Yellow = {
         type = "value",
       },
     }
@@ -346,10 +354,6 @@ matching the filter function called as function(CPos cell).]],
         args = "(CPos givenCell, LuaFunction filter)",
         returns = "(CPos)",
       },
-      Difficulty = {
-        type = "value",
-        description = [[Returns the difficulty selected by the player before starting the mission.]],
-      },
       IsNamedActor = {
         type = "function",
         description = [[Returns true if actor was originally specified in the map file.]],
@@ -413,6 +417,12 @@ matching the filter function called as function(CPos cell).]],
         type = "function",
         description = [[Display a text message to the player.]],
         args = "(string text, string prefix = Mission, Nullable`1 color = nil)",
+        returns = "(void)",
+      },
+      DisplaySystemMessage = {
+        type = "function",
+        description = [[Display a system message to the player. If 'prefix' is nil the default system prefix is used.]],
+        args = "(string text, string prefix = nil)",
         returns = "(void)",
       },
       FloatingText = {
@@ -488,6 +498,17 @@ matching the filter function called as function(CPos cell).]],
       },
     }
   },
+  Radar = {
+    type = "class",
+    childs = {
+      Ping = {
+        type = "function",
+        description = [[Creates a new radar ping that stays for the specified time at the specified WPos.]],
+        args = "(Player player, WPos position, Color color, int duration = 750)",
+        returns = "(void)",
+      },
+    }
+  },
   Reinforcements = {
     type = "class",
     childs = {
@@ -499,8 +520,8 @@ matching the filter function called as function(CPos cell).]],
       },
       ReinforceWithTransport = {
         type = "function",
-        description = [[Send reinforcements in a transport. A transport can be a ground unit (APC etc.), ships and aircraft. The first member of the entryPath array will be the spawnpoint for the transport, while the last one will be its destination. The last member of the exitPath array is be the place where the transport will be removed from the game. When the transport has reached the destination, it will unload its cargo unless a custom actionFunc has been supplied. Afterwards, the transport will follow the exitPath and leave the map, unless a custom exitFunc has been supplied. actionFunc will be called as actionFunc(Actor transport, Actor[] cargo). exitFunc will be called as exitFunc(Actor transport). Returns a table in which the first value is the transport, and the second a table containing the deployed units.]],
-        args = "(Player owner, string actorType, String[] cargoTypes, CPos[] entryPath, CPos[] exitPath = nil, LuaFunction actionFunc = nil, LuaFunction exitFunc = nil)",
+        description = [[Send reinforcements in a transport. A transport can be a ground unit (APC etc.), ships and aircraft. The first member of the entryPath array will be the spawnpoint for the transport, while the last one will be its destination. The last member of the exitPath array is be the place where the transport will be removed from the game. When the transport has reached the destination, it will unload its cargo unless a custom actionFunc has been supplied. Afterwards, the transport will follow the exitPath and leave the map, unless a custom exitFunc has been supplied. actionFunc will be called as actionFunc(Actor transport, Actor[] cargo). exitFunc will be called as exitFunc(Actor transport). dropRange determines how many cells away the transport will try to land if the actual destination is blocked (if the transport is an aircraft). Returns a table in which the first value is the transport, and the second a table containing the deployed units.]],
+        args = "(Player owner, string actorType, String[] cargoTypes, CPos[] entryPath, CPos[] exitPath = nil, LuaFunction actionFunc = nil, LuaFunction exitFunc = nil, int dropRange = 3)",
         returns = "(LuaTable)",
       },
     }
@@ -556,6 +577,12 @@ matching the filter function called as function(CPos cell).]],
         args = "(Actor[] actors, LuaFunction func)",
         returns = "(void)",
       },
+      OnAnyProduction = {
+        type = "function",
+        description = [[Call a function when any actor produces another actor. The callback function will be called as func(Actor producer, Actor produced, string productionType).]],
+        args = "(LuaFunction func)",
+        returns = "(void)",
+      },
       OnCapture = {
         type = "function",
         description = [[Call a function when this actor is captured. The callback function will be called as func(Actor self, Actor captor, Player oldOwner, Player newOwner).]],
@@ -570,7 +597,7 @@ matching the filter function called as function(CPos cell).]],
       },
       OnDiscovered = {
         type = "function",
-        description = [[Call a function when this actor is discovered by an enemy or a player with a Neutral stance. The callback function will be called as func(Actor discovered, Player discoverer). +The player actor needs the 'EnemyWatcher' trait.]],
+        description = [[Call a function when this actor is discovered by an enemy or a player with a Neutral stance. The callback function will be called as func(Actor discovered, Player discoverer). The player actor needs the 'EnemyWatcher' trait. The actors to discover need the 'AnnounceOnSeen' trait.]],
         args = "(Actor a, LuaFunction func)",
         returns = "(void)",
       },
@@ -654,7 +681,7 @@ matching the filter function called as function(CPos cell).]],
       },
       OnPlayerDiscovered = {
         type = "function",
-        description = [[Call a function when this player is discovered by an enemy or neutral player. The callback function will be called as func(Player discovered, Player discoverer, Actor discoveredActor).The player actor needs the 'EnemyWatcher' trait.]],
+        description = [[Call a function when this player is discovered by an enemy or neutral player. The callback function will be called as func(Player discovered, Player discoverer, Actor discoveredActor).The player actor needs the 'EnemyWatcher' trait. The actors to discover need the 'AnnounceOnSeen' trait.]],
         args = "(Player discovered, LuaFunction func)",
         returns = "(void)",
       },
@@ -680,6 +707,18 @@ matching the filter function called as function(CPos cell).]],
         type = "function",
         description = [[Call a function when this actor is removed from the world. The callback function will be called as func(Actor self).]],
         args = "(Actor a, LuaFunction func)",
+        returns = "(void)",
+      },
+      OnSold = {
+        type = "function",
+        description = [[Call a function when this actor is sold. The callback function will be called as func(Actor self).]],
+        args = "(Actor a, LuaFunction func)",
+        returns = "(void)",
+      },
+      OnTimerExpired = {
+        type = "function",
+        description = [[Call a function when the game timer expires. The callback function will be called as func().]],
+        args = "(LuaFunction func)",
         returns = "(void)",
       },
       RemoveFootprintTrigger = {
@@ -831,11 +870,29 @@ matching the filter function called as function(CPos cell).]],
     args = "(string condition)",
     returns = "(bool)",
   },
-  AcceptsUpgrade = {
+  ActivateIonCannon = {
     type = "function",
-    description = [[Check whether this actor accepts a specific upgrade. DEPRECATED! Will be removed.]],
-    args = "(string upgrade)",
-    returns = "(bool)",
+    description = [[Activate the actor's IonCannonPower.]],
+    args = "(CPos target)",
+    returns = "(void)",
+  },
+  ActivateNukePower = {
+    type = "function",
+    description = [[Activate the actor's NukePower.]],
+    args = "(CPos target)",
+    returns = "(void)",
+  },
+  ActivateParatroopers = {
+    type = "function",
+    description = [[Activate the actor's Paratroopers Power. Returns the aircraft that will drop the reinforcements.]],
+    args = "(WPos target, int facing = -1)",
+    returns = "(Actor[])",
+  },
+  AddObjective = {
+    type = "function",
+    description = [[Add a mission objective for this player. The function returns the ID of the newly created objective, so that it can be referred to later.]],
+    args = "(string description, string type = Primary, bool required = True)",
+    returns = "(int)",
   },
   AddPrimaryObjective = {
     type = "function",
@@ -933,6 +990,18 @@ matching the filter function called as function(CPos cell).]],
     type = "value",
     description = [[The combined value of all units lost by this player.]],
   },
+  DeliverCash = {
+    type = "function",
+    description = [[Deliver cash to the target actor.]],
+    args = "(Actor target)",
+    returns = "(void)",
+  },
+  DeliverExperience = {
+    type = "function",
+    description = [[Deliver experience to the target actor.]],
+    args = "(Actor target)",
+    returns = "(void)",
+  },
   Demolish = {
     type = "function",
     description = [[Demolish the target actor.]],
@@ -962,6 +1031,10 @@ matching the filter function called as function(CPos cell).]],
     description = [[Disguises as the target type with the specified owner.]],
     args = "(string actorType, Player newOwner)",
     returns = "(void)",
+  },
+  EffectiveOwner = {
+    type = "value",
+    description = [[The effective owner of the actor.]],
   },
   EnterTransport = {
     type = "function",
@@ -1005,6 +1078,12 @@ defines which player palette to use. Duration is in ticks.]],
     args = "(string type)",
     returns = "(Actor[])",
   },
+  GetActorsByTypes = {
+    type = "function",
+    description = [[Returns all living actors of the specified types of this player.]],
+    args = "(String[] types)",
+    returns = "(Actor[])",
+  },
   GetGroundAttackers = {
     type = "function",
     description = [[Returns an array of actors representing all ground attack units of this player.]],
@@ -1030,18 +1109,6 @@ Conditions must be defined on an ExternalConditions trait on the actor.
 If duration > 0 the condition will be automatically revoked after the defined number of ticks]],
     args = "(string condition, int duration = 0)",
     returns = "(int)",
-  },
-  GrantTimedUpgrade = {
-    type = "function",
-    description = [[Grant a limited-time upgrade to this actor. DEPRECATED! Will be removed.]],
-    args = "(string upgrade, int duration)",
-    returns = "(void)",
-  },
-  GrantUpgrade = {
-    type = "function",
-    description = [[Grant an upgrade to this actor. DEPRECATED! Will be removed.]],
-    args = "(string upgrade)",
-    returns = "(void)",
   },
   Guard = {
     type = "function",
@@ -1213,14 +1280,14 @@ If duration > 0 the condition will be automatically revoked after the defined nu
   },
   Move = {
     type = "function",
-    description = [[Moves within the cell grid. closeEnough defines an optional range (in cells) that will be considered close enough to complete the activity.]],
-    args = "(CPos cell, int closeEnough = 0)",
+    description = [[Fly within the cell grid.]],
+    args = "(CPos cell)",
     returns = "(void)",
   },
   Move = {
     type = "function",
-    description = [[Fly within the cell grid.]],
-    args = "(CPos cell)",
+    description = [[Moves within the cell grid. closeEnough defines an optional range (in cells) that will be considered close enough to complete the activity.]],
+    args = "(CPos cell, int closeEnough = 0)",
     returns = "(void)",
   },
   MoveIntoWorld = {
@@ -1277,8 +1344,10 @@ If duration > 0 the condition will be automatically revoked after the defined nu
   },
   Produce = {
     type = "function",
-    description = [[Build a unit, ignoring the production queue. The activity will wait if the exit is blocked.]],
-    args = "(string actorType, string factionVariant = nil)",
+    description = [[Build a unit, ignoring the production queue. The activity will wait if the exit is blocked.
+If productionType is nil or unavailable, then an exit will be selected based on 'Buildable.BuildAtProductionType'.
+If 'Buildable.BuildAtProductionType' is not set either, a random exit will be selected.]],
+    args = "(string actorType, string factionVariant = nil, string productionType = nil)",
     returns = "(void)",
   },
   RallyPoint = {
@@ -1324,12 +1393,6 @@ If duration > 0 the condition will be automatically revoked after the defined nu
     args = "(int token)",
     returns = "(void)",
   },
-  RevokeUpgrade = {
-    type = "function",
-    description = [[Revoke an upgrade that was previously granted using GrantUpgrade. DEPRECATED! Will be removed.]],
-    args = "(string upgrade)",
-    returns = "(void)",
-  },
   Scatter = {
     type = "function",
     description = [[Leave the current position in a random direction.]],
@@ -1362,13 +1425,13 @@ If duration > 0 the condition will be automatically revoked after the defined nu
   },
   SendParatroopers = {
     type = "function",
-    description = [[Activate the actor's Paratroopers Power. Returns the dropped units.]],
+    description = [[Activate the actor's Paratroopers Power. Returns the dropped units. DEPRECATED! Will be removed.]],
     args = "(WPos target, bool randomize = True, int facing = 0)",
     returns = "(Actor[])",
   },
   SendParatroopersFrom = {
     type = "function",
-    description = [[Activate the actor's Paratroopers Power. Returns the dropped units.]],
+    description = [[Activate the actor's Paratroopers Power. Returns the dropped units. DEPRECATED! Will be removed.]],
     args = "(CPos from, CPos to)",
     returns = "(Actor[])",
   },
@@ -1408,6 +1471,10 @@ If duration > 0 the condition will be automatically revoked after the defined nu
     args = "(CPos cell)",
     returns = "(void)",
   },
+  TooltipName = {
+    type = "value",
+    description = [[The actor's tooltip name. Returns nil if the actor has no tooltip.]],
+  },
   TriggerPowerOutage = {
     type = "function",
     description = [[Triggers low power for the chosen amount of ticks.]],
@@ -1435,7 +1502,7 @@ If duration > 0 the condition will be automatically revoked after the defined nu
   UnloadPassengers = {
     type = "function",
     description = [[Command transport to unload passengers.]],
-    args = "()",
+    args = "(Nullable`1 cell = nil, int unloadRange = 5)",
     returns = "(void)",
   },
   Wait = {
@@ -1450,7 +1517,7 @@ return {
   name = "OpenRA",
   description = "Adds API description for auto-complete and tooltip support for OpenRA.",
   author = "Matthias Mailänder",
-  version = "20171014",
+  version = "20200426",
 
   onRegister = function(self)
     ide:AddAPI("lua", "openra", api)
