@@ -2,11 +2,15 @@
 
 local id = ID("analyzeall.analyzeall")
 
-local function path2mask(s)
+local function pathEscape(s)
   return s
     :gsub('([%(%)%.%%%+%-%?%[%^%$%]])','%%%1') -- escape all special symbols
-    :gsub("%*", ".*") -- but expand asterisk into sequence of any symbols
     :gsub("[\\/]","[\\\\/]") -- allow for any path
+end
+
+local function path2mask(s)
+  return pathEscape(s)
+    :gsub("%*", ".*") -- expand asterisk into sequence of any symbols
 end
 
 local function analyzeProject(self)
@@ -18,11 +22,12 @@ local function analyzeProject(self)
   local errors, warnings = 0, 0
   local projectPath = ide:GetProject()
   if projectPath then
+    local projectMask = pathEscape(projectPath)
     local specs = self:GetConfig().ignore or {}
     local masks = {}
     for i in ipairs(specs) do masks[i] = "^"..path2mask(specs[i]).."$" end
     for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
-      local checkPath = filePath:gsub(projectPath, "")
+      local checkPath = filePath:gsub(projectMask, "")
       local ignore = false
       for _, spec in ipairs(masks) do
         ignore = ignore or checkPath:find(spec)
