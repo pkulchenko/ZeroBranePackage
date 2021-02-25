@@ -10,7 +10,7 @@ end
 
 local function path2mask(s)
   return pathEscape(s)
-    :gsub("%*", ".*") -- but expand asterisk into sequence of any symbols
+    :gsub("%*", ".*") -- expand asterisk into sequence of any symbols
 end
 
 local function analyzeProject(self)
