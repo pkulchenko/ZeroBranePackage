@@ -251,9 +251,9 @@ local SnippetManager = {} do
     return config
   end
 
-  function SnippetManager.__self_test__(editor)
+  function SnippetManager.__self_test__()
     local test = package_require 'snippets.test'
-    test(editor)
+    test()
   end
 end
 
