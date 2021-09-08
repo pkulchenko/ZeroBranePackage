@@ -26,7 +26,7 @@ local function re_match(re, str)
   return re:GetMatch(str, 1)
 end
 
-local re = wx.wxRegEx('([^ ]+)$')
+local re = wx.wxRegEx('([^[:space:]]+)$')
 local function get_last_word(str)
   if str == '' then
     return nil
@@ -155,6 +155,14 @@ local SnippetManager = {} do
     return cursor_pos, start_pos, snippet_text, snippet_name
   end
 
+  function SnippetManager:finish_current(editor)
+    local stack = self:get_stack(editor)
+    if not stack then
+      return
+    end
+    stack:finish_current()
+  end
+
   function SnippetManager:cancel_current(editor)
     local stack = self:get_stack(editor)
     if not stack then
@@ -167,7 +175,6 @@ local SnippetManager = {} do
     local log = log:get('SnippetManager:cancel')
     local stack = self:get_stack(editor)
     if stack then
-      log:debug('editor %s', tostring(editor))
       stack:cancel_all()
     end
   end
@@ -213,8 +220,9 @@ local SnippetManager = {} do
   function SnippetManager:show_scope(editor)
     local pos          = editor:GetCurrentPos()
     local scope, lexer = Editor.GetStyleNameAt(editor, pos)
+    local style        = Editor.GetStyleAt(editor, pos)
 
-    local text = 'Lexer: ' .. lexer .. '\nScope: ' .. scope
+    local text = string.format('Lexer: %s\nScope: %s (%d)', lexer, scope, style)
     editor:CallTipShow(pos, text)
   end
 

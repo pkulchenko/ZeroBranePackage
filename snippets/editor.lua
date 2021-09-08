@@ -234,7 +234,8 @@ function Editor.GetSelText(editor)
         local selection_line_pos_start = editor:GetLineSelStartPosition(line)
         local selection_line_pos_end   = editor:GetLineSelEndPosition(line)
         not_empty = not_empty or selection_line_pos_start ~= selection_line_pos_end
-        append(selected, editor:GetTextRange(selection_line_pos_start, selection_line_pos_end))
+        local text = editor:GetTextRange(selection_line_pos_start, selection_line_pos_end)
+        table.insert(selected, text)
       end
       selection.text = not_empty and (table.concat(selected, EOL) .. EOL) or ''
     else

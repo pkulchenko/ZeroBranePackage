@@ -53,6 +53,7 @@ local actions = {
     cancel_all = function (editor) manager:cancel(editor)          end,
     list       = function (editor) manager:snippet_list(editor)    end,
     show_scope = function (editor) manager:show_scope(editor)      end,
+    finish     = function (editor) manager:finish_current(editor)  end,
 }
 
 local hot_keys = {}

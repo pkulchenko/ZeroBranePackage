@@ -104,12 +104,33 @@ local SnippetStack = {} do
     return snippet and true or false
   end
 
-  function SnippetStack:allow_new_snippet(editor)
+  function SnippetStack:allow_new_snippet()
     local snippet = self._stack:top()
     if not snippet then
       return true
     end
     return snippet:support_nested()
+  end
+
+  function SnippetStack:finish_current()
+    local snippet = self._stack:top()
+    if not snippet then return end
+
+    local log = log:get('SnippetStack:finish_current')
+
+    local s_start, s_end, s_text = snippet:get_text()
+
+    -- If something went wrong and the snippet has been 'messed' up
+    -- (e.g. by undo/redo commands).
+    if not s_text then
+      log:debug('Cancel snippet')
+      return self:cancel_current()
+    end
+
+    s_text = snippet:mirror(s_text)
+    log:debug('mirrored:\n%s\n============', s_text)
+
+    snippet:finish(s_text)
   end
 
 end
