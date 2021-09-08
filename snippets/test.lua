@@ -2,8 +2,12 @@
 local SnippetManager = package_require 'snippets.manager'
 local Editor         = package_require 'snippets.editor'
 
+-- BUG
+--   cancel tab activation with selected text
+
 -- TODO
--- snippets.scivar = "$(FilePath)"
+--   snippets.scivar = "$(FilePath)"
+
 local manager = SnippetManager:new()
 
 local function print(...)
@@ -168,20 +172,20 @@ local function test_cancel(editor)
   manager:load_config{
     {
       activation = {'key', 'Ctrl+1'},
-      text = '$(SelectedText)${1:}'
+      text = '<b>$(SelectedText)${1:}</b>'
     },
     {
       activation = {'tab', '111222'},
-      text = '$(SelectedText)${1:}'
+      text = '<b>$(SelectedText)${1:}</b>'
     }
   }
   manager:release(editor)
 
   local eol = Editor.GetEOL(editor)
 
-  if true then -- cancel key
+  if true then -- ignore unknown shourtcuts
+    print('testing ingnoring unknown shortcuts')
     editor:ClearAll()
-    print('testing cancel snippet with key activation')
     editor:AddText("111222333")
 
     editor:SetAnchor(3) editor:SetCurrentPos(6)
@@ -193,23 +197,38 @@ local function test_cancel(editor)
     manager:insert(editor, 'Ctrl+I') -- Do not change selection for unknown snippet
     assert( Editor.GetSelText(editor) == "222" )
     assert( editor:GetCurrentPos() == 3 )
+  end
 
-    manager:insert(editor, 'Ctrl+1')
-    assert( editor:GetText() == '111222' .. eol .. '333' )
-    assert( editor:GetCurrentPos() == 6 )
-    assert( Editor.GetSelText(editor) == "" )
-    editor:AddText('444')
+  if true then -- cancel key
+    editor:ClearAll()
+    print('testing cancel snippet with key activation')
+    editor:AddText("111222333")
 
-    manager:cancel(editor)
-    assert( editor:GetText() == '111222333' )
-    assert( Editor.GetSelText(editor) == "222" )
-    assert( editor:GetCurrentPos() == 6 ) -- TODO restore correct position
+    for i = 1, 2 do
+      if i == 1 then
+        editor:SetAnchor(6) editor:SetCurrentPos(3)
+      else
+        editor:SetAnchor(3) editor:SetCurrentPos(6)
+      end
+
+      manager:insert(editor, 'Ctrl+1')
+      assert( editor:GetText() == '111<b>222</b>' .. eol .. '333' )
+      assert( editor:GetCurrentPos() == 9 )
+      assert( Editor.GetSelText(editor) == "" )
+      editor:AddText('444')
+      assert( editor:GetText() == '111<b>222444</b>' .. eol .. '333' )
+
+      manager:cancel(editor)
+      assert( editor:GetText() == '111222333' )
+      assert( Editor.GetSelText(editor) == "222" )
+      assert( editor:GetCurrentPos() == 6 ) -- TODO restore correct position
+    end
     print('testing cancel snippet with key activation passed')
   end
 
-  if true then -- cancel tab
+  if true then -- ignore unknown shourtcuts
+    print('testing ingnoring unknown tab activators')
     editor:ClearAll()
-    print('testing cancel snippet with key activation')
     editor:AddText("111222333")
 
     editor:SetAnchor(3) editor:SetCurrentPos(5)
@@ -218,36 +237,66 @@ local function test_cancel(editor)
     assert( editor:GetCurrentPos() == 5 )
 
     editor:SetAnchor(5) editor:SetCurrentPos(3)
-    manager:insert(editor, 'Ctrl+I') -- Do not change selection for unknown snippet
+    manager:insert(editor)
     assert( Editor.GetSelText(editor) == "22" )
     assert( editor:GetCurrentPos() == 3 )
+    print('test ingnoring unknown tab activators passed')
+  end
+
+  if true then -- cancel tab
+    editor:ClearAll()
+    print('testing cancel snippet with tab activation (without selection)')
+    editor:AddText("111222333")
 
     editor:SetSelection(6, 6);
     manager:insert(editor)
-    assert( editor:GetText() == '' .. eol .. '333' )
-    assert( editor:GetCurrentPos() == 0 )
+    assert( editor:GetText() == '<b></b>' .. eol .. '333' )
+    assert( editor:GetCurrentPos() == 3 )
     assert( Editor.GetSelText(editor) == "" )
     editor:AddText('444')
 
     manager:cancel(editor)
     assert( editor:GetText() == '111222333' )
     assert( editor:GetCurrentPos() == 6 ) -- TODO restore correct position
+    print('test cancel snippet with tab activation (without selection) passed')
+  end
 
-    if false then
-      -- TODO not supported correctly cancel for tab activatin with selection
-      editor:SetAnchor(3) editor:SetCurrentPos(6)
-      manager:insert(editor)
-      assert( editor:GetText() == '222' .. eol .. '333' )
-      assert( editor:GetCurrentPos() == 3 )
-      assert( Editor.GetSelText(editor) == "" )
-      editor:AddText('444')
+  if true then -- TODO FIX not supported correctly cancel for tab activatin with selection
+    editor:ClearAll()
+    editor:AddText("111222333")
 
-      manager:cancel(editor)
-      assert( editor:GetText() == '111222333' )
-      assert( editor:GetCurrentPos() == 6 ) -- TODO restore correct position
-    end
+    editor:SetAnchor(3) editor:SetCurrentPos(6)
+    assert( Editor.GetSelText(editor) == "222" )
 
-    print('testing cancel snippet with key activation passed')
+    manager:insert(editor)
+    assert( editor:GetText() == '<b>222</b>' .. eol .. '333' )
+    assert( editor:GetCurrentPos() == 6 )
+    assert( Editor.GetSelText(editor) == "" )
+    editor:AddText('444')
+
+    manager:cancel(editor)
+    assert( editor:GetText() == '222333' ) -- BUG in
+    assert( editor:GetCurrentPos() == 3 )
+    print('TODO FIX not supported correctly cancel for tab activatin with selection')
+  end
+
+  if true then -- TODO FIX not supported correctly cancel for tab activatin with selection
+    editor:ClearAll()
+    editor:AddText("111222333")
+
+    editor:SetAnchor(9) editor:SetCurrentPos(6)
+    assert( Editor.GetSelText(editor) == "333" )
+
+    manager:insert(editor)
+    assert( editor:GetText() == '<b>333</b>' .. eol .. '333')
+    assert( editor:GetCurrentPos() == 6 )
+    assert( Editor.GetSelText(editor) == "" )
+    editor:AddText('444')
+
+    manager:cancel(editor)
+    assert( editor:GetText() == '333333' ) -- BUG
+    assert( editor:GetCurrentPos() == 3 )
+    print('TODO FIX not supported correctly cancel for tab activatin with selection')
   end
 end
 
