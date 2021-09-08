@@ -47,13 +47,14 @@ local Package = {
 }
 
 local actions = {
-    insert     = function (editor) manager:insert(editor)          end,
-    prev       = function (editor) manager:prev(editor)            end,
-    cancel     = function (editor) manager:cancel_current(editor)  end,
-    cancel_all = function (editor) manager:cancel(editor)          end,
-    list       = function (editor) manager:snippet_list(editor)    end,
-    show_scope = function (editor) manager:show_scope(editor)      end,
-    finish     = function (editor) manager:finish_current(editor)  end,
+    insert     = function (editor) manager:insert(editor)                  end,
+    prev       = function (editor) manager:prev(editor)                    end,
+    cancel     = function (editor) manager:cancel_current(editor)          end,
+    cancel_all = function (editor) manager:cancel(editor)                  end,
+    list       = function (editor) manager:snippet_list(editor)            end,
+    show_scope = function (editor) manager:show_scope(editor)              end,
+    finish     = function (editor) manager:finish_current(editor)          end,
+    __test     = function (editor) SnippetManager.__self_test__(editor)    end,
 }
 
 local hot_keys = {}

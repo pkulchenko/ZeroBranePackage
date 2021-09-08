@@ -1,3 +1,6 @@
+-- TODO
+--  * add options to not expand snippet inside another snippet
+
 local IS_WINDOWS = package.config:sub(1,1) == '\\'
 
 local function Color(param)
@@ -154,8 +157,13 @@ function SnippetConfig:build_list()
 end
 
 function SnippetConfig:add_snippet(snippet)
-    local activation_type = snippet.activation[1]
-    local activation_text = snippet.activation[2]
+    local activation_type, activation_text 
+    if type(snippet.activation) == 'string' then
+        activation_type, activation_text = 'tab', snippet.activation
+    else
+        activation_type = snippet.activation[1]
+        activation_text = snippet.activation[2]
+    end
 
     if activation_type == 'tab' then
         self:add_scope(self._tab, activation_text, snippet)
