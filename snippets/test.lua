@@ -1,6 +1,6 @@
 -- Test suite for snippets.lua
 local SnippetManager = package_require 'snippets.manager'
-local config         = package_require 'snippets.config'
+local Config         = package_require 'snippets.config'
 local Editor         = package_require 'snippets.editor'
 
 -- BUG
@@ -211,6 +211,25 @@ local function test_snippets(editor)
     assert( not manager:has_active_snippet(editor) )
     print('stops on last missing placeholder passed')
   end
+
+  do -- EOL
+    editor:ClearAll()
+    print('testing remove eol')
+    local s = eol .. 'foo.boo()' .. eol .. 'bbb'
+    editor:AddText('rmirrors' .. s);
+    editor:SetSelection(8,8)
+    manager:insert(editor)
+
+    assert( editor:GetText() == 'one ${1/one/two/}' .. eol .. s)
+    assert( Editor.GetSelText(editor) == 'one')
+    assert( manager:has_active_snippet(editor) )
+
+    manager:next(editor)
+    assert( editor:GetText() == 'one two' .. s)
+    assert( editor:GetCurrentPos() == 7 )
+    assert( not manager:has_active_snippet(editor) )
+  end
+
 end
 
 local function test_cancel(editor)
@@ -351,7 +370,7 @@ local function run()
   test_cancel(editor)
   ide:GetDocument(editor):SetModified(false)
   ClosePage()
-  config.__self_test__()
+  Config.__self_test__()
   print('snippet tests passed')
 end
 

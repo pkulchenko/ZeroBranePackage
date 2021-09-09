@@ -182,6 +182,7 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   local next_item, item_start, item_end = self:find_next_placeholder(s_text, index)
   if not next_item then
+    log:debug('Item %d not found', index)
     return false
   end
 
@@ -192,7 +193,7 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
   end
 
   if not s_start then
-    log:debug('Item %d not found', index)
+    log:debug('Snipped body not found')
     return false
   end
 
@@ -327,21 +328,39 @@ function Snippet:push_snapshot(s_text)
   self.snapshots[self.index] = s_text
 end
 
+function Snippet:finish_cleanup(s_text, s_start, s_end)
+  local log = log:get('Snippet:finish')
+
+  s_text = escape_decode(s_text)
+  log:debug('unescaped:\n%s\n============', s_text)
+
+  s_text = escape_remove(s_text)
+  log:debug('escapes removed:\n%s\n============', s_text)
+
+  Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
+
+  s_start, s_end = self:get_pos()
+  if not s_start then
+    log:error('Can not find snipped body')
+    return
+  end
+
+  self.editor:SetSelection(s_end, s_end)
+  Editor.JoinLines(self.editor)
+end
+
 function Snippet:finish(s_text)
   local log = log:get('Snippet:finish')
   log:debug('Starting...')
-  self.editor:BeginUndoAction()
-  if not self:insert_placeholder(s_text, 0) then
-    local s_start, s_end = self:get_pos()
-    if s_start then
-      s_text = escape_decode(s_text)
-      s_text = escape_remove(s_text)
-      Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
-      self.editor:SetSelection(s_end, s_end)
-      Editor.JoinLines(self.editor)
+  local s_start, s_end = self:get_pos()
+  if s_start then
+    self.editor:BeginUndoAction()
+    if not self:insert_placeholder(s_text, 0, s_start, s_end) then
+      log:debug('No zero tabstopper')
+      self:finish_cleanup(s_text, s_start, s_end)
     end
+    self.editor:EndUndoAction()
   end
-  self.editor:EndUndoAction()
 
   -- undo should not back marker
   if self.end_marker then

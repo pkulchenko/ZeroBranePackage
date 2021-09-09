@@ -1,4 +1,4 @@
-local config        = package_require 'snippets.config'
+local Config        = package_require 'snippets.config'
 local log           = package_require 'snippets.log'
 local Editor        = package_require 'snippets.editor'
 local SnippetStack  = package_require 'snippets.stack'
@@ -56,6 +56,7 @@ local SnippetManager = {} do
     local self = setmetatable({}, class)
 
     self._stack = {} or setmetatable({}, {__mode = 'v'})
+    self.config = Config:new()
 
     return self
   end
@@ -65,7 +66,7 @@ local SnippetManager = {} do
     if not stack then
       stack = SnippetStack:new(editor)
       self._stack[tostring(editor)] = stack
-      editor:MarkerSetBackground(config.MARK_SNIPPET, config.MARK_SNIPPET_COLOR)
+      editor:MarkerSetBackground(Config.MARK_SNIPPET, Config.MARK_SNIPPET_COLOR)
     end
     return stack
   end
@@ -111,7 +112,7 @@ local SnippetManager = {} do
       local scope, lang = Editor.GetStyleNameAt(editor, cursor_pos)
       log:debug('Cursor: %d; Lexer: %s; Scope: %s; Key: %s', cursor_pos, lang, scope, snippet_arg)
 
-      local snippet_text = config:get_key(lang, scope, snippet_arg)
+      local snippet_text = self.config:get_key(lang, scope, snippet_arg)
       if not (snippet_text and snippet_text.text) then
         log:debug('Snippet not found')
         return
@@ -138,7 +139,7 @@ local SnippetManager = {} do
     local scope, lang = Editor.GetStyleNameAt(editor, cursor_pos)
     log:debug('Cursor: %d; Lexer: %s; Scope: %s, Name: %s', cursor_pos, lang, scope, snippet_name)
 
-    local snippet_text = config:get_tab(lang, scope, snippet_name)
+    local snippet_text = self.config:get_tab(lang, scope, snippet_name)
 
     if not snippet_text then
       log:debug('Snippet not found')
@@ -237,7 +238,7 @@ local SnippetManager = {} do
     -- TODO make autocomplite list
     local pos   = editor:GetCurrentPos()
     local scope, lexer = Editor.GetStyleNameAt(editor, pos)
-    local list = config:get_list(lexer, scope)
+    local list = self.config:get_list(lexer, scope)
     if not (list and list[1]) then
         return
     end
@@ -248,8 +249,8 @@ local SnippetManager = {} do
   end
 
   function SnippetManager:load_config(cfg)
-    config:load(cfg)
-    return config
+    self.config:load(cfg)
+    return self.config
   end
 
   function SnippetManager.__self_test__()

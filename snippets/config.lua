@@ -302,4 +302,4 @@ function SnippetConfig.__self_test__()
   end
 end
 
-return SnippetConfig:new()
+return SnippetConfig
