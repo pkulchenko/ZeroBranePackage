@@ -25,6 +25,9 @@ local function test_snippets(editor)
     {activation = "trans",    text = "${1:one} ${1/o(ne)?/O$1/}"                  },
     {activation = "esc",      text = [[\${1:fake one} ${1:real one} {${2:\} two}]]},
     {activation = "eruby",    text = "${1:one} ${1/.+/#{$0.capitalize}/}"         },
+    {activation = "cursor",   text = "begin${0}end"                               },
+    {activation = "dcursor",  text = "begin${0: hello}end"                        },
+    {activation = "skip",     text = "${1:one} ${3:three}"                        },
   }
   manager:release(editor)
 
@@ -90,7 +93,7 @@ local function test_snippets(editor)
     manager:next(editor)
     assert( editor:GetText() == 'one three one three' )
     print('mirrors passed')
-	end
+  end
 
   do -- Regex Mirrors
     editor:ClearAll()
@@ -166,6 +169,46 @@ local function test_snippets(editor)
     manager:next(editor)
     assert( editor:GetText() == 'two Two' )
     print('embedded ruby passed')
+  end
+
+  do -- Default value for cursor position
+    editor:ClearAll()
+    print('testing cursor position')
+    editor:AddText('cursor'); manager:insert(editor)
+    manager:next(editor)
+    assert( editor:GetText() == 'beginend' )
+    assert( editor:GetCurrentPos() == 5 )
+    assert( Editor.GetSelText(editor) == '' )
+    assert( not manager:has_active_snippet(editor) )
+    print('cursor position passed')
+  end
+
+  do -- Default value for cursor position
+    editor:ClearAll()
+    print('testing cursor position with default value')
+    editor:AddText('dcursor'); manager:insert(editor)
+    manager:next(editor)
+    assert( editor:GetText() == 'begin helloend' )
+    assert( editor:GetCurrentPos() == 11 )
+    assert( Editor.GetSelText(editor) == ' hello' )
+    assert( not manager:has_active_snippet(editor) )
+    print('cursor position with default value passed')
+  end
+
+  do -- Stops on last missing placeholder
+    editor:ClearAll()
+    print('testing stops on last missing placeholder')
+    editor:AddText('skip'); manager:insert(editor)
+    assert( editor:GetText() == 'one ${3:three}' .. eol )
+    assert( Editor.GetSelText(editor) == 'one')
+    assert( manager:has_active_snippet(editor) )
+
+    manager:next(editor)
+    assert( editor:GetText() == 'one ${3:three}' )
+    assert( editor:GetCurrentPos() == 14 )
+    assert( Editor.GetSelText(editor) == '')
+    assert( not manager:has_active_snippet(editor) )
+    print('stops on last missing placeholder passed')
   end
 end
 

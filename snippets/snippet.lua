@@ -1,11 +1,12 @@
-local config        = package_require 'snippets.config'
-local log           = package_require 'snippets.log'
-local Editor        = package_require 'snippets.editor'
-local shell_execute = package_require 'snippets.utils.shell_execute'
-local ruby_regexp   = package_require 'snippets.utils.ruby_regexp'
-local escape_encode = package_require 'snippets.escape'.encode
-local escape_decode = package_require 'snippets.escape'.decode
-local escape_remove = package_require 'snippets.escape'.remove
+local config         = package_require 'snippets.config'
+local log            = package_require 'snippets.log'
+local Editor         = package_require 'snippets.editor'
+local shell_execute  = package_require 'snippets.utils.shell_execute'
+local ruby_regexp    = package_require 'snippets.utils.ruby_regexp'
+local string_replace = package_require 'snippets.utils.string_replace'
+local escape_encode  = package_require 'snippets.escape'.encode
+local escape_decode  = package_require 'snippets.escape'.decode
+local escape_remove  = package_require 'snippets.escape'.remove
 
 local function get_macros(editor, selected_text)
   -- TODO support more macros
@@ -124,24 +125,38 @@ end
 
 ---
 -- Moves to the next placeholder. Finish snippiet if there no one
-function Snippet:next_placeholder(s_start, s_end, s_text)
+function Snippet:next_placeholder()
   local log = log:get('Snippet:next_placeholder')
 
-  self.index = self.index + 1
+  local _, _, s_text = self:get_text()
 
-  if not self.placeholders[self.index] then
+  -- If something went wrong and the snippet has been 'messed' up
+  -- (e.g. by undo/redo commands).
+  if not s_text then
+    log:error('no text')
+    return false
+  end
+
+  self:push_snapshot(s_text)
+  log:debug('snapshot[%d]:\n%s\n============', self.index, s_text)
+
+  s_text = self:mirror(s_text)
+  log:debug('mirrored:\n%s\n============', s_text)
+
+  if not self.placeholders[self.index + 1] then
     self:finish(s_text)
     return true
   end
 
+  self.index = self.index + 1
+
   log:debug('next index: %d', self.index)
 
-  self.editor:BeginUndoAction()
-  local pass = self:replace_placeholder(s_start, s_end, s_text)
-  self.editor:EndUndoAction()
-
-  if not pass then
-    return false
+  if not self:replace_placeholder(s_text) then
+    -- this should not happened because of we callect all known placeholders
+    -- in the `self.placeholders` map
+    log:error('can not replace placeholder: %d', self.index)
+    return self:next_placeholder()
   end
 
   return true
@@ -149,37 +164,80 @@ end
 
 ---
 -- Replace text with the default value for a current placeholder
-function Snippet:replace_placeholder(s_start, s_end, s_text)
-  local log = log:get('Snippet:replace_placeholder')
+function Snippet:replace_placeholder(s_text)
+  self.editor:BeginUndoAction()
+  local pass = self:insert_placeholder(s_text)
+  self.editor:EndUndoAction()
+  return pass
+end
 
-  local next_item = self:next_item(s_text)
+local CURSOR_MARKER = '|3563F9B7-0818-4E94-AFB3-3024DBD2C4E6|'
+
+---
+-- s_text - escaped text
+function Snippet:insert_placeholder(s_text, index, s_start, s_end)
+  local log = log:get('Snippet:insert_placeholder')
+
+  index = index or self.index
+
+  local next_item, item_start, item_end = self:next_item(s_text, index)
   if not next_item then
-    log:error('no item for placeholder %d', self.index)
     return false
   end
+
   log:debug('next item:\n%s\n============', next_item)
+
+  if not s_start then
+    s_start, s_end = self:get_pos()
+  end
+
+  if not s_start then
+    log:debug('Item %d not found', index)
+    return false
+  end
+
+  s_text = string_replace(s_text, CURSOR_MARKER, item_start, item_end)
 
   s_text = escape_decode(s_text)
   log:debug('unescaped:\n%s\n============', s_text)
 
+  if index == 0 then -- TODO check this out
+    s_text = escape_remove(s_text)
+    log:debug('escapes removed:\n%s\n============', s_text)
+  end
+
   Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
+
   s_start, s_end = self:get_pos()
-
-  local placeholder_start, placeholder_end
-  if s_start then
-    placeholder_start, placeholder_end = Editor.FindText(self.editor, next_item, 0, s_start, s_end)
+  if not s_start then
+    log:error('Can not find snippet range')
+    return false
   end
 
-  if placeholder_start and placeholder_end and placeholder_start >= 0 then
-    self.cursor = placeholder_start
-    local default = string.match(next_item, '^%${' .. self.index .. ':(.*)}$')
-    Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, default)
-    self.editor:SetSelection(placeholder_start, self.editor:GetCurrentPos())
-    return true
+  if index == 0 then -- remove last line
+    self.editor:SetSelection(s_end, s_end)
+    Editor.JoinLines(self.editor)
   end
 
-  log:error('can not find next_item in the editor:\n%s\n============', next_item)
-  return false
+  -- Find placeholder in editor
+  local placeholder_start, placeholder_end = Editor.FindText(self.editor, CURSOR_MARKER, wxstc.wxSTC_FIND_MATCHCASE, s_start, s_end)
+  if not placeholder_start and placeholder_start >= 0 then
+    log:error('Can not find placeholder marker')
+    return false
+  end
+
+  self.cursor = placeholder_start
+
+  log:debug('Cursor position: search range [%s, %s]; result [%s, %s]', tostring(s_start), tostring(s_end), tostring(placeholder_start), tostring(placeholder_end))
+
+  local pattern = string.format('^${%d:(.*)}$', index)
+  local default = string.match(next_item, pattern) or ''
+  log:debug('item: %s, pattern: %s, default value: %s', next_item, pattern, default)
+
+  Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, default)
+  self.editor:SetSelection(placeholder_start, self.editor:GetCurrentPos())
+
+  return true
 end
 
 ---
@@ -210,67 +268,57 @@ function Snippet:push_snapshot(s_text)
   self.snapshots[self.index] = s_text
 end
 
-function Snippet:finish_reset_text(s_text)
-  local log = log:get('Snippet:finish')
-  local s_start, s_end = self:get_pos()
-  if not s_start then
-    log:debug('snippet not found')
-    return
-  end
-
-  -- TODO support default value for ${0}
-  s_text = s_text:gsub('${0}', '$CURSOR', 1)
-  s_text = escape_decode(s_text)
-  log:debug('unescaped:\n%s\n============', s_text)
-
-  s_text = escape_remove(s_text)
-  log:debug('escapes removed:\n%s\n============', s_text)
-  Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
-
-  s_start, s_end = self:get_pos()
-  if not s_start then
-    log:error('Can not find snippet after cursor replacement')
-    return
-  end
-
-  log:debug('Move cursor to pos: %d (at line %d)',
-    s_end, self.editor:LineFromPosition(s_end)
-  )
-  self.editor:SetSelection(s_end, s_end)
-  Editor.JoinLines(self.editor)
-
-  local s, e = Editor.FindText(self.editor, '$CURSOR', wxstc.wxSTC_FIND_MATCHCASE, s_start, s_end)
-  log:debug('search cursor: search range [%s, %s]; result [%s, %s]', tostring(s_start), tostring(s_end), tostring(s), tostring(e))
-  if s and e and s >= 0 then
-    Editor.ReplaceTextRange(self.editor, s, e, '')
-  else
-    self.editor:SetSelection(s_end, s_end) -- at snippet end marker
-  end
-end
-
 function Snippet:finish(s_text)
   local log = log:get('Snippet:finish')
   log:debug('Starting...')
   self.editor:BeginUndoAction()
-  self:finish_reset_text(s_text)
-  self.editor:MarkerDeleteHandle(self.end_marker)
+  if not self:insert_placeholder(s_text, 0) then
+    local s_start, s_end = self:get_pos()
+    if s_start then
+      s_text = escape_decode(s_text)
+      s_text = escape_remove(s_text)
+      Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
+      self.editor:SetSelection(s_end, s_end)
+      Editor.JoinLines(self.editor)
+    end
+  end
   self.editor:EndUndoAction()
+
+  -- undo should not back marker
+  if self.end_marker then
+    -- try to remove in any case
+    self.editor:MarkerDeleteHandle(self.end_marker)
+    self.end_marker = nil
+  end
+
   self.index = nil
   log:debug('Done')
 end
 
-function Snippet:next_item(s_text)
-  local start = string.find(s_text, '${' .. self.index .. ':', nil, true)
-  if not start then
+function Snippet:next_item(s_text, index)
+  local next_item, default
+
+  local pattern = string.format('${%d:', index)
+  local s, e = string.find(s_text, pattern, nil, true)
+  if not s then
+    if index == 0 then -- special case 
+      s, e = string.find(s_text, '${0}', nil, true)
+      if s then
+        next_item = '${0}'
+        return next_item, s, e
+      end
+    end
     return nil
   end
 
-  local next_item = string.match(s_text, '($%b{})', start)
+  s, e, next_item = string.find(s_text, '($%b{})', s)
   if not next_item then
-    return nil
+    return
   end
 
-  return escape_decode(next_item)
+  next_item = escape_decode(next_item)
+
+  return next_item, s, e
 end
 
 -- Mirror and transform.
@@ -381,6 +429,10 @@ end
 
 function Snippet:support_nested()
   return self.nested
+end
+
+function Snippet:active()
+  return self.index ~= nil
 end
 
 return Snippet

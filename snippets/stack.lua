@@ -50,27 +50,14 @@ local SnippetStack = {} do
 
     local log = log:get('SnippetStack:next')
 
-    local s_start, s_end, s_text = snippet:get_text()
-
-    -- If something went wrong and the snippet has been 'messed' up
-    -- (e.g. by undo/redo commands).
-    if not s_text then
-      log:debug('Cancel snippet')
+    if not snippet:next_placeholder() then
+      log:debug('Snippet cancel')
       return self:cancel_current()
     end
 
-    snippet:push_snapshot(s_text)
-    log:debug('snapshot[%d]:\n%s\n============', snippet.index, s_text)
-
-    s_text = snippet:mirror(s_text)
-    log:debug('mirrored:\n%s\n============', s_text)
-
-    if not snippet:next_placeholder(s_start, s_end, s_text) then
-      return self:next()
-    end
-
-    if not snippet.index then
-        assert(snippet == self._stack:pop())
+    if not snippet:active() then
+      log:debug('Snippet finished')
+      assert(snippet == self._stack:pop())
     end
   end
 
