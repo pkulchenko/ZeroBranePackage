@@ -180,7 +180,7 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   index = index or self.index
 
-  local next_item, item_start, item_end = self:next_item(s_text, index)
+  local next_item, item_start, item_end = self:find_next_placeholder(s_text, index)
   if not next_item then
     return false
   end
@@ -230,14 +230,56 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   log:debug('Cursor position: search range [%s, %s]; result [%s, %s]', tostring(s_start), tostring(s_end), tostring(placeholder_start), tostring(placeholder_end))
 
-  local pattern = string.format('^${%d:(.*)}$', index)
-  local default = string.match(next_item, pattern) or ''
+  local pattern = string.format('^${%d([:|])(.*)}$', index)
+  local default_type, default = string.match(next_item, pattern)
   log:debug('item: %s, pattern: %s, default value: %s', next_item, pattern, default)
 
-  Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, default)
-  self.editor:SetSelection(placeholder_start, self.editor:GetCurrentPos())
+  if default_type == ':' then
+    Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, default)
+    self.editor:SetSelection(placeholder_start, self.editor:GetCurrentPos())
+    return true
+  end
+
+  Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, '')
+
+  if default_type == '|' then
+    local list = {}
+    for s in string.gmatch(default, '[^,]+') do
+      table.insert(list, s)
+    end
+    if list[1] then
+      local sep = string.char(self.editor:AutoCompGetSeparator())
+      list = table.concat(list, sep)
+      self.editor:DoWhenIdle(function()
+        self.editor:UserListShow(1, list)
+      end)
+    end
+  end
 
   return true
+end
+
+function Snippet:find_next_placeholder(s_text, index)
+  local pattern = string.format('%%${%d[:|]', index)
+  local s, e = string.find(s_text, pattern)
+  if not s then
+    if index == 0 then -- special case 
+      s, e = string.find(s_text, '${0}', nil, true)
+      if s then
+        return '${0}', s, e
+      end
+    end
+    return nil
+  end
+
+  local s, e, next_item = string.find(s_text, '($%b{})', s)
+  if not next_item then
+    return
+  end
+
+  next_item = escape_decode(next_item)
+
+  return next_item, s, e
 end
 
 ---
@@ -260,6 +302,23 @@ function Snippet:prev_placeholder()
 
     return true
   end
+end
+
+function Snippet:collect_placeholders(text)
+  local placeholders = {}
+
+  local item_patt, index_patt = '()($%b{})', '^%${(%d+)[:|].*}$'
+
+  local pos, item = string.match(text, item_patt)
+  while item do
+    local index = string.match(item, index_patt)
+    if index then
+      placeholders[ tonumber(index) ] = true
+    end
+    pos, item = string.match(text, item_patt, pos + 1)
+  end
+
+  return placeholders
 end
 
 ---
@@ -293,32 +352,6 @@ function Snippet:finish(s_text)
 
   self.index = nil
   log:debug('Done')
-end
-
-function Snippet:next_item(s_text, index)
-  local next_item, default
-
-  local pattern = string.format('${%d:', index)
-  local s, e = string.find(s_text, pattern, nil, true)
-  if not s then
-    if index == 0 then -- special case 
-      s, e = string.find(s_text, '${0}', nil, true)
-      if s then
-        next_item = '${0}'
-        return next_item, s, e
-      end
-    end
-    return nil
-  end
-
-  s, e, next_item = string.find(s_text, '($%b{})', s)
-  if not next_item then
-    return
-  end
-
-  next_item = escape_decode(next_item)
-
-  return next_item, s, e
 end
 
 -- Mirror and transform.
@@ -375,23 +408,6 @@ function Snippet:expand_plain(text, last_item)
   local mirror = '%${' .. self.index .. '}'
   text = string.gsub(text, mirror, last_item)
   return text
-end
-
-function Snippet:collect_placeholders(text)
-  local placeholders = {}
-
-  local item_patt, index_patt = '()($%b{})', '^%${(%d+):.*}$'
-
-  local pos, item = string.match(text, item_patt)
-  while item do
-    local index = string.match(item, index_patt)
-    if index then
-      placeholders[ tonumber(index) ] = true
-    end
-    pos, item = string.match(text, item_patt, pos + 1)
-  end
-
-  return placeholders
 end
 
 ---

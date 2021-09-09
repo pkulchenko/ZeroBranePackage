@@ -28,6 +28,7 @@ local function test_snippets(editor)
     {activation = "cursor",   text = "begin${0}end"                               },
     {activation = "dcursor",  text = "begin${0: hello}end"                        },
     {activation = "skip",     text = "${1:one} ${3:three}"                        },
+    {activation = "popup",    text = "${0|one,two,three} ${1|hello,world}"        }, -- TODO test it
   }
   manager:release(editor)
 
