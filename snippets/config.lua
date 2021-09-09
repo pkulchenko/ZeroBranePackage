@@ -1,8 +1,6 @@
 -- TODO
 --  * add options to not expand snippet inside another snippet
 
-local IS_WINDOWS = package.config:sub(1,1) == '\\'
-
 local function Color(param)
   param = (tonumber(param) or 0) % (1+0xFFFFFFFF)
   local r = param % 256; param = math.floor(param / 256)
@@ -14,7 +12,7 @@ end
 local SnippetConfig = {
   DEBUG              = false,
   MARK_SNIPPET       = 4,
-  MARK_SNIPPET_COLOR = Color(IS_WINDOWS and 5085593 or tonumber("0x4D9999")),
+  MARK_SNIPPET_COLOR = Color("0x4D9999"),
 }
 SnippetConfig.__index = SnippetConfig
 
