@@ -1,5 +1,6 @@
 -- Test suite for snippets.lua
 local SnippetManager = package_require 'snippets.manager'
+local config         = package_require 'snippets.config'
 local Editor         = package_require 'snippets.editor'
 
 -- BUG
@@ -306,6 +307,7 @@ local function run()
   test_cancel(editor)
   ide:GetDocument(editor):SetModified(false)
   ClosePage()
+  config.__self_test__()
   print('snippet tests passed')
 end
 
