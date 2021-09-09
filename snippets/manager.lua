@@ -234,8 +234,9 @@ local SnippetManager = {} do
       return
     end
 
+    -- TODO make autocomplite list
     local pos   = editor:GetCurrentPos()
-    local lexer, scope = Editor.GetStyleNameAt(editor, pos)
+    local scope, lexer = Editor.GetStyleNameAt(editor, pos)
     local list = config:get_list(lexer, scope)
     if not (list and list[1]) then
         return

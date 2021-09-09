@@ -1,6 +1,5 @@
-local log           = package_require 'snippets.log'
-local Snippet       = package_require 'snippets.snippet'
-local escape_decode = package_require 'snippets.escape'.decode
+local log     = package_require 'snippets.log'
+local Snippet = package_require 'snippets.snippet'
 
 local Stack = {} do
   Stack.__index = Stack
@@ -131,8 +130,11 @@ local SnippetStack = {} do
     log:debug('mirrored:\n%s\n============', s_text)
 
     snippet:finish(s_text)
-  end
 
+    if not snippet.index then
+        assert(snippet == self._stack:pop())
+    end
+  end
 end
 
 return SnippetStack
