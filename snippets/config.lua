@@ -1,6 +1,10 @@
 -- TODO
 --  * add options to not expand snippet inside another snippet
 
+local table_keys = package_require 'snippets.utils.table_keys'
+local table_sort = package_require 'snippets.utils.table_sort'
+local set_merge  = package_require 'snippets.utils.set_merge'
+
 local function Color(param)
   param = (tonumber(param) or 0) % (1+0xFFFFFFFF)
   local r = param % 256; param = math.floor(param / 256)
@@ -15,26 +19,6 @@ local SnippetConfig = {
   MARK_SNIPPET_COLOR = Color("0x4D9999"),
 }
 SnippetConfig.__index = SnippetConfig
-
-local function merge_set(dst, src)
-  for key in pairs(src) do
-    dst[key] = true
-  end
-  return dst
-end
-
-local function table_keys(t)
-  local r = {}
-  for key in pairs(t) do
-    table.insert(r, key)
-  end
-  return r
-end
-
-local function table_sort(t, ...)
-  table.sort(t, ...)
-  return t
-end
 
 local function split_scope(str)
   if not str then
@@ -116,7 +100,7 @@ function SnippetConfig:build_list()
     for lang, scope, node in self:iterate_list() do if lang ~= '*' then
       for any_scope, any_node in pairs(any_lst) do
         if any_scope == '*' or any_scope == scope then
-          merge_set(node, any_node)
+          set_merge(node, any_node)
         end
       end
     end end
@@ -125,7 +109,7 @@ function SnippetConfig:build_list()
   -- `<LANG>.*` merge with `<LANG>.<SCOPE>`
   for lang, scope, any_node in self:iterate_list() do if scope == '*' then
     for scope, scope_node in pairs(self._lst[lang]) do if scope_node ~= any_node then
-      merge_set(scope_node, any_node)
+      set_merge(scope_node, any_node)
     end end
   end end
 

@@ -218,6 +218,7 @@ function Snippet:finish_reset_text(s_text)
     return
   end
 
+  -- TODO support default value for ${0}
   s_text = s_text:gsub('${0}', '$CURSOR', 1)
   s_text = escape_decode(s_text)
   log:debug('unescaped:\n%s\n============', s_text)
