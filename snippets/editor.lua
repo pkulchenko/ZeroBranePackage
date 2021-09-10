@@ -273,4 +273,13 @@ function Editor.HasFocus(editor)
   return editor == ide:GetEditorWithFocus() and editor
 end
 
+function Editor.GetDocument(editor)
+  return ide:GetDocument(editor)
+end
+
+function Editor.GetCurrentFilePath(editor)
+  local doc = Editor.GetDocument(editor)
+  return doc and doc:GetFilePath()
+end
+
 return Editor

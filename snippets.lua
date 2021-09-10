@@ -57,8 +57,6 @@ local actions = {
     __test     = function (editor) SnippetManager.__self_test__(editor)    end,
 }
 
-local hot_keys = {}
-
 local function OnTabActivation(self, editor, event)
   local mod = event:GetModifiers()
   if (mod ~= 0) and (mod ~= wx.wxMOD_SHIFT) then
@@ -97,6 +95,8 @@ local function OnTabActivation(self, editor, event)
 
   return true
 end
+
+local hot_keys = {}
 
 Package.onRegister = function(package)
   local config = manager:load_config(package:GetConfig())
