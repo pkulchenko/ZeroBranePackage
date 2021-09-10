@@ -11,14 +11,13 @@ local escape_remove  = package_require 'snippets.escape'.remove
 local function get_macros(editor, selected_text)
   -- TODO support more macros
   local document = Editor.GetDocument(editor)
-
   local spec = editor.spec or {}
 
   local macros = {
     SelectedText = selected_text or '',
     I            = Editor.GetIndentString(editor),
-    FilePath     = document and document.filePath or '',
-    FileName     = document and document.fileName or '',
+    FilePath     = document and document:GetFilePath() or '',
+    FileName     = document and document:GetFileName() or '',
     LineNumber   = Editor.GetCurrLineNumber(editor) + 1,
     LineComment  = spec.linecomment or '',
     DateTime     = function() return os.date('%Y-%m-%d %H:%M:%S') end,
