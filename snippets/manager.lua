@@ -100,8 +100,18 @@ local SnippetManager = {} do
   end
 
   function SnippetManager:get_last_word(editor)
-    local str = get_line_start(editor)
-    return get_last_word(str)
+    local cur_pos   = editor:GetCurrentPos()
+    local pos_start = editor:WordStartPosition(cur_pos, false)
+    if pos_start < 0 or pos_start >= cur_pos then
+        return nil
+    end
+
+    local word = editor:GetTextRange(pos_start, cur_pos)
+    if (not word) or (word == '') then
+        return nil
+    end
+
+    return word, pos_start
   end
 
   function SnippetManager:find_snippet_text(editor, snippet_arg)
@@ -129,7 +139,7 @@ local SnippetManager = {} do
       return cursor_pos, cursor_pos, snippet_text
     end
 
-    local snippet_name = self:get_last_word(editor)
+    local snippet_name, start_pos = self:get_last_word(editor)
     if not snippet_name then
       log:debug('Snippet name not found')
       return
@@ -145,8 +155,6 @@ local SnippetManager = {} do
       log:debug('Snippet not found')
       return
     end
-
-    local start_pos  = cursor_pos - #snippet_name
 
     log:debug('Origin cursor pos: %d (at line %d) Start pos: %d (at line %d)',
       cursor_pos, editor:LineFromPosition(cursor_pos),

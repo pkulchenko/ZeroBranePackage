@@ -11,12 +11,17 @@ if not package_require then
   function package_require(m)
     local module = package_loaded[m]
     if module ~= nil then
-      assert(module, 'cycle for module:' .. m)
+      if module == false then
+        local err = string.format("loop or previous error loading module '%s'", m)
+        error(err, 2)
+        return
+      end
       return module
     end
 
     package_loaded[m] = false
 
+    local errors = {}
     local rpath = string.gsub(m, '%.', '/') .. '.lua'
     for _, ppath in ipairs(package_path) do
       local full_path = MergeFullPath(ppath, rpath)
@@ -25,13 +30,14 @@ if not package_require then
         package_loaded[m] = assert(loader(m))
         return package_loaded[m]
       end
+      table.insert(errors, string.format("no file '%s'", full_path))
     end
 
-    error('can not load ' .. m)
+    error(string.format("module '%s' not found:\n\t%s", m, table.concat(errors, '\n\t')), 2)
   end
 end
 
-local HotKeyToggle   = package_require 'snippets.hot_key_toggle'
+local HotKeys        = package_require 'snippets.hot_keys'
 local SnippetManager = package_require 'snippets.manager'
 
 local manager = SnippetManager:new()
@@ -96,20 +102,16 @@ local function OnTabActivation(self, editor, event)
   return true
 end
 
-local hot_keys = {}
-
 Package.onRegister = function(package)
   local config = manager:load_config(package:GetConfig())
 
   for key, handler in pairs(config.settings.keys) do
     handler = assert(actions[handler], 'Unsupported action: ' .. tostring(handler))
-    local hot_key = HotKeyToggle:new(key):set(function() handler(ide:GetEditor()) end)
-    table.insert(hot_keys, hot_key)
+    HotKeys:add(package, key, handler)
   end
 
   for _, key in ipairs(config:get_key_activators()) do
-    local hot_key = HotKeyToggle:new(key):set(function() manager:insert(ide:GetEditor(), key) end)
-    table.insert(hot_keys, hot_key)
+    HotKeys:add(package, key, function(editor) manager:insert(editor, key) end)
   end
 
   if config.settings.tab_activation then
@@ -117,11 +119,8 @@ Package.onRegister = function(package)
   end
 end
 
-Package.onUnRegister = function()
-  for _, hot_key in ipairs(hot_keys) do
-    hot_key:unset()
-  end
-  hot_keys = {}
+Package.onUnRegister = function(package)
+  HotKeys:close_package(package)
 end
 
 Package.onEditorClose = function(_, editor)
