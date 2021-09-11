@@ -37,7 +37,7 @@ if not package_require then
   end
 end
 
-local HotKeys = package_require 'hot_keys.storage'
+local HotKeys = package_require 'hotkeys.storage'
 
 return {
   name = "HotKeys",
