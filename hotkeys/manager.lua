@@ -14,6 +14,7 @@ function Keys.new(class)
   local self = setmetatable({}, class)
 
   self:_reset()
+  self.wait_interval = 5 -- Wait next key
 
   return self
 end
@@ -28,36 +29,95 @@ function Keys:_reset()
   self.last_editor  = nil
 end
 
-function Keys:clear_chain()
-    self.chain = ''
+function Keys:_current_status(editor)
+  editor = editor or ide:GetEditor()
+  return editor, editor and editor:GetCurrentPos()
 end
 
-function Keys:handler(editor, key)
-  if (self.chain ~= '') and (self.last_editor ~= editor) or self.last_pos ~= editor:GetCurrentPos() then
-    self.chain = ''
+function Keys:clear_chain()
+  self.chain       = ''
+  self.last_time   = nil
+  self.last_editor = nil
+  self.last_pos    = nil
+end
+
+function Keys:is_chain_valid(editor)
+  if self.chain == '' then
+    return true
+  end
+
+  local interval = self:interval()
+  if interval > self.wait_interval then
+    return false
+  end
+
+  local e, p = self:_current_status(editor)
+
+  if self.last_editor ~= e then
+    return false
+  end
+
+  if self.last_pos ~= p then
+    return false
+  end
+
+  return true
+end
+
+function Keys:set_chain(key)
+  self.chain        = key
+  self.last_time    = os.time()
+  self.last_editor, self.last_pos = self:_current_status()
+end
+
+function Keys:interval()
+  if not self.last_time then
+    return 0
+  end
+
+  local now = os.time()
+  if self.last_time > now then -- time shift
+    return 3600
+  end
+
+  return os.difftime(now, self.last_time)
+end
+
+function Keys:handler(key)
+  if not self:is_chain_valid() then
+    self:clear_chain()
   end
 
   local full_key = (self.chain == '') and key or (self.chain .. ':' .. key)
 
   local handler = self.key_handlers[full_key]
   if handler then
-    self.chain = ''
-    return handler(editor)
+    self:clear_chain()
+    return handler()
   end
 
   if self.key_nodes[full_key] then
-    self.last_editor = editor
-    self.last_pos    = editor:GetCurrentPos()
-    self.chain       = full_key
+    self:set_chain(full_key)
     return
   end
 
-  self.chain = ''
+  handler = self.key_handlers[key]
+  if handler then
+    self:clear_chain()
+    return handler()
+  end
+
+  if self.key_nodes[key] then
+    self:set_chain(key)
+    return
+  end
+
+  self:clear_chain()
 end
 
 function Keys:normalize_key(key)
-  -- Ctrl+A => ctrl-a
-  return string.lower(key):gsub('%+', '-')
+  -- Ctrl+A => CTRL-A
+  return string.upper(key):gsub('%+', '-')
 end
 
 function Keys:get_package_by_key(key)
@@ -109,16 +169,23 @@ function Keys:add(package, keys, handler)
       self.key_handlers[full_key] = handler
     end
 
+    if #norm_key == 1 and not (is_last and i > 1) then
+        return error('Single char allowed only as last node in chain')
+    end
+
     -- create internal handler
-    if not self.hot_keys[norm_key] then
-      self.hot_keys[norm_key] = HotKeyToggle:new(key):set(function() self:handler(ide:GetEditor(), norm_key) end)
+    if #norm_key > 1 then
+        if not self.hot_keys[norm_key] then
+          self.hot_keys[norm_key] = HotKeyToggle:new(key):set(function() self:handler(norm_key) end)
+        end
     end
 
     local package_info = self.packages[package]
     if not package_info then
-      package_info = {full_keys = {}}
+      package_info = {keys = {}, full_keys = {}}
       self.packages[package] = package_info
     end
+    package_info.keys[norm_key] = true
     package_info.full_keys[full_key] = true
   end
 end
@@ -143,6 +210,56 @@ function Keys:close()
   end
 
   self:_reset()
+end
+
+function Keys:onEditorKeyDown(editor, event)
+  if self.chain == '' then
+    return true
+  end
+
+
+  local modifier = event:GetModifiers()
+  if modifier == 0  and event:GetKeyCode() == wx.WXK_ESCAPE then
+    self:clear_chain()
+    return true
+  end
+
+  if not (modifier == 0 or modifier == wx.wxMOD_SHIFT) then
+    return true
+  end
+
+  local code = event:GetKeyCode()
+  if code == 0 or code == nil or code == wx.WXK_SHIFT then
+    return true
+  end
+
+  if code > 255 then
+    self:clear_chain()
+    return true
+  end
+
+  if not self:is_chain_valid(editor) then
+    self:clear_chain()
+    return true
+  end
+
+  local full_key = self.chain .. ':' .. string.char(code)
+  self:clear_chain()
+
+  local handler = self.key_handlers[full_key]
+  if not handler then
+    return true
+  end
+
+  handler()
+
+  return false
+end
+
+function Keys:onIdle(editor, event)
+  if not self:is_chain_valid() then
+    self:clear_chain()
+  end
 end
 
 return Keys:new()
