@@ -93,29 +93,36 @@ function Keys:handler(key)
   local handler = self.key_handlers[full_key]
   if handler then
     self:clear_chain()
-    return handler()
+    handler()
+    return true
   end
 
   if self.key_nodes[full_key] then
     self:set_chain(full_key)
-    return
+    return true
   end
 
   handler = self.key_handlers[key]
   if handler then
     self:clear_chain()
-    return handler()
+    handler()
+    return true
   end
 
   if self.key_nodes[key] then
     self:set_chain(key)
-    return
+    return true
   end
 
   self:clear_chain()
+  return false
 end
 
 function Keys:normalize_key(key)
+  if #key == 1 then
+    return key
+  end
+
   -- Ctrl+A => CTRL-A
   return string.upper(key):gsub('%+', '-')
 end
@@ -138,7 +145,7 @@ function Keys:add(package, keys, handler)
   local full_key
   for i, key in ipairs(keys) do
     if KEYMAP[key] then
-      return error(string.format('Hotkey %s alrady has action in the IDE config', key), 2)
+      return error(string.format("Fail to set hotkey %s for the package '%s'. Hotkey alrady has action in the IDE config", key, package and package.name or 'UNKNOWN'), 2)
     end
 
     local is_last = (i == #keys)
@@ -153,7 +160,7 @@ function Keys:add(package, keys, handler)
       -- partial key can be defined for multiple packages
       -- e.g. first package define `Ctrl-K Ctrl-U` and the second one - `Ctrl-K Ctrl-D`
       -- in this case partial key `Ctrl-K` uses by both packages
-      return error(string.format('Hotkey %s alrady uses in chain', key), 2)
+      return error(string.format("Fail to set hotkey %s for the package '%s'. Hotkey alrady used in chain", key, package and package.name or 'UNKNOWN'), 2)
     end
 
     if not is_last then -- mark as middle node
@@ -162,15 +169,15 @@ function Keys:add(package, keys, handler)
 
     if is_last then
       if self.key_handlers[full_key] then -- can not update hotkey action
-        local package = self:get_package_by_key(full_key)
-        local package_name = package and package.name or 'UNKNOWN'
-        return error(string.format('Hotkey %s alrady has action in package %s', key, package_name), 2)
+        local first_package = self:get_package_by_key(full_key)
+        local package_name = first_package and first_package.name or 'UNKNOWN'
+        return error(string.format("Fail to set hotkey %s for the package '%s'. Hotkey alrady has action in the package '%s'", key, package and package.name or 'UNKNOWN', package_name), 2)
       end
       self.key_handlers[full_key] = handler
     end
 
     if #norm_key == 1 and not (is_last and i > 1) then
-        return error('Single char allowed only as last node in chain')
+        return error(string.format("Fail to set hotkey %s for the package '%s'. Single char allowed only as last node in chain", key, package and package.name or 'UNKNOWN'), 2)
     end
 
     -- create internal handler
@@ -180,13 +187,14 @@ function Keys:add(package, keys, handler)
         end
     end
 
-    local package_info = self.packages[package]
-    if not package_info then
-      package_info = {keys = {}, full_keys = {}}
-      self.packages[package] = package_info
+    if is_last then
+      local package_info = self.packages[package]
+      if not package_info then
+        package_info = {full_keys = {}}
+        self.packages[package] = package_info
+      end
+      package_info.full_keys[full_key] = true
     end
-    package_info.keys[norm_key] = true
-    package_info.full_keys[full_key] = true
   end
 end
 
@@ -212,18 +220,13 @@ function Keys:close()
   self:_reset()
 end
 
-function Keys:onEditorKeyDown(editor, event)
+-- Event Provided by onchar plugin
+function Keys:onEditorKey(editor, event)
   if self.chain == '' then
     return true
   end
 
-
   local modifier = event:GetModifiers()
-  if modifier == 0  and event:GetKeyCode() == wx.WXK_ESCAPE then
-    self:clear_chain()
-    return true
-  end
-
   if not (modifier == 0 or modifier == wx.wxMOD_SHIFT) then
     return true
   end
@@ -238,22 +241,24 @@ function Keys:onEditorKeyDown(editor, event)
     return true
   end
 
-  if not self:is_chain_valid(editor) then
-    self:clear_chain()
-    return true
+  local key = string.char(code)
+  if self:handler(key) then
+    ide:Print('Keys:onEditorKey - false')
+    return false
   end
 
-  local full_key = self.chain .. ':' .. string.char(code)
-  self:clear_chain()
+  return true
+end
 
-  local handler = self.key_handlers[full_key]
-  if not handler then
-    return true
+function Keys:onEditorKeyDown(editor, event)
+  if self.chain ~= '' then
+    local modifier = event:GetModifiers()
+    if modifier == 0  and event:GetKeyCode() == wx.WXK_ESCAPE then
+      self:clear_chain()
+    end
   end
 
-  handler()
-
-  return false
+  return true
 end
 
 function Keys:onIdle(editor, event)

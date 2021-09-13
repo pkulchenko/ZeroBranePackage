@@ -17,6 +17,10 @@ return {
     return HotKeys:onEditorKeyDown(editor, event)
   end,
 
+  onEditorKey = function(self, editor, event)
+    return HotKeys:onEditorKey(editor, event)
+  end,
+
   -- TODO need this in case of show current chain in status bar
   -- onIdle = function(self, editor, event)
   --   return HotKeys:onIdle(editor, event)
