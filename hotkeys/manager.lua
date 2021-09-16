@@ -135,7 +135,7 @@ function Keys:get_package_by_key(key)
   end
 end
 
-function Keys:add(package, keys, handler)
+function Keys:add(package, keys, handler, ide_override)
   assert(handler, 'no handler')
 
   if type(keys) == 'string' then
@@ -144,7 +144,7 @@ function Keys:add(package, keys, handler)
 
   local full_key
   for i, key in ipairs(keys) do
-    if KEYMAP[key] then
+    if KEYMAP[key] and not ide_override then
       return error(string.format("Fail to set hotkey %s for the package '%s'. Hotkey alrady has action in the IDE config", key, package and package.name or 'UNKNOWN'), 2)
     end
 
