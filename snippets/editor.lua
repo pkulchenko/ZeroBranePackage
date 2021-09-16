@@ -207,8 +207,13 @@ function Editor.FindText(editor, text, flags, start, finish)
 end
 
 function Editor.ReplaceTextRange(editor, start_pos, end_pos, text)
-  editor:SetSelection(start_pos, end_pos)
-  editor:ReplaceSelection(text)
+  if start_pos ~= end_pos then
+    local length = math.abs(start_pos - end_pos)
+    start_pos    = math.min(start_pos, end_pos)
+    editor:DeleteRange(start_pos, length)
+  end
+  editor:InsertText(start_pos, text)
+  editor:SetSelection(start_pos + #text, start_pos + #text)
 end
 
 function Editor.GetSelText(editor)

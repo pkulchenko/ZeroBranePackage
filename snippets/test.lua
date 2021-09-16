@@ -23,7 +23,8 @@ local function test_snippets(editor)
     {activation = "rmirrors", text = "${1:one} ${1/one/two/}"                     },
     {activation = "rgroups",  text = [[Ordered pair: ${1:(2, 8)} so ${1/(\d), (\d)/x = $1, y = $2/}]]},
     {activation = "trans",    text = "${1:one} ${1/o(ne)?/O$1/}"                  },
-    {activation = "esc",      text = [[\${1:fake one} ${1:real one} {${2:\} two}]]},
+    {activation = "esc1",     text = [[\${1:fake one} ${1:real one} {${2:\} two}]]},
+    {activation = "esc2",     text = [[\${1:fake one} ${1:real one} {${2:\} two}${0}]]},
     {activation = "eruby",    text = "${1:one} ${1/.+/#{$0.capitalize}/}"         },
     {activation = "cursor",   text = "begin${0}end"                               },
     {activation = "dcursor",  text = "begin${0: hello}end"                        },
@@ -147,15 +148,17 @@ local function test_snippets(editor)
   end
 
   do -- Escapes
-    editor:ClearAll()
-    print('testing escapes')
-    editor:AddText('esc'); manager:insert(editor)
-    assert( Editor.GetSelText(editor) == 'real one' )
-    manager:next(editor)
-    assert( Editor.GetSelText(editor) == '\\} two' )
-    manager:next(editor)
-    assert( editor:GetText() == '${1:fake one} real one {} two' )
-    print('escapes passed')
+    for _, name in ipairs{'esc1', 'esc2'} do
+        editor:ClearAll()
+        print('testing escapes - ' .. name)
+        editor:AddText(name); manager:insert(editor)
+        assert( Editor.GetSelText(editor) == 'real one' )
+        manager:next(editor)
+        assert( Editor.GetSelText(editor) == '} two' )
+        manager:next(editor)
+        assert( editor:GetText() == '${1:fake one} real one {} two' )
+        print('escapes passed' .. name)
+    end
   end
 
   do -- Embeded Ruby

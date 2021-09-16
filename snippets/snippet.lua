@@ -97,7 +97,8 @@ function Snippet:insert_text()
     -- select snippet name
     self.editor:SetSelection(self.start_pos, self.cursor_pos)
   end
-  self.editor:ReplaceSelection(self.text)
+  local s, e = self.editor:GetSelection()
+  Editor.ReplaceTextRange(self.editor, s, e, self.text)
   self:set_end_marker()
   self:indent()
 end

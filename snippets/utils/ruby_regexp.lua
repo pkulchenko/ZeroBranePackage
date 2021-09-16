@@ -25,7 +25,7 @@ local function ruby_regexp(last_item, pattern, replacement, options)
   replacement = escape_decode(replacement)
   script = script:gsub('last_item', last_item)
   script = script:gsub('pattern', pattern)
-  script = script:gsub('options', options)
+  script = script:gsub('options', options or '')
   script = script:gsub('replacement', replacement)
 
   local file = tmpfile('snp')
