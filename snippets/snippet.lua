@@ -4,9 +4,18 @@ local Editor         = package_require 'snippets.editor'
 local shell_execute  = package_require 'snippets.utils.shell_execute'
 local ruby_regexp    = package_require 'snippets.utils.ruby_regexp'
 local string_replace = package_require 'snippets.utils.string_replace'
-local escape_encode  = package_require 'snippets.escape'.encode
-local escape_decode  = package_require 'snippets.escape'.decode
-local escape_remove  = package_require 'snippets.escape'.remove
+local Parser         = package_require 'snippets.parser'
+
+local function _expand_shell(code)
+    local log = log:get('Snippet:expand_shell')
+    log:debug('execute: %s', code)
+    local ret, stdout, stderr = shell_execute(code)
+    if ret ~= 0 then
+      log:error('code: %d\n%s\n============', ret, stderr)
+      return ''
+    end
+    return stdout
+end
 
 local function get_macros(editor, selected_text)
   -- TODO support more macros
@@ -44,12 +53,9 @@ function Snippet.new(class, editor, cursor_pos, start_pos, snippet_name, snippet
 
   local macros = get_macros(editor, selected_text)
 
-  local snippet_text = snippet.text
-
+  local placeholders = {}
+  local snippet_text = Parser.expand_macros_and_shell(snippet.text, _expand_shell, macros, placeholders)
   local count
-  snippet_text = escape_encode(snippet_text)
-  snippet_text = self:expand_macros(snippet_text, macros)
-  snippet_text = self:expand_shell(snippet_text)
   snippet_text, count = Editor.NormalizeEOL(editor, snippet_text)
 
   if selected_text == '' then
@@ -70,9 +76,9 @@ function Snippet.new(class, editor, cursor_pos, start_pos, snippet_name, snippet
   self.start_pos    = start_pos
   self.sel_text     = selected_text
   self.sel_len      = selected_len
-  self.text         = escape_decode(snippet_text)
+  self.text         = snippet_text
   self.line_count   = count
-  self.placeholders = self:collect_placeholders(snippet_text)
+  self.placeholders = placeholders
   self.snapshots    = {}
   self.cursor       = nil
   self.end_marker   = nil
@@ -197,13 +203,13 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   index = index or self.index
 
-  local next_item, item_start, item_end = self:find_next_placeholder(s_text, index)
-  if not next_item then
+  local item_start, item_end, item_default = Parser.next_placeholder(s_text, index)
+  if not item_start then
     log:debug('Item %d not found', index)
     return false
   end
 
-  log:debug('next item:\n%s\n============', next_item)
+  log:debug('next item:\n%s\n============', s_text:sub(item_start, item_end))
 
   if not s_start then
     s_start, s_end = self:get_pos()
@@ -216,11 +222,8 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   s_text = string_replace(s_text, CURSOR_MARKER, item_start, item_end)
 
-  s_text = escape_decode(s_text)
-  log:debug('unescaped:\n%s\n============', s_text)
-
   if index == 0 then -- TODO check this out
-    s_text = escape_remove(s_text)
+    s_text = Parser.unescape(s_text)
     log:debug('escapes removed:\n%s\n============', s_text)
   end
 
@@ -248,56 +251,26 @@ function Snippet:insert_placeholder(s_text, index, s_start, s_end)
 
   log:debug('Cursor position: search range [%s, %s]; result [%s, %s]', tostring(s_start), tostring(s_end), tostring(placeholder_start), tostring(placeholder_end))
 
-  local pattern = string.format('^${%d([:|])(.*)}$', index)
-  local default_type, default = string.match(next_item, pattern)
-  log:debug('item: %s, pattern: %s, default value: %s', next_item, pattern, default)
+  if type(item_default) == 'table' and item_default[1] == nil then
+    item_default = ''
+  end
 
-  if default_type == ':' then
-    Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, default)
+  if type(item_default) == 'string' then
+    Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, item_default)
     self.editor:SetSelection(placeholder_start, self.editor:GetCurrentPos())
     return true
   end
 
+  assert(type(item_default) == 'table')
   Editor.ReplaceTextRange(self.editor, placeholder_start, placeholder_end, '')
 
-  if default_type == '|' then
-    local list = {}
-    for s in string.gmatch(default, '[^,]+') do
-      table.insert(list, s)
-    end
-    if list[1] then
-      local sep = string.char(self.editor:AutoCompGetSeparator())
-      list = table.concat(list, sep)
-      self.editor:DoWhenIdle(function()
-        self.editor:UserListShow(1, list)
-      end)
-    end
-  end
+  local sep = string.char(self.editor:AutoCompGetSeparator())
+  local list = table.concat(item_default, sep)
+  self.editor:DoWhenIdle(function()
+    self.editor:UserListShow(1, list)
+  end)
 
   return true
-end
-
-function Snippet:find_next_placeholder(s_text, index)
-  local pattern = string.format('%%${%d[:|]', index)
-  local s, e = string.find(s_text, pattern)
-  if not s then
-    if index == 0 then -- special case 
-      s, e = string.find(s_text, '${0}', nil, true)
-      if s then
-        return '${0}', s, e
-      end
-    end
-    return nil
-  end
-
-  local s, e, next_item = string.find(s_text, '($%b{})', s)
-  if not next_item then
-    return
-  end
-
-  next_item = escape_decode(next_item)
-
-  return next_item, s, e
 end
 
 ---
@@ -322,23 +295,6 @@ function Snippet:prev_placeholder()
   end
 end
 
-function Snippet:collect_placeholders(text)
-  local placeholders = {}
-
-  local item_patt, index_patt = '()($%b{})', '^%${(%d+)[:|].*}$'
-
-  local pos, item = string.match(text, item_patt)
-  while item do
-    local index = string.match(item, index_patt)
-    if index then
-      placeholders[ tonumber(index) ] = true
-    end
-    pos, item = string.match(text, item_patt, pos + 1)
-  end
-
-  return placeholders
-end
-
 ---
 -- Saves snapshot for current placeholder
 function Snippet:push_snapshot(s_text)
@@ -348,11 +304,7 @@ end
 function Snippet:finish_cleanup(s_text, s_start, s_end)
   local log = log:get('Snippet:finish')
 
-  s_text = escape_decode(s_text)
-  log:debug('unescaped:\n%s\n============', s_text)
-
-  s_text = escape_remove(s_text)
-  log:debug('escapes removed:\n%s\n============', s_text)
+  s_text = Parser.unescape(s_text)
 
   Editor.ReplaceTextRange(self.editor, s_start, s_end, s_text)
 
@@ -392,58 +344,21 @@ end
 
 -- Mirror and transform.
 function Snippet:mirror(s_text)
-  s_text = escape_encode(s_text)
-
-  if self.index > 0 then
-    if self.cursor then
-      self.editor:SetSelection(self.cursor, self.editor:GetCurrentPos())
-    else
-      self.editor:WordLeftExtend()
-    end
-
-    local last_item = Editor.GetSelText(self.editor)
-
-    -- Regex mirror.
-    s_text = self:expand_pattern(s_text, last_item)
-
-    -- Plain text mirror.
-    s_text = self:expand_plain(s_text, last_item)
+  if self.index <= 0 then
+    return s_text
   end
 
+  if self.cursor then
+    self.editor:SetSelection(self.cursor, self.editor:GetCurrentPos())
+  else
+    self.editor:WordLeftExtend()
+  end
+
+  local last_item = Editor.GetSelText(self.editor)
+
+  s_text = Parser.mirror(s_text, self.index, last_item, ruby_regexp)
+
   return s_text
-end
-
-local function _expand_shell(code)
-    local log = log:get('Snippet:expand_shell')
-    log:debug('execute: %s', code)
-    local ret, stdout, stderr = shell_execute(code)
-    if ret ~= 0 then
-      log:error('code: %d\n%s\n============', ret, stderr)
-      return ''
-    end
-    return stdout
-end
-
-function Snippet:expand_shell(text)
-  return text:gsub('`(.-)`', _expand_shell)
-end
-
-function Snippet:expand_macros(text, macros)
-  return (string.gsub(text, '%$%((.-)%)', macros))
-end
-
-function Snippet:expand_pattern(text, last_item)
-  local patt = '%${' .. self.index .. '/(.-)/(.-)/([iomxneus]*)}'
-  text = string.gsub(text, patt, function(pattern, replacement, options)
-    return ruby_regexp(last_item, pattern, replacement, options)
-  end)
-  return text
-end
-
-function Snippet:expand_plain(text, last_item)
-  local mirror = '%${' .. self.index .. '}'
-  text = string.gsub(text, mirror, last_item)
-  return text
 end
 
 ---

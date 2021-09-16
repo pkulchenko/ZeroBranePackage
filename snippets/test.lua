@@ -2,6 +2,7 @@
 local SnippetManager = package_require 'snippets.manager'
 local Config         = package_require 'snippets.config'
 local Editor         = package_require 'snippets.editor'
+local Parser         = package_require 'snippets.parser'
 
 -- BUG
 --   cancel tab activation with selected text
@@ -374,6 +375,7 @@ local function run()
   ide:GetDocument(editor):SetModified(false)
   ClosePage()
   Config.__self_test__()
+  Parser.__self_test__()
   print('snippet tests passed')
 end
 
