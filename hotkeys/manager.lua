@@ -139,7 +139,11 @@ function Keys:add(package, keys, handler, ide_override)
   assert(handler, 'no handler')
 
   if type(keys) == 'string' then
-    keys = {keys}
+    local t = {}
+    for k in string.gmatch(keys, '[^%s,]+') do
+      table.insert(t, k)
+    end
+    keys = t
   end
 
   local full_key
@@ -243,7 +247,6 @@ function Keys:onEditorKey(editor, event)
 
   local key = string.char(code)
   if self:handler(key) then
-    ide:Print('Keys:onEditorKey - false')
     return false
   end
 
