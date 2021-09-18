@@ -262,7 +262,7 @@ local SnippetManager = {} do
   end
 
   function SnippetManager.__self_test__()
-    package_loaded['snippets.test'] = nil
+    -- package_require.loaded['snippets.test'] = nil
     local test = package_require 'snippets.test'
     test()
   end

@@ -24,7 +24,6 @@ local function get_macros(editor, selected_text)
 
   local macros = {
     SelectedText = selected_text or '',
-    I            = Editor.GetIndentString(editor),
     FilePath     = document and document:GetFilePath() or '',
     FileName     = document and document:GetFileName() or '',
     LineNumber   = Editor.GetCurrLineNumber(editor) + 1,
@@ -57,6 +56,7 @@ function Snippet.new(class, editor, cursor_pos, start_pos, snippet_name, snippet
   local snippet_text = Parser.expand_macros_and_shell(snippet.text, _expand_shell, macros, placeholders)
   local count
   snippet_text, count = Editor.NormalizeEOL(editor, snippet_text)
+  snippet_text = Parser.normalize_tab(snippet_text, Editor.GetEOL(editor), Editor.GetIndentString(editor))
 
   if selected_text == '' then
     selected_text = nil

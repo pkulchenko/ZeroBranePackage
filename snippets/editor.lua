@@ -164,8 +164,9 @@ function Editor.AlignIndentation(editor, ref_line, num_lines)
   local base_level  = Editor.GetLineIndentationLevel(editor, ref_line)
   local indent = editor:GetIndent()
   for i = 1, num_lines do
-    local line_indent = editor:GetLineIndentation(ref_line + i)
-    editor:SetLineIndentation(ref_line + i, line_indent + base_level * indent)
+    local line = ref_line + i
+    local line_indent = editor:GetLineIndentation(line)
+    editor:SetLineIndentation(line, line_indent + base_level * indent)
   end
 end
 

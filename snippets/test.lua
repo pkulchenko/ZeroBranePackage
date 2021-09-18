@@ -31,10 +31,12 @@ local function test_snippets(editor)
     {activation = "dcursor",  text = "begin${0: hello}end"                        },
     {activation = "skip",     text = "${1:one} ${3:three}"                        },
     {activation = "popup",    text = "${0|one,two,three} ${1|hello,world}"        }, -- TODO test it
+    {activation = "indent",   text = "hello\t\n\tworld"                           },
   }
   manager:release(editor)
 
   local eol = Editor.GetEOL(editor)
+  local indent = Editor.GetIndentString(editor)
 
   do -- Tab stops
     editor:ClearAll()
@@ -234,6 +236,16 @@ local function test_snippets(editor)
     assert( not manager:has_active_snippet(editor) )
   end
 
+  do -- inden
+    editor:ClearAll()
+    print('testing indent')
+    local prefix = '{' .. eol .. indent
+    editor:AddText(prefix .. 'indent');
+    manager:insert(editor)
+    local text = prefix .. 'hello\t' .. eol .. indent .. indent .. 'world'
+    assert(editor:GetText() == text)
+    print('indent passed')
+  end
 end
 
 local function test_cancel(editor)

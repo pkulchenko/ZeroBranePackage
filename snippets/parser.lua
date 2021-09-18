@@ -87,6 +87,18 @@ local function text_unescape(s)
   return text_unescape_pat:match(s)
 end
 
+local tab_patterns = setmetatable({}, {__index = function(self, eol)
+  local patt = P{'text',
+    text = Cs((V'line' * V'eol') ^ 0 * V'line' ^ -1),
+    line = V'tab' ^ 0 * V'neol' ^ 0,
+    tab  = P'\t' * Carg(1) / forward,
+    neol = 1 - V'eol',
+    eol  = P(eol),
+  }
+  self[eol] = patt
+  return patt
+end})
+
 local snippet_patt = P{'body',
   body        = Cs((escape_patt + V'upper_node' + 1) ^ 0),
   upper_node  = V'placeholder' + (V'shell' / text_escape) + (V'macro' / text_escape) + V'mirror' + V'transform',
@@ -104,35 +116,35 @@ local snippet_patt = P{'body',
 }
 
 local mirror_patterns = setmetatable({}, {__index = function(self, i)
-      local patt = P{'body',
-        body        = Cs((escape_patt + V'mirror' + V'transform' + 1) ^ 0),
-        mirror      = P'${' * Carg(1) * string.format('%d', i) * '}' / forward,
-        transform   = P'${' * Carg(2) * Carg(1) * string.format('%d', i) * '/' * V'regexp' * '}' / replace,
-        regexp      = Cs(V'repat') * '/' * Cs(V'repat') * '/' * (Cs(V'reflag') ^ -1),
-        repat       = ((P'\\/' / '/') + (1 - S('/'))) ^ 0,
-        reflag      = S'iomxneus' ^ 0,
-      }
-      self[i] = patt
-      return patt
-    end})
+  local patt = P{'body',
+    body        = Cs((escape_patt + V'mirror' + V'transform' + 1) ^ 0),
+    mirror      = P'${' * Carg(1) * string.format('%d', i) * '}' / forward,
+    transform   = P'${' * Carg(2) * Carg(1) * string.format('%d', i) * '/' * V'regexp' * '}' / replace,
+    regexp      = Cs(V'repat') * '/' * Cs(V'repat') * '/' * (Cs(V'reflag') ^ -1),
+    repat       = ((P'\\/' / '/') + (1 - S('/'))) ^ 0,
+    reflag      = S'iomxneus' ^ 0,
+  }
+  self[i] = patt
+  return patt
+end})
 
 local placeholder_patterns = setmetatable({}, {__index = function(self, i)
-      local patt = {'body',
-        body        = V('text') * Cp() * V('node') * Cp(),
-        text        = (escape_patt + 1 - V'node') ^ 0,
-        node        = V'default' + V'list',
-        list        = P'${' * string.format('%d', i) * '|' * (inside('braces', '{}') / split_list) * '}',
-        default     = P'${' * string.format('%d', i) * ':' * Cs(inside('braces', '{}'))  * '}',
-        braces      = P'{' * inside('braces', '{}') * '}',
-      }
-      if i == 0 then
-        patt.cursor = Cc'' * P'${0}'
-        patt.node   = patt.node + V'cursor'
-      end
-      patt = P(patt)
-      self[i] = patt
-      return patt
-    end})
+  local patt = {'body',
+    body        = V('text') * Cp() * V('node') * Cp(),
+    text        = (escape_patt + 1 - V'node') ^ 0,
+    node        = V'default' + V'list',
+    list        = P'${' * string.format('%d', i) * '|' * (inside('braces', '{}') / split_list) * '}',
+    default     = P'${' * string.format('%d', i) * ':' * Cs(inside('braces', '{}'))  * '}',
+    braces      = P'{' * inside('braces', '{}') * '}',
+  }
+  if i == 0 then
+    patt.cursor = Cc'' * P'${0}'
+    patt.node   = patt.node + V'cursor'
+  end
+  patt = P(patt)
+  self[i] = patt
+  return patt
+end})
 
 local escape_placeholder_patt = P{'body',
   body        = Cs(
@@ -180,6 +192,11 @@ end
 local function mirror(str, index, text, regexp)
   local patt = mirror_patterns[index]
   return patt:match(str, nil, text, regexp)
+end
+
+local function normalize_tab(text, eol, indent)
+  local patt = tab_patterns[eol]
+  return patt:match(text, nil, indent)
 end
 
 local __self_test__ do
@@ -273,9 +290,44 @@ local function test_text_escape()
   assert_next_placeholder(s, 1, 1, #s, '${2:$\\{3:HELLO\\}}')
 end
 
+local function test_tab_norm()
+  local s = table.concat({
+    '\t\tline1\t',
+    'line2\t',
+    '',
+    '\t\tline4\t',
+  }, '\r\n')
+
+  local expected = table.concat({
+    '****line1\t',
+    'line2\t',
+    '',
+    '****line4\t',
+  }, '\r\n')
+
+  assert_equal(expected, normalize_tab(s, '\r\n', '**'))
+
+  local s = table.concat({
+    '\t\tline1\t',
+    'line2\t',
+    '',
+    '\t\tline4\t',
+  }, '\n')
+
+  local expected = table.concat({
+    '****line1\t',
+    'line2\t',
+    '',
+    '\t\tline4\t',
+  }, '\n')
+
+  assert_equal(expected, normalize_tab(s, '\r\n', '**'))
+end
+
 function __self_test__()
   test_text_escape()
   test_shell_command()
+  test_tab_norm()
 end
 
 end
@@ -287,6 +339,7 @@ local M = {
   next_placeholder        = next_placeholder,
   mirror                  = mirror,
   unescape                = text_unescape,
+  normalize_tab           = normalize_tab,
   __self_test__           = __self_test__,
 }
 
