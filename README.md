@@ -60,6 +60,7 @@ this means that it requires a development version currently being worked on (whi
 * [overtype.lua](overtype.lua): Allows to switch overtyping on/off on systems that don't provide shortcut for that.
 * [projectsettings.lua](projectsettings.lua): Adds project settings loaded on project switch.
 * [realtimewatch.lua](realtimewatch.lua): Displays real-time values during debugging.
+* [redbean.lua](redbean.lua): Adds integration and debugging for Redbean web server.
 * [redis.lua](redis.lua): Integrates with Redis.
 * [referencepanel.lua](referencepanel.lua): Adds a panel for showing documentation based on tooltips.
 * [refreshproject.lua](refreshproject.lua): Refreshes project tree when files change (Windows only).
