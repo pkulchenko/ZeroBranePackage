@@ -37,10 +37,9 @@ local interpreter = {
     if rundebug then
       ide:GetDebugger():SetOptions({ runstart = ide.config.debugger.runonstart ~= false })
       local mdb = MergeFullPath(GetPathWithSep(ide.editorFilename), "lualibs/mobdebug/")
-      local pack = MergeFullPath(GetPathWithSep(ide.editorFilename), "packages/")
-      rundebug = ([[-e "package.path=[=[%s]=] package.loaded['socket']=require'redbean'"]]):format(
-        MergeFullPath(GetPathWithSep(ide.editorFilename), "packages/?.lua")
-      ).." "..([[-e "package.path=[=[%s]=]
+      rundebug = ([[-e "package.path=[=[%s]=] package.loaded['socket']=require'redbean'"]])
+        :format(ide:GetPackage("redbean"):GetFilePath())
+        .." "..([[-e "package.path=[=[%s]=]
 MDB=require('mobdebug')
 MDB.start()
 function OnServerStart()
@@ -79,7 +78,7 @@ return {
   name = "Redbean",
   description = "Implements integration with Redbean server.",
   author = "Paul Kulchenko",
-  version = 0.10,
+  version = 0.11,
   dependencies = "1.60",
 
   onRegister = function(self)
