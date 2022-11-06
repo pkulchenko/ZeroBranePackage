@@ -294,7 +294,14 @@ return {
   end,
 }
 
---[[ configuration example:
--- if `teal` executable is not in PATH, set the path to it manually in user.lua
-path.teal = "/full/path/tl.exe"
+--[[ configuration:
+-- Install Teal to a preferred location on your system
+-- For Windows, it's recommended to just download the precompiled package from https://github.com/teal-language/tl/releases
+-- if `teal` executable is not in PATH, set the path to it manually in user.lua (if you don't have one already, create it in "cfg" folder)
+path.teal = "full/path/tl.exe"
+-- If everything worked, you should have a new Interpreter called "Teal" in Project -> Lua Interpreter
+-- Since Teal supports Lua 5.4, you can also use it for writing Lua 5.4 code
+-- Teal will treat .lua files as Lua code and .tl files as Teal code, so you can safely code and run both Lua and Teal in ZBS
+-- For starting out with Teal syntax, look here: https://github.com/teal-language/tl/blob/master/docs/tutorial.md
+-- If you want to compile your Teal code to Lua, you can't do this within ZBS. Just call "tl.exe gen filename.lua" in a shell.
 --]]
