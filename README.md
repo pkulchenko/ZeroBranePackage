@@ -75,7 +75,7 @@ this means that it requires a development version currently being worked on (whi
 * [striptrailingwhitespace.lua](striptrailingwhitespace.lua): Strips trailing whitespaces before saving a file.
 * [syntaxcheckontype.lua](syntaxcheckontype.lua): Reports syntax errors while typing (on `Enter`).
 * [tasks.lua](tasks.lua): Provides project wide tasks panel.
-* [teal.lua](teal.lua): Adds support for Teal, a typed Lua dialect that compiles to Lua. Be sure to use the current master version of ZBS, the 1.90 release doesn't support it.
+* [teal.lua](teal.lua): Adds support for Teal, a typed Lua dialect that compiles to Lua.
 * [tildemenu.lua](tildemenu.lua): Allows to enter tilde (~) on keyboards that may not have it.
 * [todo.lua](todo.lua): Adds a panel for showing a tasks list.
 * [todoall.lua](todoall.lua): Adds a project-wide panel for showing a tasks list.
