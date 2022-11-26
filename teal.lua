@@ -265,14 +265,21 @@ lex:add_fold_point(lexer.OPERATOR, '{', '}')
 return lex
 ]=]
 
-local spec = {
-  exts = {"tl"},
-  lexer = "lexlpeg.teal",
+local luaspec = {
+  exts = {"lua"},
+  lexer = "lexlpeg.lua",
   apitype = "lua",
   linecomment = "--",
   sep = ".:",
 }
 
+local tlspec = {
+  exts = {"tl", "lua"},
+  lexer = "lexlpeg.teal",
+  apitype = "lua",
+  linecomment = "--",
+  sep = ".:",
+}
 
 local name = "teal"
 return {
@@ -285,11 +292,13 @@ return {
   onRegister = function(self)
     ide:AddInterpreter(name, interpreter)
     ide:AddLexer("lexlpeg.teal", teallexer)
-    ide:AddSpec(name, spec)
+    ide:AddSpec("Lua", luaspec)
+    ide:AddSpec(name, tlspec)
   end,
   onUnRegister = function(self)
     ide:RemoveInterpreter(name)
     ide:RemoveLexer("lexlpeg.teal")
+    ide:RemoveSpec("Lua")
     ide:RemoveSpec(name)
   end,
 }
