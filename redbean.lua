@@ -78,7 +78,7 @@ return {
   name = "Redbean",
   description = "Implements integration with Redbean server.",
   author = "Paul Kulchenko",
-  version = 0.11,
+  version = 0.12,
   dependencies = "1.60",
 
   onRegister = function(self)
@@ -94,7 +94,7 @@ return {
     return load[[return {
       _ = assert(unix.socket()),
       buf = "",
-      settimeout = function(self, t) self._timeout = t and t*1000 or -1 end,
+      settimeout = function(self, t) self._timeout = t and t*1000 or nil end,
       connect = function(self, ip, port)
         return assert(unix.connect(self._, assert(ResolveIp(ip)), port))
       end,
