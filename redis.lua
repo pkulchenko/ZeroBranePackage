@@ -1573,7 +1573,7 @@ local package = {
   name = "Redis",
   description = "Integrates with Redis.",
   author = "Paul Kulchenko",
-  version = 0.37,
+  version = 0.38,
   dependencies = "1.30",
 
   onRegister = function(self)
@@ -1828,7 +1828,7 @@ end
 if maxlen then msg, err = check(client:ldbmaxlen(maxlen)) end
 
 -- connect to the debugger
-local server, err = socket.tcp()
+local server, err = require("socket").tcp()
 check(server, ("Can't open socket: %s"):format(err))
 
 host, port = controller:match("^%s*(.+):(%d+)%s*$")
