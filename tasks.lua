@@ -9,7 +9,7 @@
 ----------------------------------------------------------------------------------------------------
 --
 -- PROJECT TASKS (tasks.lua):
---      Show list of tasks from every Lua file in the project path  and in all subdirectories
+--      Show list of tasks from every Lua file in the project path and in all subdirectories
 --      that haven't been excluded (see ignore below).
 --
 --      It also shows tasks from every open file, but will remove those from the list when the
@@ -85,13 +85,25 @@ local imglist                         -- icons for tree, set if required in onRe
 
 local mapProject, fileNameFromPath    -- forward decs
 
+
 -- parent structure different on Mac so this is cross platform method of
 -- getting parent panel
-
 local function getNoteBook()
   local nbc = "wxAuiNotebook"
   return tree.ctrl:GetParent():GetClassInfo():GetClassName() == nbc and
     tree.ctrl:GetParent():DynamicCast(nbc) or nil
+end
+
+--
+local function openEditorIterator()
+  local docs = ide:GetDocuments()
+  local doc_idx = nil
+  local doc
+
+  return function()
+    doc_idx, doc = next(docs, doc_idx)
+    return (doc_idx and doc:GetEditor() or nil)
+  end
 end
 
 -- first level from root contain file nodes for this plugin
@@ -123,7 +135,8 @@ end
 
 --
 tree.getChildByItemText = function(parentItem, childName)
-  local child, text = tree.ctrl:GetFirstChild(parentItem), nil
+  local child = tree.ctrl:GetFirstChild(parentItem)
+  local text
   while child:IsOk() do
     text = tree.ctrl:GetItemText(child)
     if text == childName then return child end
@@ -134,7 +147,8 @@ end
 
 --
 tree.getChildByDataTableItem = function(parentItem, tableItemName, value)
-  local child, data = tree.ctrl:GetFirstChild(parentItem), nil
+  local child = tree.ctrl:GetFirstChild(parentItem)
+  local data
   while child:IsOk() do
     data = tree.getDataTable(child)
     if data then
@@ -151,7 +165,8 @@ end
 
 --
 tree.getTaskByPosition = function(parentItem, pos)
-  local child, data = tree.ctrl:GetFirstChild(parentItem), nil
+  local child = tree.ctrl:GetFirstChild(parentItem)
+  local data
   while child:IsOk() do
     data = tree.getDataTable(child)
     if data then
@@ -208,7 +223,8 @@ end
 -- this is because new/different and matched children were set to true
 -- leaving only unmatched - deleted ones - as false
 tree.deleteUncheckedChildren = function(parentItem, reset)
-  local child, data = tree.ctrl:GetFirstChild(parentItem), nil
+  local child = tree.ctrl:GetFirstChild(parentItem)
+  local data
   while child:IsOk() do
     data = tree.getDataTable(child)
     if data then
@@ -342,7 +358,7 @@ tree.insertTask = function(parent, itemText, unsorted, pos)
   end
 end
 
---
+-- declared locally above
 function fileNameFromPath(filePath)
   return filePath:gsub(projectPath, "")
 end
@@ -374,7 +390,8 @@ local function mapTasks(fileName, text, isTextRawFile)
   local fileNode = tree.getOrCreateFileNode(true, fileName)
   for _, pattern in ipairs(patterns) do
     local pattNode = nil
-    local pattStart, pattEnd, pos, numLines = 0, 0, 0, 0
+    local pos, pattEnd
+    local pattStart, numLines = 0, 0
     while true do
       pos = pattStart
       pattStart, pattEnd = string.find(text, pattern.pattern, pattStart+1)
@@ -495,9 +512,8 @@ local function scanAllOpenEditorsAndMap()
   if config.singleFileMode then return end
   -- scan all open files here, in case there are non-project path files
   -- that remain open from last session that have tasks we want
-  local edNum = 0
-  local editor = ide:GetEditor(edNum)
-  while editor do
+
+  for editor in openEditorIterator() do
     -- skip project files or current file that's already been scanned
     local path = ide:GetDocument(editor):GetFilePath()
     if path ~= nil then
@@ -508,41 +524,42 @@ local function scanAllOpenEditorsAndMap()
         tree.ensureFileNodeVisible(treeItem)
       end
     end
-    edNum = edNum + 1
-    editor = ide:GetEditor(edNum)
   end
 end
 
--- main function, called from events
+-- (declared locally above) main function, called from events
+-- (declared locally above) main function, called from events
 function mapProject(editor, newTree)
   -- prevent UI updates in control to stop flickering
   local nb = getNoteBook()
   if nb then nb:Freeze() end
   -- we have frozen the whole notebook, so protect code in between freeze/thaw calls
   -- in case an error in this event keeps it frozen
-  pcall( function()
-    if newTree then tree.reset() end
+  pcall(
+    function()
+      if newTree then tree.reset() end
 
-    if editor then
-      mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
-    else
-      -- map whole project, excluding paths begining with entries in ignore list/table
-      -- in user.lua, tasks.ignore
-      local masks = {}
-      for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
-      for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
-        local fileName = fileNameFromPath(filePath)
-        local ignore = false or editor
-        for _, spec in ipairs(masks) do
-          -- don't ignore if it's just the beginning of a filename
-          ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
-        end
-        if not ignore then
-          mapTasks(fileName, FileRead(filePath) or "", true)
+      if editor then
+        mapTasks(fileNameFromPath(ide:GetDocument(editor):GetFilePath()), editor:GetText())
+      else
+        -- map whole project, excluding paths begining with entries in ignore list/table
+        -- in user.lua, tasks.ignore
+        local masks = {}
+        for i in ipairs(config.ignoreTable) do masks[i] = "^"..path2mask(config.ignoreTable[i]) end
+        for _, filePath in ipairs(ide:GetFileList(projectPath, true, "*.lua")) do
+          local fileName = fileNameFromPath(filePath)
+          local ignore = false or editor
+          for _, spec in ipairs(masks) do
+            -- don't ignore if it's just the beginning of a filename
+            ignore = ignore or (fileName:find(spec) and fileName:find("[\\/]"))
+          end
+          if not ignore then
+            mapTasks(fileName, FileRead(filePath) or "", true)
+          end
         end
       end
     end
-  end)
+  )
   -- allow UI updates
   if nb then nb:Thaw() end
 end
@@ -552,7 +569,7 @@ local package = {
   name = "Tasks panel",
   description = "Provides project wide tasks panel.",
   author = "Paul Reilly",
-  version = 0.95,
+  version = 1.0,
   dependencies = 1.61,
 
   onRegister = function(self)
@@ -587,10 +604,14 @@ local package = {
       hasButtons, linesAtRoot =  wx.wxTR_HAS_BUTTONS, wx.wxTR_LINES_AT_ROOT
     end
 
-    tree.ctrl = ide:CreateTreeCtrl(ide:GetProjectNotebook(), wx.wxID_ANY,
-                            wx.wxDefaultPosition, wx.wxSize(w, h),
-                            wx.wxTR_HIDE_ROOT + hasButtons + wx.wxNO_BORDER +
-                            wx.wxTR_ROW_LINES + linesAtRoot)
+    tree.ctrl = ide:CreateTreeCtrl(
+      ide:GetProjectNotebook(),
+      wx.wxID_ANY,
+      wx.wxDefaultPosition,
+      wx.wxSize(w, h),
+      wx.wxTR_HIDE_ROOT + hasButtons + wx.wxNO_BORDER +
+      wx.wxTR_ROW_LINES + linesAtRoot
+    )
 
     if self:GetConfig().noIcons ~= true then
       imglist = ide:CreateImageList("OUTLINE", "FILE-NORMAL", "VALUE-LCALL",
@@ -601,7 +622,7 @@ local package = {
     tree.reset()
 
     local conf = function(panel)
-      panel:Dock():MinSize(w,-1):BestSize(w,-1):FloatingSize(w,h)
+      panel:Dock():MinSize(w, -1):BestSize(w, -1):FloatingSize(w, h)
     end
 
     ide:AddPanelFlex(ide:GetProjectNotebook(), tree.ctrl, tasksPanel, TR("Tasks"), conf)
@@ -611,16 +632,19 @@ local package = {
     local ID_SINGLEFILEMODE = NewID()
     local ID_FLATMODE = NewID()
 
-    local rcMenu = ide:MakeMenu {
+    local rcMenu = ide:MakeMenu(
+      {
         { ID_FILESWITHTASKS, TR("Show Only Files With Tasks"), "", wx.wxITEM_CHECK },
         { ID_SINGLEFILEMODE, TR("Single File Mode"), "", wx.wxITEM_CHECK },
         { ID_FLATMODE, TR("View With Task Names"), "", wx.wxITEM_CHECK },
-    }
+      }
+    )
     rcMenu:Check(ID_FILESWITHTASKS, config.showOnlyFilesWithTasks)
     rcMenu:Check(ID_SINGLEFILEMODE, config.singleFileMode)
     rcMenu:Check(ID_FLATMODE, config.showNames)
 
-    tree.ctrl:Connect( wx.wxEVT_RIGHT_DOWN,
+    tree.ctrl:Connect(
+      wx.wxEVT_RIGHT_DOWN,
       function(event)
         tree.ctrl:PopupMenu(rcMenu)
       end
@@ -635,21 +659,27 @@ local package = {
       end
     end
 
-    tree.ctrl:Connect(ID_FLATMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
+    tree.ctrl:Connect(
+      ID_FLATMODE,
+      wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showNames = not config.showNames
         remapProject()
       end
     )
 
-    tree.ctrl:Connect(ID_FILESWITHTASKS, wx.wxEVT_COMMAND_MENU_SELECTED,
+    tree.ctrl:Connect(
+      ID_FILESWITHTASKS,
+      wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.showOnlyFilesWithTasks = not config.showOnlyFilesWithTasks
         remapProject()
       end
     )
 
-    tree.ctrl:Connect(ID_SINGLEFILEMODE, wx.wxEVT_COMMAND_MENU_SELECTED,
+    tree.ctrl:Connect(
+      ID_SINGLEFILEMODE,
+      wx.wxEVT_COMMAND_MENU_SELECTED,
       function(event)
         config.singleFileMode = not config.singleFileMode
         remapProject()
@@ -666,7 +696,9 @@ local package = {
       tasksSubMenu:Append(menuItemID, TR(pattern.name), "", wx.wxITEM_CHECK)
       tasksSubMenu:Check(menuItemID, pattern.visible)
 
-      tree.ctrl:Connect(menuItemID, wx.wxEVT_COMMAND_MENU_SELECTED,
+      tree.ctrl:Connect(
+        menuItemID,
+        wx.wxEVT_COMMAND_MENU_SELECTED,
         function(event)
           pattern.visible = not pattern.visible
           if config.singleFileMode then
@@ -680,7 +712,8 @@ local package = {
     end
     -- end of right click menu
 
-    tree.ctrl:Connect(wx.wxEVT_LEFT_DOWN,
+    tree.ctrl:Connect(
+      wx.wxEVT_LEFT_DOWN,
       function(event)
         local mask = (wx.wxTREE_HITTEST_ONITEMINDENT + wx.wxTREE_HITTEST_ONITEMLABEL
           + wx.wxTREE_HITTEST_ONITEMICON + wx.wxTREE_HITTEST_ONITEMRIGHT)
@@ -724,17 +757,25 @@ local package = {
     local menu = ide:GetMenuBar():GetMenu(ide:GetMenuBar():FindMenu(TR("&Project")))
     menu:InsertCheckItem(4, id, TR("Project Tasks")..KSC(id))
 
-    menu:Connect(id, wx.wxEVT_COMMAND_MENU_SELECTED, function ()
+    menu:Connect(
+      id,
+      wx.wxEVT_COMMAND_MENU_SELECTED,
+      function ()
         local uimgr = ide:GetUIManager()
         uimgr:GetPane(tasksPanel):Show(not uimgr:GetPane(tasksPanel):IsShown())
         uimgr:Update()
-      end)
+      end
+    )
 
-    ide:GetMainFrame():Connect(id, wx.wxEVT_UPDATE_UI, function (event)
+    ide:GetMainFrame():Connect(
+      id,
+      wx.wxEVT_UPDATE_UI,
+      function (event)
         local pane = ide:GetUIManager():GetPane(tasksPanel)
         menu:Enable(event:GetId(), pane:IsOk()) -- disable if doesn't exist
         menu:Check(event:GetId(), pane:IsOk() and pane:IsShown())
-      end)
+      end
+    )
   end,
 
   --
@@ -747,14 +788,16 @@ local package = {
   onProjectLoad = function(self, project)
     local newProject = projectPath == nil or projectPath ~= project
     projectPath = project
-    ide:DoWhenIdle(function()
+    ide:DoWhenIdle(
+      function()
         if not config.singleFileMode then
           mapProject(nil, newProject)
           scanAllOpenEditorsAndMap()
         else
           mapProject(currentEditor, newProject)
         end
-      end)
+      end
+    )
   end,
 
   -- this fires after project is completely loaded when ZBS is first opened
@@ -813,6 +856,7 @@ local package = {
     else
       return
     end
+
     local editor = needRefresh
     if not editor then return end
     needRefresh = nil
