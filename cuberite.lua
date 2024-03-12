@@ -30,7 +30,8 @@ local function MakeCuberiteInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			ExeName:SetName("Cuberite" .. a_ExePostfix)
 
 			-- Executable has a .exe ext on Windows
-			if (ide.osname == 'Windows') then
+			local isWindows = (ide.osname == 'Windows')
+			if (isWindows) then
 				ExeName:SetExt("exe")
 			end
 
@@ -126,7 +127,7 @@ end
 			local pid = CommandLineRun(
 				Cmd,                    -- Command to run
 				ExePath:GetFullPath(),  -- Working directory for the debuggee
-				false,                  -- Redirect debuggee output to Output pane? (NOTE: This force-hides the Cuberite window, not desirable!)
+				not(isWindows),         -- Should redirect debuggee output to Output pane? (NOTE: This force-hides the Cuberite window on Windows, not desirable!)
 				true,                   -- Add a no-hide flag to WX
 				nil,                    -- StringCallback, whatever that is
 				nil,                    -- UID to identify this running program; nil to auto-assign
@@ -137,6 +138,7 @@ end
 		hasdebugger = true,
 	}
 end
+
 
 
 
@@ -252,22 +254,24 @@ local function runInfoDump()
 	ide:GetOutput():Write("The InfoDump.lua script was executed.\n")
 end
 
+
+
+
+
 return {
 	name = "Cuberite integration",
 	description = "Implements integration with Cuberite - the custom C++ minecraft server.",
 	author = "Mattes D (https://github.com/madmaxoft)",
-	version = 0.55,
+	version = 0.56,
 	dependencies = "1.70",
 
 	AnalysisMenuID = ID("analyze.cuberite_analyzeall"),
 	InfoDumpMenuID = ID("project.cuberite_infodump"),
 
 	onRegister = function(self)
-		-- Add the interpreters
-		self.InterpreterDebug   = MakeCuberiteInterpreter(self, " - debug mode",   "_debug")
-		self.InterpreterRelease = MakeCuberiteInterpreter(self, " - release mode", "")
-		ide:AddInterpreter("cuberite_debug",   self.InterpreterDebug)
-		ide:AddInterpreter("cuberite_release", self.InterpreterRelease)
+		-- Add the interpreter:
+		self.Interpreter = MakeCuberiteInterpreter(self, "", "")
+		ide:AddInterpreter("cuberite", self.Interpreter)
 
 		-- Add the analysis menu item:
 		local _, menu, pos = ide:FindMenuItem(ID.ANALYZE)
@@ -287,8 +291,7 @@ return {
 
 	onUnRegister = function(self)
 		-- Remove the interpreters:
-		ide:RemoveInterpreter("cuberite_debug")
-		ide:RemoveInterpreter("cuberite_release")
+		ide:RemoveInterpreter("cuberite")
 
 		-- Remove the menu items:
 		ide:RemoveMenuItem(self.AnalysisMenuID)
