@@ -30,7 +30,8 @@ local function MakeCuberiteInterpreter(a_Self, a_InterpreterPostfix, a_ExePostfi
 			ExeName:SetName("Cuberite" .. a_ExePostfix)
 
 			-- Executable has a .exe ext on Windows
-			if (ide.osname == 'Windows') then
+			local isWindows = (ide.osname == 'Windows')
+			if (isWindows) then
 				ExeName:SetExt("exe")
 			end
 
@@ -126,7 +127,7 @@ end
 			local pid = CommandLineRun(
 				Cmd,                    -- Command to run
 				ExePath:GetFullPath(),  -- Working directory for the debuggee
-				false,                  -- Redirect debuggee output to Output pane? (NOTE: This force-hides the Cuberite window, not desirable!)
+				not(isWindows),         -- Should redirect debuggee output to Output pane? (NOTE: This force-hides the Cuberite window on Windows, not desirable!)
 				true,                   -- Add a no-hide flag to WX
 				nil,                    -- StringCallback, whatever that is
 				nil,                    -- UID to identify this running program; nil to auto-assign
